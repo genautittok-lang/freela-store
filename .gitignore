@@ -48,3 +48,7 @@ next-env.d.ts
 # local sqlite
 /data/*.db
 /data/*.db-*
+
+# python
+**/__pycache__/
+*.pyc
