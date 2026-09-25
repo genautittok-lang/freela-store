@@ -23,7 +23,12 @@ export default async function AdminHome({
 }: {
   searchParams: Promise<{ range?: string }>;
 }) {
-  const user = await currentAdmin();
+  let user = null;
+  try {
+    user = await currentAdmin();
+  } catch {
+    user = null;
+  }
   if (!user) redirect("/admin/login");
   const { range = "7d" } = await searchParams;
   const stats = analyticsSummary(range);
@@ -55,6 +60,11 @@ export default async function AdminHome({
           <p className="mt-1 text-sm text-muted-foreground">
             Public contact for all questions: <a className="font-medium text-primary" href="mailto:tools@freela.store">tools@freela.store</a>
           </p>
+          {stats.storage === "none" ? (
+            <p className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950">
+              Usage counters are empty on this host: analytics SQLite is ephemeral or unavailable on serverless. Login still works.
+            </p>
+          ) : null}
         </div>
         <form action={logoutAction}>
           <button className="rounded-lg border px-3 py-1.5 text-sm" type="submit">

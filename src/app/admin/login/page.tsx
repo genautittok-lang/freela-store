@@ -12,7 +12,13 @@ export default async function AdminLogin({
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
-  if (await currentAdmin()) redirect("/admin");
+  let signedIn = false;
+  try {
+    signedIn = Boolean(await currentAdmin());
+  } catch {
+    signedIn = false;
+  }
+  if (signedIn) redirect("/admin");
   const { error } = await searchParams;
   return (
     <div className="mx-auto flex min-h-screen max-w-sm flex-col justify-center px-4">

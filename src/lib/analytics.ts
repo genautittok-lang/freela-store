@@ -1,4 +1,4 @@
-import { getDb } from "@/lib/db";
+import { tryGetDb } from "@/lib/db";
 import { ANALYTICS_EVENTS, type AnalyticsEventName } from "@/lib/analytics-events";
 import { looksLikeFileContent } from "@/lib/security";
 import { toolRegistry } from "@/data/tools";
@@ -26,22 +26,26 @@ export function recordEvent(input: {
   if (fields.some((v) => typeof v === "string" && looksLikeFileContent(v))) {
     return;
   }
-  getDb()
-    .prepare(
-      `INSERT INTO events (name, tool_id, locale, session_id, processing_mode, result, path, source, created_at)
+  try {
+    tryGetDb()
+      ?.prepare(
+        `INSERT INTO events (name, tool_id, locale, session_id, processing_mode, result, path, source, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    )
-    .run(
-      input.name,
-      input.toolId ?? null,
-      input.locale ?? null,
-      input.sessionId,
-      input.processingMode ?? null,
-      input.result ?? null,
-      input.path ?? null,
-      input.source ?? null,
-      new Date().toISOString(),
-    );
+      )
+      .run(
+        input.name,
+        input.toolId ?? null,
+        input.locale ?? null,
+        input.sessionId,
+        input.processingMode ?? null,
+        input.result ?? null,
+        input.path ?? null,
+        input.source ?? null,
+        new Date().toISOString(),
+      );
+  } catch {
+    /* drop analytics if SQLite is unavailable */
+  }
 }
 
 export function rangeStart(range: string) {
@@ -52,7 +56,27 @@ export function rangeStart(range: string) {
 }
 
 export function analyticsSummary(range: string) {
-  const db = getDb();
+  const empty = {
+    visits: 0,
+    opens: 0,
+    starts: 0,
+    completions: 0,
+    errors: 0,
+    downloads: 0,
+    searches: 0,
+    uniqueSessions: 0,
+    topTools: [] as { id: string; opens: number; starts: number; completions: number; errors: number }[],
+    bySuccess: [] as { id: string; opens: number; starts: number; completions: number; errors: number; rate: number }[],
+    byError: [] as { id: string; opens: number; starts: number; completions: number; errors: number; rate: number }[],
+    byLocale: [] as { locale: string; opens: number; starts: number; success: number }[],
+    byDay: [] as { day: string; n: number }[],
+    sources: [] as { source: string; n: number }[],
+    errorTools: [] as { id: string; n: number }[],
+    storage: "none" as "sqlite" | "none",
+  };
+  const db = tryGetDb();
+  if (!db) return empty;
+  try {
   const since = rangeStart(range);
   const count = (name?: string) => {
     if (name) {
@@ -134,18 +158,25 @@ export function analyticsSummary(range: string) {
     byDay,
     sources,
     errorTools: errors,
+    storage: "sqlite" as const,
   };
+  } catch {
+    return empty;
+  }
 }
 
 export function eventsCsv(range: string) {
   const since = rangeStart(range);
-  const rows = getDb()
-    .prepare(
-      `SELECT name, tool_id, locale, processing_mode, result, path, source, created_at
-       FROM events WHERE created_at >= ? ORDER BY created_at DESC LIMIT 5000`,
-    )
-    .all(since) as Record<string, string>[];
   const header = "name,tool_id,locale,processing_mode,result,path,source,created_at";
+  const db = tryGetDb();
+  if (!db) return `${header}\n`;
+  try {
+    const rows = db
+      .prepare(
+        `SELECT name, tool_id, locale, processing_mode, result, path, source, created_at
+       FROM events WHERE created_at >= ? ORDER BY created_at DESC LIMIT 5000`,
+      )
+      .all(since) as Record<string, string>[];
   const body = rows
     .map((row) =>
       [row.name, row.tool_id, row.locale, row.processing_mode, row.result, row.path, row.source, row.created_at]
@@ -153,7 +184,10 @@ export function eventsCsv(range: string) {
         .join(","),
     )
     .join("\n");
-  return `${header}\n${body}`;
+    return `${header}\n${body}`;
+  } catch {
+    return `${header}\n`;
+  }
 }
 
 export function processingModeCounts() {
@@ -188,18 +222,24 @@ export function retentionOverview() {
 }
 
 export function recentAudit(limit = 50) {
-  return getDb()
-    .prepare(
-      `SELECT id, user_id, action, entity, entity_id, details, created_at
+  const db = tryGetDb();
+  if (!db) return [];
+  try {
+    return db
+      .prepare(
+        `SELECT id, user_id, action, entity, entity_id, details, created_at
        FROM audit_log ORDER BY id DESC LIMIT ?`,
-    )
-    .all(limit) as {
-    id: number;
-    user_id: number | null;
-    action: string;
-    entity: string;
-    entity_id: string | null;
-    details: string | null;
-    created_at: string;
-  }[];
+      )
+      .all(limit) as {
+      id: number;
+      user_id: number | null;
+      action: string;
+      entity: string;
+      entity_id: string | null;
+      details: string | null;
+      created_at: string;
+    }[];
+  } catch {
+    return [];
+  }
 }
