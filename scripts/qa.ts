@@ -7,6 +7,7 @@ import { sitemapEntries, languageAlternates } from "../src/lib/seo";
 import { LEGAL_SLUGS } from "../src/data/legal-slugs";
 import { categories } from "../src/data/categories";
 import { preparedUi, assertPreparedUi } from "../src/i18n/prepared-ui";
+import { assertToolUx } from "../src/lib/tool-ux";
 
 const errors: string[] = [];
 function fail(msg: string) {
@@ -14,6 +15,7 @@ function fail(msg: string) {
 }
 
 validateCatalog(toolRegistry);
+assertToolUx(toolRegistry);
 
 const published = toolRegistry.filter((t) => t.status === "published");
 if (!published.length) fail("No published tools");

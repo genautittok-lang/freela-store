@@ -57,6 +57,8 @@ import {
   sitemapXml,
 } from "@/lib/tools/web";
 import { privacyLabel, privacyNotice } from "@/lib/privacy";
+import { actionLabel } from "@/lib/tool-ux";
+import Link from "next/link";
 
 function pdfBlob(bytes: Uint8Array) {
   return new Blob([bytes as unknown as BlobPart], { type: "application/pdf" });
@@ -133,6 +135,8 @@ export function ToolRunner({
 
   const kind = tool.runtime.kind;
   const action = tool.runtime.action;
+  const cta = actionLabel(tool, locale);
+  const nextId = tool.relatedTools[0];
 
   return (
     <section
@@ -168,19 +172,26 @@ export function ToolRunner({
         </p>
       ) : null}
       {kind === "text-stats" || kind === "text-transform" || kind === "json-format" || kind === "codec" || kind === "seo" ? (
-        <TextTool tool={tool} locale={locale} wrap={wrap} />
+        <TextTool tool={tool} locale={locale} wrap={wrap} cta={cta} />
       ) : null}
-      {kind === "regex" ? <RegexTool locale={locale} wrap={wrap} tool={tool} /> : null}
-      {kind === "jwt" ? <JwtTool locale={locale} wrap={wrap} /> : null}
-      {kind === "hash" ? <HashTool locale={locale} wrap={wrap} /> : null}
-      {kind === "pdf" ? <PdfTool action={action} locale={locale} wrap={wrap} tool={tool} cancelled={cancelled} /> : null}
-      {kind === "image" ? <ImageTool action={action} locale={locale} wrap={wrap} tool={tool} /> : null}
-      {kind === "calculator" ? <CalcTool action={action} locale={locale} wrap={wrap} /> : null}
-      {kind === "converter" ? <ConverterTool action={action} locale={locale} wrap={wrap} /> : null}
-      {kind === "color" ? <ColorTool action={action} locale={locale} wrap={wrap} /> : null}
-      {kind === "generator" ? <GeneratorTool action={action} locale={locale} wrap={wrap} /> : null}
-      {kind === "qr" ? <QrTool locale={locale} wrap={wrap} /> : null}
-      {kind === "datetime" ? <DateTimeTool action={action} locale={locale} wrap={wrap} /> : null}
+      {kind === "regex" ? <RegexTool locale={locale} wrap={wrap} tool={tool} cta={cta} /> : null}
+      {kind === "jwt" ? <JwtTool locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "hash" ? <HashTool locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "pdf" ? <PdfTool action={action} locale={locale} wrap={wrap} tool={tool} cancelled={cancelled} cta={cta} /> : null}
+      {kind === "image" ? <ImageTool action={action} locale={locale} wrap={wrap} tool={tool} cta={cta} /> : null}
+      {kind === "calculator" ? <CalcTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "converter" ? <ConverterTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "color" ? <ColorTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "generator" ? <GeneratorTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "qr" ? <QrTool locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "datetime" ? <DateTimeTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
+      {ok && nextId ? (
+        <p className="mt-4 text-sm">
+          <Link className="font-medium text-primary" href={`/${locale}/tools/${nextId}`}>
+            {ui.nextTool}: {nextId.replace(/-/g, " ")}
+          </Link>
+        </p>
+      ) : null}
       <p className="mt-4 text-xs text-muted-foreground">{copy.privacy}</p>
     </section>
   );
@@ -190,10 +201,12 @@ function TextTool({
   tool,
   locale,
   wrap,
+  cta,
 }: {
   tool: ToolDefinition;
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
+  cta: string;
 }) {
   const ui = t(locale);
   const [input, setInput] = useState("");
@@ -376,7 +389,7 @@ function TextTool({
       ) : null}
       <div className="flex gap-2">
         <Button type="button" onClick={run}>
-          {ui.run}
+          {cta}
         </Button>
         {output ? (
           <Button
@@ -388,6 +401,19 @@ function TextTool({
             }}
           >
             {ui.copy}
+          </Button>
+        ) : null}
+        {output || input ? (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => {
+              setInput("");
+              setInputB("");
+              setOutput("");
+            }}
+          >
+            {ui.newInput}
           </Button>
         ) : null}
       </div>
@@ -409,12 +435,13 @@ function Stat({ label, value, locale }: { label: string; value: number; locale: 
 function RegexTool({
   locale,
   wrap,
+  cta,
 }: {
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
   tool?: ToolDefinition;
+  cta: string;
 }) {
-  const ui = t(locale);
   const [pattern, setPattern] = useState("");
   const [flags, setFlags] = useState("g");
   const [sample, setSample] = useState("");
@@ -450,15 +477,14 @@ function RegexTool({
           })
         }
       >
-        {ui.run}
-      </Button>
+          {cta}
+        </Button>
       {output ? <Textarea readOnly value={output} rows={8} /> : null}
     </div>
   );
 }
 
-function JwtTool({ locale, wrap }: { locale: Locale; wrap: (fn: () => void) => Promise<void> }) {
-  const ui = t(locale);
+function JwtTool({ wrap, cta }: { locale: Locale; wrap: (fn: () => void) => Promise<void>; cta: string }) {
   const [token, setToken] = useState("");
   const [output, setOutput] = useState("");
   return (
@@ -475,15 +501,14 @@ function JwtTool({ locale, wrap }: { locale: Locale; wrap: (fn: () => void) => P
           })
         }
       >
-        {ui.run}
-      </Button>
+          {cta}
+        </Button>
       {output ? <Textarea readOnly value={output} rows={10} /> : null}
     </div>
   );
 }
 
-function HashTool({ locale, wrap }: { locale: Locale; wrap: (fn: () => void) => Promise<void> }) {
-  const ui = t(locale);
+function HashTool({ wrap, cta }: { locale: Locale; wrap: (fn: () => void) => Promise<void>; cta: string }) {
   const [text, setText] = useState("");
   const [algo, setAlgo] = useState("SHA-256");
   const [output, setOutput] = useState("");
@@ -504,8 +529,8 @@ function HashTool({ locale, wrap }: { locale: Locale; wrap: (fn: () => void) => 
           })
         }
       >
-        {ui.run}
-      </Button>
+          {cta}
+        </Button>
       {output ? <Textarea readOnly value={output} rows={4} /> : null}
     </div>
   );
@@ -517,12 +542,14 @@ function PdfTool({
   wrap,
   tool,
   cancelled,
+  cta,
 }: {
   action: string;
   locale: Locale;
   wrap: (fn: () => Promise<void>) => Promise<void>;
   tool: ToolDefinition;
   cancelled: React.MutableRefObject<boolean>;
+  cta: string;
 }) {
   const ui = t(locale);
   const [files, setFiles] = useState<File[]>([]);
@@ -570,6 +597,9 @@ function PdfTool({
         {files.length ? <span className="text-xs text-muted-foreground">{files.map((f) => f.name).join(", ")}</span> : null}
         <span className="text-xs text-muted-foreground">Max {Math.round(tool.maxFileSize / 1024 / 1024)} MB · {tool.supportedFormats.join(", ")}</span>
       </label>
+      {action === "reorder" ? (
+        <p className="text-sm text-muted-foreground">This reverses the current page order. There is no drag-and-drop reorder list.</p>
+      ) : null}
       {action === "rotate" ? (
         <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))}>
           <option value={90}>90°</option>
@@ -675,7 +705,7 @@ function PdfTool({
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
       {meta ? <Textarea readOnly value={meta} rows={10} /> : null}
     </div>
@@ -701,11 +731,13 @@ function ImageTool({
   locale,
   wrap,
   tool,
+  cta,
 }: {
   action: string;
   locale: Locale;
   wrap: (fn: () => Promise<void>) => Promise<void>;
   tool: ToolDefinition;
+  cta: string;
 }) {
   const ui = t(locale);
   const [file, setFile] = useState<File | null>(null);
@@ -885,7 +917,7 @@ function ImageTool({
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
       {preview ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -900,25 +932,75 @@ function CalcTool({
   action,
   locale,
   wrap,
+  cta,
 }: {
   action: string;
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
+  cta: string;
 }) {
   const ui = t(locale);
-  const [a, setA] = useState("100");
-  const [b, setB] = useState("20");
-  const [mode, setMode] = useState("of");
+  const [a, setA] = useState(
+    action === "date-diff" ? "2026-01-01" : action === "percentage" ? "15" : action === "bmi" ? "70" : "100",
+  );
+  const [b, setB] = useState(
+    action === "date-diff" ? "2026-09-25" : action === "percentage" ? "240" : action === "bmi" ? "1.75" : "20",
+  );
+  const [mode, setMode] = useState(action === "invoice" ? "20" : action === "vat" ? "net" : "of");
   const [out, setOut] = useState("");
   const fmt = (n: number) => new Intl.NumberFormat(locale, { maximumFractionDigits: 4 }).format(n);
   return (
     <div className="grid gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field label={action === "bmi" ? "Weight kg / Height m" : "Value A"}>
-          <Input value={a} onChange={(e) => setA(e.target.value)} />
+        <Field
+          label={
+            action === "bmi"
+              ? "Weight (kg)"
+              : action === "percentage"
+                ? "Percentage"
+                : action === "vat"
+                  ? "Amount"
+                  : action === "discount"
+                    ? "Price"
+                    : action === "margin"
+                      ? "Cost"
+                      : action === "invoice"
+                        ? "Quantity"
+                        : action === "date-diff"
+                          ? "Start date"
+                          : "Value A"
+          }
+        >
+          {action === "date-diff" ? (
+            <Input type="date" value={a} onChange={(e) => setA(e.target.value)} />
+          ) : (
+            <Input value={a} onChange={(e) => setA(e.target.value)} inputMode="decimal" />
+          )}
         </Field>
-        <Field label="Value B">
-          <Input value={b} onChange={(e) => setB(e.target.value)} />
+        <Field
+          label={
+            action === "bmi"
+              ? "Height (m)"
+              : action === "percentage"
+                ? "Number"
+                : action === "vat"
+                  ? "VAT %"
+                  : action === "discount"
+                    ? "Discount %"
+                    : action === "margin"
+                      ? "Selling price"
+                      : action === "invoice"
+                        ? "Unit price"
+                        : action === "date-diff"
+                          ? "End date"
+                          : "Value B"
+          }
+        >
+          {action === "date-diff" ? (
+            <Input type="date" value={b} onChange={(e) => setB(e.target.value)} />
+          ) : (
+            <Input value={b} onChange={(e) => setB(e.target.value)} inputMode="decimal" />
+          )}
         </Field>
       </div>
       {action === "percentage" ? (
@@ -938,12 +1020,6 @@ function CalcTool({
         <Field label="Tax %">
           <Input value={mode} onChange={(e) => setMode(e.target.value)} />
         </Field>
-      ) : null}
-      {action === "date-diff" ? (
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Input type="date" value={a} onChange={(e) => setA(e.target.value)} />
-          <Input type="date" value={b} onChange={(e) => setB(e.target.value)} />
-        </div>
       ) : null}
       <Button
         type="button"
@@ -985,9 +1061,17 @@ function CalcTool({
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
-      {out ? <p className="text-lg font-semibold">{out}</p> : null}
+      {out ? (
+        <div className="rounded-xl bg-accent px-4 py-3">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{ui.result}</p>
+          <p className="text-2xl font-semibold tabular-nums">{out}</p>
+          <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => navigator.clipboard.writeText(out)}>
+            {ui.copy}
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -996,10 +1080,12 @@ function ConverterTool({
   action,
   locale,
   wrap,
+  cta,
 }: {
   action: string;
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
+  cta: string;
 }) {
   const ui = t(locale);
   const units = unitSets[action] ?? unitSets.length;
@@ -1011,24 +1097,42 @@ function ConverterTool({
   const list = action === "data-size" ? (system === "si" ? siUnits : iecUnits) : units;
   return (
     <div className="grid gap-3">
-      <Input type="number" value={value} onChange={(e) => setValue(e.target.value)} />
+      <Field label="Value">
+        <Input type="number" value={value} onChange={(e) => setValue(e.target.value)} />
+      </Field>
       {action === "data-size" ? (
         <select className="h-9 rounded-lg border px-2" value={system} onChange={(e) => setSystem(e.target.value as "si")}>
           <option value="si">SI (1000)</option>
           <option value="iec">IEC (1024)</option>
         </select>
       ) : null}
-      <div className="grid grid-cols-2 gap-2">
-        <select className="h-9 rounded-lg border px-2" value={from} onChange={(e) => setFrom(e.target.value)}>
-          {list.map((u) => (
-            <option key={u}>{u}</option>
-          ))}
-        </select>
-        <select className="h-9 rounded-lg border px-2" value={to} onChange={(e) => setTo(e.target.value)}>
-          {list.map((u) => (
-            <option key={u}>{u}</option>
-          ))}
-        </select>
+      <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-2">
+        <Field label="From">
+          <select className="h-9 w-full rounded-lg border px-2" value={from} onChange={(e) => setFrom(e.target.value)}>
+            {list.map((u) => (
+              <option key={u}>{u}</option>
+            ))}
+          </select>
+        </Field>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="mb-0.5"
+          onClick={() => {
+            setFrom(to);
+            setTo(from);
+          }}
+        >
+          {ui.swap}
+        </Button>
+        <Field label="To">
+          <select className="h-9 w-full rounded-lg border px-2" value={to} onChange={(e) => setTo(e.target.value)}>
+            {list.map((u) => (
+              <option key={u}>{u}</option>
+            ))}
+          </select>
+        </Field>
       </div>
       <Button
         type="button"
@@ -1040,9 +1144,16 @@ function ConverterTool({
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
-      {out ? <p className="text-lg font-semibold">{out}</p> : null}
+      {out ? (
+        <div className="rounded-xl bg-accent px-4 py-3">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{ui.result}</p>
+          <p className="text-2xl font-semibold tabular-nums">
+            {out} {to}
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -1051,12 +1162,13 @@ function ColorTool({
   action,
   locale,
   wrap,
+  cta,
 }: {
   action: string;
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
+  cta: string;
 }) {
-  const ui = t(locale);
   const [a, setA] = useState("#1a2b3c");
   const [b, setB] = useState("#ffffff");
   const [out, setOut] = useState("");
@@ -1064,7 +1176,10 @@ function ColorTool({
     <div className="grid gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label="Color A">
-          <Input value={a} onChange={(e) => setA(e.target.value)} />
+          <div className="flex gap-2">
+            <Input type="color" value={a.startsWith("#") ? a.slice(0, 7) : "#1a2b3c"} onChange={(e) => setA(e.target.value)} className="h-10 w-14 p-1" />
+            <Input value={a} onChange={(e) => setA(e.target.value)} />
+          </div>
         </Field>
         {action === "contrast" || action === "gradient" ? (
           <Field label="Color B">
@@ -1100,7 +1215,7 @@ function ColorTool({
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
       {out ? <pre className="overflow-auto rounded-lg bg-muted p-3 text-sm">{out}</pre> : null}
       <div className="flex gap-2">
@@ -1115,10 +1230,12 @@ function GeneratorTool({
   action,
   locale,
   wrap,
+  cta,
 }: {
   action: string;
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
+  cta: string;
 }) {
   const ui = t(locale);
   const [count, setCount] = useState(5);
@@ -1157,7 +1274,7 @@ function GeneratorTool({
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
       {out ? (
         <Textarea
@@ -1176,7 +1293,7 @@ function GeneratorTool({
   );
 }
 
-function QrTool({ locale, wrap }: { locale: Locale; wrap: (fn: () => Promise<void>) => Promise<void> }) {
+function QrTool({ locale, wrap, cta }: { locale: Locale; wrap: (fn: () => Promise<void>) => Promise<void>; cta: string }) {
   const ui = t(locale);
   const [text, setText] = useState("https://freela.store/en/");
   const [src, setSrc] = useState("");
@@ -1189,17 +1306,27 @@ function QrTool({ locale, wrap }: { locale: Locale; wrap: (fn: () => Promise<voi
           wrap(async () => {
             const url = await (await import("qrcode")).default.toDataURL(text, { margin: 1, width: 320 });
             setSrc(url);
-            const blob = await (await fetch(url)).blob();
-            downloadBlob(blob, "qr.png");
-            track("file_download", { toolId: "qr-generator", locale });
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
       {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt="Generated QR code" className="h-40 w-40" />
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={src} alt="Generated QR code" className="h-40 w-40" />
+          <Button
+            type="button"
+            variant="outline"
+            onClick={async () => {
+              const blob = await (await fetch(src)).blob();
+              downloadBlob(blob, "qr.png");
+              track("file_download", { toolId: "qr-generator", locale });
+            }}
+          >
+            {ui.download}
+          </Button>
+        </>
       ) : null}
     </div>
   );
@@ -1209,33 +1336,51 @@ function DateTimeTool({
   action,
   locale,
   wrap,
+  cta,
 }: {
   action: string;
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
+  cta: string;
 }) {
-  const ui = t(locale);
   const [value, setValue] = useState("");
-  const [from, setFrom] = useState("Europe/Berlin");
-  const [to, setTo] = useState("America/New_York");
+  const [from, setFrom] = useState(action === "ics" ? "Freela event" : "Europe/Berlin");
+  const [to, setTo] = useState(action === "ics" ? "" : "America/New_York");
   const [out, setOut] = useState("");
   return (
     <div className="grid gap-3">
       {action === "ics" ? (
-        <Field label="Title">
-          <Input value={from} onChange={(e) => setFrom(e.target.value)} />
-        </Field>
+        <>
+          <Field label="Event title">
+            <Input value={from} onChange={(e) => setFrom(e.target.value)} />
+          </Field>
+          <Field label="Start">
+            <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
+          </Field>
+          <Field label="End">
+            <Input type="datetime-local" value={to} onChange={(e) => setTo(e.target.value)} />
+          </Field>
+        </>
       ) : null}
       {action === "unix" ? (
-        <Input value={value} onChange={(e) => setValue(e.target.value)} />
-      ) : (
-        <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
-      )}
-      {action === "timezone" || action === "ics" ? (
-        <div className="grid grid-cols-2 gap-2">
-          <Input value={from} onChange={(e) => setFrom(e.target.value)} />
-          <Input value={to} onChange={(e) => setTo(e.target.value)} />
-        </div>
+        <Field label="Unix timestamp (seconds or ms)">
+          <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder="1735689600" />
+        </Field>
+      ) : null}
+      {action === "timezone" ? (
+        <>
+          <Field label="Date and time">
+            <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
+          </Field>
+          <div className="grid grid-cols-2 gap-2">
+            <Field label="From time zone">
+              <Input value={from} onChange={(e) => setFrom(e.target.value)} />
+            </Field>
+            <Field label="To time zone">
+              <Input value={to} onChange={(e) => setTo(e.target.value)} />
+            </Field>
+          </div>
+        </>
       ) : null}
       <Button
         type="button"
@@ -1250,7 +1395,8 @@ function DateTimeTool({
                 `${d.toISOString()}\n${new Intl.DateTimeFormat(locale, { dateStyle: "full", timeStyle: "long" }).format(d)}\n${Math.floor(d.getTime() / 1000)} s · ${d.getTime()} ms`,
               );
             } else if (action === "ics") {
-              const end = to.includes("T") ? to : value;
+              if (!value) throw new Error("Choose a start date and time.");
+              const end = to || value;
               setOut(icsEvent(from, new Date(value).toISOString(), new Date(end).toISOString()));
             } else {
               const d = new Date(value);
@@ -1262,7 +1408,7 @@ function DateTimeTool({
           })
         }
       >
-        {ui.run}
+        {cta}
       </Button>
       {out ? <pre className="overflow-auto rounded-lg bg-muted p-3 text-sm">{out}</pre> : null}
     </div>

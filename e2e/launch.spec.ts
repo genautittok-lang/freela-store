@@ -23,20 +23,20 @@ test("text tool completes", async ({ page }) => {
   await page.goto(`${base}/en/tools/word-counter`);
   await page.locator("textarea").first().fill("one two three four");
   await expect(page.getByText("Local only", { exact: true }).first()).toBeVisible();
-  await page.getByRole("button", { name: "Run" }).click();
+  await page.getByRole("button", { name: "Count words" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible();
 });
 
 test("developer json tool", async ({ page }) => {
   await page.goto(`${base}/en/tools/json-formatter`);
   await page.locator("textarea").first().fill('{"a":1}');
-  await page.getByRole("button", { name: "Run" }).click();
+  await page.getByRole("button", { name: "Format JSON" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible();
 });
 
 test("calculator returns a value", async ({ page }) => {
   await page.goto(`${base}/en/tools/percentage`);
-  await page.getByRole("button", { name: "Run" }).click();
+  await page.getByRole("button", { name: "Calculate" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible();
 });
 
@@ -51,7 +51,7 @@ test("image compress completes", async ({ page }) => {
     mimeType: "image/png",
     buffer: png,
   });
-  await page.getByRole("button", { name: "Run" }).click();
+  await page.getByRole("button", { name: "Compress image" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible({ timeout: 20_000 });
 });
 
@@ -66,7 +66,7 @@ test("pdf merge completes", async ({ page }) => {
     { name: "a.pdf", mimeType: "application/pdf", buffer: Buffer.from(bytes) },
     { name: "b.pdf", mimeType: "application/pdf", buffer: Buffer.from(bytes) },
   ]);
-  await page.getByRole("button", { name: "Run" }).click();
+  await page.getByRole("button", { name: "Merge PDFs" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible({ timeout: 20_000 });
 });
 
@@ -118,7 +118,7 @@ test("mobile menu", async ({ page }) => {
 
 test("accessibility smoke homepage", async ({ page }) => {
   await page.goto(`${base}/en`);
-  const results = await new AxeBuilder({ page }).disableRules(["color-contrast"]).analyze();
+  const results = await new AxeBuilder({ page }).analyze();
   const serious = results.violations.filter((v) => v.impact === "critical" || v.impact === "serious");
   expect(serious, JSON.stringify(serious.map((v) => v.id))).toEqual([]);
 });
@@ -126,7 +126,7 @@ test("accessibility smoke homepage", async ({ page }) => {
 test("validation error is actionable", async ({ page }) => {
   await page.goto(`${base}/en/tools/json-formatter`);
   await page.locator("textarea").first().fill("{not-json");
-  await page.getByRole("button", { name: "Run" }).click();
+  await page.getByRole("button", { name: "Format JSON" }).click();
   await expect(page.locator("#tool").getByRole("alert")).toBeVisible();
 });
 

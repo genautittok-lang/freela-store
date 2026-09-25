@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { track } from "@/components/analytics-provider";
 
-type Hit = { kind: string; id: string; label: string; href: string };
+type Hit = { kind: string; id: string; label: string; href: string; description?: string; category?: string };
 
 export function SearchBox({ locale, initial = "" }: { locale: Locale; initial?: string }) {
   const ui = t(locale);
@@ -53,8 +53,11 @@ export function SearchBox({ locale, initial = "" }: { locale: Locale; initial?: 
         <ul className="absolute z-20 mt-1 w-full rounded-lg border bg-background p-1 shadow">
           {hits.map((hit) => (
             <li key={hit.href}>
-              <a className="block rounded px-3 py-2 text-sm hover:bg-muted" href={hit.href}>
-                {hit.label}
+              <a className="block rounded-lg px-3 py-2 text-sm hover:bg-muted" href={hit.href}>
+                <span className="font-medium">{hit.label}</span>
+                {hit.description ? (
+                  <span className="mt-0.5 line-clamp-1 block text-xs text-muted-foreground">{hit.description}</span>
+                ) : null}
               </a>
             </li>
           ))}

@@ -17,6 +17,8 @@ export function GET(request: NextRequest) {
         kind: "tool",
         id: hit.tool.id,
         label: hit.tool.copy[locale].name,
+        description: hit.tool.copy[locale].description,
+        category: hit.tool.category,
         href: `/${locale}/tools/${hit.tool.copy[locale].slug}`,
       };
     }

@@ -25,6 +25,10 @@ export type ExtraMessages = {
   toolsNav: string;
   cookieTitle: string;
   necessaryOnly: string;
+  result: string;
+  newInput: string;
+  swap: string;
+  nextTool: string;
 };
 
 export const extras: Record<Locale, ExtraMessages> = {
@@ -54,6 +58,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Tools",
     cookieTitle: "Privacy first",
     necessaryOnly: "Necessary only",
+    result: "Result",
+    newInput: "New input",
+    swap: "Swap",
+    nextTool: "Try next",
   },
   de: {
     trustTitle: "Dateien bleiben auf Ihrem Gerät",
@@ -81,6 +89,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Werkzeuge",
     cookieTitle: "Datenschutz zuerst",
     necessaryOnly: "Nur notwendige",
+    result: "Ergebnis",
+    newInput: "Neue Eingabe",
+    swap: "Tauschen",
+    nextTool: "Als Nächstes",
   },
   uk: {
     trustTitle: "Файли залишаються на вашому пристрої",
@@ -108,6 +120,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Інструменти",
     cookieTitle: "Приватність насамперед",
     necessaryOnly: "Лише необхідні",
+    result: "Результат",
+    newInput: "Нове введення",
+    swap: "Поміняти",
+    nextTool: "Далі",
   },
   pl: {
     trustTitle: "Pliki zostają na Twoim urządzeniu",
@@ -135,6 +151,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Narzędzia",
     cookieTitle: "Prywatność przede wszystkim",
     necessaryOnly: "Tylko niezbędne",
+    result: "Wynik",
+    newInput: "Nowe dane",
+    swap: "Zamień",
+    nextTool: "Następne",
   },
   fr: {
     trustTitle: "Les fichiers restent sur votre appareil",
@@ -162,6 +182,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Outils",
     cookieTitle: "Confidentialité d’abord",
     necessaryOnly: "Nécessaires uniquement",
+    result: "Résultat",
+    newInput: "Nouvelle saisie",
+    swap: "Inverser",
+    nextTool: "Suivant",
   },
   es: {
     trustTitle: "Los archivos se quedan en tu dispositivo",
@@ -189,6 +213,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Herramientas",
     cookieTitle: "Privacidad primero",
     necessaryOnly: "Solo necesarias",
+    result: "Resultado",
+    newInput: "Nueva entrada",
+    swap: "Intercambiar",
+    nextTool: "Siguiente",
   },
   it: {
     trustTitle: "I file restano sul dispositivo",
@@ -216,6 +244,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Strumenti",
     cookieTitle: "Privacy prima di tutto",
     necessaryOnly: "Solo necessari",
+    result: "Risultato",
+    newInput: "Nuovo input",
+    swap: "Inverti",
+    nextTool: "Prossimo",
   },
   pt: {
     trustTitle: "Os ficheiros ficam no seu dispositivo",
@@ -243,6 +275,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Ferramentas",
     cookieTitle: "Privacidade primeiro",
     necessaryOnly: "Apenas necessárias",
+    result: "Resultado",
+    newInput: "Nova entrada",
+    swap: "Trocar",
+    nextTool: "Seguinte",
   },
   nl: {
     trustTitle: "Bestanden blijven op je apparaat",
@@ -270,6 +306,10 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Tools",
     cookieTitle: "Privacy eerst",
     necessaryOnly: "Alleen noodzakelijk",
+    result: "Resultaat",
+    newInput: "Nieuwe invoer",
+    swap: "Wissel",
+    nextTool: "Volgende",
   },
   tr: {
     trustTitle: "Dosyalar cihazınızda kalır",
@@ -297,5 +337,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     toolsNav: "Araçlar",
     cookieTitle: "Önce gizlilik",
     necessaryOnly: "Yalnızca gerekli",
+    result: "Sonuç",
+    newInput: "Yeni girdi",
+    swap: "Değiştir",
+    nextTool: "Sonraki",
   },
 };

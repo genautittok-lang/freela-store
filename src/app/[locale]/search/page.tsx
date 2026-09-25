@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/data/locales";
@@ -6,6 +7,8 @@ import { pageMetadata } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
 import { PageTracker } from "@/components/page-tracker";
+import { iconForTool } from "@/lib/tool-icons";
+import { categories } from "@/data/categories";
 
 export async function generateMetadata({
   params,
@@ -52,11 +55,21 @@ export default async function SearchPage({
         {hits.map((hit) => {
           if (hit.kind === "tool") {
             const copy = hit.tool.copy[locale];
+            const cat = categories.find((c) => c.id === hit.tool.category);
             return (
               <li key={hit.tool.id}>
-                <Link href={`/${locale}/tools/${copy.slug}`} className="block rounded-xl border p-4 hover:border-foreground">
-                  <p className="font-medium">{copy.name}</p>
-                  <p className="text-sm text-muted-foreground">{copy.description}</p>
+                <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card flex gap-3 p-4">
+                  {createElement(iconForTool(hit.tool.id, hit.tool.category), {
+                    className: "mt-0.5 h-5 w-5 shrink-0 text-primary",
+                    "aria-hidden": true,
+                  })}
+                  <span>
+                    <span className="font-medium">{copy.name}</span>
+                    {cat ? (
+                      <span className="ms-2 text-xs text-muted-foreground">{cat.copy[locale].name}</span>
+                    ) : null}
+                    <span className="mt-1 block text-sm text-muted-foreground">{copy.description}</span>
+                  </span>
                 </Link>
               </li>
             );

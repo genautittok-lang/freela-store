@@ -46,7 +46,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
       <PageTracker locale={locale} />
-      <section className="grid items-center gap-8 rounded-[1.5rem] border border-border bg-card px-5 py-8 shadow-sm sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:py-10">
+      <section className="grid items-center gap-6 rounded-[1.5rem] border border-border bg-card px-4 py-6 shadow-sm sm:px-8 sm:py-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
           <p className="text-sm font-semibold text-primary">freela.store</p>
           <h1 className="mt-2 max-w-xl text-3xl font-semibold tracking-tight sm:text-5xl">{ui.tagline}</h1>
@@ -103,7 +103,8 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         <AdSlot position="home-mid" />
       </div>
       <section className="mt-10 max-w-xl">
-        <h2 className="text-lg font-semibold">{ui.brand}</h2>
+        <h2 className="text-lg font-semibold">How Freela works</h2>
+        <p className="mt-1 text-sm text-muted-foreground">Search, open a tool, run it in your browser, download the result.</p>
         <video className="mt-3 w-full rounded-2xl border" controls muted playsInline preload="metadata" poster="/brand/hero.png">
           <source src="/brand/teaser.mp4" type="video/mp4" />
         </video>

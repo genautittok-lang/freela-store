@@ -1,0 +1,2136 @@
+[
+  {
+    "toolId": "merge-pdf",
+    "slug": "merge-pdf",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Merge PDFs",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": true,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Combine several PDF documents into one file on your device. Nothing is uploaded.",
+    "formats": [
+      "pdf"
+    ],
+    "maxFileSize": 26214400,
+    "options": [],
+    "related": [
+      "split-pdf",
+      "reorder-pdf",
+      "extract-pdf-pages"
+    ]
+  },
+  {
+    "toolId": "split-pdf",
+    "slug": "split-pdf",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Split PDF",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Cut a PDF into individual page files in your browser. Choose a range or export every page.",
+    "formats": [
+      "pdf"
+    ],
+    "maxFileSize": 26214400,
+    "options": [
+      "pages: 1-1 (default) or all"
+    ],
+    "related": [
+      "merge-pdf",
+      "extract-pdf-pages",
+      "reorder-pdf"
+    ]
+  },
+  {
+    "toolId": "rotate-pdf",
+    "slug": "rotate-pdf",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Rotate PDF",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Turn sideways scans upright without re-printing. Rotation is applied locally with pdf-lib.",
+    "formats": [
+      "pdf"
+    ],
+    "maxFileSize": 26214400,
+    "options": [
+      "angle: 90 (default), 180, 270"
+    ],
+    "related": [
+      "reorder-pdf",
+      "pdf-metadata",
+      "merge-pdf"
+    ]
+  },
+  {
+    "toolId": "images-to-pdf",
+    "slug": "images-to-pdf",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Convert images to PDF",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Turn JPG, PNG or WebP photos into a paginated PDF. Images never leave this browser tab.",
+    "formats": [
+      "png",
+      "jpg",
+      "jpeg",
+      "webp"
+    ],
+    "maxFileSize": 15728640,
+    "options": [],
+    "related": [
+      "merge-pdf",
+      "convert-image",
+      "compress-image"
+    ]
+  },
+  {
+    "toolId": "extract-pdf-pages",
+    "slug": "extract-pdf-pages",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Extract pages",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Keep only the pages you list. The rest of the document is ignored and never uploaded.",
+    "formats": [
+      "pdf"
+    ],
+    "maxFileSize": 26214400,
+    "options": [
+      "pages: 1-1 (default)"
+    ],
+    "related": [
+      "split-pdf",
+      "reorder-pdf",
+      "merge-pdf"
+    ]
+  },
+  {
+    "toolId": "pdf-metadata",
+    "slug": "pdf-metadata",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Read metadata",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Inspect document information dictionaries locally. Useful before you share a file that still contains author names.",
+    "formats": [
+      "pdf"
+    ],
+    "maxFileSize": 26214400,
+    "options": [],
+    "related": [
+      "exif-strip",
+      "rotate-pdf"
+    ]
+  },
+  {
+    "toolId": "reorder-pdf",
+    "slug": "reorder-pdf",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Reverse page order",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Shuffle page order in the browser. Reverse a scan or move a cover to the front without extra software.",
+    "formats": [
+      "pdf"
+    ],
+    "maxFileSize": 26214400,
+    "options": [],
+    "related": [
+      "merge-pdf",
+      "extract-pdf-pages",
+      "rotate-pdf"
+    ]
+  },
+  {
+    "toolId": "compress-image",
+    "slug": "compress-image",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Compress image",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": true,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Shrink image files with a quality slider. Encoding happens on a canvas in your browser.",
+    "formats": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "maxFileSize": 12582912,
+    "options": [
+      "quality: 0.8 default"
+    ],
+    "related": [
+      "resize-image",
+      "convert-image",
+      "favicon-generator"
+    ]
+  },
+  {
+    "toolId": "resize-image",
+    "slug": "resize-image",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Resize image",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Scale photos to exact dimensions while locking aspect ratio. Useful for thumbnails and social crops.",
+    "formats": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "maxFileSize": 12582912,
+    "options": [
+      "width: 800 default"
+    ],
+    "related": [
+      "crop-image",
+      "compress-image",
+      "favicon-generator"
+    ]
+  },
+  {
+    "toolId": "crop-image",
+    "slug": "crop-image",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Crop image",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Cut unused margins from screenshots and photos. The crop runs locally on a canvas.",
+    "formats": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "maxFileSize": 12582912,
+    "options": [
+      "x,y,w,h: 0,0,256,256 default"
+    ],
+    "related": [
+      "resize-image",
+      "compress-image",
+      "convert-image"
+    ]
+  },
+  {
+    "toolId": "convert-image",
+    "slug": "convert-image",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Convert to WebP",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Switch between JPEG, PNG and WebP in the tab you already have open. Transparency becomes a chosen matte on JPEG.",
+    "formats": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "maxFileSize": 12582912,
+    "options": [
+      "output: WebP"
+    ],
+    "related": [
+      "compress-image",
+      "image-to-base64",
+      "images-to-pdf"
+    ]
+  },
+  {
+    "toolId": "image-to-base64",
+    "slug": "image-to-base64",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Encode image",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Create a data URL for CSS or HTML prototypes. Encoding uses the FileReader API in your browser.",
+    "formats": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp",
+      "gif",
+      "svg"
+    ],
+    "maxFileSize": 5242880,
+    "options": [],
+    "related": [
+      "base64-to-image",
+      "base64",
+      "favicon-generator"
+    ]
+  },
+  {
+    "toolId": "base64-to-image",
+    "slug": "base64-to-image",
+    "family": "image",
+    "inputType": "text",
+    "actionLabel": "Decode image",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Paste a data URL or raw Base64 and preview the picture. Decoding never calls a server.",
+    "formats": [
+      "png",
+      "jpg",
+      "webp"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "image-to-base64",
+      "base64"
+    ]
+  },
+  {
+    "toolId": "exif-strip",
+    "slug": "exif-strip",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Strip metadata",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Download a copy of a JPEG or PNG without metadata. Stripping is done by redrawing the image on a canvas.",
+    "formats": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "maxFileSize": 12582912,
+    "options": [],
+    "related": [
+      "compress-image",
+      "pdf-metadata",
+      "crop-image"
+    ]
+  },
+  {
+    "toolId": "favicon-generator",
+    "slug": "favicon-generator",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Generate favicons",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Create PNG favicon sizes from a square logo. Scaling runs in the browser canvas.",
+    "formats": [
+      "png",
+      "jpg",
+      "jpeg",
+      "webp"
+    ],
+    "maxFileSize": 5242880,
+    "options": [],
+    "related": [
+      "resize-image",
+      "convert-image",
+      "compress-image"
+    ]
+  },
+  {
+    "toolId": "word-counter",
+    "slug": "word-counter",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Count words",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": true,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Get a live word, sentence and paragraph count as you type. Counting uses locale-aware segmentation where the browser supports it.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "character-counter",
+      "text-statistics",
+      "whitespace-cleaner"
+    ]
+  },
+  {
+    "toolId": "character-counter",
+    "slug": "character-counter",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Count characters",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Measure characters, spaces and lines for bios, ads and SMS. Useful next to a 160-character or 70-character title limit.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "word-counter",
+      "slug-generator",
+      "meta-tag-generator"
+    ]
+  },
+  {
+    "toolId": "case-converter",
+    "slug": "case-converter",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Convert case",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Switch casing without a word processor. Title case uses simple English rules, not a full editorial style guide.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "upper, lower, title, sentence, invert"
+    ],
+    "related": [
+      "slug-generator",
+      "whitespace-cleaner",
+      "word-counter"
+    ]
+  },
+  {
+    "toolId": "remove-duplicate-lines",
+    "slug": "remove-duplicate-lines",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Remove duplicates",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Keep the first occurrence of each line. Optional case-insensitive mode helps clean mixed exports.",
+    "formats": [
+      "txt",
+      "csv"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "sensitive | insensitive"
+    ],
+    "related": [
+      "sort-lines",
+      "whitespace-cleaner",
+      "text-statistics"
+    ]
+  },
+  {
+    "toolId": "sort-lines",
+    "slug": "sort-lines",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Sort lines",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Order lists with locale collation. Choose A–Z, Z–A or numeric sort for version-looking strings.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "asc | desc | numeric"
+    ],
+    "related": [
+      "remove-duplicate-lines",
+      "whitespace-cleaner"
+    ]
+  },
+  {
+    "toolId": "slug-generator",
+    "slug": "slug-generator",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Make slug",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Turn a heading into a lowercase hyphenated slug. Accents are folded; punctuation is stripped.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "case-converter",
+      "whitespace-cleaner",
+      "meta-tag-generator"
+    ]
+  },
+  {
+    "toolId": "whitespace-cleaner",
+    "slug": "whitespace-cleaner",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Clean whitespace",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Remove extra spaces, tabs and blank lines from pasted text. Handy after copying from PDFs or slides.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "keep | drop empty lines"
+    ],
+    "related": [
+      "remove-duplicate-lines",
+      "case-converter",
+      "json-formatter"
+    ]
+  },
+  {
+    "toolId": "text-statistics",
+    "slug": "text-statistics",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Analyze text",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "See words, unique words, average word length and estimated reading time for a passage.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "word-counter",
+      "character-counter",
+      "text-diff"
+    ]
+  },
+  {
+    "toolId": "text-diff",
+    "slug": "text-diff",
+    "family": "text",
+    "inputType": "structured",
+    "actionLabel": "Compare texts",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Highlight lines that were added, removed or changed. The diff runs locally with a simple LCS algorithm.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "whitespace-cleaner",
+      "json-formatter",
+      "sort-lines"
+    ]
+  },
+  {
+    "toolId": "json-formatter",
+    "slug": "json-formatter",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Format JSON",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": true,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Pretty-print or compact JSON with a syntax check. Invalid documents show the parser message, not a stack trace.",
+    "formats": [
+      "json"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "pretty | min"
+    ],
+    "related": [
+      "json-validator",
+      "csv-json",
+      "whitespace-cleaner"
+    ]
+  },
+  {
+    "toolId": "json-validator",
+    "slug": "json-validator",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Validate JSON",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Check whether a string is valid JSON. Errors mention the parser’s message without sending the payload away.",
+    "formats": [
+      "json"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "json-formatter",
+      "csv-json",
+      "jwt-decoder"
+    ]
+  },
+  {
+    "toolId": "csv-json",
+    "slug": "csv-json",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Convert",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Turn CSV tables into arrays of objects, or flatten JSON arrays to CSV. Parsing understands quoted commas.",
+    "formats": [
+      "csv",
+      "json"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "to json | to csv"
+    ],
+    "related": [
+      "json-formatter",
+      "sort-lines",
+      "remove-duplicate-lines"
+    ]
+  },
+  {
+    "toolId": "base64",
+    "slug": "base64",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Encode or decode",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Encode UTF-8 text to Base64 or decode it back. Invalid payloads show an error instead of mojibake.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "encode | decode"
+    ],
+    "related": [
+      "url-codec",
+      "image-to-base64",
+      "hash-generator"
+    ]
+  },
+  {
+    "toolId": "url-codec",
+    "slug": "url-codec",
+    "family": "developer",
+    "inputType": "url",
+    "actionLabel": "Encode or decode",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Apply encodeURIComponent or decodeURIComponent to a string. Handy when a parameter contains spaces or Unicode.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "encode | decode"
+    ],
+    "related": [
+      "base64",
+      "html-entities",
+      "slug-generator"
+    ]
+  },
+  {
+    "toolId": "html-entities",
+    "slug": "html-entities",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Encode or decode",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Escape <, > and & for safe HTML text nodes, or decode entities back to characters.",
+    "formats": [
+      "html",
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "encode | decode"
+    ],
+    "related": [
+      "url-codec",
+      "whitespace-cleaner"
+    ]
+  },
+  {
+    "toolId": "uuid-generator",
+    "slug": "uuid-generator",
+    "family": "generator",
+    "inputType": "none",
+    "actionLabel": "Generate UUIDs",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Create RFC 4122 version 4 UUIDs with crypto.getRandomValues. Nothing is logged.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "count"
+    ],
+    "related": [
+      "password-generator",
+      "random-string",
+      "hash-generator"
+    ]
+  },
+  {
+    "toolId": "hash-generator",
+    "slug": "hash-generator",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Hash text",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Hash text with Web Crypto. Use it for checksums, not for storing passwords — that needs a slow salted KDF.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "SHA-1, SHA-256 (default), SHA-384, SHA-512"
+    ],
+    "related": [
+      "base64",
+      "jwt-decoder",
+      "password-generator"
+    ]
+  },
+  {
+    "toolId": "regex-tester",
+    "slug": "regex-tester",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Test regex",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Run a pattern against sample text and see matches. Invalid patterns fail with the engine’s error message.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "pattern, flags (g default)"
+    ],
+    "related": [
+      "text-diff",
+      "slug-generator",
+      "json-validator"
+    ]
+  },
+  {
+    "toolId": "jwt-decoder",
+    "slug": "jwt-decoder",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Decode JWT",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Inspect non-secret sample JWTs. Signatures are displayed, not verified, and tokens are never sent to Freela.",
+    "formats": [
+      "jwt",
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "base64",
+      "json-formatter",
+      "hash-generator"
+    ]
+  },
+  {
+    "toolId": "meta-tag-generator",
+    "slug": "meta-tag-generator",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Generate tags",
+    "outputType": "code",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Build title, description and basic Open Graph tags from fields you type. It does not fetch or rewrite live pages.",
+    "formats": [
+      "html"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "serp-preview",
+      "robots-txt-generator",
+      "hreflang-generator"
+    ]
+  },
+  {
+    "toolId": "robots-txt-generator",
+    "slug": "robots-txt-generator",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Generate robots.txt",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Emit a robots.txt with allow/disallow paths you list. It does not crawl your site or prove what Google will fetch.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "meta-tag-generator",
+      "hreflang-generator",
+      "serp-preview"
+    ]
+  },
+  {
+    "toolId": "serp-preview",
+    "slug": "serp-preview",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Preview snippet",
+    "outputType": "preview",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "See how a title, URL and description might wrap in a generic results layout. This is not a live SERP from Google.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "meta-tag-generator",
+      "character-counter",
+      "slug-generator"
+    ]
+  },
+  {
+    "toolId": "hreflang-generator",
+    "slug": "hreflang-generator",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Generate hreflang",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Build link rel=alternate hreflang tags plus x-default from a list of locale URLs you provide.",
+    "formats": [
+      "html"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "meta-tag-generator",
+      "robots-txt-generator"
+    ]
+  },
+  {
+    "toolId": "percentage",
+    "slug": "percentage",
+    "family": "calculator",
+    "inputType": "number",
+    "actionLabel": "Calculate",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": true,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Find a percent of a number, or the percent change between two values. Arithmetic is done in JavaScript decimals.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "X% of Y | X is what % of Y | percent change"
+    ],
+    "related": [
+      "discount",
+      "vat-calculator",
+      "profit-margin"
+    ]
+  },
+  {
+    "toolId": "vat-calculator",
+    "slug": "vat-calculator",
+    "family": "calculator",
+    "inputType": "number",
+    "actionLabel": "Calculate VAT",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert between net and gross using a VAT rate you enter. Country rules are not applied automatically.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "net | gross, rate in Value B"
+    ],
+    "related": [
+      "percentage",
+      "discount",
+      "profit-margin"
+    ]
+  },
+  {
+    "toolId": "discount",
+    "slug": "discount",
+    "family": "calculator",
+    "inputType": "number",
+    "actionLabel": "Calculate discount",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Apply a percent off a list price and see the savings. Stacked coupons are not modeled.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "percentage",
+      "profit-margin",
+      "vat-calculator"
+    ]
+  },
+  {
+    "toolId": "profit-margin",
+    "slug": "profit-margin",
+    "family": "calculator",
+    "inputType": "number",
+    "actionLabel": "Calculate margin",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Derive margin and markup from cost and selling price. Labels follow standard retail definitions.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "discount",
+      "percentage",
+      "vat-calculator"
+    ]
+  },
+  {
+    "toolId": "bmi-calculator",
+    "slug": "bmi-calculator",
+    "family": "calculator",
+    "inputType": "number",
+    "actionLabel": "Calculate BMI",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Compute BMI from height and weight as a generic index. It is not a diagnosis and ignores muscle mass.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "percentage",
+      "date-difference"
+    ]
+  },
+  {
+    "toolId": "date-difference",
+    "slug": "date-difference",
+    "family": "calculator",
+    "inputType": "date",
+    "actionLabel": "Calculate difference",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Count whole days and an approximate years/months breakdown between two calendar dates in your local timezone.",
+    "formats": [
+      "date"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "unix-timestamp",
+      "timezone-convert"
+    ]
+  },
+  {
+    "toolId": "temperature",
+    "slug": "temperature",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert temperatures with standard formulas. Kelvin cannot go below zero in the output.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "length",
+      "weight",
+      "data-size"
+    ]
+  },
+  {
+    "toolId": "length",
+    "slug": "length",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert common length units through metres. Results use locale number formatting.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "weight",
+      "temperature",
+      "data-size"
+    ]
+  },
+  {
+    "toolId": "weight",
+    "slug": "weight",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert mass units via kilograms. This is mass, not planetary weight, despite the everyday label.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "length",
+      "bmi-calculator",
+      "data-size"
+    ]
+  },
+  {
+    "toolId": "data-size",
+    "slug": "data-size",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert file sizes using SI (1000) or IEC (1024) units. Labels stay explicit so KiB is not called KB.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "SI 1000 | IEC 1024"
+    ],
+    "related": [
+      "length",
+      "hash-generator",
+      "compress-image"
+    ]
+  },
+  {
+    "toolId": "hex-rgb-hsl",
+    "slug": "hex-rgb-hsl",
+    "family": "color",
+    "inputType": "color",
+    "actionLabel": "Convert color",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Translate color notations used in CSS. Invalid hex strings are rejected instead of silently clamped.",
+    "formats": [
+      "hex",
+      "rgb"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "contrast-checker",
+      "palette-generator"
+    ]
+  },
+  {
+    "toolId": "contrast-checker",
+    "slug": "contrast-checker",
+    "family": "color",
+    "inputType": "color",
+    "actionLabel": "Check contrast",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Compute the contrast ratio of a foreground and background pair against WCAG 2 AA and AAA thresholds.",
+    "formats": [
+      "hex"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "hex-rgb-hsl",
+      "palette-generator"
+    ]
+  },
+  {
+    "toolId": "palette-generator",
+    "slug": "palette-generator",
+    "family": "color",
+    "inputType": "color",
+    "actionLabel": "Generate palette",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Generate lighter and darker HEX steps from a base color by mixing with white and black in sRGB.",
+    "formats": [
+      "hex"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "hex-rgb-hsl",
+      "contrast-checker"
+    ]
+  },
+  {
+    "toolId": "password-generator",
+    "slug": "password-generator",
+    "family": "generator",
+    "inputType": "none",
+    "actionLabel": "Generate passwords",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Create passwords with crypto.getRandomValues. Length and character classes are under your control.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "count, length"
+    ],
+    "related": [
+      "random-string",
+      "uuid-generator",
+      "hash-generator"
+    ]
+  },
+  {
+    "toolId": "qr-generator",
+    "slug": "qr-generator",
+    "family": "qr",
+    "inputType": "text",
+    "actionLabel": "Generate QR code",
+    "outputType": "preview",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Encode text into a QR PNG entirely in the browser. We do not shorten URLs or track scans.",
+    "formats": [
+      "png"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "content text"
+    ],
+    "related": [
+      "url-codec",
+      "slug-generator",
+      "meta-tag-generator"
+    ]
+  },
+  {
+    "toolId": "random-string",
+    "slug": "random-string",
+    "family": "generator",
+    "inputType": "none",
+    "actionLabel": "Generate strings",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Produce random tokens for test data. Not a password manager and not a lottery.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "count, length"
+    ],
+    "related": [
+      "password-generator",
+      "uuid-generator"
+    ]
+  },
+  {
+    "toolId": "unix-timestamp",
+    "slug": "unix-timestamp",
+    "family": "datetime",
+    "inputType": "text",
+    "actionLabel": "Convert timestamp",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Switch between Unix seconds, milliseconds and ISO-8601 strings using your locale’s date formatting.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "timezone-convert",
+      "date-difference"
+    ]
+  },
+  {
+    "toolId": "timezone-convert",
+    "slug": "timezone-convert",
+    "family": "datetime",
+    "inputType": "text",
+    "actionLabel": "Convert timezone",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Show the same instant in several IANA timezones using Intl.DateTimeFormat. DST rules come from the browser.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "unix-timestamp",
+      "date-difference"
+    ]
+  },
+  {
+    "toolId": "compress-pdf",
+    "slug": "compress-pdf",
+    "family": "pdf",
+    "inputType": "file",
+    "actionLabel": "Compress PDF",
+    "outputType": "file",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Rewrite a PDF with object streams to often shrink size. No upload. Heavily encoded scans may not get smaller.",
+    "formats": [
+      "pdf"
+    ],
+    "maxFileSize": 26214400,
+    "options": [],
+    "related": [
+      "merge-pdf",
+      "split-pdf"
+    ]
+  },
+  {
+    "toolId": "xml-formatter",
+    "slug": "xml-formatter",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Format XML",
+    "outputType": "code",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Indent XML-like markup in the browser. This is a structural pretty-printer, not a schema validator.",
+    "formats": [
+      "xml"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "json-formatter",
+      "html-entities"
+    ]
+  },
+  {
+    "toolId": "yaml-json",
+    "slug": "yaml-json",
+    "family": "developer",
+    "inputType": "text",
+    "actionLabel": "Convert YAML",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Turn flat key: value YAML into JSON. Nested documents, anchors and multiline blocks are not supported.",
+    "formats": [
+      "yaml",
+      "json"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "json-formatter",
+      "csv-json"
+    ]
+  },
+  {
+    "toolId": "sitemap-helper",
+    "slug": "sitemap-helper",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Generate sitemap",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Turn a list of absolute URLs into a urlset. It does not crawl your site or prove indexing.",
+    "formats": [
+      "xml"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "robots-txt-generator",
+      "canonical-helper"
+    ]
+  },
+  {
+    "toolId": "canonical-helper",
+    "slug": "canonical-helper",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Generate canonical",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Emit a single rel=canonical tag for an absolute URL. It does not rewrite your site.",
+    "formats": [
+      "html"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "hreflang-generator",
+      "meta-tag-generator"
+    ]
+  },
+  {
+    "toolId": "schema-generator",
+    "slug": "schema-generator",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Generate schema",
+    "outputType": "code",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Build a WebPage/WebApplication JSON-LD object from fields you type. Review and rating types are blocked.",
+    "formats": [
+      "json"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "meta-tag-generator",
+      "og-preview"
+    ]
+  },
+  {
+    "toolId": "og-preview",
+    "slug": "og-preview",
+    "family": "seo",
+    "inputType": "structured",
+    "actionLabel": "Generate Open Graph",
+    "outputType": "code",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Sketch how an og:title and description might appear. We do not fetch the live image from your server.",
+    "formats": [
+      "html"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "meta-tag-generator",
+      "serp-preview"
+    ]
+  },
+  {
+    "toolId": "speed",
+    "slug": "speed",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert everyday speed units through metres per second. Not a vehicle computer.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "length",
+      "temperature"
+    ]
+  },
+  {
+    "toolId": "area",
+    "slug": "area",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert land and floor areas through square metres. Survey-specific acres are not modeled.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "length",
+      "volume"
+    ]
+  },
+  {
+    "toolId": "volume",
+    "slug": "volume",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert common volumes using the US liquid gallon. UK gallons are not included in this set.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "area",
+      "weight"
+    ]
+  },
+  {
+    "toolId": "pressure",
+    "slug": "pressure",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert pressure units through pascals. Not a medical or industrial certification tool.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "energy",
+      "temperature"
+    ]
+  },
+  {
+    "toolId": "energy",
+    "slug": "energy",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert energy units through joules. Food calories here are thermochemical kilocalories.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "pressure",
+      "data-size"
+    ]
+  },
+  {
+    "toolId": "duration",
+    "slug": "duration",
+    "family": "converter",
+    "inputType": "number",
+    "actionLabel": "Convert",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Convert durations through seconds. This is elapsed time, not calendar dates or DST.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "date-difference",
+      "unix-timestamp"
+    ]
+  },
+  {
+    "toolId": "gradient-generator",
+    "slug": "gradient-generator",
+    "family": "color",
+    "inputType": "color",
+    "actionLabel": "Generate CSS",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Emit a linear-gradient CSS snippet from two HEX colors and an angle. Colors stay in sRGB.",
+    "formats": [
+      "css"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "hex-rgb-hsl",
+      "palette-generator"
+    ]
+  },
+  {
+    "toolId": "url-parser",
+    "slug": "url-parser",
+    "family": "developer",
+    "inputType": "url",
+    "actionLabel": "Parse URL",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Parse an absolute URL with the browser URL API. The tool does not request the address.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "url-codec",
+      "query-parser"
+    ]
+  },
+  {
+    "toolId": "query-parser",
+    "slug": "query-parser",
+    "family": "developer",
+    "inputType": "url",
+    "actionLabel": "Parse query",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Turn a query string or full URL into a key/value map using URLSearchParams. Duplicate keys keep the last value.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "url-parser",
+      "url-codec"
+    ]
+  },
+  {
+    "toolId": "invoice-math",
+    "slug": "invoice-math",
+    "family": "calculator",
+    "inputType": "number",
+    "actionLabel": "Calculate invoice",
+    "outputType": "number",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Multiply quantity by unit price and apply a tax rate. Not an invoicing product or tax filing tool.",
+    "formats": [
+      "number"
+    ],
+    "maxFileSize": 0,
+    "options": [
+      "qty, unit price, tax %"
+    ],
+    "related": [
+      "vat-calculator",
+      "profit-margin"
+    ]
+  },
+  {
+    "toolId": "resume-bullets",
+    "slug": "resume-bullets",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Format bullets",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Prefix trimmed lines with a bullet and collapse spaces. This is a writing aid, not career advice.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "whitespace-cleaner",
+      "case-converter"
+    ]
+  },
+  {
+    "toolId": "cover-letter-template",
+    "slug": "cover-letter-template",
+    "family": "text",
+    "inputType": "text",
+    "actionLabel": "Build template",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Assemble a three-paragraph letter from role, company and your notes. Not legal or immigration advice.",
+    "formats": [
+      "txt"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "resume-bullets",
+      "whitespace-cleaner"
+    ]
+  },
+  {
+    "toolId": "ics-event",
+    "slug": "ics-event",
+    "family": "datetime",
+    "inputType": "text",
+    "actionLabel": "Create ICS",
+    "outputType": "code",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Build a VEVENT from a title and start/end. Timezone folding is the browser’s. Not a calendar product.",
+    "formats": [
+      "ics"
+    ],
+    "maxFileSize": 0,
+    "options": [],
+    "related": [
+      "timezone-convert",
+      "date-difference"
+    ]
+  },
+  {
+    "toolId": "color-extract",
+    "slug": "color-extract",
+    "family": "image",
+    "inputType": "file",
+    "actionLabel": "Extract colors",
+    "outputType": "text",
+    "privacyMode": "LOCAL_ONLY",
+    "hasExample": true,
+    "hasErrorState": true,
+    "hasSuccessState": true,
+    "hasMobileQA": true,
+    "hasTest": false,
+    "translationStatus": "en-indexable; others noindex pending native QA",
+    "indexable": true,
+    "purpose": "Average pixels on a downscaled canvas to suggest a few HEX colors. Not a professional color profiler.",
+    "formats": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "maxFileSize": 8388608,
+    "options": [],
+    "related": [
+      "hex-rgb-hsl",
+      "palette-generator"
+    ]
+  }
+]
