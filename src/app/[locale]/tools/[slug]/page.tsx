@@ -138,10 +138,10 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <p className="mt-3 inline-flex rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
         {privacyLabel(tool.processingMode, locale)}
       </p>
-      <ToolBriefing tool={tool} locale={locale} />
-      <div className="mt-4">
+      <div className="mt-5">
         <ToolRunner tool={tool} locale={locale} />
       </div>
+      <ToolBriefing tool={tool} locale={locale} />
       <p className="mt-3 text-xs text-muted-foreground">
         {ui.formats}: {copy.formats}
         {tool.maxFileSize > 0 ? ` · ${ui.sizeLimit} ${formatBytes(locale, tool.maxFileSize)}` : null}

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { track } from "@/components/analytics-provider";
 import { FormatBadges, FormatMark, FormatPath } from "@/components/format-badges";
 import { copyForTool } from "@/lib/copy";
+import { toolById } from "@/lib/registry";
 import {
   cleanWhitespace,
   convertCase,
@@ -61,18 +62,10 @@ import { privacyLabel, privacyNotice } from "@/lib/privacy";
 import { actionLabel } from "@/lib/tool-ux";
 import { rl } from "@/i18n/runner";
 import Link from "next/link";
+import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dropzone";
 
 function pdfBlob(bytes: Uint8Array) {
   return new Blob([bytes as unknown as BlobPart], { type: "application/pdf" });
-}
-
-function downloadBlob(blob: Blob, name: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = name;
-  a.click();
-  URL.revokeObjectURL(url);
 }
 
 function Field({
@@ -143,9 +136,12 @@ export function ToolRunner({
   return (
     <section
       id="tool"
-      className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6"
+      className="rounded-3xl border border-border bg-card p-4 shadow-md sm:p-7"
       aria-labelledby="tool-heading"
     >
+      <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-primary">
+        {busy ? ui.statusProcessing : error ? ui.statusError : ok ? ui.statusDone : ui.filesReady}
+      </p>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <p
           className={`rounded-full px-3 py-1 text-xs font-medium ${
@@ -190,7 +186,7 @@ export function ToolRunner({
       {ok && nextId ? (
         <p className="mt-4 text-sm">
           <Link className="font-medium text-primary" href={`/${locale}/tools/${nextId}`}>
-            {ui.nextTool}: {nextId.replace(/-/g, " ")}
+            {ui.nextTool}: {toolById(nextId) ? copyForTool(toolById(nextId)!, locale).name : nextId}
           </Link>
         </p>
       ) : null}
@@ -614,14 +610,20 @@ function PdfTool({
 }) {
   const ui = t(locale);
   const [files, setFiles] = useState<File[]>([]);
-  const fileRef = useRef<HTMLInputElement>(null);
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
   const [angle, setAngle] = useState(90);
   const [pages, setPages] = useState("1-1");
   const [meta, setMeta] = useState("");
 
+  function savePdf(blob: Blob, name: string) {
+    setResult({ blob, name });
+    triggerDownload(blob, name);
+    track("file_download", { toolId: tool.id, locale });
+  }
+
   async function load(file: File) {
     const { PDFDocument } = await import("pdf-lib");
-    if (file.size > tool.maxFileSize) throw new Error(`Max file size is ${Math.round(tool.maxFileSize / 1024 / 1024)} MB.`);
+    if (file.size > tool.maxFileSize) throw new Error(rl(locale, "tooLarge"));
     if (file.type && file.type !== "application/pdf" && action !== "images-to-pdf") {
       throw new Error(rl(locale, "choosePdf"));
     }
@@ -644,36 +646,22 @@ function PdfTool({
             ? `${ui.fromLabel}: JPG / PNG / WebP → ${ui.toLabel}: PDF`
             : `${ui.fromLabel}: PDF → ${ui.toLabel}: PDF`}
       </p>
-      <label
-        className="grid cursor-pointer gap-1 rounded-xl border border-dashed border-primary/40 bg-accent/40 px-4 py-8 text-center text-sm"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          const list = [...e.dataTransfer.files];
-          setFiles(list);
-          if (list.length) track("file_selected", { toolId: tool.id, locale });
+      <FileDropzone
+        locale={locale}
+        toolId={tool.id}
+        accept={action === "images-to-pdf" ? "image/png,image/jpeg,image/webp" : "application/pdf"}
+        multiple={action === "merge" || action === "images-to-pdf"}
+        files={files}
+        onFiles={(next) => {
+          setFiles(next);
+          setResult(null);
         }}
-      >
-        {ui.dropFiles}
-        <input
-          id={`files-${tool.id}`}
-          ref={fileRef}
-          type="file"
-          className="mx-auto"
-          multiple={action === "merge" || action === "images-to-pdf"}
-          accept={action === "images-to-pdf" ? "image/png,image/jpeg,image/webp" : "application/pdf"}
-          onChange={(e) => {
-            const list = [...(e.target.files ?? [])];
-            setFiles(list);
-            if (list.length) track("file_selected", { toolId: tool.id, locale });
-          }}
-        />
-        {files.length ?         <span className="text-xs text-muted-foreground">{files.map((f) => f.name).join(", ")}</span> : null}
-        <FormatBadges formats={tool.supportedFormats} />
-        <span className="text-xs text-muted-foreground">Max {Math.round(tool.maxFileSize / 1024 / 1024)} MB</span>
-      </label>
+        formats={tool.supportedFormats}
+        maxBytes={tool.maxFileSize}
+        onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+      />
       {action === "reorder" ? (
-        <p className="text-sm text-muted-foreground">This reverses the current page order. There is no drag-and-drop reorder list.</p>
+        <p className="text-sm text-muted-foreground">{rl(locale, "reverseNote")}</p>
       ) : null}
       {action === "rotate" ? (
         <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))}>
@@ -689,10 +677,12 @@ function PdfTool({
       ) : null}
       <Button
         type="button"
+        size="lg"
+        className="w-full sm:w-auto"
         onClick={() =>
           wrap(async () => {
             const { PDFDocument, degrees } = await import("pdf-lib");
-            const native = fileRef.current ?? ([...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined);
+            const native = [...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined;
             const selected = files.length ? files : [...(native?.files ?? [])];
             if (!selected.length) throw new Error(rl(locale, "chooseFile"));
             if (cancelled.current) return;
@@ -722,8 +712,7 @@ function PdfTool({
                 const copied = await out.copyPages(src, src.getPageIndices());
                 copied.forEach((p) => out.addPage(p));
               }
-              downloadBlob(pdfBlob(await out.save()), "merged.pdf");
-              track("file_download", { toolId: tool.id, locale });
+              savePdf(pdfBlob(await out.save()), "merged.pdf");
               return;
             }
             if (action === "images-to-pdf") {
@@ -736,58 +725,57 @@ function PdfTool({
                 const page = out.addPage([img.width, img.height]);
                 page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
               }
-              downloadBlob(pdfBlob(await out.save()), "images.pdf");
-              track("file_download", { toolId: tool.id, locale });
+              savePdf(pdfBlob(await out.save()), "images.pdf");
               return;
             }
             if (action === "compress") {
               const src = await load(selected[0]);
-              downloadBlob(pdfBlob(await src.save({ useObjectStreams: true })), "compressed.pdf");
-              track("file_download", { toolId: tool.id, locale });
+              savePdf(pdfBlob(await src.save({ useObjectStreams: true })), "compressed.pdf");
               return;
             }
             const src = await load(selected[0]);
             const out = await PDFDocument.create();
             if (action === "rotate") {
               src.getPages().forEach((page) => page.setRotation(degrees((page.getRotation().angle + angle) % 360)));
-              downloadBlob(pdfBlob(await src.save()), "rotated.pdf");
-              track("file_download", { toolId: tool.id, locale });
+              savePdf(pdfBlob(await src.save()), "rotated.pdf");
               return;
             }
             if (action === "reorder") {
               const indices = src.getPageIndices().reverse();
               const copied = await out.copyPages(src, indices);
               copied.forEach((p) => out.addPage(p));
-              downloadBlob(pdfBlob(await out.save()), "reordered.pdf");
-              track("file_download", { toolId: tool.id, locale });
+              savePdf(pdfBlob(await out.save()), "reordered.pdf");
               return;
             }
-            const wanted = parsePages(pages, src.getPageCount());
+            const wanted = parsePages(pages, src.getPageCount(), locale);
             if (action === "split" && pages === "all") {
+              let last: { blob: Blob; name: string } | null = null;
               for (const i of src.getPageIndices()) {
                 const one = await PDFDocument.create();
                 const [page] = await one.copyPages(src, [i]);
                 one.addPage(page);
-                downloadBlob(pdfBlob(await one.save()), `page-${i + 1}.pdf`);
+                last = { blob: pdfBlob(await one.save()), name: `page-${i + 1}.pdf` };
+                triggerDownload(last.blob, last.name);
               }
+              if (last) setResult(last);
               track("file_download", { toolId: tool.id, locale });
               return;
             }
             const copied = await out.copyPages(src, wanted);
             copied.forEach((p) => out.addPage(p));
-            downloadBlob(pdfBlob(await out.save()), "extracted.pdf");
-            track("file_download", { toolId: tool.id, locale });
+            savePdf(pdfBlob(await out.save()), "extracted.pdf");
           })
         }
       >
         {cta}
       </Button>
+      <DownloadBar locale={locale} blob={result?.blob ?? null} name={result?.name ?? ""} />
       {meta ? <Textarea readOnly value={meta} rows={10} /> : null}
     </div>
   );
 }
 
-function parsePages(spec: string, count: number) {
+function parsePages(spec: string, count: number, locale: string) {
   if (spec.trim() === "all") return Array.from({ length: count }, (_, i) => i);
   const set = new Set<number>();
   for (const part of spec.split(",")) {
@@ -797,7 +785,7 @@ function parsePages(spec: string, count: number) {
     const end = b || a;
     for (let p = start; p <= end; p++) if (p >= 1 && p <= count) set.add(p - 1);
   }
-  if (!set.size) throw new Error("No valid pages in range.");
+  if (!set.size) throw new Error(rl(locale, "noPages"));
   return [...set];
 }
 
@@ -815,14 +803,21 @@ function ImageTool({
   cta: string;
 }) {
   const ui = t(locale);
-  const [file, setFile] = useState<File | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
   const [quality, setQuality] = useState(0.8);
   const [width, setWidth] = useState(800);
   const [crop, setCrop] = useState({ x: 0, y: 0, w: 200, h: 200 });
   const [text, setText] = useState("");
   const [preview, setPreview] = useState("");
   const [outMime, setOutMime] = useState<"image/jpeg" | "image/png" | "image/webp">("image/webp");
+  const file = files[0] ?? null;
+
+  function saveImage(blob: Blob, name: string) {
+    setResult({ blob, name });
+    triggerDownload(blob, name);
+    track("file_download", { toolId: tool.id, locale });
+  }
 
   function loadImage(src: File) {
     return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -834,7 +829,7 @@ function ImageTool({
       };
       img.onerror = () => {
         URL.revokeObjectURL(url);
-        reject(new Error("Unsupported or corrupted image."));
+        reject(new Error(rl(locale, "badImage")));
       };
       img.src = url;
     });
@@ -843,35 +838,20 @@ function ImageTool({
   return (
     <div className="grid gap-3">
       {action !== "from-base64" ? (
-        <label
-          className="grid cursor-pointer gap-1 rounded-xl border border-dashed border-primary/40 bg-accent/40 px-4 py-8 text-center text-sm"
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => {
-            e.preventDefault();
-            const f = e.dataTransfer.files[0] || null;
-            setFile(f);
-            if (f) track("file_selected", { toolId: tool.id, locale });
+        <FileDropzone
+          locale={locale}
+          toolId={tool.id}
+          accept="image/*"
+          multiple={false}
+          files={files}
+          onFiles={(next) => {
+            setFiles(next);
+            setResult(null);
           }}
-        >
-          {ui.dropFiles}
-          <input
-            id={`files-${tool.id}`}
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            className="mx-auto"
-            onChange={(e) => {
-              const f = e.target.files?.[0] || null;
-              setFile(f);
-              if (f) track("file_selected", { toolId: tool.id, locale });
-            }}
-          />
-          {file ? <span className="text-xs text-muted-foreground">{file.name}</span> : null}
-          <FormatBadges formats={tool.supportedFormats} />
-          <span className="text-xs text-muted-foreground">
-            {ui.sizeLimit} {Math.round(tool.maxFileSize / 1024 / 1024)} MB
-          </span>
-        </label>
+          formats={tool.supportedFormats}
+          maxBytes={tool.maxFileSize}
+          onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        />
       ) : (
         <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} />
       )}
@@ -932,6 +912,8 @@ function ImageTool({
       ) : null}
       <Button
         type="button"
+        size="lg"
+        className="w-full sm:w-auto"
         onClick={() =>
           wrap(async () => {
             if (action === "from-base64") {
@@ -944,11 +926,10 @@ function ImageTool({
               const b64 = url.slice(comma + 1);
               const bin = atob(b64);
               const bytes = Uint8Array.from(bin, (ch) => ch.charCodeAt(0));
-              downloadBlob(new Blob([bytes], { type: "image/png" }), "decoded.png");
-              track("file_download", { toolId: tool.id, locale });
+              saveImage(new Blob([bytes], { type: "image/png" }), "decoded.png");
               return;
             }
-            const native = fileRef.current ?? ([...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined);
+            const native = [...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined;
             const chosen = file || native?.files?.[0] || null;
             if (!chosen) throw new Error(rl(locale, "chooseImage"));
             if (chosen.size > tool.maxFileSize) throw new Error(rl(locale, "tooLarge"));
@@ -977,6 +958,7 @@ function ImageTool({
               ctx.drawImage(img, x, y, w, h, 0, 0, w, h);
             } else if (action === "favicon") {
               const sizes = [16, 32, 180, 512];
+              let last: { blob: Blob; name: string } | null = null;
               for (const size of sizes) {
                 canvas.width = size;
                 canvas.height = size;
@@ -988,12 +970,14 @@ function ImageTool({
                 await new Promise<void>((resolve) => {
                   canvas.toBlob((blob) => {
                     if (blob) {
-                      downloadBlob(blob, `favicon-${size}.png`);
+                      last = { blob, name: `favicon-${size}.png` };
+                      triggerDownload(blob, last.name);
                     }
                     resolve();
                   }, "image/png");
                 });
               }
+              if (last) setResult(last);
               track("file_download", { toolId: tool.id, locale });
               return;
             } else if (action === "extract-colors") {
@@ -1022,10 +1006,9 @@ function ImageTool({
             await new Promise<void>((resolve, reject) => {
               const mime = action === "convert" ? outMime : type;
               const finish = (blob: Blob | null, used: string) => {
-                if (!blob) return reject(new Error("Could not encode image."));
+                if (!blob) return reject(new Error(rl(locale, "encodeFail")));
                 setPreview(URL.createObjectURL(blob));
-                downloadBlob(blob, `result.${used.split("/")[1]}`);
-                track("file_download", { toolId: tool.id, locale });
+                saveImage(blob, `result.${used.split("/")[1]}`);
                 resolve();
               };
               canvas.toBlob(
@@ -1044,9 +1027,10 @@ function ImageTool({
           ? `${ui.convert} → ${outMime === "image/jpeg" ? "JPG" : "PNG"}`
           : cta}
       </Button>
+      <DownloadBar locale={locale} blob={result?.blob ?? null} name={result?.name ?? ""} />
       {preview ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={preview} alt="Result preview" className="max-h-64 w-max rounded-lg border" />
+        <img src={preview} alt="" className="max-h-64 w-max rounded-lg border" />
       ) : null}
       {text && (action === "to-base64" || action === "extract-colors") ? <Textarea readOnly value={text} rows={6} /> : null}
     </div>
@@ -1445,7 +1429,7 @@ function QrTool({ locale, wrap, cta }: { locale: string; wrap: (fn: () => Promis
             variant="outline"
             onClick={async () => {
               const blob = await (await fetch(src)).blob();
-              downloadBlob(blob, "qr.png");
+              triggerDownload(blob, "qr.png");
               track("file_download", { toolId: "qr-generator", locale });
             }}
           >

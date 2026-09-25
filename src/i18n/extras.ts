@@ -31,7 +31,17 @@ export type ExtraMessages = {
   nextTool: string;
   walkthroughTitle: string;
   walkthroughLead: string;
+  clearAll: string;
+  removeFile: string;
+  filesReady: string;
+  downloadResult: string;
+  dropHint: string;
+  statusSelected: string;
+  statusProcessing: string;
+  statusDone: string;
+  statusError: string;
 };
+
 
 export const extras: Record<Locale, ExtraMessages> = {
   en: {
@@ -66,6 +76,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Try next",
     walkthroughTitle: "How Freela works",
     walkthroughLead: "Search, open a tool, run it in your browser, download the result.",
+    clearAll: "Clear all",
+    removeFile: "Remove",
+    filesReady: "Files ready",
+    downloadResult: "Download result",
+    dropHint: "Drop files here",
+    statusSelected: "Selected",
+    statusProcessing: "Processing…",
+    statusDone: "Done",
+    statusError: "Error",
   },
   de: {
     trustTitle: "Dateien bleiben auf Ihrem Gerät",
@@ -99,6 +118,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Als Nächstes",
     walkthroughTitle: "So funktioniert Freela",
     walkthroughLead: "Suchen, öffnen, im Browser ausführen, Ergebnis herunterladen.",
+    clearAll: "Alle entfernen",
+    removeFile: "Entfernen",
+    filesReady: "Dateien bereit",
+    downloadResult: "Ergebnis herunterladen",
+    dropHint: "Dateien hier ablegen",
+    statusSelected: "Ausgewählt",
+    statusProcessing: "Wird verarbeitet…",
+    statusDone: "Fertig",
+    statusError: "Fehler",
   },
   uk: {
     trustTitle: "Файли залишаються на вашому пристрої",
@@ -132,6 +160,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Далі",
     walkthroughTitle: "Як працює Freela",
     walkthroughLead: "Знайдіть інструмент, запустіть його в браузері, завантажте результат.",
+    clearAll: "Очистити все",
+    removeFile: "Прибрати",
+    filesReady: "Файли готові",
+    downloadResult: "Завантажити результат",
+    dropHint: "Перетягніть файли сюди",
+    statusSelected: "Обрано",
+    statusProcessing: "Обробка…",
+    statusDone: "Готово",
+    statusError: "Помилка",
   },
   pl: {
     trustTitle: "Pliki zostają na Twoim urządzeniu",
@@ -165,6 +202,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Następne",
     walkthroughTitle: "Jak działa Freela",
     walkthroughLead: "Wyszukaj, otwórz narzędzie, uruchom w przeglądarce, pobierz wynik.",
+    clearAll: "Wyczyść wszystko",
+    removeFile: "Usuń",
+    filesReady: "Pliki gotowe",
+    downloadResult: "Pobierz wynik",
+    dropHint: "Upuść pliki tutaj",
+    statusSelected: "Wybrano",
+    statusProcessing: "Przetwarzanie…",
+    statusDone: "Gotowe",
+    statusError: "Błąd",
   },
   fr: {
     trustTitle: "Les fichiers restent sur votre appareil",
@@ -198,6 +244,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Suivant",
     walkthroughTitle: "Comment Freela fonctionne",
     walkthroughLead: "Recherchez, ouvrez un outil, exécutez-le dans le navigateur, téléchargez le résultat.",
+    clearAll: "Tout effacer",
+    removeFile: "Retirer",
+    filesReady: "Fichiers prêts",
+    downloadResult: "Télécharger le résultat",
+    dropHint: "Déposez des fichiers ici",
+    statusSelected: "Sélectionné",
+    statusProcessing: "Traitement…",
+    statusDone: "Terminé",
+    statusError: "Erreur",
   },
   es: {
     trustTitle: "Los archivos se quedan en tu dispositivo",
@@ -231,6 +286,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Siguiente",
     walkthroughTitle: "Cómo funciona Freela",
     walkthroughLead: "Busca, abre una herramienta, ejecútala en el navegador y descarga el resultado.",
+    clearAll: "Quitar todo",
+    removeFile: "Quitar",
+    filesReady: "Archivos listos",
+    downloadResult: "Descargar resultado",
+    dropHint: "Suelta archivos aquí",
+    statusSelected: "Seleccionado",
+    statusProcessing: "Procesando…",
+    statusDone: "Listo",
+    statusError: "Error",
   },
   it: {
     trustTitle: "I file restano sul dispositivo",
@@ -264,6 +328,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Prossimo",
     walkthroughTitle: "Come funziona Freela",
     walkthroughLead: "Cerca, apri uno strumento, eseguilo nel browser, scarica il risultato.",
+    clearAll: "Cancella tutto",
+    removeFile: "Rimuovi",
+    filesReady: "File pronti",
+    downloadResult: "Scarica il risultato",
+    dropHint: "Trascina i file qui",
+    statusSelected: "Selezionato",
+    statusProcessing: "Elaborazione…",
+    statusDone: "Fatto",
+    statusError: "Errore",
   },
   pt: {
     trustTitle: "Os ficheiros ficam no seu dispositivo",
@@ -297,6 +370,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Seguinte",
     walkthroughTitle: "Como a Freela funciona",
     walkthroughLead: "Pesquise, abra uma ferramenta, execute no browser e descarregue o resultado.",
+    clearAll: "Limpar tudo",
+    removeFile: "Remover",
+    filesReady: "Ficheiros prontos",
+    downloadResult: "Descarregar resultado",
+    dropHint: "Largue ficheiros aqui",
+    statusSelected: "Selecionado",
+    statusProcessing: "A processar…",
+    statusDone: "Concluído",
+    statusError: "Erro",
   },
   nl: {
     trustTitle: "Bestanden blijven op je apparaat",
@@ -330,6 +412,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Volgende",
     walkthroughTitle: "Hoe Freela werkt",
     walkthroughLead: "Zoek, open een tool, voer die in de browser uit, download het resultaat.",
+    clearAll: "Alles wissen",
+    removeFile: "Verwijderen",
+    filesReady: "Bestanden klaar",
+    downloadResult: "Resultaat downloaden",
+    dropHint: "Sleep bestanden hierheen",
+    statusSelected: "Geselecteerd",
+    statusProcessing: "Bezig…",
+    statusDone: "Klaar",
+    statusError: "Fout",
   },
   tr: {
     trustTitle: "Dosyalar cihazınızda kalır",
@@ -363,6 +454,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "Sonraki",
     walkthroughTitle: "Freela nasıl çalışır",
     walkthroughLead: "Arayın, bir araç açın, tarayıcıda çalıştırın, sonucu indirin.",
+    clearAll: "Tümünü temizle",
+    removeFile: "Kaldır",
+    filesReady: "Dosyalar hazır",
+    downloadResult: "Sonucu indir",
+    dropHint: "Dosyaları buraya bırakın",
+    statusSelected: "Seçildi",
+    statusProcessing: "İşleniyor…",
+    statusDone: "Tamam",
+    statusError: "Hata",
   },
   ar: {
     trustTitle: "الملفات تبقى على جهازك",
@@ -396,6 +496,15 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "التالي",
     walkthroughTitle: "كيف تعمل Freela",
     walkthroughLead: "ابحث، افتح أداة، شغّلها في المتصفح، نزّل النتيجة.",
+    clearAll: "مسح الكل",
+    removeFile: "إزالة",
+    filesReady: "الملفات جاهزة",
+    downloadResult: "تنزيل النتيجة",
+    dropHint: "أسقط الملفات هنا",
+    statusSelected: "محدد",
+    statusProcessing: "جارٍ العمل…",
+    statusDone: "تم",
+    statusError: "خطأ",
   },
   he: {
     trustTitle: "הקבצים נשארים במכשיר",
@@ -429,5 +538,14 @@ export const extras: Record<Locale, ExtraMessages> = {
     nextTool: "הבא",
     walkthroughTitle: "איך Freela עובדת",
     walkthroughLead: "חפשו, פתחו כלי, הריצו בדפדפן, הורידו את התוצאה.",
+    clearAll: "נקה הכול",
+    removeFile: "הסר",
+    filesReady: "קבצים מוכנים",
+    downloadResult: "הורדת התוצאה",
+    dropHint: "גררו קבצים לכאן",
+    statusSelected: "נבחרו",
+    statusProcessing: "עובד…",
+    statusDone: "בוצע",
+    statusError: "שגיאה",
   },
 };

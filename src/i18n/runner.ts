@@ -57,6 +57,7 @@ const labels = {
     payloadLarge: "Payload is too large.",
     noCanvas: "Canvas is not available.",
     encodeFail: "Could not encode image.",
+    reverseNote: "This reverses the current page order.",
   },
   de: {
     words: "Wörter",
@@ -113,6 +114,7 @@ const labels = {
     payloadLarge: "Nutzlast ist zu groß.",
     noCanvas: "Canvas ist nicht verfügbar.",
     encodeFail: "Bild konnte nicht kodiert werden.",
+    reverseNote: "Die Seitenreihenfolge wird umgekehrt.",
   },
   uk: {
     words: "Слова",
@@ -169,6 +171,7 @@ const labels = {
     payloadLarge: "Дані завеликі.",
     noCanvas: "Canvas недоступний.",
     encodeFail: "Не вдалося закодувати зображення.",
+    reverseNote: "Порядок сторінок буде змінено на зворотний.",
   },
   pl: {
     words: "Słowa",
@@ -225,6 +228,7 @@ const labels = {
     payloadLarge: "Dane są za duże.",
     noCanvas: "Canvas jest niedostępny.",
     encodeFail: "Nie udało się zakodować obrazu.",
+    reverseNote: "To odwraca kolejność stron.",
   },
   fr: {
     words: "Mots",
@@ -281,6 +285,7 @@ const labels = {
     payloadLarge: "Charge trop volumineuse.",
     noCanvas: "Canvas indisponible.",
     encodeFail: "Impossible d’encoder l’image.",
+    reverseNote: "Cela inverse l’ordre des pages.",
   },
   es: {
     words: "Palabras",
@@ -337,6 +342,7 @@ const labels = {
     payloadLarge: "La carga es demasiado grande.",
     noCanvas: "Canvas no está disponible.",
     encodeFail: "No se pudo codificar la imagen.",
+    reverseNote: "Esto invierte el orden de las páginas.",
   },
   it: {
     words: "Parole",
@@ -393,6 +399,7 @@ const labels = {
     payloadLarge: "Carico troppo grande.",
     noCanvas: "Canvas non disponibile.",
     encodeFail: "Impossibile codificare l’immagine.",
+    reverseNote: "Inverte l’ordine delle pagine.",
   },
   pt: {
     words: "Palavras",
@@ -449,6 +456,7 @@ const labels = {
     payloadLarge: "Carga demasiado grande.",
     noCanvas: "Canvas indisponível.",
     encodeFail: "Não foi possível codificar a imagem.",
+    reverseNote: "Isto inverte a ordem das páginas.",
   },
   nl: {
     words: "Woorden",
@@ -505,6 +513,7 @@ const labels = {
     payloadLarge: "Payload is te groot.",
     noCanvas: "Canvas is niet beschikbaar.",
     encodeFail: "Afbeelding kon niet worden gecodeerd.",
+    reverseNote: "Dit keert de paginavolgorde om.",
   },
   tr: {
     words: "Kelimeler",
@@ -561,6 +570,7 @@ const labels = {
     payloadLarge: "Yük çok büyük.",
     noCanvas: "Canvas kullanılamıyor.",
     encodeFail: "Görsel kodlanamadı.",
+    reverseNote: "Sayfa sırasını tersine çevirir.",
   },
   ar: {
     words: "كلمات",
@@ -617,6 +627,7 @@ const labels = {
     payloadLarge: "البيانات كبيرة جدًا.",
     noCanvas: "Canvas غير متاح.",
     encodeFail: "تعذّر ترميز الصورة.",
+    reverseNote: "هذا يعكس ترتيب الصفحات.",
   },
   he: {
     words: "מילים",
@@ -673,6 +684,7 @@ const labels = {
     payloadLarge: "המטען גדול מדי.",
     noCanvas: "Canvas אינו זמין.",
     encodeFail: "לא ניתן לקודד את התמונה.",
+    reverseNote: "פעולה זו הופכת את סדר העמודים.",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

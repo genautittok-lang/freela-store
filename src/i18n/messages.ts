@@ -149,7 +149,7 @@ export const messages: Record<Locale, Messages> = {
     openMenu: "Menü öffnen",
   },
   uk: {
-    brand: "Freela",
+    brand: "Фрелла",
     tagline: "Безкоштовні онлайн-інструменти у вашому браузері",
     searchPlaceholder: "Пошук інструментів…",
     searchButton: "Шукати",
