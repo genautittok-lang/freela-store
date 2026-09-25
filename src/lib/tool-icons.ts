@@ -1,36 +1,29 @@
+import type { ComponentType } from "react";
 import type { CategoryId } from "@/data/categories";
 import {
-  FileText,
-  Image as ImageIcon,
-  Type,
-  Code2,
-  Search,
-  Calculator,
-  ArrowRightLeft,
-  Palette,
-  Sparkles,
-  Calendar,
-  type LucideIcon,
-} from "lucide-react";
+  BrandCategoryIcon,
+  PdfMark,
+  ImageMark,
+  CodeMark,
+  CalcMark,
+  SparkMark,
+  TextMark,
+  SeoMark,
+  DocMark,
+} from "@/components/brand-icons";
 
-export const categoryIcons: Record<CategoryId, LucideIcon> = {
-  "pdf-documents": FileText,
-  images: ImageIcon,
-  text: Type,
-  developer: Code2,
-  seo: Search,
-  calculators: Calculator,
-  converters: ArrowRightLeft,
-  color: Palette,
-  generators: Sparkles,
-  "date-time": Calendar,
-};
+type IconProps = { className?: string; "aria-hidden"?: boolean };
 
-export function iconForTool(id: string, category: CategoryId): LucideIcon {
-  if (id.includes("pdf")) return FileText;
-  if (id.includes("image") || id.includes("favicon") || id.includes("exif") || id.includes("color-extract")) return ImageIcon;
-  if (id.includes("json") || id.includes("xml") || id.includes("yaml") || id.includes("regex") || id.includes("jwt") || id.includes("hash") || id.includes("base64") || id.includes("uuid")) return Code2;
-  if (id.includes("qr") || id.includes("password") || id.includes("random")) return Sparkles;
-  if (id.includes("word") || id.includes("text") || id.includes("slug") || id.includes("resume") || id.includes("cover")) return Type;
-  return categoryIcons[category];
+export function iconForTool(id: string, category: CategoryId): ComponentType<IconProps> {
+  if (id.includes("pdf")) return PdfMark;
+  if (id.includes("image") || id.includes("favicon") || id.includes("exif") || id.includes("color-extract")) return ImageMark;
+  if (id.includes("json") || id.includes("xml") || id.includes("yaml") || id.includes("regex") || id.includes("jwt") || id.includes("hash") || id.includes("base64") || id.includes("uuid")) return CodeMark;
+  if (id.includes("qr") || id.includes("password") || id.includes("random")) return SparkMark;
+  if (id.includes("word") || id.includes("text") || id.includes("slug") || id.includes("resume") || id.includes("cover")) return TextMark;
+  if (id.includes("seo") || id.includes("meta") || id.includes("sitemap") || id.includes("robots")) return SeoMark;
+  if (category === "calculators") return CalcMark;
+  if (category === "pdf-documents") return DocMark;
+  return function CategoryMark(props: IconProps) {
+    return BrandCategoryIcon({ id: category, className: props.className });
+  };
 }

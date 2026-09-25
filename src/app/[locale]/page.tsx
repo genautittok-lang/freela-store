@@ -135,9 +135,9 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           {categories.map((cat) => (
             <li key={cat.id}>
               <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="freela-card block p-4">
-                <span className="freela-well">
-                  <CategoryIcon id={cat.id} />
-                </span>
+                  <span className="freela-well h-12 w-12">
+                    <CategoryIcon id={cat.id} className="h-8 w-8" />
+                  </span>
                 <p className="mt-3 text-sm font-semibold">{copyForCategory(cat, locale).name}</p>
               </Link>
             </li>
@@ -153,12 +153,23 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       <div className="mt-12">
         <AdSlot position="home-mid" locale={locale} />
       </div>
-      <section className="mt-12 max-w-2xl">
+      <section className="mt-12">
         <h2 className="text-2xl font-semibold tracking-tight">{ui.walkthroughTitle}</h2>
         <p className="mt-2 text-sm text-muted-foreground">{ui.walkthroughLead}</p>
-        <video className="mt-4 w-full rounded-[1.5rem] border shadow-sm" controls muted playsInline preload="metadata" poster="/brand/hero.png">
-          <source src="/brand/teaser.mp4" type="video/mp4" />
-        </video>
+        <div className="mt-5 grid gap-4 lg:grid-cols-2">
+          <figure>
+            <video className="w-full rounded-[1.5rem] border border-border shadow-sm" controls muted playsInline preload="metadata" poster="/brand/hero.png">
+              <source src="/brand/teaser.mp4" type="video/mp4" />
+            </video>
+            <figcaption className="mt-2 text-xs font-medium text-muted-foreground">{ui.videoPhone}</figcaption>
+          </figure>
+          <figure className="hidden lg:block">
+            <video className="w-full rounded-[1.5rem] border border-border shadow-sm" controls muted playsInline preload="metadata" poster="/brand/hero.png">
+              <source src="/brand/teaser-desktop.mp4" type="video/mp4" />
+            </video>
+            <figcaption className="mt-2 text-xs font-medium text-muted-foreground">{ui.videoDesktop}</figcaption>
+          </figure>
+        </div>
       </section>
       <ToolGrid locale={locale} title={ui.newest} tools={newest} cta={ui.openTool} />
       <section className="mt-12">
@@ -169,8 +180,8 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
             return (
               <div key={cat.id} className="freela-card p-5">
                 <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="flex items-center gap-3 font-semibold">
-                  <span className="freela-well">
-                    <CategoryIcon id={cat.id} />
+                  <span className="freela-well h-12 w-12">
+                    <CategoryIcon id={cat.id} className="h-8 w-8" />
                   </span>
                   {copyForCategory(cat, locale).name}
                 </Link>
@@ -216,8 +227,8 @@ function ToolGrid({
           return (
             <li key={tool.id}>
               <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card block h-full p-5">
-                <span className="freela-well">
-                  <Icon className="h-5 w-5" aria-hidden />
+                <span className="freela-well h-12 w-12">
+                  <Icon className="h-8 w-8" aria-hidden />
                 </span>
                 <p className="mt-3 font-semibold">{copy.name}</p>
                 <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{copy.description}</p>

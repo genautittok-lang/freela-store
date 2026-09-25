@@ -1,210 +1,881 @@
 import type { Locale } from "@/data/locales";
 import { isLocale } from "@/data/locales";
 import type { LegalSlug } from "@/data/legal-slugs";
-import { dataInventory, vendors } from "@/data/privacy-ops";
+import { CONTACT_EMAIL } from "@/lib/site";
 
-const EN: Record<LegalSlug, string[]> = {
-  about: [
-    "Freela is a catalogue of free browser tools at freela.store. Files are processed on your device whenever the format allows it.",
-    "We do not promise search rankings. We publish a page only when the tool works and the copy has been reviewed.",
-    "Calculators and templates are convenience utilities. They are not tax, medical, legal or career advice.",
-  ],
-  privacy: [
-    "Freela collects the minimum data needed to run the site. Published tools in this release use LOCAL_ONLY processing: file bytes and pasted document contents stay in your browser and are not uploaded to Freela.",
-    "If you consent, first-party analytics records a random session id, event name, tool id, locale, success/error, path and optional referrer host. Analytics never stores file names as content, document bytes, images, audio, extracted private text or secrets.",
-    "Admin authentication uses a bcrypt password hash and an httpOnly session cookie. Login attempts are rate-limited. HTTPS is required in production.",
-    "You can refuse analytics cookies and still use every tool. This page describes the software as built; it is not a claim of legal certification. Have a lawyer review the live data flows before a public launch.",
-  ],
-  terms: [
-    "Tools are provided as-is for personal and professional convenience. These terms do not remove legal obligations that apply by law.",
-    "Do not use Freela to break authentication, hide malware, generate official-looking identity documents, or create scaled spam. You are responsible for the files you process and for complying with copyright and local law.",
-    "Results can be wrong. Double-check anything that matters. Freela may disable a broken tool and mark it noindex rather than leave a non-functional page indexed.",
-  ],
-  contact: [
-    "Product questions: hello@freela.store.",
-    "Security reports: security@freela.store. Please describe the issue without attaching live secrets or other people’s private files.",
-    "We do not accept unsolicited bulk tool pages that are not in the registry.",
-  ],
-  "affiliate-disclosure": [
-    "Some links may be affiliate or sponsored placements. They are labeled. Clicking them is never required to run a tool, download a result, or copy text.",
-    "Display ads, when enabled, sit outside the tool card and must never look like a Run or Download control.",
-  ],
-  "acceptable-use": [
-    "Allowed: ordinary conversion, compression, inspection, counting and generation of content you are entitled to process.",
-    "Not allowed: authentication bypass, password cracking, defeating encryption or DRM, forging passports, IDs, certificates, bank statements or other official documents, malware, credential theft, phishing, or marketing a converter as a way to conceal illegal activity.",
-    "We may refuse service, disable a tool, or report abuse when we have a legal duty to do so.",
-  ],
-  abuse: [
-    "Report illegal content, security issues or legal notices to abuse@freela.store and legal@freela.store.",
-    "Include URLs, a description, and your contact details. Do not send copies of other people’s identity documents unless a competent authority requires it through a lawful process.",
-    "This channel is monitored for notices, not for general product support.",
-  ],
-  "data-deletion": [
-    "LOCAL_ONLY tools do not store your files on Freela servers. Close the tab to drop in-memory copies; we cannot delete what we never received.",
-    "To delete analytics events tied to a session cookie, email privacy@freela.store with the session id from local storage key freela_sid, or clear site data in the browser.",
-    "Admin accounts are deleted by removing the admin_users row. Session cookies expire after twelve hours or on logout.",
-  ],
-  vendors: [
-    vendors.length
-      ? "The following processors receive file bytes for named tools."
-      : "This release has no third-party file processors. THIRD_PARTY_PROCESSING tools are not enabled in production.",
-    "Hosting, DNS and future advertising vendors will be listed here before they receive personal data. No production traffic is sent to unnamed APIs.",
-    ...vendors.map(
-      (v) =>
-        `${v.name} (${v.category}): ${v.whatIsSent}. Why: ${v.why}. Retention: ${v.retention}. Region: ${v.region}. Enabled: ${v.enabled ? "yes" : "no"}.`,
-    ),
-  ],
-  "file-processing": [
-    "Every file-capable tool declares exactly one processingMode: LOCAL_ONLY, SERVER_PROCESSING or THIRD_PARTY_PROCESSING. The badge on the tool is generated from that field.",
-    "This catalogue currently ships LOCAL_ONLY tools only. There is no server upload endpoint for user documents, no public object URLs, and no file history.",
-    "If a future tool needs server processing, it must use temporary storage, size and time limits, TLS, deletion after processing, and cleanup jobs before it is published.",
-  ],
-  copyright: [
-    "If you are a rights holder and believe material on Freela infringes your copyright, write to copyright@freela.store with the URL, a description of the work, and a statement made in good faith.",
-    "Freela hosts tool interfaces and generated results in the browser. We do not keep a library of user uploads in this release. Notices that require us to take down a page in the registry will be reviewed.",
-    "This notice-and-takedown process will be aligned with the jurisdictions actually used at launch, after legal review.",
-  ],
-  "data-inventory": [
-    "What we collect today, why, where it lives, how long we keep it, who processes it, and how it is deleted:",
-    ...dataInventory.map(
-      (row) =>
-        `${row.data} — Why: ${row.why}. Where: ${row.where}. Retention: ${row.retention}. Processor: ${row.processor}. Deletion: ${row.deletion}.`,
-    ),
-  ],
-};
-
-const ABOUT: Record<Locale, string[]> = {
-  en: EN.about,
-  de: [
-    "Freela ist ein Katalog kostenloser Browser-Werkzeuge unter freela.store. Dateien werden auf Ihrem Gerät verarbeitet, sobald das Format das zulässt.",
-    "Wir versprechen keine Suchrankings. Eine Seite wird nur veröffentlicht, wenn das Werkzeug funktioniert und der Text geprüft ist.",
-    "Rechner und Vorlagen sind Hilfsmittel. Sie sind keine Steuer-, Medizin-, Rechts- oder Karriereberatung.",
-  ],
-  uk: [
-    "Freela — каталог безкоштовних інструментів у браузері на freela.store. Файли обробляються на вашому пристрої, коли формат це дозволяє.",
-    "Ми не обіцяємо позицій у пошуку. Сторінка публікується лише коли інструмент працює і текст перевірено.",
-    "Калькулятори й шаблони — зручні утиліти. Це не податкова, медична, юридична чи кар’єрна консультація.",
-  ],
-  pl: [
-    "Freela to katalog darmowych narzędzi przeglądarkowych na freela.store. Pliki są przetwarzane na urządzeniu, gdy format na to pozwala.",
-    "Nie obiecujemy pozycji w wyszukiwarce. Stronę publikujemy dopiero gdy narzędzie działa, a treść jest sprawdzona.",
-    "Kalkulatory i szablony to udogodnienia. To nie jest porada podatkowa, medyczna, prawna ani zawodowa.",
-  ],
-  fr: [
-    "Freela est un catalogue d’outils gratuits dans le navigateur sur freela.store. Les fichiers sont traités sur votre appareil dès que le format le permet.",
-    "Nous ne promettons aucun classement de recherche. Une page n’est publiée que si l’outil fonctionne et que le texte a été relu.",
-    "Calculateurs et modèles sont des commodités. Ce n’est pas un conseil fiscal, médical, juridique ou de carrière.",
-  ],
-  es: [
-    "Freela es un catálogo de herramientas de navegador gratuitas en freela.store. Los archivos se procesan en tu dispositivo cuando el formato lo permite.",
-    "No prometemos posiciones en buscadores. Publicamos una página solo cuando la herramienta funciona y el texto está revisado.",
-    "Las calculadoras y plantillas son utilidades. No son asesoramiento fiscal, médico, legal ni profesional.",
-  ],
-  it: [
-    "Freela è un catalogo di strumenti gratuiti nel browser su freela.store. I file sono elaborati sul dispositivo quando il formato lo consente.",
-    "Non promettiamo posizionamenti di ricerca. Una pagina è pubblicata solo se lo strumento funziona e il testo è stato revisionato.",
-    "Calcolatrici e modelli sono comodità. Non sono consulenza fiscale, medica, legale o di carriera.",
-  ],
-  pt: [
-    "A Freela é um catálogo de ferramentas grátis no navegador em freela.store. Os ficheiros são processados no dispositivo quando o formato o permite.",
-    "Não prometemos rankings de pesquisa. Uma página só é publicada quando a ferramenta funciona e o texto foi revisto.",
-    "Calculadoras e modelos são conveniências. Não são aconselhamento fiscal, médico, jurídico ou de carreira.",
-  ],
-  nl: [
-    "Freela is een catalogus van gratis browsertools op freela.store. Bestanden worden op uw apparaat verwerkt wanneer het formaat dat toelaat.",
-    "We beloven geen zoekposities. Een pagina wordt alleen gepubliceerd als de tool werkt en de tekst is nagekeken.",
-    "Rekenmachines en sjablonen zijn hulpmiddelen. Het is geen belasting-, medisch, juridisch of loopbaanadvies.",
-  ],
-  tr: [
-    "Freela, freela.store’da tarayıcıda çalışan ücretsiz araçların kataloğudur. Biçim izin verdiğinde dosyalar cihazınızda işlenir.",
-    "Arama sıralaması vaat etmiyoruz. Bir sayfa yalnızca araç çalışıyor ve metin incelenmişse yayımlanır.",
-    "Hesaplayıcılar ve şablonlar kolaylıktır. Vergi, tıbbi, hukuki veya kariyer tavsiyesi değildir.",
-  ],
-  ar: [
-    "Freela كتالوج لأدوات مجانية في المتصفح على freela.store. تُعالَج الملفات على جهازك كلما سمح التنسيق بذلك.",
-    "لا نعد بترتيب في محركات البحث. ننشر الصفحة فقط عندما تعمل الأداة ويُراجع النص.",
-    "الحاسبات والقوالب أدوات مساعدة. ليست استشارة ضريبية أو طبية أو قانونية أو مهنية.",
-  ],
-  he: [
-    "Freela הוא קטלוג כלים חינמיים בדפדפן ב-freela.store. קבצים מעובדים במכשיר כשהפורמט מאפשר.",
-    "אין הבטחת דירוג בחיפוש. דף מתפרסם רק כשהכלי עובד והטקסט נבדק.",
-    "מחשבונים ותבניות הם כלי עזר. זה לא ייעוץ מס, רפואי, משפטי או קריירה.",
-  ],
-};
-
-const PRIVACY: Record<Locale, string[]> = {
-  en: EN.privacy,
-  de: [
-    "Freela erhebt nur die Daten, die der Betrieb der Seite braucht. Veröffentlichte Werkzeuge nutzen LOCAL_ONLY: Dateiinhalte und eingefügter Text bleiben im Browser und werden nicht zu Freela hochgeladen.",
-    "Mit Einwilligung speichert First-Party-Analytik eine Zufalls-Session-ID, Ereignisname, Tool-ID, Locale, Erfolg/Fehler, Pfad und optional den Referrer-Host. Dateinamen als Inhalt, Bytes, Bilder, Audio oder Geheimnisse werden nicht gespeichert.",
-    "Admin-Login nutzt einen bcrypt-Hash und ein httpOnly-Session-Cookie. Anmeldeversuche sind rate-limited. In Produktion ist HTTPS Pflicht.",
-    "Sie können Analyse-Cookies ablehnen und alle Werkzeuge weiter nutzen. Diese Seite beschreibt die Software, sie ist keine Rechtszertifizierung.",
-  ],
-  uk: [
-    "Freela збирає мінімум даних для роботи сайту. Опубліковані інструменти — LOCAL_ONLY: байти файлів і вставлений текст лишаються в браузері й не надсилаються на Freela.",
-    "За згодою аналітика першої сторони записує випадковий session id, подію, id інструмента, локаль, успіх/помилку, шлях і за потреби хост referrer. Байти файлів і секрети не зберігаються.",
-    "Адмін-вхід використовує bcrypt і httpOnly-cookie. Спроби входу обмежені. У продакшені потрібен HTTPS.",
-    "Можна відмовитись від аналітичних cookies і користуватись усіма інструментами. Це опис ПЗ, не юридичний сертифікат.",
-  ],
-  pl: [
-    "Freela zbiera minimum danych do działania serwisu. Opublikowane narzędzia używają LOCAL_ONLY: bajty plików i wklejony tekst zostają w przeglądarce i nie są wysyłane do Freela.",
-    "Po zgodzie analityka first-party zapisuje losowe session id, nazwę zdarzenia, id narzędzia, locale, sukces/błąd, ścieżkę i opcjonalnie host referrera. Nie przechowuje bajtów plików ani sekretów.",
-    "Logowanie admina używa bcrypt i ciasteczka httpOnly. Próby logowania są limitowane. W produkcji wymagane jest HTTPS.",
-    "Możesz odrzucić ciasteczka analityczne i nadal używać wszystkich narzędzi. To opis oprogramowania, nie certyfikat prawny.",
-  ],
-  fr: [
-    "Freela collecte le minimum nécessaire au fonctionnement du site. Les outils publiés sont LOCAL_ONLY : les octets des fichiers et le texte collé restent dans le navigateur et ne sont pas envoyés à Freela.",
-    "Avec consentement, l’analytique first-party enregistre un identifiant de session aléatoire, l’événement, l’id d’outil, la locale, succès/erreur, le chemin et éventuellement l’hôte referrer. Jamais les octets de fichiers ni les secrets.",
-    "L’admin utilise un hash bcrypt et un cookie de session httpOnly. Les tentatives de connexion sont limitées. HTTPS est requis en production.",
-    "Vous pouvez refuser les cookies d’analyse et utiliser tous les outils. Cette page décrit le logiciel ; ce n’est pas une certification juridique.",
-  ],
-  es: [
-    "Freela recoge el mínimo de datos para operar el sitio. Las herramientas publicadas usan LOCAL_ONLY: los bytes de archivo y el texto pegado se quedan en el navegador y no se suben a Freela.",
-    "Con consentimiento, la analítica propia registra un id de sesión aleatorio, evento, id de herramienta, locale, éxito/error, ruta y opcionalmente el host de referencia. Nunca bytes de archivo ni secretos.",
-    "El admin usa hash bcrypt y cookie de sesión httpOnly. Los intentos de acceso están limitados. HTTPS es obligatorio en producción.",
-    "Puedes rechazar las cookies de analítica y seguir usando todas las herramientas. Esta página describe el software; no es una certificación legal.",
-  ],
-  it: [
-    "Freela raccoglie i dati minimi per far funzionare il sito. Gli strumenti pubblicati usano LOCAL_ONLY: i byte dei file e il testo incollato restano nel browser e non vengono inviati a Freela.",
-    "Con consenso, l’analytics di prima parte registra un session id casuale, evento, id strumento, locale, successo/errore, percorso e opzionalmente l’host referrer. Mai byte di file o segreti.",
-    "L’admin usa hash bcrypt e cookie di sessione httpOnly. I tentativi di login sono limitati. HTTPS è richiesto in produzione.",
-    "Puoi rifiutare i cookie analytics e usare tutti gli strumenti. Questa pagina descrive il software; non è una certificazione legale.",
-  ],
-  pt: [
-    "A Freela recolhe o mínimo de dados para o site funcionar. As ferramentas publicadas usam LOCAL_ONLY: os bytes dos ficheiros e o texto colado ficam no navegador e não são enviados à Freela.",
-    "Com consentimento, a analítica própria regista um session id aleatório, evento, id da ferramenta, locale, sucesso/erro, caminho e opcionalmente o host de referência. Nunca bytes de ficheiros nem segredos.",
-    "O admin usa hash bcrypt e cookie de sessão httpOnly. As tentativas de login são limitadas. HTTPS é obrigatório em produção.",
-    "Pode recusar cookies de analítica e continuar a usar todas as ferramentas. Esta página descreve o software; não é certificação jurídica.",
-  ],
-  nl: [
-    "Freela verzamelt alleen wat nodig is om de site te laten werken. Gepubliceerde tools zijn LOCAL_ONLY: bestandsbytes en geplakte tekst blijven in de browser en gaan niet naar Freela.",
-    "Met toestemming legt first-party analytics een willekeurige session-id, event, tool-id, locale, succes/fout, pad en optioneel de referrer-host vast. Geen bestandsbytes of geheimen.",
-    "Admin-login gebruikt bcrypt en een httpOnly-sessiecookie. Inlogpogingen zijn beperkt. HTTPS is verplicht in productie.",
-    "U kunt analytics-cookies weigeren en alle tools blijven gebruiken. Deze pagina beschrijft de software; het is geen juridische certificering.",
-  ],
-  tr: [
-    "Freela siteyi çalıştırmak için gereken en az veriyi toplar. Yayımlanan araçlar LOCAL_ONLY’dir: dosya baytları ve yapıştırılan metin tarayıcıda kalır, Freela’ya yüklenmez.",
-    "Onaylarsanız birinci taraf analitik rastgele oturum kimliği, olay, araç kimliği, dil, başarı/hata, yol ve isteğe bağlı referrer host kaydeder. Dosya baytları veya sırlar saklanmaz.",
-    "Yönetici girişi bcrypt ve httpOnly oturum çerezi kullanır. Denemeler hız sınırlıdır. Üretimde HTTPS zorunludur.",
-    "Analitik çerezlerini reddedip tüm araçları kullanabilirsiniz. Bu sayfa yazılımı anlatır; hukuki sertifika değildir.",
-  ],
-  ar: [
-    "تجمع Freela الحد الأدنى من البيانات لتشغيل الموقع. الأدوات المنشورة LOCAL_ONLY: بايتات الملفات والنص الملصق تبقى في المتصفح ولا تُرفع إلى Freela.",
-    "عند الموافقة تسجّل التحليلات معرّف جلسة عشوائيًا واسم الحدث ومعرّف الأداة والمحلية والنجاح/الخطأ والمسار واختياريًا مضيف الإحالة. لا تُخزَّن بايتات الملفات أو الأسرار.",
-    "دخول المشرف يستخدم bcrypt وملف ارتباط جلسة httpOnly. محاولات الدخول محدودة المعدل. HTTPS مطلوب في الإنتاج.",
-    "يمكنك رفض ملفات التحليلات واستخدام كل الأدوات. هذه الصفحة تصف البرنامج وليست شهادة قانونية.",
-  ],
-  he: [
-    "Freela אוספת את המינימום הנדרש להפעלת האתר. הכלים הרשמיים הם LOCAL_ONLY: בתים של קבצים וטקסט מודבק נשארים בדפדפן ולא מועלים ל-Freela.",
-    "בהסכמה, אנליטיקה first-party רושמת מזהה סשן אקראי, אירוע, מזהה כלי, שפה, הצלחה/שגיאה, נתיב ולעתים host מפנה. אין בתים של קבצים או סודות.",
-    "כניסת מנהל משתמשת ב-bcrypt ובעוגיית סשן httpOnly. ניסיונות כניסה מוגבלים. HTTPS נדרש בייצור.",
-    "אפשר לסרב לעוגיות אנליטיקה ולהמשיך להשתמש בכל הכלים. הדף מתאר את התוכנה; זו לא הסמכה משפטית.",
-  ],
+const BODIES: Record<LegalSlug, Record<Locale, string[]>> = {
+  "about": {
+    en: [
+      "Freela is a catalogue of free browser tools at freela.store. Files are processed on your device whenever the format allows it.",
+      "We do not promise search rankings. We publish a page only when the tool works and the copy has been reviewed.",
+      "Calculators and templates are convenience utilities. They are not tax, medical, legal or career advice.",
+      "Questions about the product or these pages: tools@freela.store.",
+    ],
+    de: [
+      "Freela ist ein Katalog kostenloser Browser-Werkzeuge unter freela.store. Dateien werden auf Ihrem Gerät verarbeitet, sobald das Format das zulässt.",
+      "Wir versprechen keine Suchrankings. Eine Seite wird nur veröffentlicht, wenn das Werkzeug funktioniert und der Text geprüft ist.",
+      "Rechner und Vorlagen sind Hilfsmittel. Sie sind keine Steuer-, Medizin-, Rechts- oder Karriereberatung.",
+      "Fragen zum Produkt oder zu diesen Seiten: tools@freela.store.",
+    ],
+    uk: [
+      "Freela — каталог безкоштовних інструментів у браузері на freela.store. Файли обробляються на вашому пристрої, коли формат це дозволяє.",
+      "Ми не обіцяємо позицій у пошуку. Сторінка публікується лише коли інструмент працює і текст перевірено.",
+      "Калькулятори й шаблони — зручні утиліти. Це не податкова, медична, юридична чи кар’єрна консультація.",
+      "Питання про продукт і ці сторінки: tools@freela.store.",
+    ],
+    pl: [
+      "Freela to katalog darmowych narzędzi przeglądarkowych na freela.store. Pliki są przetwarzane na urządzeniu, gdy format na to pozwala.",
+      "Nie obiecujemy pozycji w wyszukiwarce. Stronę publikujemy dopiero gdy narzędzie działa, a treść jest sprawdzona.",
+      "Kalkulatory i szablony to udogodnienia. To nie jest porada podatkowa, medyczna, prawna ani zawodowa.",
+      "Pytania o produkt i te strony: tools@freela.store.",
+    ],
+    fr: [
+      "Freela est un catalogue d’outils gratuits dans le navigateur sur freela.store. Les fichiers sont traités sur votre appareil dès que le format le permet.",
+      "Nous ne promettons aucun classement de recherche. Une page n’est publiée que si l’outil fonctionne et que le texte a été relu.",
+      "Calculateurs et modèles sont des commodités. Ce n’est pas un conseil fiscal, médical, juridique ou de carrière.",
+      "Questions sur le produit ou ces pages : tools@freela.store.",
+    ],
+    es: [
+      "Freela es un catálogo de herramientas de navegador gratuitas en freela.store. Los archivos se procesan en tu dispositivo cuando el formato lo permite.",
+      "No prometemos posiciones en buscadores. Publicamos una página solo cuando la herramienta funciona y el texto está revisado.",
+      "Las calculadoras y plantillas son utilidades. No son asesoramiento fiscal, médico, legal ni profesional.",
+      "Preguntas sobre el producto o estas páginas: tools@freela.store.",
+    ],
+    it: [
+      "Freela è un catalogo di strumenti gratuiti nel browser su freela.store. I file sono elaborati sul dispositivo quando il formato lo consente.",
+      "Non promettiamo posizionamenti di ricerca. Una pagina è pubblicata solo se lo strumento funziona e il testo è stato revisionato.",
+      "Calcolatrici e modelli sono comodità. Non sono consulenza fiscale, medica, legale o di carriera.",
+      "Domande sul prodotto o su queste pagine: tools@freela.store.",
+    ],
+    pt: [
+      "A Freela é um catálogo de ferramentas grátis no navegador em freela.store. Os ficheiros são processados no dispositivo quando o formato o permite.",
+      "Não prometemos rankings de pesquisa. Uma página só é publicada quando a ferramenta funciona e o texto foi revisto.",
+      "Calculadoras e modelos são conveniências. Não são aconselhamento fiscal, médico, jurídico ou de carreira.",
+      "Perguntas sobre o produto ou estas páginas: tools@freela.store.",
+    ],
+    nl: [
+      "Freela is een catalogus van gratis browsertools op freela.store. Bestanden worden op uw apparaat verwerkt wanneer het formaat dat toelaat.",
+      "We beloven geen zoekposities. Een pagina wordt alleen gepubliceerd als de tool werkt en de tekst is nagekeken.",
+      "Rekenmachines en sjablonen zijn hulpmiddelen. Het is geen belasting-, medisch, juridisch of loopbaanadvies.",
+      "Vragen over het product of deze pagina’s: tools@freela.store.",
+    ],
+    tr: [
+      "Freela, freela.store’da tarayıcıda çalışan ücretsiz araçların kataloğudur. Biçim izin verdiğinde dosyalar cihazınızda işlenir.",
+      "Arama sıralaması vaat etmiyoruz. Bir sayfa yalnızca araç çalışıyor ve metin incelenmişse yayımlanır.",
+      "Hesaplayıcılar ve şablonlar kolaylıktır. Vergi, tıbbi, hukuki veya kariyer tavsiyesi değildir.",
+      "Ürün ve bu sayfalar hakkında sorular: tools@freela.store.",
+    ],
+    ar: [
+      "Freela كتالوج لأدوات مجانية في المتصفح على freela.store. تُعالَج الملفات على جهازك كلما سمح التنسيق بذلك.",
+      "لا نعد بترتيب في محركات البحث. ننشر الصفحة فقط عندما تعمل الأداة ويُراجع النص.",
+      "الحاسبات والقوالب أدوات مساعدة. ليست استشارة ضريبية أو طبية أو قانونية أو مهنية.",
+      "أسئلة عن المنتج أو هذه الصفحات: tools@freela.store.",
+    ],
+    he: [
+      "Freela הוא קטלוג כלים חינמיים בדפדפן ב-freela.store. קבצים מעובדים במכשיר כשהפורמט מאפשר.",
+      "אין הבטחת דירוג בחיפוש. דף מתפרסם רק כשהכלי עובד והטקסט נבדק.",
+      "מחשבונים ותבניות הם כלי עזר. זה לא ייעוץ מס, רפואי, משפטי או קריירה.",
+      "שאלות על המוצר או הדפים האלה: tools@freela.store.",
+    ],
+  },
+  "privacy": {
+    en: [
+      "Freela collects the minimum data needed to run the site. Published tools in this release use LOCAL_ONLY processing: file bytes and pasted document contents stay in your browser and are not uploaded to Freela.",
+      "If you consent, first-party analytics records a random session id, event name, tool id, locale, success/error, path and optional referrer host. Analytics never stores file names as content, document bytes, images, audio, extracted private text or secrets.",
+      "Admin authentication uses a bcrypt password hash and an httpOnly session cookie. Login attempts are rate-limited. HTTPS is required in production.",
+      "You can refuse analytics cookies and still use every tool. This page describes the software as built; it is not a claim of legal certification.",
+      "Privacy questions and analytics deletion requests go to tools@freela.store.",
+    ],
+    de: [
+      "Freela erhebt nur die Daten, die der Betrieb der Seite braucht. Veröffentlichte Werkzeuge nutzen LOCAL_ONLY: Dateiinhalte und eingefügter Text bleiben im Browser und werden nicht zu Freela hochgeladen.",
+      "Mit Einwilligung speichert First-Party-Analytik eine Zufalls-Session-ID, Ereignisname, Tool-ID, Locale, Erfolg/Fehler, Pfad und optional den Referrer-Host. Dateinamen als Inhalt, Bytes, Bilder, Audio oder Geheimnisse werden nicht gespeichert.",
+      "Admin-Login nutzt einen bcrypt-Hash und ein httpOnly-Session-Cookie. Anmeldeversuche sind rate-limited. In Produktion ist HTTPS Pflicht.",
+      "Sie können Analyse-Cookies ablehnen und alle Werkzeuge weiter nutzen. Diese Seite beschreibt die Software, sie ist keine Rechtszertifizierung.",
+      "Datenschutzfragen und Löschanträge zur Analytik: tools@freela.store.",
+    ],
+    uk: [
+      "Freela збирає мінімум даних для роботи сайту. Опубліковані інструменти — LOCAL_ONLY: байти файлів і вставлений текст лишаються в браузері й не надсилаються на Freela.",
+      "За згодою аналітика першої сторони записує випадковий session id, подію, id інструмента, локаль, успіх/помилку, шлях і за потреби хост referrer. Байти файлів і секрети не зберігаються.",
+      "Адмін-вхід використовує bcrypt і httpOnly-cookie. Спроби входу обмежені. У продакшені потрібен HTTPS.",
+      "Можна відмовитись від аналітичних cookies і користуватись усіма інструментами. Це опис ПЗ, не юридичний сертифікат.",
+      "Питання приватності та запити на видалення аналітики: tools@freela.store.",
+    ],
+    pl: [
+      "Freela zbiera minimum danych do działania serwisu. Opublikowane narzędzia używają LOCAL_ONLY: bajty plików i wklejony tekst zostają w przeglądarce i nie są wysyłane do Freela.",
+      "Po zgodzie analityka first-party zapisuje losowe session id, nazwę zdarzenia, id narzędzia, locale, sukces/błąd, ścieżkę i opcjonalnie host referrera. Nie przechowuje bajtów plików ani sekretów.",
+      "Logowanie admina używa bcrypt i ciasteczka httpOnly. Próby logowania są limitowane. W produkcji wymagane jest HTTPS.",
+      "Możesz odrzucić ciasteczka analityczne i nadal używać wszystkich narzędzi. To opis oprogramowania, nie certyfikat prawny.",
+      "Pytania o prywatność i usunięcie analityki: tools@freela.store.",
+    ],
+    fr: [
+      "Freela collecte le minimum nécessaire au fonctionnement du site. Les outils publiés sont LOCAL_ONLY : les octets des fichiers et le texte collé restent dans le navigateur et ne sont pas envoyés à Freela.",
+      "Avec consentement, l’analytique first-party enregistre un identifiant de session aléatoire, l’événement, l’id d’outil, la locale, succès/erreur, le chemin et éventuellement l’hôte referrer. Jamais les octets de fichiers ni les secrets.",
+      "L’admin utilise un hash bcrypt et un cookie de session httpOnly. Les tentatives de connexion sont limitées. HTTPS est requis en production.",
+      "Vous pouvez refuser les cookies d’analyse et utiliser tous les outils. Cette page décrit le logiciel ; ce n’est pas une certification juridique.",
+      "Questions de confidentialité et demandes d’effacement analytique : tools@freela.store.",
+    ],
+    es: [
+      "Freela recoge el mínimo de datos para operar el sitio. Las herramientas publicadas usan LOCAL_ONLY: los bytes de archivo y el texto pegado se quedan en el navegador y no se suben a Freela.",
+      "Con consentimiento, la analítica propia registra un id de sesión aleatorio, evento, id de herramienta, locale, éxito/error, ruta y opcionalmente el host de referencia. Nunca bytes de archivo ni secretos.",
+      "El admin usa hash bcrypt y cookie de sesión httpOnly. Los intentos de acceso están limitados. HTTPS es obligatorio en producción.",
+      "Puedes rechazar las cookies de analítica y seguir usando todas las herramientas. Esta página describe el software; no es una certificación legal.",
+      "Preguntas de privacidad y solicitudes de borrado analítico: tools@freela.store.",
+    ],
+    it: [
+      "Freela raccoglie i dati minimi per far funzionare il sito. Gli strumenti pubblicati usano LOCAL_ONLY: i byte dei file e il testo incollato restano nel browser e non vengono inviati a Freela.",
+      "Con consenso, l’analytics di prima parte registra un session id casuale, evento, id strumento, locale, successo/errore, percorso e opzionalmente l’host referrer. Mai byte di file o segreti.",
+      "L’admin usa hash bcrypt e cookie di sessione httpOnly. I tentativi di login sono limitati. HTTPS è richiesto in produzione.",
+      "Puoi rifiutare i cookie analytics e usare tutti gli strumenti. Questa pagina descrive il software; non è una certificazione legale.",
+      "Domande sulla privacy e richieste di cancellazione analytics: tools@freela.store.",
+    ],
+    pt: [
+      "A Freela recolhe o mínimo de dados para o site funcionar. As ferramentas publicadas usam LOCAL_ONLY: os bytes dos ficheiros e o texto colado ficam no navegador e não são enviados à Freela.",
+      "Com consentimento, a analítica própria regista um session id aleatório, evento, id da ferramenta, locale, sucesso/erro, caminho e opcionalmente o host de referência. Nunca bytes de ficheiros nem segredos.",
+      "O admin usa hash bcrypt e cookie de sessão httpOnly. As tentativas de login são limitadas. HTTPS é obrigatório em produção.",
+      "Pode recusar cookies de analítica e continuar a usar todas as ferramentas. Esta página descreve o software; não é certificação jurídica.",
+      "Perguntas de privacidade e pedidos de apagamento de analítica: tools@freela.store.",
+    ],
+    nl: [
+      "Freela verzamelt alleen wat nodig is om de site te laten werken. Gepubliceerde tools zijn LOCAL_ONLY: bestandsbytes en geplakte tekst blijven in de browser en gaan niet naar Freela.",
+      "Met toestemming legt first-party analytics een willekeurige session-id, event, tool-id, locale, succes/fout, pad en optioneel de referrer-host vast. Geen bestandsbytes of geheimen.",
+      "Admin-login gebruikt bcrypt en een httpOnly-sessiecookie. Inlogpogingen zijn beperkt. HTTPS is verplicht in productie.",
+      "U kunt analytics-cookies weigeren en alle tools blijven gebruiken. Deze pagina beschrijft de software; het is geen juridische certificering.",
+      "Privacyvragen en verzoeken om analytics te wissen: tools@freela.store.",
+    ],
+    tr: [
+      "Freela siteyi çalıştırmak için gereken en az veriyi toplar. Yayımlanan araçlar LOCAL_ONLY’dir: dosya baytları ve yapıştırılan metin tarayıcıda kalır, Freela’ya yüklenmez.",
+      "Onaylarsanız birinci taraf analitik rastgele oturum kimliği, olay, araç kimliği, dil, başarı/hata, yol ve isteğe bağlı referrer host kaydeder. Dosya baytları veya sırlar saklanmaz.",
+      "Yönetici girişi bcrypt ve httpOnly oturum çerezi kullanır. Denemeler hız sınırlıdır. Üretimde HTTPS zorunludur.",
+      "Analitik çerezlerini reddedip tüm araçları kullanabilirsiniz. Bu sayfa yazılımı anlatır; hukuki sertifika değildir.",
+      "Gizlilik soruları ve analitik silme istekleri: tools@freela.store.",
+    ],
+    ar: [
+      "تجمع Freela الحد الأدنى من البيانات لتشغيل الموقع. الأدوات المنشورة LOCAL_ONLY: بايتات الملفات والنص الملصق تبقى في المتصفح ولا تُرفع إلى Freela.",
+      "عند الموافقة تسجّل التحليلات معرّف جلسة عشوائيًا واسم الحدث ومعرّف الأداة والمحلية والنجاح/الخطأ والمسار واختياريًا مضيف الإحالة. لا تُخزَّن بايتات الملفات أو الأسرار.",
+      "دخول المشرف يستخدم bcrypt وملف ارتباط جلسة httpOnly. محاولات الدخول محدودة المعدل. HTTPS مطلوب في الإنتاج.",
+      "يمكنك رفض ملفات التحليلات واستخدام كل الأدوات. هذه الصفحة تصف البرنامج وليست شهادة قانونية.",
+      "أسئلة الخصوصية وطلبات حذف التحليلات: tools@freela.store.",
+    ],
+    he: [
+      "Freela אוספת את המינימום הנדרש להפעלת האתר. הכלים הרשמיים הם LOCAL_ONLY: בתים של קבצים וטקסט מודבק נשארים בדפדפן ולא מועלים ל-Freela.",
+      "בהסכמה, אנליטיקה first-party רושמת מזהה סשן אקראי, אירוע, מזהה כלי, שפה, הצלחה/שגיאה, נתיב ולעתים host מפנה. אין בתים של קבצים או סודות.",
+      "כניסת מנהל משתמשת ב-bcrypt ובעוגיית סשן httpOnly. ניסיונות כניסה מוגבלים. HTTPS נדרש בייצור.",
+      "אפשר לסרב לעוגיות אנליטיקה ולהמשיך להשתמש בכל הכלים. הדף מתאר את התוכנה; זו לא הסמכה משפטית.",
+      "שאלות פרטיות ובקשות מחיקת אנליטיקה: tools@freela.store.",
+    ],
+  },
+  "terms": {
+    en: [
+      "Tools are provided as-is for personal and professional convenience. These terms do not remove legal obligations that apply by law.",
+      "Do not use Freela to break authentication, hide malware, generate official-looking identity documents, or create scaled spam. You are responsible for the files you process and for complying with copyright and local law.",
+      "Results can be wrong. Double-check anything that matters. Freela may disable a broken tool and mark it noindex rather than leave a non-functional page indexed.",
+      "Questions about these terms: tools@freela.store.",
+    ],
+    de: [
+      "Die Werkzeuge werden ohne Gewähr zur persönlichen und beruflichen Nutzung bereitgestellt. Gesetzliche Pflichten bleiben unberührt.",
+      "Nutzen Sie Freela nicht, um Authentifizierung zu umgehen, Schadsoftware zu verbergen, amtlich wirkende Ausweise zu erzeugen oder Massen-Spam zu erzeugen. Sie sind für Ihre Dateien und die Einhaltung von Urheberrecht und lokalem Recht verantwortlich.",
+      "Ergebnisse können falsch sein. Prüfen Sie Wichtiges selbst. Freela kann ein defektes Werkzeug deaktivieren und auf noindex setzen, statt eine nicht funktionierende Seite indexiert zu lassen.",
+      "Fragen zu diesen Bedingungen: tools@freela.store.",
+    ],
+    uk: [
+      "Інструменти надаються «як є» для особистої та професійної зручності. Ці умови не скасовують обов’язків за законом.",
+      "Не використовуйте Freela, щоб обходити автентифікацію, ховати шкідливе ПЗ, підробляти офіційні документи чи розсилати спам. Ви відповідаєте за файли й дотримання авторського права та місцевого закону.",
+      "Результати можуть бути помилковими. Перевіряйте важливе. Freela може вимкнути зламаний інструмент і поставити noindex замість індексації неробочої сторінки.",
+      "Питання щодо умов: tools@freela.store.",
+    ],
+    pl: [
+      "Narzędzia są dostarczane w stanie, w jakim są, do wygody osobistej i zawodowej. Te warunki nie uchylają obowiązków wynikających z prawa.",
+      "Nie używaj Freeli do omijania uwierzytelniania, ukrywania złośliwego oprogramowania, fałszowania dokumentów urzędowych ani spamu na skalę. Odpowiadasz za pliki i przestrzeganie prawa autorskiego oraz lokalnego prawa.",
+      "Wyniki mogą być błędne. Sprawdź to, co ważne. Freela może wyłączyć zepsute narzędzie i oznaczyć je noindex zamiast zostawiać niesprawną stronę w indeksie.",
+      "Pytania o regulamin: tools@freela.store.",
+    ],
+    fr: [
+      "Les outils sont fournis en l’état pour un usage personnel et professionnel. Ces conditions n’écartent pas les obligations légales.",
+      "N’utilisez pas Freela pour contourner une authentification, dissimuler des malwares, fabriquer des documents officiels d’apparence, ou produire du spam à grande échelle. Vous êtes responsable des fichiers traités et du respect du droit d’auteur et du droit local.",
+      "Les résultats peuvent être faux. Vérifiez ce qui compte. Freela peut désactiver un outil cassé et le passer en noindex plutôt que de laisser une page non fonctionnelle indexée.",
+      "Questions sur ces conditions : tools@freela.store.",
+    ],
+    es: [
+      "Las herramientas se ofrecen tal cual para uso personal y profesional. Estos términos no eliminan obligaciones legales.",
+      "No uses Freela para eludir autenticación, ocultar malware, fabricar documentos oficiales de apariencia ni generar spam a escala. Eres responsable de los archivos que procesas y de cumplir el derecho de autor y la ley local.",
+      "Los resultados pueden ser incorrectos. Comprueba lo que importe. Freela puede desactivar una herramienta rota y marcarla noindex en lugar de dejar indexada una página que no funciona.",
+      "Preguntas sobre estos términos: tools@freela.store.",
+    ],
+    it: [
+      "Gli strumenti sono forniti così come sono per uso personale e professionale. Questi termini non escludono obblighi di legge.",
+      "Non usare Freela per aggirare autenticazioni, nascondere malware, creare documenti ufficiali contraffatti o spam su scala. Sei responsabile dei file elaborati e del rispetto del diritto d’autore e della legge locale.",
+      "I risultati possono essere sbagliati. Controlla ciò che conta. Freela può disattivare uno strumento rotto e marcarlo noindex invece di lasciare indicizzata una pagina non funzionante.",
+      "Domande su questi termini: tools@freela.store.",
+    ],
+    pt: [
+      "As ferramentas são fornecidas tal como estão para uso pessoal e profissional. Estes termos não afastam obrigações legais.",
+      "Não use a Freela para contornar autenticação, esconder malware, forjar documentos oficiais ou criar spam em escala. É responsável pelos ficheiros que processa e pelo respeito dos direitos de autor e da lei local.",
+      "Os resultados podem estar errados. Confirme o que importa. A Freela pode desativar uma ferramenta partida e marcá-la noindex em vez de deixar indexada uma página que não funciona.",
+      "Perguntas sobre estes termos: tools@freela.store.",
+    ],
+    nl: [
+      "Tools worden as-is geleverd voor persoonlijk en professioneel gemak. Deze voorwaarden heffen wettelijke plichten niet op.",
+      "Gebruik Freela niet om authenticatie te omzeilen, malware te verbergen, officiële documenten na te maken of spam op schaal te maken. U bent verantwoordelijk voor de bestanden die u verwerkt en voor auteursrecht en lokaal recht.",
+      "Resultaten kunnen fout zijn. Controleer wat ertoe doet. Freela kan een kapotte tool uitschakelen en op noindex zetten in plaats van een niet-werkende pagina geïndexeerd te laten.",
+      "Vragen over deze voorwaarden: tools@freela.store.",
+    ],
+    tr: [
+      "Araçlar kişisel ve mesleki kolaylık için olduğu gibi sunulur. Bu koşullar yasal yükümlülükleri kaldırmaz.",
+      "Freela’yı kimlik doğrulamayı kırmak, kötü amaçlı yazılım gizlemek, resmi görünümlü belgeler üretmek veya ölçekli spam için kullanmayın. İşlediğiniz dosyalardan, telif ve yerel hukuktan siz sorumlusunuz.",
+      "Sonuçlar yanlış olabilir. Önemli olanı kontrol edin. Freela bozuk bir aracı kapatıp noindex işaretleyebilir; çalışmayan bir sayfayı dizinde bırakmaz.",
+      "Bu koşullar hakkında sorular: tools@freela.store.",
+    ],
+    ar: [
+      "تُقدَّم الأدوات كما هي للاستخدام الشخصي والمهني. لا تُلغي هذه الشروط الالتزامات القانونية.",
+      "لا تستخدم Freela لكسر المصادقة أو إخفاء برمجيات خبيثة أو تزوير وثائق رسمية المظهر أو إنشاء بريد عشوائي على نطاق واسع. أنت مسؤول عن الملفات التي تعالجها وعن حقوق النشر والقانون المحلي.",
+      "قد تكون النتائج خاطئة. راجع ما يهم. قد تعطّل Freela أداة معطلة وتضع noindex بدل ترك صفحة غير عاملة مفهرسة.",
+      "أسئلة عن هذه الشروط: tools@freela.store.",
+    ],
+    he: [
+      "הכלים מסופקים כפי שהם לנוחות אישית ומקצועית. תנאים אלה לא מבטלים חובות חוק.",
+      "אל תשתמשו ב-Freela כדי לעקוף אימות, להסתיר תוכנה זדונית, לייצר מסמכים רשמיים למראה או ליצור ספאם בהיקף. אתם אחראים לקבצים שאתם מעבדים ולזכויות יוצרים ולחוק המקומי.",
+      "תוצאות עלולות להיות שגויות. בדקו מה שחשוב. Freela יכולה לכבות כלי שבור ולסמן noindex במקום להשאיר דף לא פועל באינדקס.",
+      "שאלות על התנאים: tools@freela.store.",
+    ],
+  },
+  "contact": {
+    en: [
+      "The primary contact for all questions is tools@freela.store. Product help, privacy, abuse reports, copyright notices and security reports all use this address.",
+      "Describe the issue without attaching live secrets, passwords, or other people’s private files.",
+      "We do not accept unsolicited bulk tool pages that are not in the registry.",
+    ],
+    de: [
+      "Die zentrale Kontaktadresse für alle Fragen ist tools@freela.store. Produkthilfe, Datenschutz, Missbrauchsmeldungen, Urheberrechtshinweise und Sicherheitsmeldungen laufen über dieselbe Adresse.",
+      "Beschreiben Sie das Anliegen ohne echte Geheimnisse, Passwörter oder fremde Privatdateien im Anhang.",
+      "Unaufgeforderte Massen-Toolseiten, die nicht im Register stehen, nehmen wir nicht an.",
+    ],
+    uk: [
+      "Основна адреса для всіх питань — tools@freela.store. Допомога з продуктом, приватність, скарги на зловживання, авторське право й безпека йдуть сюди.",
+      "Опишіть проблему без живих секретів, паролів і чужих приватних файлів.",
+      "Ми не приймаємо незамовлені масові сторінки інструментів поза реєстром.",
+    ],
+    pl: [
+      "Główny kontakt na wszystkie pytania to tools@freela.store. Pomoc produktowa, prywatność, zgłoszenia nadużyć, prawa autorskie i bezpieczeństwo trafiają na ten adres.",
+      "Opisz sprawę bez żywych sekretów, haseł i cudzych prywatnych plików.",
+      "Nie przyjmujemy niezamówionych masowych stron narzędzi spoza rejestru.",
+    ],
+    fr: [
+      "Le contact principal pour toutes les questions est tools@freela.store. Aide produit, confidentialité, signalements d’abus, droit d’auteur et sécurité passent par cette adresse.",
+      "Décrivez le problème sans joindre de secrets en clair, de mots de passe ou de fichiers privés d’autrui.",
+      "Nous n’acceptons pas de pages d’outils en masse hors du registre.",
+    ],
+    es: [
+      "El contacto principal para todas las preguntas es tools@freela.store. Producto, privacidad, abuso, copyright y seguridad usan esta dirección.",
+      "Describe el problema sin adjuntar secretos en vivo, contraseñas ni archivos privados de otras personas.",
+      "No aceptamos páginas de herramientas masivas no solicitadas fuera del registro.",
+    ],
+    it: [
+      "Il contatto principale per tutte le domande è tools@freela.store. Prodotto, privacy, abusi, copyright e sicurezza usano questo indirizzo.",
+      "Descrivi il problema senza allegare segreti in chiaro, password o file privati di altri.",
+      "Non accettiamo pagine di strumenti in massa non richieste fuori dal registro.",
+    ],
+    pt: [
+      "O contacto principal para todas as perguntas é tools@freela.store. Produto, privacidade, abuso, direitos de autor e segurança usam este endereço.",
+      "Descreva o problema sem anexar segredos em claro, palavras-passe ou ficheiros privados de outras pessoas.",
+      "Não aceitamos páginas de ferramentas em massa não solicitadas fora do registo.",
+    ],
+    nl: [
+      "Het hoofdcontact voor alle vragen is tools@freela.store. Producthulp, privacy, misbruik, auteursrecht en beveiliging gaan naar dit adres.",
+      "Beschrijf het probleem zonder live geheimen, wachtwoorden of andermans privébestanden bij te voegen.",
+      "We accepteren geen ongevraagde bulk-toolpagina’s buiten het register.",
+    ],
+    tr: [
+      "Tüm sorular için birincil iletişim tools@freela.store. Ürün, gizlilik, kötüye kullanım, telif ve güvenlik bu adresi kullanır.",
+      "Sorunu canlı sırlar, parolalar veya başkalarının özel dosyaları eklemeden anlatın.",
+      "Kayıtta olmayan toplu araç sayfalarını kabul etmiyoruz.",
+    ],
+    ar: [
+      "جهة الاتصال الأساسية لكل الأسئلة هي tools@freela.store. المنتج والخصوصية وإساءة الاستخدام وحقوق النشر والأمن تمر عبر هذا العنوان.",
+      "صف المشكلة دون إرفاق أسرار حيّة أو كلمات مرور أو ملفات خاصة لأشخاص آخرين.",
+      "لا نقبل صفحات أدوات جماعية غير مطلوبة خارج السجل.",
+    ],
+    he: [
+      "איש הקשר הראשי לכל שאלה הוא tools@freela.store. מוצר, פרטיות, שימוש לרעה, זכויות יוצרים ואבטחה עוברים בכתובת הזו.",
+      "תארו את הבעיה בלי לצרף סודות חיים, סיסמאות או קבצים פרטיים של אחרים.",
+      "איננו מקבלים דפי כלים המוניים לא מבוקשים מחוץ לרשם.",
+    ],
+  },
+  "affiliate-disclosure": {
+    en: [
+      "Some links may be affiliate or sponsored placements. They are labeled. Clicking them is never required to run a tool, download a result, or copy text.",
+      "Display ads, when enabled, sit outside the tool card and must never look like a Run or Download control.",
+      "Questions about labeled placements: tools@freela.store.",
+    ],
+    de: [
+      "Einige Links können Affiliate- oder Sponsor-Platzierungen sein. Sie sind gekennzeichnet. Ein Klick ist nie nötig, um ein Werkzeug auszuführen, ein Ergebnis herunterzuladen oder Text zu kopieren.",
+      "Display-Werbung sitzt — wenn sie aktiv ist — außerhalb der Werkzeugkarte und darf niemals wie Ausführen oder Herunterladen aussehen.",
+      "Fragen zu gekennzeichneten Platzierungen: tools@freela.store.",
+    ],
+    uk: [
+      "Деякі посилання можуть бути партнерськими або спонсорськими. Вони позначені. Клік ніколи не обов’язковий, щоб запустити інструмент, завантажити результат чи скопіювати текст.",
+      "Банерна реклама, якщо увімкнена, стоїть поза карткою інструмента і не повинна виглядати як «Запустити» чи «Завантажити».",
+      "Питання про позначені розміщення: tools@freela.store.",
+    ],
+    pl: [
+      "Niektóre linki mogą być partnerskie lub sponsorowane. Są oznaczone. Kliknięcie nigdy nie jest wymagane, by uruchomić narzędzie, pobrać wynik lub skopiować tekst.",
+      "Reklamy display — gdy włączone — stoją poza kartą narzędzia i nie mogą wyglądać jak Uruchom lub Pobierz.",
+      "Pytania o oznaczone miejsca: tools@freela.store.",
+    ],
+    fr: [
+      "Certains liens peuvent être affiliés ou sponsorisés. Ils sont étiquetés. Un clic n’est jamais requis pour lancer un outil, télécharger un résultat ou copier du texte.",
+      "Les publicités display, si elles sont activées, restent hors de la carte d’outil et ne doivent jamais ressembler à Lancer ou Télécharger.",
+      "Questions sur les emplacements étiquetés : tools@freela.store.",
+    ],
+    es: [
+      "Algunos enlaces pueden ser de afiliados o patrocinados. Van etiquetados. Nunca hace falta pulsarlos para ejecutar una herramienta, descargar un resultado o copiar texto.",
+      "Los anuncios display, si están activos, quedan fuera de la tarjeta de la herramienta y no deben parecer Ejecutar o Descargar.",
+      "Preguntas sobre emplazamientos etiquetados: tools@freela.store.",
+    ],
+    it: [
+      "Alcuni link possono essere affiliati o sponsorizzati. Sono etichettati. Non è mai necessario farci clic per eseguire uno strumento, scaricare un risultato o copiare testo.",
+      "Gli annunci display, se attivi, restano fuori dalla scheda dello strumento e non devono sembrare Esegui o Scarica.",
+      "Domande sulle inserzioni etichettate: tools@freela.store.",
+    ],
+    pt: [
+      "Alguns ligações podem ser de afiliados ou patrocinadas. Estão identificadas. Nunca é obrigatório clicar para executar uma ferramenta, descarregar um resultado ou copiar texto.",
+      "Os anúncios display, quando ativos, ficam fora do cartão da ferramenta e não devem parecer Executar ou Descarregar.",
+      "Perguntas sobre colocações identificadas: tools@freela.store.",
+    ],
+    nl: [
+      "Sommige links kunnen affiliate of gesponsord zijn. Ze zijn gelabeld. Klikken is nooit nodig om een tool te draaien, een resultaat te downloaden of tekst te kopiëren.",
+      "Display-ads, als ze aan staan, staan buiten de toolkaart en mogen nooit op Uitvoeren of Downloaden lijken.",
+      "Vragen over gelabelde plaatsingen: tools@freela.store.",
+    ],
+    tr: [
+      "Bazı bağlantılar ortaklık veya sponsorluk olabilir. Etiketlenir. Bir aracı çalıştırmak, sonuç indirmek veya metin kopyalamak için tıklamak zorunlu değildir.",
+      "Görüntülü reklamlar açıksa araç kartının dışında durur ve Çalıştır veya İndir gibi görünmemelidir.",
+      "Etiketli yerleşimler hakkında: tools@freela.store.",
+    ],
+    ar: [
+      "قد تكون بعض الروابط تابعة أو مدفوعة. وهي مُعلَّمة. النقر عليها ليس مطلوبًا لتشغيل أداة أو تنزيل نتيجة أو نسخ نص.",
+      "إعلانات العرض إن فُعِّلت تبقى خارج بطاقة الأداة ويجب ألا تشبه تشغيلًا أو تنزيلًا.",
+      "أسئلة عن المواضع المعلَّمة: tools@freela.store.",
+    ],
+    he: [
+      "חלק מהקישורים עשויים להיות שותפות או ממומנים. הם מסומנים. אין חובה ללחוץ כדי להריץ כלי, להוריד תוצאה או להעתיק טקסט.",
+      "מודעות תצוגה, אם פעילות, נשארות מחוץ לכרטיס הכלי ואל להן להיראות כמו הפעלה או הורדה.",
+      "שאלות על מיקומים מסומנים: tools@freela.store.",
+    ],
+  },
+  "acceptable-use": {
+    en: [
+      "Allowed: ordinary conversion, compression, inspection, counting and generation of content you are entitled to process.",
+      "Not allowed: authentication bypass, password cracking, defeating encryption or DRM, forging passports, IDs, certificates, bank statements or other official documents, malware, credential theft, phishing, or marketing a converter as a way to conceal illegal activity.",
+      "We may refuse service, disable a tool, or report abuse when we have a legal duty to do so.",
+      "Questions about these rules: tools@freela.store.",
+    ],
+    de: [
+      "Erlaubt: gewöhnliches Konvertieren, Komprimieren, Prüfen, Zählen und Erzeugen von Inhalten, die Sie verarbeiten dürfen.",
+      "Nicht erlaubt: Authentifizierungs-Bypass, Passwortknacken, Umgehen von Verschlüsselung oder DRM, Fälschen von Pässen, Ausweisen, Zeugnissen, Kontoauszügen oder anderen amtlichen Dokumenten, Schadsoftware, Credential-Diebstahl, Phishing oder das Bewerben eines Konverters zum Verbergen illegaler Aktivität.",
+      "Wir können den Dienst verweigern, ein Werkzeug abschalten oder Missbrauch melden, wenn uns das Recht dazu verpflichtet.",
+      "Fragen zu diesen Regeln: tools@freela.store.",
+    ],
+    uk: [
+      "Дозволено: звичайне конвертування, стиснення, перевірка, підрахунок і генерація контенту, який ви маєте право обробляти.",
+      "Заборонено: обхід автентифікації, злам паролів, злам шифрування чи DRM, підробка паспортів, посвідчень, сертифікатів, банківських виписок, шкідливе ПЗ, крадіжка облікових даних, фішинг чи реклама конвертера для приховування незаконної діяльності.",
+      "Ми можемо відмовити в сервісі, вимкнути інструмент або повідомити про зловживання, якщо цього вимагає закон.",
+      "Питання щодо правил: tools@freela.store.",
+    ],
+    pl: [
+      "Dozwolone: zwykła konwersja, kompresja, inspekcja, zliczanie i generowanie treści, które masz prawo przetwarzać.",
+      "Niedozwolone: omijanie uwierzytelniania, łamanie haseł, łamanie szyfrowania lub DRM, fałszowanie paszportów, dowodów, certyfikatów, wyciągów bankowych, malware, kradzież poświadczeń, phishing ani reklamowanie konwertera do ukrywania nielegalnej działalności.",
+      "Możemy odmówić usługi, wyłączyć narzędzie lub zgłosić nadużycie, gdy mamy taki obowiązek prawny.",
+      "Pytania o te zasady: tools@freela.store.",
+    ],
+    fr: [
+      "Autorisé : conversion, compression, inspection, comptage et génération ordinaires de contenus que vous avez le droit de traiter.",
+      "Interdit : contournement d’authentification, cassage de mots de passe, contournement de chiffrement ou DRM, falsification de passeports, pièces d’identité, certificats, relevés bancaires, malwares, vol d’identifiants, hameçonnage, ou promotion d’un convertisseur pour dissimuler une activité illégale.",
+      "Nous pouvons refuser le service, désactiver un outil ou signaler un abus lorsque la loi l’exige.",
+      "Questions sur ces règles : tools@freela.store.",
+    ],
+    es: [
+      "Permitido: conversión, compresión, inspección, recuento y generación ordinarios de contenidos que tienes derecho a procesar.",
+      "No permitido: eludir autenticación, romper contraseñas, romper cifrado o DRM, falsificar pasaportes, DNI, certificados, extractos bancarios, malware, robo de credenciales, phishing, ni promocionar un conversor para ocultar actividad ilegal.",
+      "Podemos negar el servicio, desactivar una herramienta o denunciar abuso cuando la ley nos obligue.",
+      "Preguntas sobre estas normas: tools@freela.store.",
+    ],
+    it: [
+      "Consentito: conversione, compressione, ispezione, conteggio e generazione ordinari di contenuti che hai diritto di elaborare.",
+      "Non consentito: aggirare autenticazione, cracking di password, eludere cifratura o DRM, falsificare passaporti, documenti, certificati, estratti conto, malware, furto di credenziali, phishing, o promuovere un convertitore per occultare attività illegali.",
+      "Possiamo rifiutare il servizio, disattivare uno strumento o segnalare abusi quando la legge lo impone.",
+      "Domande su queste regole: tools@freela.store.",
+    ],
+    pt: [
+      "Permitido: conversão, compressão, inspeção, contagem e geração ordinárias de conteúdos que tem o direito de processar.",
+      "Não permitido: contornar autenticação, partir palavras-passe, burlar cifra ou DRM, forjar passaportes, IDs, certificados, extratos bancários, malware, roubo de credenciais, phishing, ou promover um conversor para ocultar atividade ilegal.",
+      "Podemos recusar serviço, desativar uma ferramenta ou denunciar abuso quando a lei o exigir.",
+      "Perguntas sobre estas regras: tools@freela.store.",
+    ],
+    nl: [
+      "Toegestaan: gewoon converteren, comprimeren, inspecteren, tellen en genereren van content die u mag verwerken.",
+      "Niet toegestaan: authenticatie omzeilen, wachtwoorden kraken, encryptie of DRM kraken, paspoorten, ID’s, certificaten of bankafschriften vervalsen, malware, credentialdiefstal, phishing, of een converter verkopen om illegale activiteit te verhullen.",
+      "We kunnen service weigeren, een tool uitzetten of misbruik melden wanneer de wet dat eist.",
+      "Vragen over deze regels: tools@freela.store.",
+    ],
+    tr: [
+      "İzinli: işlemeye hakkınız olan içeriğin olağan dönüştürme, sıkıştırma, inceleme, sayma ve üretimi.",
+      "İzinli değil: kimlik doğrulamayı atlama, parola kırma, şifreleme veya DRM kırma, pasaport, kimlik, sertifika, banka ekstresi sahteciliği, kötü amaçlı yazılım, kimlik bilgisi hırsızlığı, oltalama veya yasa dışı faaliyeti gizlemek için dönüştürücü pazarlamak.",
+      "Yasal yükümlülüğümüz olduğunda hizmeti reddedebilir, aracı kapatabilir veya kötüye kullanımı bildirebiliriz.",
+      "Bu kurallar hakkında: tools@freela.store.",
+    ],
+    ar: [
+      "مسموح: التحويل والضغط والفحص والعدّ والتوليد العادي لمحتوى يحق لك معالجته.",
+      "غير مسموح: تجاوز المصادقة، كسر كلمات المرور، كسر التشفير أو DRM، تزوير جوازات أو هويات أو شهادات أو كشوف بنكية، برمجيات خبيثة، سرقة بيانات الدخول، التصيد، أو الترويج لمحوّل لإخفاء نشاط غير قانوني.",
+      "قد نرفض الخدمة أو نعطّل أداة أو نبلّغ عن إساءة عندما يلزمنا القانون.",
+      "أسئلة عن هذه القواعد: tools@freela.store.",
+    ],
+    he: [
+      "מותר: המרה, דחיסה, בדיקה, ספירה ויצירה רגילות של תוכן שיש לכם זכות לעבד.",
+      "אסור: עקיפת אימות, פריצת סיסמאות, שבירת הצפנה או DRM, זיוף דרכונים, תעודות זהות, תעודות, דפי חשבון, נוזקה, גניבת אישורים, פישינג, או שיווק ממיר כדי להסתיר פעילות לא חוקית.",
+      "נוכל לסרב לשירות, לכבות כלי או לדווח על שימוש לרעה כשהחוק מחייב.",
+      "שאלות על הכללים: tools@freela.store.",
+    ],
+  },
+  "abuse": {
+    en: [
+      "Report illegal content, security issues or legal notices to tools@freela.store.",
+      "Include URLs, a description, and your contact details. Do not send copies of other people’s identity documents unless a competent authority requires it through a lawful process.",
+      "This channel is monitored for notices as well as product questions. The same address is used so you never have to guess a mailbox.",
+    ],
+    de: [
+      "Melden Sie illegale Inhalte, Sicherheitsprobleme oder rechtliche Hinweise an tools@freela.store.",
+      "Geben Sie URLs, eine Beschreibung und Ihre Kontaktdaten an. Senden Sie keine Kopien fremder Ausweisdokumente, außer eine zuständige Behörde verlangt das in einem rechtmäßigen Verfahren.",
+      "Dieses Postfach nimmt Hinweise und Produktfragen entgegen. Es gibt nur eine Adresse, damit niemand raten muss.",
+    ],
+    uk: [
+      "Повідомляйте про незаконний контент, проблеми безпеки чи юридичні вимоги на tools@freela.store.",
+      "Додайте URL, опис і свої контакти. Не надсилайте копії чужих документів, окрім законної вимоги компетентного органу.",
+      "Ця адреса приймає і повідомлення, і продуктові питання — одна скринька, без вгадування.",
+    ],
+    pl: [
+      "Zgłaszaj nielegalne treści, problemy bezpieczeństwa lub wezwania prawne na tools@freela.store.",
+      "Podaj URL, opis i dane kontaktowe. Nie wysyłaj kopii cudzych dokumentów tożsamości, chyba że właściwy organ wymaga tego w legalnym trybie.",
+      "Ten adres przyjmuje zgłoszenia i pytania produktowe — jedna skrzynka, bez zgadywania.",
+    ],
+    fr: [
+      "Signalez un contenu illégal, un problème de sécurité ou une mise en demeure à tools@freela.store.",
+      "Indiquez les URL, une description et vos coordonnées. N’envoyez pas de copies de pièces d’identité d’autrui, sauf exigence d’une autorité compétente par une procédure légale.",
+      "Cette adresse reçoit les notifications et les questions produit — une seule boîte, sans devinette.",
+    ],
+    es: [
+      "Informa de contenido ilegal, problemas de seguridad o requerimientos legales a tools@freela.store.",
+      "Incluye URL, una descripción y tus datos de contacto. No envíes copias de documentos de identidad ajenos salvo que una autoridad competente lo exija por un cauce legal.",
+      "Esta dirección recibe avisos y preguntas de producto: un solo buzón.",
+    ],
+    it: [
+      "Segnala contenuti illegali, problemi di sicurezza o avvisi legali a tools@freela.store.",
+      "Includi URL, una descrizione e i tuoi recapiti. Non inviare copie di documenti d’identità altrui salvo richiesta di un’autorità competente in un procedimento lecito.",
+      "Questo indirizzo riceve avvisi e domande di prodotto: una sola casella.",
+    ],
+    pt: [
+      "Comunique conteúdo ilegal, problemas de segurança ou avisos legais para tools@freela.store.",
+      "Inclua URL, uma descrição e os seus contactos. Não envie cópias de documentos de identidade de terceiros salvo exigência de autoridade competente por via legal.",
+      "Este endereço recebe avisos e perguntas de produto — uma só caixa.",
+    ],
+    nl: [
+      "Meld illegale content, beveiligingsproblemen of juridische kennisgevingen aan tools@freela.store.",
+      "Vermeld URL’s, een beschrijving en uw contactgegevens. Stuur geen kopieën van andermans identiteitsdocumenten, tenzij een bevoegde autoriteit dat via een wettelijk proces eist.",
+      "Dit adres ontvangt meldingen én productvragen — één mailbox.",
+    ],
+    tr: [
+      "Yasa dışı içerik, güvenlik sorunları veya hukuki bildirimleri tools@freela.store adresine bildirin.",
+      "URL, açıklama ve iletişim bilgilerinizi ekleyin. Yetkili bir makam yasal süreçle istemedikçe başkalarının kimlik belgelerinin kopyasını göndermeyin.",
+      "Bu adres hem bildirim hem ürün sorularını alır — tek kutu.",
+    ],
+    ar: [
+      "بلّغ عن محتوى غير قانوني أو مشكلات أمنية أو إشعارات قانونية إلى tools@freela.store.",
+      "ضمّن عناوين URL ووصفًا وبيانات الاتصال. لا ترسل نسخ وثائق هوية الغير إلا إذا طلبت جهة مختصة ذلك بإجراء قانوني.",
+      "هذا العنوان يستقبل الإشعارات وأسئلة المنتج — صندوق واحد.",
+    ],
+    he: [
+      "דווחו על תוכן לא חוקי, בעיות אבטחה או הודעות משפטיות ל-tools@freela.store.",
+      "כללו כתובות, תיאור ופרטי קשר. אל תשלחו עותקים של תעודות זהות של אחרים אלא אם רשות מוסמכת דורשת זאת בהליך חוקי.",
+      "הכתובת מקבלת הודעות ושאלות מוצר — תיבה אחת.",
+    ],
+  },
+  "data-deletion": {
+    en: [
+      "LOCAL_ONLY tools do not store your files on Freela servers. Close the tab to drop in-memory copies; we cannot delete what we never received.",
+      "To delete analytics events tied to a session cookie, email tools@freela.store with the session id from local storage key freela_sid, or clear site data in the browser.",
+      "Admin accounts are deleted by removing the admin_users row. Session cookies expire after twelve hours or on logout.",
+    ],
+    de: [
+      "LOCAL_ONLY-Werkzeuge speichern Ihre Dateien nicht auf Freela-Servern. Schließen Sie den Tab, um Kopien im Arbeitsspeicher zu verwerfen; wir können nicht löschen, was wir nie erhalten haben.",
+      "Um Analytik-Ereignisse einer Session zu löschen, schreiben Sie an tools@freela.store mit der Session-ID aus dem localStorage-Schlüssel freela_sid, oder löschen Sie die Website-Daten im Browser.",
+      "Admin-Konten werden durch Entfernen der admin_users-Zeile gelöscht. Session-Cookies enden nach zwölf Stunden oder beim Abmelden.",
+    ],
+    uk: [
+      "Інструменти LOCAL_ONLY не зберігають ваші файли на серверах Freela. Закрийте вкладку, щоб скинути копії в пам’яті; ми не можемо видалити те, чого не отримували.",
+      "Щоб видалити події аналітики сесії, напишіть на tools@freela.store з session id з ключа localStorage freela_sid або очистіть дані сайту в браузері.",
+      "Облікові записи адміністратора видаляються рядком admin_users. Сесійні cookies закінчуються за дванадцять годин або після виходу.",
+    ],
+    pl: [
+      "Narzędzia LOCAL_ONLY nie przechowują Twoich plików na serwerach Freeli. Zamknij kartę, aby odrzucić kopie w pamięci; nie usuniemy tego, czego nigdy nie otrzymaliśmy.",
+      "Aby usunąć zdarzenia analityki powiązane z ciasteczkiem sesji, napisz na tools@freela.store z identyfikatorem z klucza localStorage freela_sid albo wyczyść dane witryny w przeglądarce.",
+      "Konta admina usuwa się przez skasowanie wiersza admin_users. Ciasteczka sesji wygasają po dwunastu godzinach lub po wylogowaniu.",
+    ],
+    fr: [
+      "Les outils LOCAL_ONLY ne stockent pas vos fichiers sur les serveurs Freela. Fermez l’onglet pour jeter les copies en mémoire ; nous ne pouvons pas supprimer ce que nous n’avons jamais reçu.",
+      "Pour supprimer les événements analytiques liés à un cookie de session, écrivez à tools@freela.store avec l’identifiant de session (clé localStorage freela_sid), ou effacez les données du site dans le navigateur.",
+      "Les comptes admin sont supprimés en ôtant la ligne admin_users. Les cookies de session expirent après douze heures ou à la déconnexion.",
+    ],
+    es: [
+      "Las herramientas LOCAL_ONLY no guardan tus archivos en servidores de Freela. Cierra la pestaña para soltar copias en memoria; no podemos borrar lo que nunca recibimos.",
+      "Para borrar eventos de analítica ligados a una cookie de sesión, escribe a tools@freela.store con el id de sesión de la clave localStorage freela_sid, o borra los datos del sitio en el navegador.",
+      "Las cuentas de admin se eliminan quitando la fila admin_users. Las cookies de sesión caducan a las doce horas o al cerrar sesión.",
+    ],
+    it: [
+      "Gli strumenti LOCAL_ONLY non memorizzano i tuoi file sui server Freela. Chiudi la scheda per scartare le copie in memoria; non possiamo cancellare ciò che non abbiamo mai ricevuto.",
+      "Per cancellare gli eventi analytics legati a un cookie di sessione, scrivi a tools@freela.store con l’id di sessione dalla chiave localStorage freela_sid, oppure cancella i dati del sito nel browser.",
+      "Gli account admin si eliminano rimuovendo la riga admin_users. I cookie di sessione scadono dopo dodici ore o al logout.",
+    ],
+    pt: [
+      "As ferramentas LOCAL_ONLY não guardam os seus ficheiros nos servidores da Freela. Feche o separador para largar cópias em memória; não podemos apagar o que nunca recebemos.",
+      "Para apagar eventos de analítica ligados a um cookie de sessão, escreva para tools@freela.store com o id de sessão da chave localStorage freela_sid, ou limpe os dados do sítio no navegador.",
+      "Contas de admin apagam-se removendo a linha admin_users. Os cookies de sessão expiram ao fim de doze horas ou no logout.",
+    ],
+    nl: [
+      "LOCAL_ONLY-tools slaan uw bestanden niet op Freela-servers op. Sluit het tabblad om kopieën in het geheugen te laten vallen; we kunnen niet wissen wat we nooit hebben ontvangen.",
+      "Om analytics-events van een sessiecookie te wissen, mail tools@freela.store met de session-id uit localStorage-sleutel freela_sid, of wis de sitegegevens in de browser.",
+      "Admin-accounts worden verwijderd door de rij admin_users te schrappen. Sessiecookies verlopen na twaalf uur of bij uitloggen.",
+    ],
+    tr: [
+      "LOCAL_ONLY araçlar dosyalarınızı Freela sunucularında saklamaz. Bellekteki kopyaları atmak için sekmeyi kapatın; hiç almadığımızı silemeyiz.",
+      "Oturum çerezine bağlı analitik olaylarını silmek için localStorage anahtarı freela_sid’deki oturum kimliğiyle tools@freela.store adresine yazın veya tarayıcıda site verilerini temizleyin.",
+      "Yönetici hesapları admin_users satırı silinerek kaldırılır. Oturum çerezleri on iki saatte veya çıkışta biter.",
+    ],
+    ar: [
+      "أدوات LOCAL_ONLY لا تخزّن ملفاتك على خوادم Freela. أغلق التبويب لإسقاط النسخ في الذاكرة؛ لا يمكننا حذف ما لم نستلمه.",
+      "لحذف أحداث التحليلات المرتبطة بملف ارتباط الجلسة، راسل tools@freela.store بمعرّف الجلسة من مفتاح localStorage المسمّى freela_sid، أو امسح بيانات الموقع في المتصفح.",
+      "تُحذف حسابات المشرف بإزالة صف admin_users. تنتهي ملفات ارتباط الجلسة بعد اثنتي عشرة ساعة أو عند تسجيل الخروج.",
+    ],
+    he: [
+      "כלי LOCAL_ONLY לא שומרים את הקבצים שלכם בשרתי Freela. סגרו את הלשונית כדי לשחרר עותקים בזיכרון; איננו יכולים למחוק מה שמעולם לא קיבלנו.",
+      "כדי למחוק אירועי אנליטיקה של עוגיית סשן, כתבו ל-tools@freela.store עם מזהה הסשן ממפתח localStorage בשם freela_sid, או נקו נתוני אתר בדפדפן.",
+      "חשבונות מנהל נמחקים בהסרת שורת admin_users. עוגיות סשן פגות אחרי שתים-עשרה שעות או ביציאה.",
+    ],
+  },
+  "vendors": {
+    en: [
+      "This release has no third-party file processors. THIRD_PARTY_PROCESSING tools are not enabled in production.",
+      "Hosting, DNS and future advertising vendors will be listed here before they receive personal data. No production traffic is sent to unnamed APIs.",
+      "Vendor questions: tools@freela.store.",
+    ],
+    de: [
+      "Diese Version hat keine Drittanbieter für Dateiverarbeitung. THIRD_PARTY_PROCESSING-Werkzeuge sind in Produktion nicht aktiv.",
+      "Hosting, DNS und künftige Werbeanbieter werden hier genannt, bevor sie personenbezogene Daten erhalten. Produktionsverkehr geht nicht an unbenannte APIs.",
+      "Fragen zu Anbietern: tools@freela.store.",
+    ],
+    uk: [
+      "У цьому випуску немає сторонніх обробників файлів. Інструменти THIRD_PARTY_PROCESSING у продакшені вимкнені.",
+      "Хостинг, DNS і майбутні рекламні постачальники будуть перелічені тут, перш ніж отримають персональні дані. Продакшен-трафік не йде на неназвані API.",
+      "Питання про постачальників: tools@freela.store.",
+    ],
+    pl: [
+      "W tej wersji nie ma zewnętrznych procesorów plików. Narzędzia THIRD_PARTY_PROCESSING nie są włączone w produkcji.",
+      "Hosting, DNS i przyszli dostawcy reklam będą tu wymienieni, zanim otrzymają dane osobowe. Ruch produkcyjny nie idzie do nienazwanych API.",
+      "Pytania o dostawców: tools@freela.store.",
+    ],
+    fr: [
+      "Cette version n’a aucun prestataire tiers de fichiers. Les outils THIRD_PARTY_PROCESSING ne sont pas activés en production.",
+      "L’hébergement, le DNS et de futurs régies publicitaires seront listés ici avant de recevoir des données personnelles. Aucun trafic de production n’est envoyé vers des API non nommées.",
+      "Questions sur les prestataires : tools@freela.store.",
+    ],
+    es: [
+      "Esta versión no tiene procesadores de archivos de terceros. Las herramientas THIRD_PARTY_PROCESSING no están activas en producción.",
+      "Alojamiento, DNS y futuros proveedores de publicidad se listarán aquí antes de recibir datos personales. El tráfico de producción no se envía a API sin nombre.",
+      "Preguntas sobre proveedores: tools@freela.store.",
+    ],
+    it: [
+      "Questa versione non ha processori file di terze parti. Gli strumenti THIRD_PARTY_PROCESSING non sono attivi in produzione.",
+      "Hosting, DNS e futuri vendor pubblicitari saranno elencati qui prima di ricevere dati personali. Il traffico di produzione non va verso API senza nome.",
+      "Domande sui fornitori: tools@freela.store.",
+    ],
+    pt: [
+      "Esta versão não tem processadores de ficheiros de terceiros. Ferramentas THIRD_PARTY_PROCESSING não estão ativas em produção.",
+      "Alojamento, DNS e futuros fornecedores de publicidade serão listados aqui antes de receberem dados pessoais. O tráfego de produção não vai para API sem nome.",
+      "Perguntas sobre fornecedores: tools@freela.store.",
+    ],
+    nl: [
+      "Deze release heeft geen externe bestandsverwerkers. THIRD_PARTY_PROCESSING-tools staan niet aan in productie.",
+      "Hosting, DNS en toekomstige advertentiepartners staan hier voordat ze persoonsgegevens ontvangen. Productieverkeer gaat niet naar naamloze API’s.",
+      "Vragen over leveranciers: tools@freela.store.",
+    ],
+    tr: [
+      "Bu sürümde üçüncü taraf dosya işleyicisi yoktur. THIRD_PARTY_PROCESSING araçları üretimde kapalıdır.",
+      "Barındırma, DNS ve gelecekteki reklam satıcıları kişisel veri almadan önce burada listelenir. Üretim trafiği adsız API’lere gitmez.",
+      "Satıcı soruları: tools@freela.store.",
+    ],
+    ar: [
+      "لا يوجد في هذا الإصدار معالجو ملفات من أطراف ثالثة. أدوات THIRD_PARTY_PROCESSING غير مفعّلة في الإنتاج.",
+      "سيُذكر الاستضافة وDNS وموردو الإعلان المستقبليون هنا قبل أن يتلقوا بيانات شخصية. لا يُرسل مرور الإنتاج إلى واجهات برمجة غير مسمّاة.",
+      "أسئلة عن الموردين: tools@freela.store.",
+    ],
+    he: [
+      "בגרסה זו אין מעבדי קבצים של צד שלישי. כלי THIRD_PARTY_PROCESSING אינם פעילים בייצור.",
+      "אחסון, DNS וספקי פרסום עתידיים יופיעו כאן לפני שיקבלו נתונים אישיים. תעבורת ייצור לא נשלחת ל-API בלי שם.",
+      "שאלות על ספקים: tools@freela.store.",
+    ],
+  },
+  "file-processing": {
+    en: [
+      "Every file-capable tool declares exactly one processingMode: LOCAL_ONLY, SERVER_PROCESSING or THIRD_PARTY_PROCESSING. The badge on the tool is generated from that field.",
+      "This catalogue currently ships LOCAL_ONLY tools only. There is no server upload endpoint for user documents, no public object URLs, and no file history.",
+      "If a future tool needs server processing, it must use temporary storage, size and time limits, TLS, deletion after processing, and cleanup jobs before it is published.",
+      "Questions about how a tool handles files: tools@freela.store.",
+    ],
+    de: [
+      "Jedes dateifähige Werkzeug hat genau einen processingMode: LOCAL_ONLY, SERVER_PROCESSING oder THIRD_PARTY_PROCESSING. Das Badge kommt aus diesem Feld.",
+      "Der Katalog enthält derzeit nur LOCAL_ONLY-Werkzeuge. Es gibt keinen Upload-Endpunkt für Nutzerdokumente, keine öffentlichen Objekt-URLs und keine Dateihistorie.",
+      "Falls ein künftiges Werkzeug Serververarbeitung braucht, müssen temporärer Speicher, Größen- und Zeitlimits, TLS, Löschung nach der Verarbeitung und Aufräumjobs vor der Veröffentlichung stehen.",
+      "Fragen zur Dateiverarbeitung eines Werkzeugs: tools@freela.store.",
+    ],
+    uk: [
+      "Кожен файловий інструмент має рівно один processingMode: LOCAL_ONLY, SERVER_PROCESSING або THIRD_PARTY_PROCESSING. Значок береться з цього поля.",
+      "Зараз каталог містить лише LOCAL_ONLY. Немає ендпоінта завантаження документів, публічних object URL і історії файлів.",
+      "Якщо майбутній інструмент потребуватиме сервера, перед публікацією потрібні тимчасове сховище, ліміти розміру й часу, TLS, видалення після обробки та очищення.",
+      "Питання про обробку файлів: tools@freela.store.",
+    ],
+    pl: [
+      "Każde narzędzie plikowe ma dokładnie jeden processingMode: LOCAL_ONLY, SERVER_PROCESSING lub THIRD_PARTY_PROCESSING. Znacznik pochodzi z tego pola.",
+      "Katalog obecnie zawiera tylko narzędzia LOCAL_ONLY. Nie ma endpointu wgrywania dokumentów, publicznych object URL ani historii plików.",
+      "Jeśli przyszłe narzędzie będzie wymagało serwera, przed publikacją musi mieć tymczasowy magazyn, limity rozmiaru i czasu, TLS, usuwanie po przetworzeniu i zadania sprzątające.",
+      "Pytania o przetwarzanie plików: tools@freela.store.",
+    ],
+    fr: [
+      "Chaque outil fichier déclare exactement un processingMode : LOCAL_ONLY, SERVER_PROCESSING ou THIRD_PARTY_PROCESSING. Le badge vient de ce champ.",
+      "Le catalogue ne propose actuellement que des outils LOCAL_ONLY. Pas de point de dépôt serveur pour les documents, pas d’URL d’objet publiques, pas d’historique de fichiers.",
+      "Si un futur outil a besoin du serveur, il devra avoir un stockage temporaire, des limites de taille et de durée, TLS, une suppression après traitement et des tâches de nettoyage avant publication.",
+      "Questions sur le traitement des fichiers : tools@freela.store.",
+    ],
+    es: [
+      "Cada herramienta de archivos declara exactamente un processingMode: LOCAL_ONLY, SERVER_PROCESSING o THIRD_PARTY_PROCESSING. La insignia sale de ese campo.",
+      "El catálogo solo incluye herramientas LOCAL_ONLY. No hay endpoint de subida de documentos, ni URL de objeto públicas, ni historial de archivos.",
+      "Si una herramienta futura necesita servidor, deberá tener almacenamiento temporal, límites de tamaño y tiempo, TLS, borrado tras el proceso y tareas de limpieza antes de publicarse.",
+      "Preguntas sobre el tratamiento de archivos: tools@freela.store.",
+    ],
+    it: [
+      "Ogni strumento file dichiara esattamente un processingMode: LOCAL_ONLY, SERVER_PROCESSING o THIRD_PARTY_PROCESSING. Il badge deriva da quel campo.",
+      "Il catalogo include solo strumenti LOCAL_ONLY. Non c’è endpoint di upload documenti, URL oggetto pubbliche né cronologia file.",
+      "Se uno strumento futuro richiederà il server, dovrà avere storage temporaneo, limiti di dimensione e tempo, TLS, cancellazione dopo l’elaborazione e job di pulizia prima della pubblicazione.",
+      "Domande sull’elaborazione file: tools@freela.store.",
+    ],
+    pt: [
+      "Cada ferramenta de ficheiros declara exatamente um processingMode: LOCAL_ONLY, SERVER_PROCESSING ou THIRD_PARTY_PROCESSING. O distintivo vem desse campo.",
+      "O catálogo só inclui ferramentas LOCAL_ONLY. Não há endpoint de envio de documentos, URL de objeto públicas nem histórico de ficheiros.",
+      "Se uma ferramenta futura precisar de servidor, terá de ter armazenamento temporário, limites de tamanho e tempo, TLS, apagamento após o processamento e tarefas de limpeza antes de ser publicada.",
+      "Perguntas sobre o processamento de ficheiros: tools@freela.store.",
+    ],
+    nl: [
+      "Elke bestands-tool heeft precies één processingMode: LOCAL_ONLY, SERVER_PROCESSING of THIRD_PARTY_PROCESSING. De badge komt uit dat veld.",
+      "De catalogus bevat nu alleen LOCAL_ONLY-tools. Er is geen upload-endpoint voor documenten, geen publieke object-URL’s en geen bestandshistorie.",
+      "Als een toekomstige tool de server nodig heeft, moet die tijdelijke opslag, grootte- en tijdslimieten, TLS, verwijdering na verwerking en opruimjobs hebben vóór publicatie.",
+      "Vragen over bestandsverwerking: tools@freela.store.",
+    ],
+    tr: [
+      "Dosya işleyen her araç tam olarak bir processingMode bildirir: LOCAL_ONLY, SERVER_PROCESSING veya THIRD_PARTY_PROCESSING. Rozet bu alandan gelir.",
+      "Katalog şu an yalnızca LOCAL_ONLY araçlar sunar. Belge yükleme uç noktası, genel nesne URL’si ve dosya geçmişi yoktur.",
+      "Gelecekte bir araç sunucu gerektirirse yayımlanmadan önce geçici depolama, boyut ve süre sınırları, TLS, işlem sonrası silme ve temizlik işleri olmalıdır.",
+      "Dosya işleme soruları: tools@freela.store.",
+    ],
+    ar: [
+      "كل أداة ملفات تعلن processingMode واحدًا بالضبط: LOCAL_ONLY أو SERVER_PROCESSING أو THIRD_PARTY_PROCESSING. الشارة من هذا الحقل.",
+      "الكتالوج يضم حاليًا أدوات LOCAL_ONLY فقط. لا توجد نقطة رفع للمستندات ولا عناوين كائنات عامة ولا سجل ملفات.",
+      "إن احتاجت أداة مستقبلية الخادم فيجب أن تتوفر تخزين مؤقت وحدود حجم ووقت وTLS وحذف بعد المعالجة ومهام تنظيف قبل النشر.",
+      "أسئلة عن معالجة الملفات: tools@freela.store.",
+    ],
+    he: [
+      "כל כלי קבצים מצהיר על processingMode אחד בדיוק: LOCAL_ONLY, SERVER_PROCESSING או THIRD_PARTY_PROCESSING. התג נגזר מהשדה.",
+      "הקטלוג כולל כרגע רק כלי LOCAL_ONLY. אין נקודת העלאה למסמכים, אין כתובות אובייקט ציבוריות ואין היסטוריית קבצים.",
+      "אם כלי עתידי יזדקק לשרת, לפני פרסום נדרשים אחסון זמני, מגבלות גודל וזמן, TLS, מחיקה אחרי עיבוד ומשימות ניקוי.",
+      "שאלות על עיבוד קבצים: tools@freela.store.",
+    ],
+  },
+  "copyright": {
+    en: [
+      "If you are a rights holder and believe material on Freela infringes your copyright, write to tools@freela.store with the URL, a description of the work, and a statement made in good faith.",
+      "Freela hosts tool interfaces and generated results in the browser. We do not keep a library of user uploads in this release. Notices that require us to take down a page in the registry will be reviewed.",
+      "This notice-and-takedown process will be aligned with the jurisdictions actually used at launch, after legal review.",
+    ],
+    de: [
+      "Wenn Sie Rechteinhaber sind und Material auf Freela Ihr Urheberrecht verletzt, schreiben Sie an tools@freela.store mit URL, Beschreibung des Werks und einer gutgläubigen Erklärung.",
+      "Freela stellt Werkzeugoberflächen und im Browser erzeugte Ergebnisse bereit. In dieser Version führen wir keine Bibliothek von Nutzer-Uploads. Hinweise, eine Registerseite zu entfernen, werden geprüft.",
+      "Das Notice-and-Takedown-Verfahren wird nach juristischer Prüfung an die tatsächlich genutzten Rechtsordnungen angeglichen.",
+    ],
+    uk: [
+      "Якщо ви правовласник і вважаєте, що матеріал на Freela порушує авторське право, напишіть на tools@freela.store з URL, описом твору та добросовісною заявою.",
+      "Freela показує інтерфейси інструментів і результати в браузері. У цьому випуску немає бібліотеки завантажень користувачів. Запити прибрати сторінку з реєстру розглядаються.",
+      "Процедуру notice-and-takedown узгодять із юрисдикціями запуску після юридичної перевірки.",
+    ],
+    pl: [
+      "Jeśli jesteś uprawnionym i uważasz, że materiał na Freeli narusza Twoje prawa, napisz na tools@freela.store z URL, opisem utworu i oświadczeniem w dobrej wierze.",
+      "Freela pokazuje interfejsy narzędzi i wyniki w przeglądarce. W tej wersji nie prowadzimy biblioteki wgrań użytkowników. Żądania zdjęcia strony z rejestru są rozpatrywane.",
+      "Procedura notice-and-takedown zostanie dopasowana do jurysdykcji startu po przeglądzie prawnym.",
+    ],
+    fr: [
+      "Si vous êtes titulaire de droits et estimez qu’un contenu sur Freela porte atteinte à votre droit d’auteur, écrivez à tools@freela.store avec l’URL, une description de l’œuvre et une déclaration de bonne foi.",
+      "Freela héberge des interfaces d’outils et des résultats générés dans le navigateur. Cette version ne conserve pas une bibliothèque d’envois utilisateurs. Les demandes de retrait d’une page du registre sont examinées.",
+      "La procédure de notification et de retrait sera alignée sur les juridictions réellement utilisées au lancement, après relecture juridique.",
+    ],
+    es: [
+      "Si eres titular de derechos y crees que material en Freela infringe tu copyright, escribe a tools@freela.store con la URL, una descripción de la obra y una declaración de buena fe.",
+      "Freela muestra interfaces de herramientas y resultados generados en el navegador. En esta versión no guardamos una biblioteca de subidas de usuarios. Las solicitudes de retirar una página del registro se revisan.",
+      "El proceso de aviso y retirada se alineará con las jurisdicciones reales del lanzamiento, tras revisión legal.",
+    ],
+    it: [
+      "Se sei titolare di diritti e ritieni che materiale su Freela violi il tuo copyright, scrivi a tools@freela.store con URL, descrizione dell’opera e dichiarazione in buona fede.",
+      "Freela ospita interfacce degli strumenti e risultati generati nel browser. In questa versione non teniamo una libreria di upload utente. Le richieste di rimuovere una pagina dal registro sono esaminate.",
+      "La procedura notice-and-takedown sarà allineata alle giurisdizioni effettive del lancio, dopo revisione legale.",
+    ],
+    pt: [
+      "Se for titular de direitos e considerar que material na Freela viola os seus direitos de autor, escreva para tools@freela.store com o URL, uma descrição da obra e uma declaração de boa-fé.",
+      "A Freela apresenta interfaces de ferramentas e resultados gerados no navegador. Nesta versão não guardamos uma biblioteca de envios de utilizadores. Pedidos para retirar uma página do registo são revistos.",
+      "O processo de aviso e retirada será alinhado com as jurisdições reais do lançamento, após revisão jurídica.",
+    ],
+    nl: [
+      "Als u rechthebbende bent en meent dat materiaal op Freela uw auteursrecht schendt, schrijf naar tools@freela.store met de URL, een beschrijving van het werk en een verklaring te goeder trouw.",
+      "Freela toont toolinterfaces en resultaten in de browser. In deze release bewaren we geen bibliotheek van gebruikersuploads. Verzoeken om een registerpagina te verwijderen worden beoordeeld.",
+      "De notice-and-takedown-procedure wordt na juridische review afgestemd op de jurisdicties van de lancering.",
+    ],
+    tr: [
+      "Hak sahibiyseniz ve Freela’daki bir malzemenin telifinizi ihlal ettiğini düşünüyorsanız URL, eserin tanımı ve iyi niyet beyanıyla tools@freela.store adresine yazın.",
+      "Freela araç arayüzlerini ve tarayıcıda üretilen sonuçları barındırır. Bu sürümde kullanıcı yüklemelerinden bir kütüphane tutmuyoruz. Kayıttan sayfa kaldırma bildirimleri incelenir.",
+      "Bildirim-kaldırma süreci lansmandaki yargı yerlerine, hukuki incelemeden sonra hizalanır.",
+    ],
+    ar: [
+      "إن كنت صاحب حقوق وتعتقد أن مادة على Freela تنتهك حقوقك، اكتب إلى tools@freela.store مع عنوان URL ووصف العمل وإقرار بحسن نية.",
+      "تعرض Freela واجهات الأدوات والنتائج المولَّدة في المتصفح. لا نحتفظ بمكتبة لرفوعات المستخدمين في هذا الإصدار. تُراجع طلبات إزالة صفحة من السجل.",
+      "ستُواءم عملية الإشعار والإزالة مع الولايات القضائية الفعلية عند الإطلاق بعد مراجعة قانونية.",
+    ],
+    he: [
+      "אם אתם בעלי זכויות וסבורים שחומר ב-Freela מפר זכויות יוצרים, כתבו ל-tools@freela.store עם כתובת, תיאור היצירה והצהרה בתום לב.",
+      "Freela מציגה ממשקי כלים ותוצאות שנוצרו בדפדפן. בגרסה זו אין ספריית העלאות משתמש. בקשות להסיר דף מהרשם נבדקות.",
+      "תהליך ההודעה וההסרה ייושר עם תחומי השיפוט בפועל בהשקה, אחרי סקירה משפטית.",
+    ],
+  },
+  "data-inventory": {
+    en: [
+      "What we collect today, why, where it lives, how long we keep it, who processes it, and how it is deleted:",
+      "Admin email + password hash — Why: authenticate the owner dashboard. Where: SQLite on the host. Retention: until the account is removed. Processor: Freela (first party). Deletion: delete the admin_users row or wipe the database file.",
+      "Admin session token hash — Why: keep an authenticated session. Where: SQLite + httpOnly cookie. Retention: 12 hours. Processor: Freela. Deletion: logout or expiry deletes the session row.",
+      "Privacy-safe analytics events (tool id, locale, session UUID, success/error, path) — Why: understand which tools work and fail. Where: SQLite. Retention: until export or wipe. Processor: Freela, only with analytics consent. Deletion: wipe the events table or request deletion via email.",
+      "Preferred locale cookie — Why: remember language. Where: browser cookie and localStorage. Retention: 1 year. Processor: your device. Deletion: clear site data.",
+      "User files and pasted document contents — Why: run the selected tool. Where: browser memory only for LOCAL_ONLY tools. Retention: until the tab is closed or a new file is chosen. Processor: none (LOCAL_ONLY). Deletion: object URLs are revoked; memory is released on navigation.",
+      "Inventory questions: tools@freela.store.",
+    ],
+    de: [
+      "Was wir heute erheben, warum, wo es liegt, wie lange, wer es verarbeitet und wie es gelöscht wird:",
+      "Admin-E-Mail + Passwort-Hash — Zweck: Dashboard-Anmeldung. Ort: SQLite auf dem Host. Speicherdauer: bis das Konto entfernt wird. Verarbeiter: Freela. Löschung: admin_users-Zeile oder Datenbankdatei löschen.",
+      "Admin-Session-Token-Hash — Zweck: angemeldete Sitzung. Ort: SQLite + httpOnly-Cookie. Speicherdauer: 12 Stunden. Verarbeiter: Freela. Löschung: Logout oder Ablauf.",
+      "Datenschutzarme Analytik (Tool-ID, Locale, Session-UUID, Erfolg/Fehler, Pfad) — Zweck: Funktion und Fehler verstehen. Ort: SQLite. Speicherdauer: bis Export oder Wipe. Verarbeiter: Freela, nur mit Einwilligung. Löschung: Ereignistabelle leeren oder per E-Mail verlangen.",
+      "Locale-Cookie — Zweck: Sprache merken. Ort: Cookie und localStorage. Speicherdauer: 1 Jahr. Verarbeiter: Ihr Gerät. Löschung: Website-Daten löschen.",
+      "Nutzerdateien und eingefügter Text — Zweck: das gewählte Werkzeug ausführen. Ort: nur Browser-Speicher bei LOCAL_ONLY. Speicherdauer: bis Tab-Schluss oder neue Datei. Verarbeiter: keiner (LOCAL_ONLY). Löschung: Object-URLs werden freigegeben.",
+      "Fragen zum Inventar: tools@freela.store.",
+    ],
+    uk: [
+      "Що збираємо сьогодні, навіщо, де зберігається, як довго, хто обробляє і як видаляється:",
+      "Email адміністратора + хеш пароля — Навіщо: вхід у панель. Де: SQLite на хості. Строк: поки обліковий запис не видалено. Оператор: Freela. Видалення: рядок admin_users або файл БД.",
+      "Хеш токена сесії адміністратора — Навіщо: тримати сесію. Де: SQLite + httpOnly cookie. Строк: 12 годин. Оператор: Freela. Видалення: вихід або закінчення строку.",
+      "Аналітика без вмісту файлів (id інструмента, локаль, UUID сесії, успіх/помилка, шлях) — Навіщо: розуміти збої. Де: SQLite. Строк: до експорту чи очищення. Оператор: Freela лише за згодою. Видалення: таблиця подій або лист.",
+      "Cookie мови — Навіщо: пам’ятати мову. Де: cookie і localStorage. Строк: 1 рік. Оператор: ваш пристрій. Видалення: очистити дані сайту.",
+      "Файли користувача і вставлений текст — Навіщо: запустити інструмент. Де: лише пам’ять браузера для LOCAL_ONLY. Строк: до закриття вкладки. Оператор: немає. Видалення: object URL відкликаються.",
+      "Питання щодо інвентаря: tools@freela.store.",
+    ],
+    pl: [
+      "Co zbieramy dziś, po co, gdzie leży, jak długo, kto przetwarza i jak usuwać:",
+      "E-mail admina + hash hasła — Cel: logowanie do panelu. Gdzie: SQLite na hoście. Czas: do usunięcia konta. Podmiot: Freela. Usuwanie: wiersz admin_users lub plik bazy.",
+      "Hash tokenu sesji admina — Cel: utrzymać sesję. Gdzie: SQLite + ciasteczko httpOnly. Czas: 12 godzin. Podmiot: Freela. Usuwanie: wylogowanie lub wygaśnięcie.",
+      "Analityka bez treści plików (id narzędzia, locale, UUID sesji, sukces/błąd, ścieżka) — Cel: rozumieć awarie. Gdzie: SQLite. Czas: do eksportu lub wyczyszczenia. Podmiot: Freela tylko za zgodą. Usuwanie: tabela zdarzeń lub e-mail.",
+      "Ciasteczko języka — Cel: zapamiętać język. Gdzie: ciasteczko i localStorage. Czas: 1 rok. Podmiot: Twoje urządzenie. Usuwanie: wyczyść dane witryny.",
+      "Pliki użytkownika i wklejony tekst — Cel: uruchomić narzędzie. Gdzie: tylko pamięć przeglądarki przy LOCAL_ONLY. Czas: do zamknięcia karty. Podmiot: brak. Usuwanie: object URL są odwoływane.",
+      "Pytania o inwentarz: tools@freela.store.",
+    ],
+    fr: [
+      "Ce que nous collectons aujourd’hui, pourquoi, où, combien de temps, qui traite et comment supprimer :",
+      "E-mail admin + hash du mot de passe — Pourquoi : authentifier le tableau de bord. Où : SQLite sur l’hôte. Durée : jusqu’à suppression du compte. Traiteur : Freela. Suppression : ligne admin_users ou fichier de base.",
+      "Hash du jeton de session admin — Pourquoi : maintenir la session. Où : SQLite + cookie httpOnly. Durée : 12 heures. Traiteur : Freela. Suppression : déconnexion ou expiration.",
+      "Événements analytiques sans contenu de fichier (id d’outil, locale, UUID de session, succès/erreur, chemin) — Pourquoi : comprendre les pannes. Où : SQLite. Durée : jusqu’à export ou purge. Traiteur : Freela avec consentement. Suppression : table d’événements ou e-mail.",
+      "Cookie de langue — Pourquoi : mémoriser la langue. Où : cookie et localStorage. Durée : 1 an. Traiteur : votre appareil. Suppression : effacer les données du site.",
+      "Fichiers utilisateur et texte collé — Pourquoi : exécuter l’outil. Où : mémoire du navigateur seulement (LOCAL_ONLY). Durée : jusqu’à fermeture de l’onglet. Traiteur : aucun. Suppression : révocation des object URL.",
+      "Questions sur l’inventaire : tools@freela.store.",
+    ],
+    es: [
+      "Qué recogemos hoy, por qué, dónde vive, cuánto tiempo, quién lo trata y cómo se borra:",
+      "Email de admin + hash de contraseña — Por qué: autenticar el panel. Dónde: SQLite en el host. Retención: hasta borrar la cuenta. Encargado: Freela. Borrado: fila admin_users o archivo de base.",
+      "Hash del token de sesión de admin — Por qué: mantener la sesión. Dónde: SQLite + cookie httpOnly. Retención: 12 horas. Encargado: Freela. Borrado: cierre de sesión o caducidad.",
+      "Eventos analíticos sin contenido de archivo (id de herramienta, locale, UUID de sesión, éxito/error, ruta) — Por qué: entender fallos. Dónde: SQLite. Retención: hasta exportar o vaciar. Encargado: Freela con consentimiento. Borrado: tabla de eventos o correo.",
+      "Cookie de idioma — Por qué: recordar el idioma. Dónde: cookie y localStorage. Retención: 1 año. Encargado: tu dispositivo. Borrado: borrar datos del sitio.",
+      "Archivos de usuario y texto pegado — Por qué: ejecutar la herramienta. Dónde: solo memoria del navegador (LOCAL_ONLY). Retención: hasta cerrar la pestaña. Encargado: ninguno. Borrado: se revocan las object URL.",
+      "Preguntas sobre el inventario: tools@freela.store.",
+    ],
+    it: [
+      "Cosa raccogliamo oggi, perché, dove vive, per quanto, chi lo tratta e come si cancella:",
+      "Email admin + hash password — Perché: autenticare la dashboard. Dove: SQLite sull’host. Conservazione: fino alla rimozione dell’account. Titolare: Freela. Cancellazione: riga admin_users o file database.",
+      "Hash token sessione admin — Perché: mantenere la sessione. Dove: SQLite + cookie httpOnly. Conservazione: 12 ore. Titolare: Freela. Cancellazione: logout o scadenza.",
+      "Eventi analytics senza contenuto file (id strumento, locale, UUID sessione, successo/errore, percorso) — Perché: capire i guasti. Dove: SQLite. Conservazione: fino a export o wipe. Titolare: Freela con consenso. Cancellazione: tabella eventi o email.",
+      "Cookie lingua — Perché: ricordare la lingua. Dove: cookie e localStorage. Conservazione: 1 anno. Titolare: il tuo dispositivo. Cancellazione: cancella i dati del sito.",
+      "File utente e testo incollato — Perché: eseguire lo strumento. Dove: solo memoria del browser (LOCAL_ONLY). Conservazione: fino alla chiusura scheda. Titolare: nessuno. Cancellazione: object URL revocate.",
+      "Domande sull’inventario: tools@freela.store.",
+    ],
+    pt: [
+      "O que recolhemos hoje, porquê, onde vive, durante quanto tempo, quem trata e como se apaga:",
+      "Email de admin + hash da palavra-passe — Porquê: autenticar o painel. Onde: SQLite no anfitrião. Retenção: até remover a conta. Responsável: Freela. Apagamento: linha admin_users ou ficheiro da base.",
+      "Hash do token de sessão de admin — Porquê: manter a sessão. Onde: SQLite + cookie httpOnly. Retenção: 12 horas. Responsável: Freela. Apagamento: logout ou expiração.",
+      "Eventos de analítica sem conteúdo de ficheiro (id da ferramenta, locale, UUID de sessão, sucesso/erro, caminho) — Porquê: perceber falhas. Onde: SQLite. Retenção: até exportar ou limpar. Responsável: Freela com consentimento. Apagamento: tabela de eventos ou email.",
+      "Cookie de idioma — Porquê: lembrar o idioma. Onde: cookie e localStorage. Retenção: 1 ano. Responsável: o seu dispositivo. Apagamento: limpar dados do sítio.",
+      "Ficheiros do utilizador e texto colado — Porquê: executar a ferramenta. Onde: só memória do navegador (LOCAL_ONLY). Retenção: até fechar o separador. Responsável: nenhum. Apagamento: object URL são revogados.",
+      "Perguntas sobre o inventário: tools@freela.store.",
+    ],
+    nl: [
+      "Wat we vandaag verzamelen, waarom, waar het staat, hoe lang, wie het verwerkt en hoe het wordt gewist:",
+      "Admin-e-mail + wachtwoordhash — Waarom: dashboard authenticeren. Waar: SQLite op de host. Bewaartermijn: tot het account weg is. Verwerker: Freela. Wissen: rij admin_users of databasebestand.",
+      "Hash van admin-sessietoken — Waarom: sessie vasthouden. Waar: SQLite + httpOnly-cookie. Bewaartermijn: 12 uur. Verwerker: Freela. Wissen: uitloggen of verlopen.",
+      "Privacyveilige analytics (tool-id, locale, sessie-UUID, succes/fout, pad) — Waarom: storingen begrijpen. Waar: SQLite. Bewaartermijn: tot export of wipe. Verwerker: Freela met toestemming. Wissen: eventtabel of e-mail.",
+      "Taalcookie — Waarom: taal onthouden. Waar: cookie en localStorage. Bewaartermijn: 1 jaar. Verwerker: uw apparaat. Wissen: sitegegevens wissen.",
+      "Gebruikersbestanden en geplakte tekst — Waarom: de tool uitvoeren. Waar: alleen browsermengeheugen (LOCAL_ONLY). Bewaartermijn: tot het tabblad sluit. Verwerker: geen. Wissen: object-URL’s worden ingetrokken.",
+      "Vragen over de inventaris: tools@freela.store.",
+    ],
+    tr: [
+      "Bugün ne topluyoruz, neden, nerede duruyor, ne kadar, kim işliyor ve nasıl silinir:",
+      "Yönetici e-postası + parola özeti — Neden: paneli doğrulamak. Nerede: host’taki SQLite. Saklama: hesap silinene kadar. İşleyen: Freela. Silme: admin_users satırı veya veritabanı dosyası.",
+      "Yönetici oturum jetonu özeti — Neden: oturumu tutmak. Nerede: SQLite + httpOnly çerez. Saklama: 12 saat. İşleyen: Freela. Silme: çıkış veya süre dolumu.",
+      "Dosya içeriği olmayan analitik (araç kimliği, dil, oturum UUID, başarı/hata, yol) — Neden: arızaları anlamak. Nerede: SQLite. Saklama: dışa aktarma veya silmeye kadar. İşleyen: onayla Freela. Silme: olay tablosu veya e-posta.",
+      "Dil çerezi — Neden: dili hatırlamak. Nerede: çerez ve localStorage. Saklama: 1 yıl. İşleyen: cihazınız. Silme: site verilerini temizleyin.",
+      "Kullanıcı dosyaları ve yapıştırılan metin — Neden: aracı çalıştırmak. Nerede: yalnızca tarayıcı belleği (LOCAL_ONLY). Saklama: sekme kapanana kadar. İşleyen: yok. Silme: object URL iptal edilir.",
+      "Envanter soruları: tools@freela.store.",
+    ],
+    ar: [
+      "ما نجمعه اليوم ولماذا وأين يعيش ومدة الاحتفاظ ومن يعالجه وكيف يُحذف:",
+      "بريد المشرف + تجزئة كلمة المرور — لماذا: مصادقة لوحة التحكم. أين: SQLite على المضيف. الاحتفاظ: حتى حذف الحساب. المعالِج: Freela. الحذف: صف admin_users أو ملف قاعدة البيانات.",
+      "تجزئة رمز جلسة المشرف — لماذا: إبقاء الجلسة. أين: SQLite وملف ارتباط httpOnly. الاحتفاظ: 12 ساعة. المعالِج: Freela. الحذف: الخروج أو انتهاء المدة.",
+      "أحداث تحليلات بلا محتوى ملفات (معرّف الأداة، المحلية، UUID الجلسة، نجاح/خطأ، المسار) — لماذا: فهم الأعطال. أين: SQLite. الاحتفاظ: حتى التصدير أو المسح. المعالِج: Freela بالموافقة. الحذف: جدول الأحداث أو البريد.",
+      "ملف ارتباط اللغة — لماذا: تذكر اللغة. أين: ملف ارتباط وlocalStorage. الاحتفاظ: سنة. المعالِج: جهازك. الحذف: امسح بيانات الموقع.",
+      "ملفات المستخدم والنص الملصق — لماذا: تشغيل الأداة. أين: ذاكرة المتصفح فقط (LOCAL_ONLY). الاحتفاظ: حتى إغلاق التبويب. المعالِج: لا أحد. الحذف: تُلغى عناوين الكائنات.",
+      "أسئلة عن الجرد: tools@freela.store.",
+    ],
+    he: [
+      "מה אוספים היום, למה, איפה זה חי, כמה זמן, מי מעבד ואיך מוחקים:",
+      "אימייל מנהל + גיבוב סיסמה — למה: אימות לוח הבקרה. איפה: SQLite על המארח. שמירה: עד מחיקת החשבון. מעבד: Freela. מחיקה: שורת admin_users או קובץ מסד.",
+      "גיבוב אסימון סשן מנהל — למה: לשמור סשן. איפה: SQLite + עוגיית httpOnly. שמירה: 12 שעות. מעבד: Freela. מחיקה: יציאה או פקיעה.",
+      "אירועי אנליטיקה בלי תוכן קבצים (מזהה כלי, שפה, UUID סשן, הצלחה/שגיאה, נתיב) — למה: להבין תקלות. איפה: SQLite. שמירה: עד ייצוא או ניקוי. מעבד: Freela בהסכמה. מחיקה: טבלת אירועים או אימייל.",
+      "עוגיית שפה — למה: לזכור שפה. איפה: עוגייה ו-localStorage. שמירה: שנה. מעבד: המכשיר שלכם. מחיקה: נקו נתוני אתר.",
+      "קבצי משתמש וטקסט מודבק — למה: להריץ את הכלי. איפה: רק זיכרון הדפדפן (LOCAL_ONLY). שמירה: עד סגירת הלשונית. מעבד: אין. מחיקה: כתובות אובייקט מבוטלות.",
+      "שאלות על המלאי: tools@freela.store.",
+    ],
+  },
 };
 
 export function legalBody(slug: LegalSlug, locale: string): string[] {
   const code: Locale = isLocale(locale) ? locale : "en";
-  if (slug === "about") return ABOUT[code];
-  if (slug === "privacy") return PRIVACY[code];
-  return EN[slug];
+  return BODIES[slug][code];
 }
+
+export function legalMentionsContact(slug: LegalSlug, locale: string): boolean {
+  return legalBody(slug, locale).some((p) => p.includes(CONTACT_EMAIL));
+}
+

@@ -31,6 +31,9 @@ export type ExtraMessages = {
   nextTool: string;
   walkthroughTitle: string;
   walkthroughLead: string;
+  videoPhone: string;
+  videoDesktop: string;
+  contactHint: string;
   clearAll: string;
   removeFile: string;
   filesReady: string;
@@ -85,6 +88,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Processing…",
     statusDone: "Done",
     statusError: "Error",
+    videoPhone: "On a phone",
+    videoDesktop: "On a computer",
+    contactHint: "All questions: tools@freela.store",
   },
   de: {
     trustTitle: "Dateien bleiben auf Ihrem Gerät",
@@ -127,6 +133,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Wird verarbeitet…",
     statusDone: "Fertig",
     statusError: "Fehler",
+    videoPhone: "Am Telefon",
+    videoDesktop: "Am Computer",
+    contactHint: "Alle Fragen: tools@freela.store",
   },
   uk: {
     trustTitle: "Файли залишаються на вашому пристрої",
@@ -169,6 +178,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Обробка…",
     statusDone: "Готово",
     statusError: "Помилка",
+    videoPhone: "На телефоні",
+    videoDesktop: "На комп’ютері",
+    contactHint: "Усі запитання: tools@freela.store",
   },
   pl: {
     trustTitle: "Pliki zostają na Twoim urządzeniu",
@@ -211,6 +223,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Przetwarzanie…",
     statusDone: "Gotowe",
     statusError: "Błąd",
+    videoPhone: "Na telefonie",
+    videoDesktop: "Na komputerze",
+    contactHint: "Wszystkie pytania: tools@freela.store",
   },
   fr: {
     trustTitle: "Les fichiers restent sur votre appareil",
@@ -253,6 +268,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Traitement…",
     statusDone: "Terminé",
     statusError: "Erreur",
+    videoPhone: "Sur un téléphone",
+    videoDesktop: "Sur un ordinateur",
+    contactHint: "Toutes les questions : tools@freela.store",
   },
   es: {
     trustTitle: "Los archivos se quedan en tu dispositivo",
@@ -295,6 +313,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Procesando…",
     statusDone: "Listo",
     statusError: "Error",
+    videoPhone: "En el teléfono",
+    videoDesktop: "En el ordenador",
+    contactHint: "Todas las preguntas: tools@freela.store",
   },
   it: {
     trustTitle: "I file restano sul dispositivo",
@@ -337,6 +358,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Elaborazione…",
     statusDone: "Fatto",
     statusError: "Errore",
+    videoPhone: "Sul telefono",
+    videoDesktop: "Sul computer",
+    contactHint: "Tutte le domande: tools@freela.store",
   },
   pt: {
     trustTitle: "Os ficheiros ficam no seu dispositivo",
@@ -379,6 +403,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "A processar…",
     statusDone: "Concluído",
     statusError: "Erro",
+    videoPhone: "No telemóvel",
+    videoDesktop: "No computador",
+    contactHint: "Todas as perguntas: tools@freela.store",
   },
   nl: {
     trustTitle: "Bestanden blijven op je apparaat",
@@ -421,6 +448,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "Bezig…",
     statusDone: "Klaar",
     statusError: "Fout",
+    videoPhone: "Op de telefoon",
+    videoDesktop: "Op de computer",
+    contactHint: "Alle vragen: tools@freela.store",
   },
   tr: {
     trustTitle: "Dosyalar cihazınızda kalır",
@@ -463,6 +493,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "İşleniyor…",
     statusDone: "Tamam",
     statusError: "Hata",
+    videoPhone: "Telefonda",
+    videoDesktop: "Bilgisayarda",
+    contactHint: "Tüm sorular: tools@freela.store",
   },
   ar: {
     trustTitle: "الملفات تبقى على جهازك",
@@ -505,6 +538,9 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "جارٍ العمل…",
     statusDone: "تم",
     statusError: "خطأ",
+    videoPhone: "على الهاتف",
+    videoDesktop: "على الحاسوب",
+    contactHint: "كل الأسئلة: tools@freela.store",
   },
   he: {
     trustTitle: "הקבצים נשארים במכשיר",
@@ -547,5 +583,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     statusProcessing: "עובד…",
     statusDone: "בוצע",
     statusError: "שגיאה",
+    videoPhone: "בטלפון",
+    videoDesktop: "במחשב",
+    contactHint: "כל השאלות: tools@freela.store",
   },
 };

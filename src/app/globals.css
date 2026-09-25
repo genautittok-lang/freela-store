@@ -99,6 +99,11 @@
       radial-gradient(700px 240px at 100% 0%, rgb(231 246 236 / 0.8), transparent 50%);
     background-attachment: fixed;
   }
+  @media (max-width: 640px) {
+    body {
+      background-attachment: scroll;
+    }
+  }
   html {
     @apply font-sans;
   }

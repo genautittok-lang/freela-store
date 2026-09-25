@@ -52,6 +52,9 @@ export default async function AdminHome({
           <p className="text-sm text-muted-foreground">
             {user.email} · role {user.role} (owner, admin, editor, analyst)
           </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Public contact for all questions: <a className="font-medium text-primary" href="mailto:tools@freela.store">tools@freela.store</a>
+          </p>
         </div>
         <form action={logoutAction}>
           <button className="rounded-lg border px-3 py-1.5 text-sm" type="submit">

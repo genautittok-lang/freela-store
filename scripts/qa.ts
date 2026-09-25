@@ -6,6 +6,7 @@ import { extras } from "../src/i18n/extras";
 import { uxChrome } from "../src/i18n/ux";
 import { sitemapEntries, languageAlternates, indexableLocales } from "../src/lib/seo";
 import { LEGAL_SLUGS } from "../src/data/legal-slugs";
+import { legalBody } from "../src/i18n/legal";
 import { categories } from "../src/data/categories";
 import { preparedUi, assertPreparedUi } from "../src/i18n/prepared-ui";
 import { assertToolUx, ACTION_LABEL_EN } from "../src/lib/tool-ux";
@@ -119,6 +120,16 @@ if (PREPARED_LOCALES.includes("ar" as never)) fail("ar should not be prepared");
 
 for (const slug of LEGAL_SLUGS) {
   if (!/^[a-z0-9-]+$/.test(slug)) fail(`Bad legal slug ${slug}`);
+  const en = legalBody(slug, "en").join("\n");
+  if (!en.includes("tools@freela.store")) fail(`EN ${slug} missing tools@freela.store`);
+  if (/hello@|abuse@|legal@|privacy@|copyright@|security@/.test(en)) fail(`EN ${slug} still uses a non-primary mailbox`);
+  for (const locale of INITIAL_LOCALES) {
+    const body = legalBody(slug, locale);
+    if (!body.length) fail(`Empty legal body ${slug} ${locale}`);
+    const joined = body.join("\n");
+    if (locale !== "en" && joined === en) fail(`Legal ${slug} leftover English in ${locale}`);
+    if (!joined.includes("tools@freela.store")) fail(`Legal ${slug} ${locale} missing tools@freela.store`);
+  }
 }
 
 const expectedMin = INITIAL_LOCALES.length * (1 + LEGAL_SLUGS.length + published.length);

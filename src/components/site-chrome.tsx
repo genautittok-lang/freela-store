@@ -9,13 +9,13 @@ import { SearchBox } from "@/components/search-box";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { categoryIcons } from "@/lib/tool-icons";
+import { BrandCategoryIcon } from "@/components/brand-icons";
 import { Menu, X } from "lucide-react";
 import type { CategoryId } from "@/data/categories";
+import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/site";
 
 export function CategoryIcon({ id, className }: { id: CategoryId; className?: string }) {
-  const Icon = categoryIcons[id];
-  return <Icon className={className ?? "h-5 w-5 text-primary"} aria-hidden />;
+  return <BrandCategoryIcon id={id} className={className ?? "h-8 w-8"} />;
 }
 
 export function SiteHeader({ locale, pathname }: { locale: string; pathname: string }) {
@@ -124,6 +124,12 @@ export function SiteFooter({ locale }: { locale: string }) {
             <Logo locale={locale} />
             <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">{ui.tagline}</p>
             <p className="mt-3 text-xs font-medium text-emerald-800">{ui.processedLocally}</p>
+            <p className="mt-4 text-sm">
+              <a className="font-semibold text-primary hover:underline" href={CONTACT_MAILTO}>
+                {CONTACT_EMAIL}
+              </a>
+              <span className="mt-1 block text-xs text-muted-foreground">{ui.contactHint}</span>
+            </p>
           </div>
           <nav aria-label={ui.tools}>
             <p className="text-sm font-semibold">{ui.tools}</p>
