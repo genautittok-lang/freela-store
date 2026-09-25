@@ -1,11 +1,22 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { AnalyticsEventName } from "@/lib/analytics";
+import { createContext, useContext, useMemo, useSyncExternalStore } from "react";
+import type { AnalyticsEventName } from "@/lib/analytics-events";
 
-type Ctx = { sessionId: string; consent: "unknown" | "yes" | "no"; setConsent: (v: "yes" | "no") => void };
+type Consent = "unknown" | "yes" | "no";
+type Ctx = { sessionId: string; consent: Consent; setConsent: (v: "yes" | "no") => void };
 
 const AnalyticsContext = createContext<Ctx | null>(null);
+const listeners = new Set<() => void>();
+
+function emit() {
+  listeners.forEach((fn) => fn());
+}
+
+function subscribe(fn: () => void) {
+  listeners.add(fn);
+  return () => listeners.delete(fn);
+}
 
 function sid() {
   const key = "freela_sid";
@@ -17,19 +28,23 @@ function sid() {
   return id;
 }
 
-export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
-  const [sessionId, setSessionId] = useState("");
-  const [consent, setConsentState] = useState<"unknown" | "yes" | "no">("unknown");
+function readSid() {
+  return sid();
+}
 
-  useEffect(() => {
-    setSessionId(sid());
-    const stored = localStorage.getItem("freela_consent") as "yes" | "no" | null;
-    if (stored) setConsentState(stored);
-  }, []);
+function readConsent(): Consent {
+  const stored = localStorage.getItem("freela_consent");
+  if (stored === "yes" || stored === "no") return stored;
+  return "unknown";
+}
+
+export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
+  const sessionId = useSyncExternalStore(subscribe, readSid, () => "");
+  const consent = useSyncExternalStore(subscribe, readConsent, () => "unknown" as Consent);
 
   function setConsent(v: "yes" | "no") {
     localStorage.setItem("freela_consent", v);
-    setConsentState(v);
+    emit();
   }
 
   const value = useMemo(() => ({ sessionId, consent, setConsent }), [sessionId, consent]);
@@ -51,15 +66,26 @@ export function track(
   if (consent === "no") return;
   const sessionId = localStorage.getItem("freela_sid");
   if (!sessionId) return;
+  let source: string | undefined;
+  try {
+    if (document.referrer) source = new URL(document.referrer).hostname;
+  } catch {
+    source = undefined;
+  }
   const payload = {
     name,
     sessionId,
     toolId: extra.toolId,
     locale: extra.locale,
     processingMode: extra.processingMode,
-    result: extra.result,
+    result: extra.result === "ok" || extra.result === "error" ? extra.result : undefined,
     path: window.location.pathname,
+    source,
   };
-  navigator.sendBeacon?.("/api/analytics", new Blob([JSON.stringify(payload)], { type: "application/json" })) ||
-    fetch("/api/analytics", { method: "POST", body: JSON.stringify(payload), headers: { "content-type": "application/json" } });
+  fetch("/api/analytics", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "content-type": "application/json" },
+    keepalive: true,
+  }).catch(() => undefined);
 }

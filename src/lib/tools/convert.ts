@@ -65,3 +65,62 @@ export const lengthUnits = Object.keys(LENGTH_TO_M);
 export const weightUnits = Object.keys(WEIGHT_TO_KG);
 export const siUnits = Object.keys(SI);
 export const iecUnits = Object.keys(IEC);
+
+function tableConvert(table: Record<string, number>, value: number, from: string, to: string, label: string) {
+  if (!(from in table) || !(to in table)) throw new Error(`Unknown ${label} unit.`);
+  return (value * table[from]) / table[to];
+}
+
+export const SPEED: Record<string, number> = { "m/s": 1, "km/h": 1 / 3.6, mph: 0.44704, kn: 0.514444 };
+export const AREA: Record<string, number> = { m2: 1, km2: 1e6, ha: 1e4, ft2: 0.092903, acre: 4046.856 };
+export const VOLUME: Record<string, number> = { L: 1, mL: 0.001, m3: 1000, gal: 3.785411784, cup: 0.236588 };
+export const PRESSURE: Record<string, number> = { Pa: 1, kPa: 1000, bar: 1e5, psi: 6894.757, atm: 101325 };
+export const ENERGY: Record<string, number> = { J: 1, kJ: 1000, kcal: 4184, Wh: 3600, kWh: 3.6e6 };
+export const DURATION: Record<string, number> = { s: 1, min: 60, h: 3600, d: 86400, wk: 604800 };
+
+export const convertSpeed = (v: number, f: string, t: string) => tableConvert(SPEED, v, f, t, "speed");
+export const convertArea = (v: number, f: string, t: string) => tableConvert(AREA, v, f, t, "area");
+export const convertVolume = (v: number, f: string, t: string) => tableConvert(VOLUME, v, f, t, "volume");
+export const convertPressure = (v: number, f: string, t: string) => tableConvert(PRESSURE, v, f, t, "pressure");
+export const convertEnergy = (v: number, f: string, t: string) => tableConvert(ENERGY, v, f, t, "energy");
+export const convertDuration = (v: number, f: string, t: string) => tableConvert(DURATION, v, f, t, "time");
+
+export const unitSets: Record<string, string[]> = {
+  speed: Object.keys(SPEED),
+  area: Object.keys(AREA),
+  volume: Object.keys(VOLUME),
+  pressure: Object.keys(PRESSURE),
+  energy: Object.keys(ENERGY),
+  duration: Object.keys(DURATION),
+  length: lengthUnits,
+  weight: weightUnits,
+  temperature: ["C", "F", "K"],
+  "data-size": siUnits,
+};
+
+export function convertByAction(action: string, value: number, from: string, to: string, system: "si" | "iec" = "si") {
+  switch (action) {
+    case "length":
+      return convertLength(value, from, to);
+    case "weight":
+      return convertWeight(value, from, to);
+    case "temperature":
+      return convertTemperature(value, from as "C", to as "C");
+    case "data-size":
+      return convertDataSize(value, from, to, system);
+    case "speed":
+      return convertSpeed(value, from, to);
+    case "area":
+      return convertArea(value, from, to);
+    case "volume":
+      return convertVolume(value, from, to);
+    case "pressure":
+      return convertPressure(value, from, to);
+    case "energy":
+      return convertEnergy(value, from, to);
+    case "duration":
+      return convertDuration(value, from, to);
+    default:
+      throw new Error("Unknown converter.");
+  }
+}

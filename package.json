@@ -9,7 +9,9 @@
     "lint": "eslint",
     "test": "vitest run",
     "validate": "tsx scripts/validate-registry.ts",
-    "prebuild": "tsx scripts/validate-registry.ts"
+    "qa": "tsx scripts/qa.ts",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "tsx scripts/validate-registry.ts && tsx scripts/qa.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

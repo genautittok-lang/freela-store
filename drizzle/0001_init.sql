@@ -7,8 +7,9 @@ CREATE TABLE IF NOT EXISTS events (
   session_id TEXT NOT NULL,
   processing_mode TEXT,
   result TEXT,
-  path TEXT,
-  created_at TEXT NOT NULL
+      path TEXT,
+      source TEXT,
+      created_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS admin_users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -46,14 +46,14 @@ Production build fails if the registry schema is invalid.
 
 ## What is in the first ship
 
-- 56 working tools (PDF, images, text, developer, SEO helpers, calculators, converters, color, generators, date/time)
-- Locales: English (indexable) plus German, Ukrainian, Polish, French, Spanish, Italian, Portuguese, Dutch, Turkish (switcher works; non-English tool copy is in translation review / `noindex` until QA)
+- 76 working tools (original catalogue plus addendum converters, SEO helpers, web utilities, invoice math, resume/cover helpers, ICS, color extraction)
+- Locales: English (indexable) plus German, Ukrainian, Polish, French, Spanish, Italian, Portuguese, Dutch, Turkish (switcher works; non-English tool copy is in translation review / `noindex` until QA). Prepared (no public URLs yet): Arabic, Hebrew, Japanese, Korean, Chinese, Hindi, Indonesian, Vietnamese, Thai, and other European locales.
 - Search (registry-backed, typo-tolerant, search URLs `noindex`)
 - Sitemap, robots.txt, canonical, hreflang, WebApplication + FAQ + breadcrumb JSON-LD on tool pages
-- Admin dashboard: usage, top tools, languages, errors, translation QA, SEO checklist, CSV export
-- First-party analytics events (no file contents)
+- Admin dashboard: usage, success/error rates, languages, SEO, translation completeness, processing modes, retention, audit log, CSV export
+- First-party analytics events (no file contents; origin + rate limit)
 - Cookie consent for analytics
-- Privacy, terms, contact, about, affiliate disclosure
+- Legal: privacy, terms, contact, about, affiliate, acceptable use, abuse, deletion, vendors, file processing, copyright, data inventory
 
 ## Deploy
 

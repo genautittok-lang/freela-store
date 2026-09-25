@@ -26,7 +26,7 @@ function t(
 ): EnTool {
   return {
     status: "published",
-    processingMode: "client",
+    processingMode: "LOCAL_ONLY",
     clientOnly: true,
     retention: "none",
     deletion: "Text is kept only in memory for this tab.",

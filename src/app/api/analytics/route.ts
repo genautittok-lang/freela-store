@@ -1,29 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { recordEvent } from "@/lib/analytics";
+import { clientIp, clientOriginAllowed, rateLimit, sanitizeAnalyticsPayload } from "@/lib/security";
 
 export async function POST(request: NextRequest) {
-  const json = (await request.json().catch(() => null)) as
-    | {
-        name?: string;
-        sessionId?: string;
-        toolId?: string;
-        locale?: string;
-        processingMode?: string;
-        result?: string;
-        path?: string;
-      }
-    | null;
-  if (!json?.name || !json.sessionId) {
+  if (!clientOriginAllowed(request)) {
+    return NextResponse.json({ ok: false }, { status: 403 });
+  }
+  if (!rateLimit(`analytics:${clientIp(request)}`, 60, 60_000)) {
+    return NextResponse.json({ ok: false }, { status: 429 });
+  }
+  const json = await request.json().catch(() => null);
+  const event = sanitizeAnalyticsPayload(json);
+  if (!event) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
-  recordEvent({
-    name: json.name,
-    sessionId: json.sessionId.slice(0, 80),
-    toolId: json.toolId,
-    locale: json.locale,
-    processingMode: json.processingMode,
-    result: json.result,
-    path: json.path?.slice(0, 200),
-  });
+  recordEvent(event);
   return NextResponse.json({ ok: true });
 }

@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     template: "%s · Freela",
   },
   description: "Browser-first PDF, image, text, developer and calculator tools. Files stay on your device.",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

@@ -28,14 +28,10 @@ import {
   vatBreakdown,
 } from "@/lib/tools/calc";
 import {
-  convertDataSize,
-  convertLength,
-  convertTemperature,
-  convertWeight,
+  convertByAction,
   iecUnits,
-  lengthUnits,
   siUnits,
-  weightUnits,
+  unitSets,
 } from "@/lib/tools/convert";
 import { contrastRatio, hexToRgb, paletteFrom, parseRgb, rgbToHex, rgbToHsl } from "@/lib/tools/color";
 import {
@@ -48,8 +44,19 @@ import {
   jsonToCsv,
   utf8ToBase64,
 } from "@/lib/tools/dev";
-import { PDFDocument, degrees } from "pdf-lib";
-import QRCode from "qrcode";
+import {
+  canonicalTag,
+  icsEvent,
+  invoiceMath,
+  linearGradient,
+  parseQuery,
+  parseUrl,
+  prettyXml,
+  schemaJsonLd,
+  simpleYamlToJson,
+  sitemapXml,
+} from "@/lib/tools/web";
+import { privacyLabel, privacyNotice } from "@/lib/privacy";
 
 function pdfBlob(bytes: Uint8Array) {
   return new Blob([bytes as unknown as BlobPart], { type: "application/pdf" });
@@ -90,21 +97,24 @@ export function ToolRunner({
   const ui = t(locale);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [ok, setOk] = useState(false);
   const cancelled = useRef(false);
 
   async function wrap(fn: () => Promise<void> | void, okResult = "ok") {
     cancelled.current = false;
     setError(null);
+    setOk(false);
     setBusy(true);
     track("tool_start", { toolId: tool.id, locale, processingMode: tool.processingMode });
     try {
       await fn();
       if (!cancelled.current) {
+        setOk(true);
         track("tool_success", {
           toolId: tool.id,
           locale,
           processingMode: tool.processingMode,
-          result: okResult,
+          result: okResult === "ok" || okResult === "error" ? okResult : "ok",
         });
       }
     } catch (err) {
@@ -131,8 +141,14 @@ export function ToolRunner({
       aria-labelledby="tool-heading"
     >
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <p className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800">
-          {ui.processedLocally}
+        <p
+          className={`rounded-full px-3 py-1 text-xs font-medium ${
+            tool.processingMode === "LOCAL_ONLY"
+              ? "bg-emerald-50 text-emerald-800"
+              : "bg-amber-50 text-amber-900"
+          }`}
+        >
+          {privacyLabel(tool.processingMode, locale)} · {privacyNotice(tool.processingMode, locale)}
         </p>
         {busy ? (
           <Button type="button" variant="outline" size="sm" onClick={() => (cancelled.current = true)}>
@@ -140,6 +156,12 @@ export function ToolRunner({
           </Button>
         ) : null}
       </div>
+        {busy ? <p className="mb-3 text-sm text-muted-foreground" role="status">{ui.processing}</p> : null}
+      {ok && !error ? (
+        <p className="mb-3 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800" role="status">
+          {ui.done}
+        </p>
+      ) : null}
       {error ? (
         <p className="mb-4 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive" role="alert">
           {error}
@@ -248,6 +270,44 @@ function TextTool({
         });
         setOutput(tags.join("\n"));
       }
+      if (a === "xml") setOutput(prettyXml(input));
+      if (a === "yaml") setOutput(simpleYamlToJson(input));
+      if (a === "sitemap") setOutput(sitemapXml(input.split("\n").filter(Boolean)));
+      if (a === "canonical") setOutput(canonicalTag(input.trim()));
+      if (a === "schema") {
+        const [type, name, description, url] = input.split("\n");
+        setOutput(schemaJsonLd(type || "WebPage", name || "", description || "", url || "https://freela.store/en/"));
+      }
+      if (a === "og") {
+        const [title, description, image] = input.split("\n");
+        setOutput(
+          [
+            `<meta property="og:title" content="${title || ""}" />`,
+            `<meta property="og:description" content="${description || ""}" />`,
+            image ? `<meta property="og:image" content="${image}" />` : "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        );
+      }
+      if (a === "url-parse") setOutput(JSON.stringify(parseUrl(input.trim()), null, 2));
+      if (a === "query") setOutput(JSON.stringify(parseQuery(input.trim()), null, 2));
+      if (a === "resume") {
+        setOutput(
+          input
+            .split("\n")
+            .map((line) => line.trim())
+            .filter(Boolean)
+            .map((line) => `• ${line.replace(/^[-*•]\s*/, "")}`)
+            .join("\n"),
+        );
+      }
+      if (a === "cover") {
+        const [role, company, ...notes] = input.split("\n");
+        setOutput(
+          `Dear hiring team,\n\nI am writing about the ${role || "role"} at ${company || "your company"}. ${notes.filter(Boolean).join(" ")}\n\nThank you for your time.\n`,
+        );
+      }
     });
   }
 
@@ -290,8 +350,11 @@ function TextTool({
       {tool.runtime.action === "serp" ? (
         <p className="text-xs text-muted-foreground">One field per line: title, display URL, description. Not a live Google result.</p>
       ) : null}
-      {tool.runtime.action === "hreflang" ? (
-        <p className="text-xs text-muted-foreground">One locale and absolute URL per line, e.g. en https://freela.store/en/</p>
+      {tool.runtime.action === "og" ? (
+        <p className="text-xs text-muted-foreground">One field per line: title, description, image URL (not fetched).</p>
+      ) : null}
+      {tool.runtime.action === "schema" ? (
+        <p className="text-xs text-muted-foreground">One field per line: schema type, name, description, URL. Review types are blocked.</p>
       ) : null}
       <Textarea value={input} onChange={(e) => setInput(e.target.value)} rows={needsSecond ? 6 : 10} />
       {needsSecond ? <Textarea value={inputB} onChange={(e) => setInputB(e.target.value)} rows={6} /> : null}
@@ -328,6 +391,7 @@ function TextTool({
           </Button>
         ) : null}
       </div>
+      {!input.trim() ? <p className="text-xs text-muted-foreground">{ui.emptyHint}</p> : null}
       {output ? <Textarea readOnly value={output} rows={8} /> : null}
     </div>
   );
@@ -345,11 +409,10 @@ function Stat({ label, value, locale }: { label: string; value: number; locale: 
 function RegexTool({
   locale,
   wrap,
-  tool,
 }: {
   locale: Locale;
   wrap: (fn: () => void) => Promise<void>;
-  tool: ToolDefinition;
+  tool?: ToolDefinition;
 }) {
   const ui = t(locale);
   const [pattern, setPattern] = useState("");
@@ -468,8 +531,12 @@ function PdfTool({
   const [meta, setMeta] = useState("");
 
   async function load(file: File) {
+    const { PDFDocument } = await import("pdf-lib");
     if (file.size > tool.maxFileSize) throw new Error(`Max file size is ${Math.round(tool.maxFileSize / 1024 / 1024)} MB.`);
     if (file.type && file.type !== "application/pdf" && action !== "images-to-pdf") {
+      throw new Error("Please choose a PDF file.");
+    }
+    if (!file.type && action !== "images-to-pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
       throw new Error("Please choose a PDF file.");
     }
     return PDFDocument.load(await file.arrayBuffer());
@@ -477,16 +544,31 @@ function PdfTool({
 
   return (
     <div className="grid gap-3">
-      <input
-        type="file"
-        multiple={action === "merge" || action === "images-to-pdf"}
-        accept={action === "images-to-pdf" ? "image/png,image/jpeg,image/webp" : "application/pdf"}
-        onChange={(e) => {
-          const list = [...(e.target.files ?? [])];
+      <label
+        className="grid cursor-pointer gap-1 rounded-xl border border-dashed border-primary/40 bg-accent/40 px-4 py-8 text-center text-sm"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          e.preventDefault();
+          const list = [...e.dataTransfer.files];
           setFiles(list);
           if (list.length) track("file_selected", { toolId: tool.id, locale });
         }}
-      />
+      >
+        {ui.dropFiles}
+        <input
+          type="file"
+          className="mx-auto"
+          multiple={action === "merge" || action === "images-to-pdf"}
+          accept={action === "images-to-pdf" ? "image/png,image/jpeg,image/webp" : "application/pdf"}
+          onChange={(e) => {
+            const list = [...(e.target.files ?? [])];
+            setFiles(list);
+            if (list.length) track("file_selected", { toolId: tool.id, locale });
+          }}
+        />
+        {files.length ? <span className="text-xs text-muted-foreground">{files.map((f) => f.name).join(", ")}</span> : null}
+        <span className="text-xs text-muted-foreground">Max {Math.round(tool.maxFileSize / 1024 / 1024)} MB · {tool.supportedFormats.join(", ")}</span>
+      </label>
       {action === "rotate" ? (
         <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))}>
           <option value={90}>90°</option>
@@ -503,6 +585,7 @@ function PdfTool({
         type="button"
         onClick={() =>
           wrap(async () => {
+            const { PDFDocument, degrees } = await import("pdf-lib");
             if (!files.length) throw new Error("Choose a file first.");
             if (cancelled.current) return;
             if (action === "metadata") {
@@ -546,6 +629,12 @@ function PdfTool({
                 page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
               }
               downloadBlob(pdfBlob(await out.save()), "images.pdf");
+              track("file_download", { toolId: tool.id, locale });
+              return;
+            }
+            if (action === "compress") {
+              const src = await load(files[0]);
+              downloadBlob(pdfBlob(await src.save({ useObjectStreams: true })), "compressed.pdf");
               track("file_download", { toolId: tool.id, locale });
               return;
             }
@@ -642,15 +731,32 @@ function ImageTool({
   return (
     <div className="grid gap-3">
       {action !== "from-base64" ? (
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const f = e.target.files?.[0] || null;
+        <label
+          className="grid cursor-pointer gap-1 rounded-xl border border-dashed border-primary/40 bg-accent/40 px-4 py-8 text-center text-sm"
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            const f = e.dataTransfer.files[0] || null;
             setFile(f);
             if (f) track("file_selected", { toolId: tool.id, locale });
           }}
-        />
+        >
+          {ui.dropFiles}
+          <input
+            type="file"
+            accept="image/*"
+            className="mx-auto"
+            onChange={(e) => {
+              const f = e.target.files?.[0] || null;
+              setFile(f);
+              if (f) track("file_selected", { toolId: tool.id, locale });
+            }}
+          />
+          {file ? <span className="text-xs text-muted-foreground">{file.name}</span> : null}
+          <span className="text-xs text-muted-foreground">
+            {ui.sizeLimit} {Math.round(tool.maxFileSize / 1024 / 1024)} MB · {tool.supportedFormats.join(", ")}
+          </span>
+        </label>
       ) : (
         <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} />
       )}
@@ -734,6 +840,22 @@ function ImageTool({
               }
               track("file_download", { toolId: tool.id, locale });
               return;
+            } else if (action === "extract-colors") {
+              canvas.width = 48;
+              canvas.height = 48;
+              ctx.drawImage(img, 0, 0, 48, 48);
+              const data = ctx.getImageData(0, 0, 48, 48).data;
+              const buckets = new Map<string, number>();
+              for (let i = 0; i < data.length; i += 4) {
+                const hex = `#${[data[i], data[i + 1], data[i + 2]].map((n) => n.toString(16).padStart(2, "0")).join("")}`;
+                buckets.set(hex, (buckets.get(hex) || 0) + 1);
+              }
+              const top = [...buckets.entries()]
+                .sort((x, y) => y[1] - x[1])
+                .slice(0, 6)
+                .map(([hex]) => hex);
+              setText(top.join("\n"));
+              return;
             } else {
               canvas.width = img.width;
               canvas.height = img.height;
@@ -763,7 +885,7 @@ function ImageTool({
         // eslint-disable-next-line @next/next/no-img-element
         <img src={preview} alt="Result preview" className="max-h-64 w-max rounded-lg border" />
       ) : null}
-      {text && action === "to-base64" ? <Textarea readOnly value={text} rows={6} /> : null}
+      {text && (action === "to-base64" || action === "extract-colors") ? <Textarea readOnly value={text} rows={6} /> : null}
     </div>
   );
 }
@@ -806,6 +928,11 @@ function CalcTool({
           <option value="gross">Amount is gross</option>
         </select>
       ) : null}
+      {action === "invoice" ? (
+        <Field label="Tax %">
+          <Input value={mode} onChange={(e) => setMode(e.target.value)} />
+        </Field>
+      ) : null}
       {action === "date-diff" ? (
         <div className="grid gap-3 sm:grid-cols-2">
           <Input type="date" value={a} onChange={(e) => setA(e.target.value)} />
@@ -845,6 +972,10 @@ function CalcTool({
               const d = dateDiff(a, b);
               setOut(`${d.days} days · ${fmt(d.weeks)} weeks · ${d.years}y ${d.months}m ${d.restDays}d`);
             }
+            if (action === "invoice") {
+              const v = invoiceMath(Number(a), Number(b), Number(mode) || 0);
+              setOut(`Net ${fmt(v.net)} · Tax ${fmt(v.tax)} · Gross ${fmt(v.gross)}`);
+            }
           })
         }
       >
@@ -865,14 +996,7 @@ function ConverterTool({
   wrap: (fn: () => void) => Promise<void>;
 }) {
   const ui = t(locale);
-  const units =
-    action === "length"
-      ? lengthUnits
-      : action === "weight"
-        ? weightUnits
-        : action === "data-size"
-          ? siUnits
-          : ["C", "F", "K"];
+  const units = unitSets[action] ?? unitSets.length;
   const [value, setValue] = useState("1");
   const [from, setFrom] = useState(units[0]);
   const [to, setTo] = useState(units[1]);
@@ -905,14 +1029,7 @@ function ConverterTool({
         onClick={() =>
           wrap(() => {
             const n = Number(value);
-            const v =
-              action === "length"
-                ? convertLength(n, from, to)
-                : action === "weight"
-                  ? convertWeight(n, from, to)
-                  : action === "temperature"
-                    ? convertTemperature(n, from as "C", to as "C")
-                    : convertDataSize(n, from, to, system);
+            const v = convertByAction(action, n, from, to, system);
             setOut(new Intl.NumberFormat(locale, { maximumFractionDigits: 6 }).format(v));
           })
         }
@@ -943,7 +1060,7 @@ function ColorTool({
         <Field label="Color A">
           <Input value={a} onChange={(e) => setA(e.target.value)} />
         </Field>
-        {action === "contrast" ? (
+        {action === "contrast" || action === "gradient" ? (
           <Field label="Color B">
             <Input value={b} onChange={(e) => setB(e.target.value)} />
           </Field>
@@ -970,6 +1087,9 @@ function ColorTool({
             if (action === "palette") {
               const p = paletteFrom(a);
               setOut([...p.tints, p.base, ...p.shades].join("\n"));
+            }
+            if (action === "gradient") {
+              setOut(linearGradient(a, b, 90));
             }
           })
         }
@@ -1061,7 +1181,7 @@ function QrTool({ locale, wrap }: { locale: Locale; wrap: (fn: () => Promise<voi
         type="button"
         onClick={() =>
           wrap(async () => {
-            const url = await QRCode.toDataURL(text, { margin: 1, width: 320 });
+            const url = await (await import("qrcode")).default.toDataURL(text, { margin: 1, width: 320 });
             setSrc(url);
             const blob = await (await fetch(url)).blob();
             downloadBlob(blob, "qr.png");
@@ -1089,18 +1209,23 @@ function DateTimeTool({
   wrap: (fn: () => void) => Promise<void>;
 }) {
   const ui = t(locale);
-  const [value, setValue] = useState(String(Math.floor(Date.now() / 1000)));
+  const [value, setValue] = useState("");
   const [from, setFrom] = useState("Europe/Berlin");
   const [to, setTo] = useState("America/New_York");
   const [out, setOut] = useState("");
   return (
     <div className="grid gap-3">
+      {action === "ics" ? (
+        <Field label="Title">
+          <Input value={from} onChange={(e) => setFrom(e.target.value)} />
+        </Field>
+      ) : null}
       {action === "unix" ? (
         <Input value={value} onChange={(e) => setValue(e.target.value)} />
       ) : (
         <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
       )}
-      {action === "timezone" ? (
+      {action === "timezone" || action === "ics" ? (
         <div className="grid grid-cols-2 gap-2">
           <Input value={from} onChange={(e) => setFrom(e.target.value)} />
           <Input value={to} onChange={(e) => setTo(e.target.value)} />
@@ -1118,6 +1243,9 @@ function DateTimeTool({
               setOut(
                 `${d.toISOString()}\n${new Intl.DateTimeFormat(locale, { dateStyle: "full", timeStyle: "long" }).format(d)}\n${Math.floor(d.getTime() / 1000)} s · ${d.getTime()} ms`,
               );
+            } else if (action === "ics") {
+              const end = to.includes("T") ? to : value;
+              setOut(icsEvent(from, new Date(value).toISOString(), new Date(end).toISOString()));
             } else {
               const d = new Date(value);
               if (Number.isNaN(d.getTime())) throw new Error("Invalid date-time.");

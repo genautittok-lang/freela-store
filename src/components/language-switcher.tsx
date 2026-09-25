@@ -14,28 +14,35 @@ export function LanguageSwitcher({
 }) {
   const router = useRouter();
   const ui = t(locale);
-  const rest = pathname.replace(/^\/[a-z]{2}(?:-[A-Z]{2})?/, "") || "/";
+  const rest = pathname.replace(/^\/[a-z]{2}(?:-[A-Za-z]{2})?/, "") || "/";
+  const current = localeRegistry[locale];
   return (
-    <label className="flex items-center gap-2 text-sm">
+    <label className="flex min-w-0 items-center gap-2 text-sm">
       <span className="sr-only">{ui.language}</span>
       <select
-        className="h-9 max-w-[10rem] rounded-lg border bg-background px-2"
+        className="h-9 max-w-[14rem] rounded-lg border bg-background px-2"
         value={locale}
         onChange={(e) => {
           const next = e.target.value as Locale;
-          document.cookie = `freela_locale=${next};path=/;max-age=31536000`;
+          document.cookie = `freela_locale=${next};path=/;max-age=31536000;SameSite=Lax`;
           localStorage.setItem("freela_locale", next);
           track("language_change", { locale: next });
           router.push(`/${next}${rest === "/" ? "" : rest}`);
         }}
         aria-label={ui.language}
       >
-        {INITIAL_LOCALES.map((code) => (
-          <option key={code} value={code}>
-            {localeRegistry[code].nativeName}
-          </option>
-        ))}
+        {INITIAL_LOCALES.map((code) => {
+          const rec = localeRegistry[code];
+          return (
+            <option key={code} value={code}>
+              {rec.flag} {rec.nativeName} ({code})
+            </option>
+          );
+        })}
       </select>
+      <span className="hidden text-xs text-muted-foreground lg:inline" aria-hidden>
+        {current.flag} {current.code}
+      </span>
     </label>
   );
 }

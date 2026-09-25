@@ -2,9 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { isLocale } from "@/data/locales";
 import { searchRegistry } from "@/lib/search";
 import { categoryById } from "@/lib/registry";
+import { clientIp, rateLimit } from "@/lib/security";
 
 export function GET(request: NextRequest) {
-  const q = request.nextUrl.searchParams.get("q") || "";
+  if (!rateLimit(`search:${clientIp(request)}`, 120, 60_000)) {
+    return NextResponse.json({ hits: [] }, { status: 429, headers: { "x-robots-tag": "noindex" } });
+  }
+  const q = (request.nextUrl.searchParams.get("q") || "").slice(0, 80);
   const locale = request.nextUrl.searchParams.get("locale") || "en";
   if (!isLocale(locale)) return NextResponse.json({ hits: [] });
   const hits = searchRegistry(locale, q).map((hit) => {

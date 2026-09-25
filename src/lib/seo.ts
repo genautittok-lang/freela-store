@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/data/locales";
 import { getLocale, localeRegistry, SOURCE_LOCALE } from "@/data/locales";
+import { LEGAL_SLUGS } from "@/data/legal-slugs";
 import { absoluteUrl } from "@/lib/site";
 import { indexableTools, publicLocalesForTool } from "@/lib/registry";
 import type { ToolDefinition } from "@/data/schema";
@@ -31,12 +32,7 @@ export function pageMetadata(opts: {
   const loc = getLocale(opts.locale)!;
   const canonical = absoluteUrl(`/${opts.locale}${opts.pathWithoutLocale}`);
   const index = opts.index ?? loc.indexable;
-  const locales = (Object.keys(localeRegistry) as Locale[]).filter((code) => {
-    if (opts.pathWithoutLocale.startsWith("/tools/") && opts.pathWithoutLocale.split("/").length === 3) {
-      return true;
-    }
-    return true;
-  });
+  const locales = Object.keys(localeRegistry) as Locale[];
   return {
     title: opts.title,
     description: opts.description,
@@ -132,7 +128,7 @@ export function faqJsonLd(faq: { question: string; answer: string }[]) {
 }
 
 export function sitemapEntries() {
-  const pages = ["", "/about", "/privacy", "/terms", "/contact", "/affiliate-disclosure"];
+  const pages = ["", ...LEGAL_SLUGS.map((slug) => `/${slug}`)];
   const urls: {
     url: string;
     lastModified?: string;

@@ -114,11 +114,17 @@ export function audit(
   entityId: string | null,
   details: string | null,
 ) {
+  const safe =
+    details && details.length > 240
+      ? details.slice(0, 240)
+      : details && /%PDF-|data:image|-----BEGIN /.test(details)
+        ? "[redacted]"
+        : details;
   getDb()
     .prepare(
       "INSERT INTO audit_log (user_id, action, entity, entity_id, details, created_at) VALUES (?, ?, ?, ?, ?, ?)",
     )
-    .run(userId, action, entity, entityId, details, new Date().toISOString());
+    .run(userId, action, entity, entityId, safe, new Date().toISOString());
 }
 
 export function requireRole(user: AdminUser, roles: AdminRole[]) {

@@ -115,7 +115,7 @@ Tüm metin tarayıcınızda kalır. Freela yapıştırdığınız içeriği alma
 
 export const baseMeta = {
   status: "published" as const,
-  processingMode: "client" as const,
+  processingMode: "LOCAL_ONLY" as const,
   clientOnly: true,
   retention: "none",
   tested: true,

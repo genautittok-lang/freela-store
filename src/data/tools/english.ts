@@ -27,7 +27,7 @@ function t(
 ): EnTool {
   return {
     status: "published",
-    processingMode: "client",
+    processingMode: "LOCAL_ONLY",
     clientOnly: true,
     retention: "none",
     deletion:

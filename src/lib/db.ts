@@ -21,6 +21,7 @@ export function getDb() {
       processing_mode TEXT,
       result TEXT,
       path TEXT,
+      source TEXT,
       created_at TEXT NOT NULL
     );
     CREATE INDEX IF NOT EXISTS events_name_time ON events(name, created_at);
@@ -60,6 +61,11 @@ export function getDb() {
       updated_at TEXT NOT NULL
     );
   `);
+  try {
+    db.exec("ALTER TABLE events ADD COLUMN source TEXT");
+  } catch {
+    /* already present */
+  }
   singleton = db;
   return db;
 }

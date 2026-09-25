@@ -1,4 +1,5 @@
 import type { Locale } from "@/data/locales";
+import { extras, type ExtraMessages } from "@/i18n/extras";
 
 export type Messages = {
   brand: string;
@@ -531,6 +532,8 @@ export const messages: Record<Locale, Messages> = {
   },
 };
 
-export function t(locale: Locale): Messages {
-  return messages[locale];
+export type UiMessages = Messages & ExtraMessages;
+
+export function t(locale: Locale): UiMessages {
+  return { ...messages[locale], ...extras[locale] };
 }

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { INITIAL_LOCALES } from "./locales";
 import { CATEGORY_IDS } from "./categories";
 
 export const contentStatusSchema = z.enum([
@@ -10,7 +9,11 @@ export const contentStatusSchema = z.enum([
   "disabled",
 ]);
 
-export const processingModeSchema = z.enum(["client", "server", "hybrid"]);
+export const processingModeSchema = z.enum([
+  "LOCAL_ONLY",
+  "SERVER_PROCESSING",
+  "THIRD_PARTY_PROCESSING",
+]);
 
 export const faqSchema = z.object({
   question: z.string().min(8),
@@ -98,20 +101,24 @@ export function validateCatalog(tools: unknown[]) {
   for (const tool of parsed) {
     if (ids.has(tool.id)) throw new Error(`Duplicate tool id: ${tool.id}`);
     ids.add(tool.id);
-    for (const locale of INITIAL_LOCALES) {
-      if (!tool.copy[locale]) {
-        throw new Error(`Missing ${locale} copy for ${tool.id}`);
-      }
-    }
+    if (!tool.copy.en) throw new Error(`Missing English copy for ${tool.id}`);
   }
 
   const published = parsed.filter((t) => t.status === "published");
   const slugKeys = new Set<string>();
   for (const tool of published) {
-    for (const locale of INITIAL_LOCALES) {
+    const locales = Object.keys(tool.copy);
+    if (!tool.copy.en) throw new Error(`Missing English copy for ${tool.id}`);
+    if (!tool.copy.en.title || !tool.copy.en.description || !tool.copy.en.h1) {
+      throw new Error(`Published tool ${tool.id} is missing English SEO metadata`);
+    }
+    for (const locale of locales) {
       const key = `${locale}:${tool.copy[locale].slug}`;
       if (slugKeys.has(key)) throw new Error(`Duplicate slug ${key}`);
       slugKeys.add(key);
+    }
+    if (tool.status === "published" && !tool.processingMode) {
+      throw new Error(`Tool ${tool.id} missing processingMode`);
     }
   }
 

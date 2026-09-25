@@ -2,6 +2,7 @@ import { englishTools } from "./english";
 import { moreEnglishTools } from "./english-images";
 import { textDevSeoTools } from "./english-text-dev";
 import { calcRestTools } from "./english-calc";
+import { addendumTools } from "./english-addendum";
 import { privacyFiles, privacyText } from "./define";
 import type { Locale } from "../locales";
 import { INITIAL_LOCALES, SOURCE_LOCALE } from "../locales";
@@ -9,14 +10,15 @@ import type { ToolDefinition } from "../schema";
 import { validateCatalog } from "../schema";
 import { packs } from "./locale-packs";
 
-export type EnglishTool = (typeof englishTools)[number];
-
 const englishCatalog = [
   ...englishTools,
   ...moreEnglishTools,
   ...textDevSeoTools,
   ...calcRestTools,
+  ...addendumTools,
 ];
+
+export type EnglishTool = (typeof englishCatalog)[number];
 
 function privacyFor(tool: EnglishTool, locale: Locale): string {
   if (tool.inputTypes.includes("file")) return privacyFiles[locale];
