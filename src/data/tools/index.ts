@@ -11,6 +11,7 @@ import { validateCatalog } from "../schema";
 import { packs } from "./locale-packs";
 import { packsMore } from "./locale-packs-more";
 import { packsRtl } from "./locale-packs-rtl";
+import { seoOverlay } from "./seo-overlay";
 
 const englishCatalog = [
   ...englishTools,
@@ -41,26 +42,59 @@ function ensureMin(text: string, min: number) {
 }
 
 function copyFor(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][string] | null {
+  const seo = seoOverlay[tool.id]?.[locale];
   if (locale === SOURCE_LOCALE) {
-    return { ...tool.copyEn, slug: tool.id };
+    const faq = [
+      ...(seo?.faq ?? []),
+      ...tool.copyEn.faq,
+    ].filter((item, i, arr) => arr.findIndex((x) => x.question === item.question) === i)
+      .slice(0, 8);
+    return {
+      ...tool.copyEn,
+      slug: tool.id,
+      name: seo?.name ?? tool.copyEn.name,
+      title: seo?.title ?? tool.copyEn.title,
+      description: seo?.description ?? tool.copyEn.description,
+      h1: seo?.h1 ?? tool.copyEn.h1,
+      intro: seo?.intro ?? tool.copyEn.intro,
+      faq,
+    };
   }
   const pack = packs[locale]?.[tool.id] ?? packsMore[locale]?.[tool.id] ?? packsRtl[locale]?.[tool.id];
-  if (!pack) return null;
-  return {
-    name: ensureMin(pack.name, 2),
-    slug: tool.id,
-    title: clamp(pack.title, 10, 70),
-    description: clamp(pack.description, 40, 170),
-    h1: clamp(pack.h1, 4, 80),
-    intro: ensureMin(pack.intro.length >= 40 ? pack.intro : `${pack.intro} ${pack.description}`, 40),
-    howTo: pack.howTo.map((step) => ensureMin(step, 8)),
-    faq: pack.faq.map((item) => ({
+  if (!pack && !seo) return null;
+  const faq = [
+    ...(seo?.faq ?? []),
+    ...((pack?.faq ?? []).map((item) => ({
       question: ensureMin(item.question, 8),
       answer: ensureMin(item.answer, 8),
-    })),
-    privacy: pack.privacy ?? privacyFor(tool, locale),
-    formats: ensureMin(pack.formats, 8),
-    examples: pack.examples.map((ex) => ensureMin(ex, 8)),
+    }))),
+  ]
+    .filter((item, i, arr) => arr.findIndex((x) => x.question === item.question) === i)
+    .slice(0, 8);
+  const howTo = (pack?.howTo?.length ? pack.howTo : ["Add your input.", "Run the primary action.", "Copy or download the result."]).map(
+    (step) => ensureMin(step, 8),
+  );
+  const examples = (pack?.examples?.length ? pack.examples : ["Try the main task for this tool.", "Try empty or invalid input."]).map((ex) =>
+    ensureMin(ex, 8),
+  );
+  return {
+    name: seo?.name ?? ensureMin(pack?.name ?? tool.copyEn.name, 2),
+    slug: tool.id,
+    title: clamp(seo?.title ?? pack?.title ?? tool.copyEn.title, 10, 70),
+    description: clamp(seo?.description ?? pack?.description ?? tool.copyEn.description, 40, 170),
+    h1: clamp(seo?.h1 ?? pack?.h1 ?? tool.copyEn.h1, 4, 80),
+    intro: ensureMin(
+      seo?.intro ?? (pack && pack.intro.length >= 40 ? pack.intro : `${pack?.intro ?? ""} ${pack?.description ?? tool.copyEn.description}`),
+      40,
+    ),
+    howTo,
+    faq: faq.length >= 2 ? faq : [
+      { question: ensureMin("Does this upload files?", 8), answer: ensureMin("No. LOCAL_ONLY in the browser.", 8) },
+      { question: ensureMin("Is this professional advice?", 8), answer: ensureMin("No. Check important results yourself.", 8) },
+    ],
+    privacy: pack?.privacy ?? privacyFor(tool, locale),
+    formats: ensureMin(pack?.formats ?? "Input and output stay in this browser tab.", 8),
+    examples,
   };
 }
 

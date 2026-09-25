@@ -19,6 +19,7 @@ export type UxChrome = {
   noWordExport: string;
   pdfFamily: string;
   imageFamily: string;
+  homeTitle: string;
 };
 
 export const uxChrome: Record<Locale, UxChrome> = {
@@ -40,6 +41,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela does not convert PDF to Word. Use merge, split, rotate, or images → PDF.",
     pdfFamily: "PDF tools",
     imageFamily: "Image tools",
+    homeTitle: "Free PDF, image and JSON tools in your browser",
   },
   de: {
     company: "Unternehmen",
@@ -59,6 +61,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela wandelt PDF nicht nach Word. Nutzen Sie Zusammenführen, Teilen, Drehen oder Bilder → PDF.",
     pdfFamily: "PDF-Werkzeuge",
     imageFamily: "Bild-Werkzeuge",
+    homeTitle: "Kostenlose PDF-, Bild- und JSON-Tools im Browser",
   },
   uk: {
     company: "Компанія",
@@ -78,6 +81,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela не конвертує PDF у Word. Є об’єднання, поділ, обертання або зображення → PDF.",
     pdfFamily: "Інструменти PDF",
     imageFamily: "Інструменти зображень",
+    homeTitle: "Безкоштовні PDF, зображення та JSON у браузері",
   },
   pl: {
     company: "Firma",
@@ -97,6 +101,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela nie konwertuje PDF do Word. Jest łączenie, podział, obrót lub obrazy → PDF.",
     pdfFamily: "Narzędzia PDF",
     imageFamily: "Narzędzia obrazów",
+    homeTitle: "Darmowe narzędzia PDF, obrazów i JSON w przeglądarce",
   },
   fr: {
     company: "Société",
@@ -116,6 +121,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela ne convertit pas le PDF vers Word. Fusion, découpe, rotation ou images → PDF.",
     pdfFamily: "Outils PDF",
     imageFamily: "Outils images",
+    homeTitle: "Outils PDF, image et JSON gratuits dans le navigateur",
   },
   es: {
     company: "Empresa",
@@ -135,6 +141,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela no convierte PDF a Word. Une, divide, rota o imágenes → PDF.",
     pdfFamily: "Herramientas PDF",
     imageFamily: "Herramientas de imagen",
+    homeTitle: "Herramientas PDF, imagen y JSON gratis en el navegador",
   },
   it: {
     company: "Azienda",
@@ -154,6 +161,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela non converte PDF in Word. Unisci, dividi, ruota o immagini → PDF.",
     pdfFamily: "Strumenti PDF",
     imageFamily: "Strumenti immagini",
+    homeTitle: "Strumenti PDF, immagini e JSON gratis nel browser",
   },
   pt: {
     company: "Empresa",
@@ -173,6 +181,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "A Freela não converte PDF para Word. Junte, divida, rode ou imagens → PDF.",
     pdfFamily: "Ferramentas PDF",
     imageFamily: "Ferramentas de imagem",
+    homeTitle: "Ferramentas PDF, imagem e JSON grátis no navegador",
   },
   nl: {
     company: "Bedrijf",
@@ -192,6 +201,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela zet PDF niet om naar Word. Samenvoegen, splitsen, draaien of afbeeldingen → PDF.",
     pdfFamily: "PDF-tools",
     imageFamily: "Afbeeldingstools",
+    homeTitle: "Gratis PDF-, afbeeldings- en JSON-tools in de browser",
   },
   tr: {
     company: "Şirket",
@@ -211,6 +221,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela PDF’yi Word’e çevirmez. Birleştirme, bölme, döndürme veya görseller → PDF.",
     pdfFamily: "PDF araçları",
     imageFamily: "Görsel araçları",
+    homeTitle: "Tarayıcıda ücretsiz PDF, görsel ve JSON araçları",
   },
   ar: {
     company: "الشركة",
@@ -230,6 +241,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela لا تحوّل PDF إلى Word. الدمج والتقسيم والتدوير أو صور → PDF.",
     pdfFamily: "أدوات PDF",
     imageFamily: "أدوات الصور",
+    homeTitle: "أدوات PDF والصور وJSON المجانية في المتصفح",
   },
   he: {
     company: "חברה",
@@ -249,6 +261,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     noWordExport: "Freela לא ממירה PDF ל-Word. מיזוג, פיצול, סיבוב או תמונות → PDF.",
     pdfFamily: "כלי PDF",
     imageFamily: "כלי תמונה",
+    homeTitle: "כלי PDF, תמונה ו-JSON חינמיים בדפדפן",
   },
 };
 

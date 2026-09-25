@@ -46,9 +46,9 @@ const C = (
 
 export const categories: CategoryDefinition[] = [
   C("pdf-documents", true, {
-    en: ["PDF & Documents", "pdf", "Merge, split, rotate and inspect PDFs in your browser.", "PDF tools"],
-    de: ["PDF & Dokumente", "pdf", "PDFs im Browser zusammenführen, teilen, drehen und prüfen.", "PDF-Werkzeuge"],
-    uk: ["PDF і документи", "pdf", "Об’єднуйте, діліть, обертайте та перевіряйте PDF у браузері.", "Інструменти PDF"],
+    en: ["PDF & Documents", "pdf", "Free online PDF tools: merge, split, rotate and inspect files in your browser. Nothing is uploaded.", "PDF tools online"],
+    de: ["PDF & Dokumente", "pdf", "Kostenlose PDF-Tools online: zusammenführen, teilen, drehen und prüfen. Kein Upload.", "PDF-Werkzeuge online"],
+    uk: ["PDF і документи", "pdf", "Безкоштовні PDF онлайн: об’єднати, розділити, повернути й перевірити. Без вивантаження.", "Інструменти PDF онлайн"],
     pl: ["PDF i dokumenty", "pdf", "Łącz, dziel, obracaj i sprawdzaj PDF w przeglądarce.", "Narzędzia PDF"],
     fr: ["PDF et documents", "pdf", "Fusionnez, découpez, faites pivoter et inspectez des PDF dans le navigateur.", "Outils PDF"],
     es: ["PDF y documentos", "pdf", "Une, divide, rota e inspecciona PDF en el navegador.", "Herramientas PDF"],
@@ -60,8 +60,8 @@ export const categories: CategoryDefinition[] = [
     he: ["PDF ומסמכים", "pdf", "מזגו, פצלו, סובבו ובדקו PDF בדפדפן.", "כלי PDF"],
   }),
   C("images", true, {
-    en: ["Images", "images", "Compress, resize, convert and encode images locally.", "Image tools"],
-    de: ["Bilder", "bilder", "Bilder lokal komprimieren, skalieren, konvertieren und kodieren.", "Bild-Werkzeuge"],
+    en: ["Images", "images", "Free online image tools: compress, resize, convert JPG PNG WebP locally. No upload.", "Image tools online"],
+    de: ["Bilder", "bilder", "Kostenlose Bild-Tools: komprimieren, skalieren, JPG PNG WebP konvertieren. Kein Upload.", "Bild-Werkzeuge online"],
     uk: ["Зображення", "images", "Стискайте, змінюйте розмір, конвертуйте та кодуйте зображення локально.", "Інструменти зображень"],
     pl: ["Obrazy", "obrazy", "Kompresuj, skaluj, konwertuj i koduj obrazy lokalnie.", "Narzędzia obrazów"],
     fr: ["Images", "images", "Compressez, redimensionnez, convertissez et encodez des images localement.", "Outils images"],
@@ -102,7 +102,7 @@ export const categories: CategoryDefinition[] = [
     he: ["למפתחים", "developer", "עיצוב JSON, קידוד URL, hash ופענוח JWT לדוגמה.", "כלי מפתחים"],
   }),
   C("seo", true, {
-    en: ["SEO", "seo", "Build meta tags, robots.txt, hreflang sets and SERP previews.", "SEO tools"],
+    en: ["SEO", "seo", "Free SEO helpers: meta tags, robots.txt, hreflang, sitemap and SERP preview. Copy-paste locally.", "SEO tools online"],
     de: ["SEO", "seo", "Meta-Tags, robots.txt, hreflang-Sets und SERP-Vorschauen erstellen.", "SEO-Werkzeuge"],
     uk: ["SEO", "seo", "Створюйте метатеги, robots.txt, набори hreflang і прев’ю SERP.", "SEO-інструменти"],
     pl: ["SEO", "seo", "Twórz meta tagi, robots.txt, zestawy hreflang i podgląd SERP.", "Narzędzia SEO"],
@@ -130,7 +130,7 @@ export const categories: CategoryDefinition[] = [
     he: ["מחשבונים", "calculators", "אחוזים, מע\"מ, הנחה, מרווח, BMI והפרש תאריכים.", "מחשבונים"],
   }),
   C("converters", true, {
-    en: ["Converters", "converters", "Convert length, weight, temperature and data sizes with locale-aware units.", "Unit converters"],
+    en: ["Converters", "converters", "Free unit converters: length, weight, temperature, MB/GB. From → to in your browser.", "Unit converters online"],
     de: ["Umrechner", "umrechner", "Länge, Gewicht, Temperatur und Datengrößen lokalisiert umrechnen.", "Einheitenumrechner"],
     uk: ["Конвертери", "converters", "Конвертуйте довжину, вагу, температуру та розмір даних.", "Конвертери одиниць"],
     pl: ["Konwertery", "konwertery", "Przeliczaj długość, wagę, temperaturę i rozmiar danych.", "Konwertery jednostek"],

@@ -59,6 +59,7 @@ export async function generateMetadata({
       title: copy.h1,
       description: copy.description,
       pathWithoutLocale: `/tools/${copy.slug}`,
+      ogType: "website",
     });
   }
   return {};
@@ -130,7 +131,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
           <h1 id="tool-heading" className="text-3xl font-semibold tracking-tight">
             {copy.h1}
           </h1>
-          <p className="mt-2 text-muted-foreground">{copy.description}</p>
+          <p className="mt-2 text-muted-foreground">{copy.intro}</p>
         </div>
       </div>
       {!loc.indexable ? <p className="mt-3 text-sm text-amber-800">{ui.noIndexNote}</p> : null}
@@ -204,10 +205,27 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
   const ui = t(locale);
   const tools = toolsInCategory(locale, cat.id);
   const copy = copyForCategory(cat, locale);
+  const crumbs = [
+    { name: ui.home, url: absoluteUrl(`/${locale}`) },
+    { name: copy.name, url: absoluteUrl(`/${locale}/tools/${copy.slug}`) },
+  ];
+  const itemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: copy.h1,
+    itemListElement: tools.map((tool, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: absoluteUrl(`/${locale}/tools/${copyForTool(tool, locale).slug}`),
+      name: copyForTool(tool, locale).name,
+    })),
+  };
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <PageTracker locale={locale} />
-      <nav className="text-sm text-muted-foreground">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd(crumbs)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
+      <nav className="text-sm text-muted-foreground" aria-label="Breadcrumb">
         <Link href={`/${locale}`}>{ui.home}</Link>
         {" / "}
         <span>{copy.name}</span>

@@ -12,7 +12,7 @@ import {
   toolsInCategory,
   visibleTools,
 } from "@/lib/registry";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, websiteJsonLd } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
 import { AdSlot, CategoryIcon } from "@/components/site-chrome";
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const ui = t(locale);
   return pageMetadata({
     locale,
-    title: `${ui.brand} — ${ui.tagline}`,
+    title: ui.homeTitle,
     description: ui.heroLead,
     pathWithoutLocale: "",
   });
@@ -56,10 +56,11 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
       <PageTracker locale={locale} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale, ui.heroLead)) }} />
       <section className="grid items-center gap-6 rounded-[1.5rem] border border-border bg-card px-4 py-6 shadow-sm sm:px-8 sm:py-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
           <p className="text-sm font-semibold text-primary">freela.store</p>
-          <h1 className="mt-2 max-w-xl text-3xl font-semibold tracking-tight sm:text-5xl">{ui.tagline}</h1>
+          <h1 className="mt-2 max-w-xl text-3xl font-semibold tracking-tight sm:text-5xl">{ui.homeTitle}</h1>
           <p className="mt-3 max-w-xl text-muted-foreground">{ui.heroLead}</p>
           <div className="mt-6 max-w-xl">
             <SearchBox locale={locale} />

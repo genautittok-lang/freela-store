@@ -111,7 +111,10 @@ export function SiteFooter({ locale }: { locale: string }) {
     { id: "merge-pdf", label: "PDF → PDF" },
     { id: "images-to-pdf", label: "JPG / PNG → PDF" },
     { id: "convert-image", label: "JPG / PNG → WebP" },
-    { id: "compress-image", label: "JPG / PNG" },
+    { id: "csv-json", label: "CSV → JSON" },
+    { id: "yaml-json", label: "YAML → JSON" },
+    { id: "temperature", label: "°C → °F" },
+    { id: "hex-rgb-hsl", label: "HEX → RGB" },
   ];
   return (
     <footer className="mt-auto border-t border-border bg-card">

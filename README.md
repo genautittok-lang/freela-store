@@ -51,21 +51,49 @@ Or `npm run release` (typecheck, unit, validate, qa, lint, audit, e2e). Producti
 ## What is in this ship
 
 - 77 published tools; all `LOCAL_ONLY` (no file bytes leave the device)
-- Locales: English is the only **indexable** locale. Routed UI exists for `de uk pl fr es it pt nl tr` plus live RTL chrome for `ar` and `he`, all `noindex` until native-quality QA. Remaining prepared locales stay unrouted.
+- **12 indexable locales:** `en`, `de`, `uk`, `pl`, `fr`, `es`, `it`, `pt`, `nl`, `tr`, `ar`, `he` (sitemap + hreflang + x-default). Remaining prepared locales stay unrouted.
 - Search (registry-backed; search URLs `noindex`)
-- Sitemap, robots.txt, canonical, hreflang + x-default (indexable locales only), WebApplication + FAQ + breadcrumb JSON-LD
+- Sitemap, robots.txt, canonical, hreflang + x-default, WebApplication + FAQ + HowTo + Breadcrumb JSON-LD, OG/Twitter image `/brand/og.png`
 - Admin dashboard: usage, success/error rates, languages, SEO, translation completeness, processing modes, retention, audit log, CSV export
 - First-party analytics (no file contents; origin + rate limit)
 - Compact cookie consent for analytics
 - Legal: privacy, terms, contact, about, affiliate, acceptable use, abuse, deletion, vendors, file processing, copyright, data inventory
 - Original Freela brand assets in `public/brand/` (hero, OG, social, teaser video), favicon/manifest
 
-## Production deploy (freela.store)
+## Free continuous hosting (Vercel) + custom domain
 
-1. Use Node 22 on a host that can run `next start` (or a Node platform such as a VPS, Fly, or similar). HTTPS must terminate in front of the app.
+This repo is a Next.js app. `vercel.json` sets `framework: nextjs` and `npm run build`.
+
+**This environment has no Vercel login and no `VERCEL_TOKEN`.** A non-interactive deploy cannot run here. Use the **Publish** control in the project chat (already enabled) or deploy from your own Vercel account.
+
+### Deploy on Vercel
+
+1. Import the Git repository in [Vercel](https://vercel.com) (or click **Publish**).
+2. Framework preset: Next.js. Build: `npm run build`. Output: default Next.js (do not set a static `outputDirectory`).
+3. Environment variables:
+   - `NEXT_PUBLIC_SITE_URL=https://freela.store` (or `https://your-project.vercel.app` until DNS is live)
+   - `ADMIN_EMAIL` / `ADMIN_PASSWORD` — production secrets, not the development defaults
+   - `DATABASE_PATH` — SQLite via `better-sqlite3`. Vercel serverless filesystems are **ephemeral**, so admin/analytics DB will not persist on the free hobby plan. The public tool pages are `LOCAL_ONLY` and do not need the database. For durable admin stats, attach a persistent host later or accept empty analytics on serverless.
+4. Deploy production. Confirm `https://<project>.vercel.app/en` returns 200 and `/sitemap.xml` lists the 12 locales.
+
+### Custom domain (freela.store)
+
+1. Vercel project → **Settings → Domains** → add `freela.store` and `www.freela.store`.
+2. At your DNS host, create the records Vercel shows (usually A/`10.0.1.2` for apex, CNAME for `www`, or ALIAS).
+3. Set `NEXT_PUBLIC_SITE_URL=https://freela.store` and redeploy so canonical, hreflang, robots, and OG URLs use the apex.
+4. Redirect `www` → apex in the Vercel domain UI (or keep the app’s host header behavior).
+5. After TLS is green: Google Search Console domain property, submit `https://freela.store/sitemap.xml`. **Indexing is not guaranteed.**
+
+Cloudflare Pages is an alternative (Next.js via `@cloudflare/next-on-pages` or a Node adapter). Vercel is the path wired by `vercel.json`.
+
+Temporary public preview (this agent VM only): a Cloudflare quick tunnel may be running; it is not production and the hostname changes when the tunnel restarts.
+
+## Production deploy (self-hosted Node)
+
+1. Use Node 22 on a host that can run `next start` (or a Node platform such as a VPS). HTTPS must terminate in front of the app.
 2. Set environment variables (never commit secrets):
 
-   - `NEXT_PUBLIC_SITE_URL=https://freela.store` (apex; `www.` is redirected with 308)
+   - `NEXT_PUBLIC_SITE_URL=https://freela.store`
    - `ADMIN_EMAIL=` a real operator address
    - `ADMIN_PASSWORD=` a long random secret (**not** `changeme-freela`)
    - `DATABASE_PATH=` a persistent volume path (for example `/var/lib/freela/freela.db`)

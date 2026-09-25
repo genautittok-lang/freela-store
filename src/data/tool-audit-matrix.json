@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T10:14:36.169Z",
+  "generatedAt": "2026-09-25T16:00:35.992Z",
   "published": 77,
   "workflowPass": 77,
   "locales": [
@@ -312,7 +312,7 @@
       "slug": "merge-pdf",
       "category": "pdf-documents",
       "url": "/en/tools/merge-pdf",
-      "purpose": "Combine several PDF documents into one file on your device. Nothing is uploaded.",
+      "purpose": "Merge PDF files (PDF). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "pdf"
@@ -346,7 +346,7 @@
       "slug": "split-pdf",
       "category": "pdf-documents",
       "url": "/en/tools/split-pdf",
-      "purpose": "Cut a PDF into individual page files in your browser. Choose a range or export every page.",
+      "purpose": "Split PDF pages (PDF). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "pdf"
@@ -382,7 +382,7 @@
       "slug": "rotate-pdf",
       "category": "pdf-documents",
       "url": "/en/tools/rotate-pdf",
-      "purpose": "Turn sideways scans upright without re-printing. Rotation is applied locally with pdf-lib.",
+      "purpose": "Rotate PDF pages (PDF). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "pdf"
@@ -418,7 +418,7 @@
       "slug": "images-to-pdf",
       "category": "pdf-documents",
       "url": "/en/tools/images-to-pdf",
-      "purpose": "Turn JPG, PNG or WebP photos into a paginated PDF. Images never leave this browser tab.",
+      "purpose": "JPG PNG to PDF. Convert JPG / PNG / WebP to PDF on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "png",
@@ -455,7 +455,7 @@
       "slug": "extract-pdf-pages",
       "category": "pdf-documents",
       "url": "/en/tools/extract-pdf-pages",
-      "purpose": "Keep only the pages you list. The rest of the document is ignored and never uploaded.",
+      "purpose": "Extract PDF pages (PDF). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "pdf"
@@ -491,7 +491,7 @@
       "slug": "pdf-metadata",
       "category": "pdf-documents",
       "url": "/en/tools/pdf-metadata",
-      "purpose": "Inspect document information dictionaries locally. Useful before you share a file that still contains author names.",
+      "purpose": "PDF metadata viewer (PDF). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "pdf"
@@ -524,7 +524,7 @@
       "slug": "reorder-pdf",
       "category": "pdf-documents",
       "url": "/en/tools/reorder-pdf",
-      "purpose": "Shuffle page order in the browser. Reverse a scan or move a cover to the front without extra software.",
+      "purpose": "Reorder PDF pages (PDF). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "pdf"
@@ -558,7 +558,7 @@
       "slug": "compress-image",
       "category": "images",
       "url": "/en/tools/compress-image",
-      "purpose": "Shrink image files with a quality slider. Encoding happens on a canvas in your browser.",
+      "purpose": "Compress JPG PNG WebP (JPG PNG WebP). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "jpg",
@@ -597,7 +597,7 @@
       "slug": "resize-image",
       "category": "images",
       "url": "/en/tools/resize-image",
-      "purpose": "Scale photos to exact dimensions while locking aspect ratio. Useful for thumbnails and social crops.",
+      "purpose": "Resize image online (JPG PNG WebP). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "jpg",
@@ -636,7 +636,7 @@
       "slug": "crop-image",
       "category": "images",
       "url": "/en/tools/crop-image",
-      "purpose": "Cut unused margins from screenshots and photos. The crop runs locally on a canvas.",
+      "purpose": "Crop image online (JPG PNG WebP). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "jpg",
@@ -675,7 +675,7 @@
       "slug": "convert-image",
       "category": "images",
       "url": "/en/tools/convert-image",
-      "purpose": "Switch between JPEG, PNG and WebP in the tab you already have open. Transparency becomes a chosen matte on JPEG.",
+      "purpose": "Convert image to WebP. Convert JPG / PNG / WebP to JPG / PNG / WebP on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "jpg",
@@ -714,7 +714,7 @@
       "slug": "image-to-base64",
       "category": "images",
       "url": "/en/tools/image-to-base64",
-      "purpose": "Create a data URL for CSS or HTML prototypes. Encoding uses the FileReader API in your browser.",
+      "purpose": "Image to Base64. Convert image to Base64 on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "jpg",
@@ -753,7 +753,7 @@
       "slug": "base64-to-image",
       "category": "images",
       "url": "/en/tools/base64-to-image",
-      "purpose": "Paste a data URL or raw Base64 and preview the picture. Decoding never calls a server.",
+      "purpose": "Base64 to image. Convert Base64 to image on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "png",
@@ -788,7 +788,7 @@
       "slug": "exif-strip",
       "category": "images",
       "url": "/en/tools/exif-strip",
-      "purpose": "Download a copy of a JPEG or PNG without metadata. Stripping is done by redrawing the image on a canvas.",
+      "purpose": "Remove EXIF metadata (JPG PNG). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "jpg",
@@ -825,7 +825,7 @@
       "slug": "favicon-generator",
       "category": "images",
       "url": "/en/tools/favicon-generator",
-      "purpose": "Create PNG favicon sizes from a square logo. Scaling runs in the browser canvas.",
+      "purpose": "Favicon generator (PNG → ICO). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "png",
@@ -862,7 +862,7 @@
       "slug": "word-counter",
       "category": "text",
       "url": "/en/tools/word-counter",
-      "purpose": "Get a live word, sentence and paragraph count as you type. Counting uses locale-aware segmentation where the browser supports it.",
+      "purpose": "Word counter online (word counter). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -896,7 +896,7 @@
       "slug": "character-counter",
       "category": "text",
       "url": "/en/tools/character-counter",
-      "purpose": "Measure characters, spaces and lines for bios, ads and SMS. Useful next to a 160-character or 70-character title limit.",
+      "purpose": "Character counter (character counter). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -930,7 +930,7 @@
       "slug": "case-converter",
       "category": "text",
       "url": "/en/tools/case-converter",
-      "purpose": "Switch casing without a word processor. Title case uses simple English rules, not a full editorial style guide.",
+      "purpose": "Case converter (case converter). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -966,7 +966,7 @@
       "slug": "remove-duplicate-lines",
       "category": "text",
       "url": "/en/tools/remove-duplicate-lines",
-      "purpose": "Keep the first occurrence of each line. Optional case-insensitive mode helps clean mixed exports.",
+      "purpose": "Remove duplicate lines (remove duplicate lines). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt",
@@ -1003,7 +1003,7 @@
       "slug": "sort-lines",
       "category": "text",
       "url": "/en/tools/sort-lines",
-      "purpose": "Order lists with locale collation. Choose A–Z, Z–A or numeric sort for version-looking strings.",
+      "purpose": "Sort lines of text (sort lines). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -1038,7 +1038,7 @@
       "slug": "slug-generator",
       "category": "text",
       "url": "/en/tools/slug-generator",
-      "purpose": "Turn a heading into a lowercase hyphenated slug. Accents are folded; punctuation is stripped.",
+      "purpose": "URL slug generator (slug generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -1072,7 +1072,7 @@
       "slug": "whitespace-cleaner",
       "category": "text",
       "url": "/en/tools/whitespace-cleaner",
-      "purpose": "Remove extra spaces, tabs and blank lines from pasted text. Handy after copying from PDFs or slides.",
+      "purpose": "Clean whitespace (whitespace cleaner). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -1108,7 +1108,7 @@
       "slug": "text-statistics",
       "category": "text",
       "url": "/en/tools/text-statistics",
-      "purpose": "See words, unique words, average word length and estimated reading time for a passage.",
+      "purpose": "Text statistics (text statistics). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -1142,7 +1142,7 @@
       "slug": "text-diff",
       "category": "text",
       "url": "/en/tools/text-diff",
-      "purpose": "Highlight lines that were added, removed or changed. The diff runs locally with a simple LCS algorithm.",
+      "purpose": "Compare two texts (text diff). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "txt"
@@ -1176,7 +1176,7 @@
       "slug": "json-formatter",
       "category": "developer",
       "url": "/en/tools/json-formatter",
-      "purpose": "Pretty-print or compact JSON with a syntax check. Invalid documents show the parser message, not a stack trace.",
+      "purpose": "JSON formatter online (json formatter). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "json"
@@ -1212,7 +1212,7 @@
       "slug": "json-validator",
       "category": "developer",
       "url": "/en/tools/json-validator",
-      "purpose": "Check whether a string is valid JSON. Errors mention the parser’s message without sending the payload away.",
+      "purpose": "JSON validator (json validator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "json"
@@ -1246,7 +1246,7 @@
       "slug": "csv-json",
       "category": "developer",
       "url": "/en/tools/csv-json",
-      "purpose": "Turn CSV tables into arrays of objects, or flatten JSON arrays to CSV. Parsing understands quoted commas.",
+      "purpose": "CSV to JSON converter. Convert CSV to JSON on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "csv",
@@ -1283,7 +1283,7 @@
       "slug": "base64",
       "category": "developer",
       "url": "/en/tools/base64",
-      "purpose": "Encode UTF-8 text to Base64 or decode it back. Invalid payloads show an error instead of mojibake.",
+      "purpose": "Base64 encode decode (base64). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -1319,7 +1319,7 @@
       "slug": "url-codec",
       "category": "developer",
       "url": "/en/tools/url-codec",
-      "purpose": "Apply encodeURIComponent or decodeURIComponent to a string. Handy when a parameter contains spaces or Unicode.",
+      "purpose": "URL encode decode (url codec). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "url",
       "supportedFormats": [
         "txt"
@@ -1355,7 +1355,7 @@
       "slug": "html-entities",
       "category": "developer",
       "url": "/en/tools/html-entities",
-      "purpose": "Escape <, > and & for safe HTML text nodes, or decode entities back to characters.",
+      "purpose": "HTML entities encoder (html entities). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "html",
@@ -1391,7 +1391,7 @@
       "slug": "uuid-generator",
       "category": "developer",
       "url": "/en/tools/uuid-generator",
-      "purpose": "Create RFC 4122 version 4 UUIDs with crypto.getRandomValues. Nothing is logged.",
+      "purpose": "UUID generator (uuid generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "none",
       "supportedFormats": [
         "txt"
@@ -1427,7 +1427,7 @@
       "slug": "hash-generator",
       "category": "developer",
       "url": "/en/tools/hash-generator",
-      "purpose": "Hash text with Web Crypto. Use it for checksums, not for storing passwords — that needs a slow salted KDF.",
+      "purpose": "SHA hash generator (hash generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -1463,7 +1463,7 @@
       "slug": "regex-tester",
       "category": "developer",
       "url": "/en/tools/regex-tester",
-      "purpose": "Run a pattern against sample text and see matches. Invalid patterns fail with the engine’s error message.",
+      "purpose": "Regex tester online (regex tester). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -1499,7 +1499,7 @@
       "slug": "jwt-decoder",
       "category": "developer",
       "url": "/en/tools/jwt-decoder",
-      "purpose": "Inspect non-secret sample JWTs. Signatures are displayed, not verified, and tokens are never sent to Freela.",
+      "purpose": "JWT decoder (jwt decoder). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "jwt",
@@ -1534,7 +1534,7 @@
       "slug": "meta-tag-generator",
       "category": "seo",
       "url": "/en/tools/meta-tag-generator",
-      "purpose": "Build title, description and basic Open Graph tags from fields you type. It does not fetch or rewrite live pages.",
+      "purpose": "Meta tag generator (meta tag generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "html"
@@ -1568,7 +1568,7 @@
       "slug": "robots-txt-generator",
       "category": "seo",
       "url": "/en/tools/robots-txt-generator",
-      "purpose": "Emit a robots.txt with allow/disallow paths you list. It does not crawl your site or prove what Google will fetch.",
+      "purpose": "robots.txt generator (robots txt generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "txt"
@@ -1602,7 +1602,7 @@
       "slug": "serp-preview",
       "category": "seo",
       "url": "/en/tools/serp-preview",
-      "purpose": "See how a title, URL and description might wrap in a generic results layout. This is not a live SERP from Google.",
+      "purpose": "SERP snippet preview (serp preview). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "txt"
@@ -1636,7 +1636,7 @@
       "slug": "hreflang-generator",
       "category": "seo",
       "url": "/en/tools/hreflang-generator",
-      "purpose": "Build link rel=alternate hreflang tags plus x-default from a list of locale URLs you provide.",
+      "purpose": "hreflang tag generator (hreflang generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "html"
@@ -1669,7 +1669,7 @@
       "slug": "percentage",
       "category": "calculators",
       "url": "/en/tools/percentage",
-      "purpose": "Find a percent of a number, or the percent change between two values. Arithmetic is done in JavaScript decimals.",
+      "purpose": "Percentage calculator (percentage). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1705,7 +1705,7 @@
       "slug": "vat-calculator",
       "category": "calculators",
       "url": "/en/tools/vat-calculator",
-      "purpose": "Convert between net and gross using a VAT rate you enter. Country rules are not applied automatically.",
+      "purpose": "VAT calculator (vat calculator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1741,7 +1741,7 @@
       "slug": "discount",
       "category": "calculators",
       "url": "/en/tools/discount",
-      "purpose": "Apply a percent off a list price and see the savings. Stacked coupons are not modeled.",
+      "purpose": "Discount calculator (discount). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1775,7 +1775,7 @@
       "slug": "profit-margin",
       "category": "calculators",
       "url": "/en/tools/profit-margin",
-      "purpose": "Derive margin and markup from cost and selling price. Labels follow standard retail definitions.",
+      "purpose": "Profit margin calculator (profit margin). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1809,7 +1809,7 @@
       "slug": "bmi-calculator",
       "category": "calculators",
       "url": "/en/tools/bmi-calculator",
-      "purpose": "Compute BMI from height and weight as a generic index. It is not a diagnosis and ignores muscle mass.",
+      "purpose": "BMI calculator (bmi calculator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1842,7 +1842,7 @@
       "slug": "date-difference",
       "category": "calculators",
       "url": "/en/tools/date-difference",
-      "purpose": "Count whole days and an approximate years/months breakdown between two calendar dates in your local timezone.",
+      "purpose": "Date difference calculator (date difference). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "date",
       "supportedFormats": [
         "date"
@@ -1875,7 +1875,7 @@
       "slug": "temperature",
       "category": "converters",
       "url": "/en/tools/temperature",
-      "purpose": "Convert temperatures with standard formulas. Kelvin cannot go below zero in the output.",
+      "purpose": "Temperature converter. Convert °C / °F / K to °C / °F / K on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1909,7 +1909,7 @@
       "slug": "length",
       "category": "converters",
       "url": "/en/tools/length",
-      "purpose": "Convert common length units through metres. Results use locale number formatting.",
+      "purpose": "Length unit converter (m ft km). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1943,7 +1943,7 @@
       "slug": "weight",
       "category": "converters",
       "url": "/en/tools/weight",
-      "purpose": "Convert mass units via kilograms. This is mass, not planetary weight, despite the everyday label.",
+      "purpose": "Weight unit converter (kg lb). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -1977,7 +1977,7 @@
       "slug": "data-size",
       "category": "converters",
       "url": "/en/tools/data-size",
-      "purpose": "Convert file sizes using SI (1000) or IEC (1024) units. Labels stay explicit so KiB is not called KB.",
+      "purpose": "MB GB data converter (MB GB). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2013,7 +2013,7 @@
       "slug": "hex-rgb-hsl",
       "category": "color",
       "url": "/en/tools/hex-rgb-hsl",
-      "purpose": "Translate color notations used in CSS. Invalid hex strings are rejected instead of silently clamped.",
+      "purpose": "HEX RGB HSL converter. Convert HEX / RGB / HSL to HEX / RGB / HSL on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "color",
       "supportedFormats": [
         "hex",
@@ -2047,7 +2047,7 @@
       "slug": "contrast-checker",
       "category": "color",
       "url": "/en/tools/contrast-checker",
-      "purpose": "Compute the contrast ratio of a foreground and background pair against WCAG 2 AA and AAA thresholds.",
+      "purpose": "WCAG contrast checker (contrast checker). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "color",
       "supportedFormats": [
         "hex"
@@ -2080,7 +2080,7 @@
       "slug": "palette-generator",
       "category": "color",
       "url": "/en/tools/palette-generator",
-      "purpose": "Generate lighter and darker HEX steps from a base color by mixing with white and black in sRGB.",
+      "purpose": "Color palette generator (palette generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "color",
       "supportedFormats": [
         "hex"
@@ -2113,7 +2113,7 @@
       "slug": "password-generator",
       "category": "generators",
       "url": "/en/tools/password-generator",
-      "purpose": "Create passwords with crypto.getRandomValues. Length and character classes are under your control.",
+      "purpose": "Password generator (password generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "none",
       "supportedFormats": [
         "txt"
@@ -2149,7 +2149,7 @@
       "slug": "qr-generator",
       "category": "generators",
       "url": "/en/tools/qr-generator",
-      "purpose": "Encode text into a QR PNG entirely in the browser. We do not shorten URLs or track scans.",
+      "purpose": "QR code generator (qr generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "png"
@@ -2185,7 +2185,7 @@
       "slug": "random-string",
       "category": "generators",
       "url": "/en/tools/random-string",
-      "purpose": "Produce random tokens for test data. Not a password manager and not a lottery.",
+      "purpose": "Random string generator (random string). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "none",
       "supportedFormats": [
         "txt"
@@ -2220,7 +2220,7 @@
       "slug": "unix-timestamp",
       "category": "date-time",
       "url": "/en/tools/unix-timestamp",
-      "purpose": "Switch between Unix seconds, milliseconds and ISO-8601 strings using your locale’s date formatting.",
+      "purpose": "Unix timestamp converter. Convert Unix to date on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -2253,7 +2253,7 @@
       "slug": "timezone-convert",
       "category": "date-time",
       "url": "/en/tools/timezone-convert",
-      "purpose": "Show the same instant in several IANA timezones using Intl.DateTimeFormat. DST rules come from the browser.",
+      "purpose": "Timezone converter. Convert timezone to timezone on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -2286,7 +2286,7 @@
       "slug": "compress-pdf",
       "category": "pdf-documents",
       "url": "/en/tools/compress-pdf",
-      "purpose": "Rewrite a PDF with object streams to often shrink size. No upload. Heavily encoded scans may not get smaller.",
+      "purpose": "Compress PDF online (PDF). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "pdf"
@@ -2319,7 +2319,7 @@
       "slug": "xml-formatter",
       "category": "developer",
       "url": "/en/tools/xml-formatter",
-      "purpose": "Indent XML-like markup in the browser. This is a structural pretty-printer, not a schema validator.",
+      "purpose": "XML formatter (xml formatter). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "xml"
@@ -2352,7 +2352,7 @@
       "slug": "yaml-json",
       "category": "developer",
       "url": "/en/tools/yaml-json",
-      "purpose": "Turn flat key: value YAML into JSON. Nested documents, anchors and multiline blocks are not supported.",
+      "purpose": "YAML to JSON. Convert YAML to JSON on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "yaml",
@@ -2386,7 +2386,7 @@
       "slug": "sitemap-helper",
       "category": "seo",
       "url": "/en/tools/sitemap-helper",
-      "purpose": "Turn a list of absolute URLs into a urlset. It does not crawl your site or prove indexing.",
+      "purpose": "XML sitemap helper (sitemap helper). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "xml"
@@ -2419,7 +2419,7 @@
       "slug": "canonical-helper",
       "category": "seo",
       "url": "/en/tools/canonical-helper",
-      "purpose": "Emit a single rel=canonical tag for an absolute URL. It does not rewrite your site.",
+      "purpose": "Canonical URL tag (canonical helper). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "html"
@@ -2452,7 +2452,7 @@
       "slug": "schema-generator",
       "category": "seo",
       "url": "/en/tools/schema-generator",
-      "purpose": "Build a WebPage/WebApplication JSON-LD object from fields you type. Review and rating types are blocked.",
+      "purpose": "JSON-LD schema helper (schema generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "json"
@@ -2485,7 +2485,7 @@
       "slug": "og-preview",
       "category": "seo",
       "url": "/en/tools/og-preview",
-      "purpose": "Sketch how an og:title and description might appear. We do not fetch the live image from your server.",
+      "purpose": "Open Graph preview (og preview). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "structured",
       "supportedFormats": [
         "html"
@@ -2518,7 +2518,7 @@
       "slug": "speed",
       "category": "converters",
       "url": "/en/tools/speed",
-      "purpose": "Convert everyday speed units through metres per second. Not a vehicle computer.",
+      "purpose": "Speed unit converter (speed). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2551,7 +2551,7 @@
       "slug": "area",
       "category": "converters",
       "url": "/en/tools/area",
-      "purpose": "Convert land and floor areas through square metres. Survey-specific acres are not modeled.",
+      "purpose": "Area unit converter (area). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2584,7 +2584,7 @@
       "slug": "volume",
       "category": "converters",
       "url": "/en/tools/volume",
-      "purpose": "Convert common volumes using the US liquid gallon. UK gallons are not included in this set.",
+      "purpose": "Volume unit converter (volume). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2617,7 +2617,7 @@
       "slug": "pressure",
       "category": "converters",
       "url": "/en/tools/pressure",
-      "purpose": "Convert pressure units through pascals. Not a medical or industrial certification tool.",
+      "purpose": "Pressure unit converter (pressure). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2650,7 +2650,7 @@
       "slug": "energy",
       "category": "converters",
       "url": "/en/tools/energy",
-      "purpose": "Convert energy units through joules. Food calories here are thermochemical kilocalories.",
+      "purpose": "Energy unit converter (energy). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2683,7 +2683,7 @@
       "slug": "duration",
       "category": "converters",
       "url": "/en/tools/duration",
-      "purpose": "Convert durations through seconds. This is elapsed time, not calendar dates or DST.",
+      "purpose": "Time duration converter (duration). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2716,7 +2716,7 @@
       "slug": "gradient-generator",
       "category": "color",
       "url": "/en/tools/gradient-generator",
-      "purpose": "Emit a linear-gradient CSS snippet from two HEX colors and an angle. Colors stay in sRGB.",
+      "purpose": "CSS gradient generator (gradient generator). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "color",
       "supportedFormats": [
         "css"
@@ -2749,7 +2749,7 @@
       "slug": "url-parser",
       "category": "developer",
       "url": "/en/tools/url-parser",
-      "purpose": "Parse an absolute URL with the browser URL API. The tool does not request the address.",
+      "purpose": "URL parser (url parser). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "url",
       "supportedFormats": [
         "txt"
@@ -2782,7 +2782,7 @@
       "slug": "query-parser",
       "category": "developer",
       "url": "/en/tools/query-parser",
-      "purpose": "Turn a query string or full URL into a key/value map using URLSearchParams. Duplicate keys keep the last value.",
+      "purpose": "Query string parser (query parser). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "url",
       "supportedFormats": [
         "txt"
@@ -2815,7 +2815,7 @@
       "slug": "invoice-math",
       "category": "calculators",
       "url": "/en/tools/invoice-math",
-      "purpose": "Multiply quantity by unit price and apply a tax rate. Not an invoicing product or tax filing tool.",
+      "purpose": "Invoice line calculator (invoice math). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "number",
       "supportedFormats": [
         "number"
@@ -2850,7 +2850,7 @@
       "slug": "resume-bullets",
       "category": "text",
       "url": "/en/tools/resume-bullets",
-      "purpose": "Prefix trimmed lines with a bullet and collapse spaces. This is a writing aid, not career advice.",
+      "purpose": "Resume bullet helper (resume bullets). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -2883,7 +2883,7 @@
       "slug": "cover-letter-template",
       "category": "text",
       "url": "/en/tools/cover-letter-template",
-      "purpose": "Assemble a three-paragraph letter from role, company and your notes. Not legal or immigration advice.",
+      "purpose": "Cover letter template (cover letter template). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "txt"
@@ -2916,7 +2916,7 @@
       "slug": "ics-event",
       "category": "date-time",
       "url": "/en/tools/ics-event",
-      "purpose": "Build a VEVENT from a title and start/end. Timezone folding is the browser’s. Not a calendar product.",
+      "purpose": "ICS calendar event (ics event). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "text",
       "supportedFormats": [
         "ics"
@@ -2949,7 +2949,7 @@
       "slug": "color-extract",
       "category": "images",
       "url": "/en/tools/color-extract",
-      "purpose": "Average pixels on a downscaled canvas to suggest a few HEX colors. Not a professional color profiler.",
+      "purpose": "Extract colors from image (JPG PNG). Free. Files and text stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
         "jpg",

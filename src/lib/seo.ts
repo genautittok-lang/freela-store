@@ -139,6 +139,20 @@ export function howToJsonLd(name: string, steps: string[], url: string) {
   };
 }
 
+export function websiteJsonLd(locale: string, description?: string) {
+  const loc = getLocale(locale) ?? getLocale("en")!;
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Freela",
+    url: absoluteUrl(`/${locale}`),
+    inLanguage: loc.htmlLang,
+    description:
+      description ?? "Browser-first PDF, image, text and developer tools. Files stay on your device.",
+    publisher: { "@type": "Organization", name: "Freela", url: absoluteUrl("/en") },
+  };
+}
+
 export function faqJsonLd(faq: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",
