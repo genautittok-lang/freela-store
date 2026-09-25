@@ -6,7 +6,7 @@ import { extras } from "../src/i18n/extras";
 import { sitemapEntries, languageAlternates } from "../src/lib/seo";
 import { LEGAL_SLUGS } from "../src/data/legal-slugs";
 import { categories } from "../src/data/categories";
-import { messageKeyNotes } from "../src/i18n/catalog";
+import { preparedUi, assertPreparedUi } from "../src/i18n/prepared-ui";
 
 const errors: string[] = [];
 function fail(msg: string) {
@@ -70,9 +70,17 @@ for (const entry of urls) {
 
 const sample = languageAlternates("", ["en"]);
 if (!sample.en || !sample["x-default"]) fail("hreflang sample incomplete");
+if (urls.some((u) => /\/(uk|de|fr|es)\//.test(u.url) || /\/(uk|de)$/.test(u.url))) {
+  fail("Sitemap includes a non-indexable locale");
+}
+for (const entry of urls) {
+  const codes = Object.keys(entry.alternates.languages).filter((c) => c !== "x-default");
+  if (codes.some((c) => c !== "en")) fail(`Sitemap hreflang includes unpublished locale: ${codes.join(",")}`);
+}
 
 if (PREPARED_LOCALES.includes("ar" as never) && localeRegistry.en.dir !== "ltr") fail("EN should be LTR");
-if (!messageKeyNotes.trustTitle) fail("Translator notes missing");
+assertPreparedUi();
+if (!preparedUi.ar.tagline || !preparedUi.he.tagline) fail("RTL prepared chrome missing");
 
 for (const slug of LEGAL_SLUGS) {
   if (!/^[a-z0-9-]+$/.test(slug)) fail(`Bad legal slug ${slug}`);

@@ -12,6 +12,10 @@ export function robotsFor(locale: Locale, extraIndex = true): Metadata["robots"]
   return { index, follow: true, googleBot: { index, follow: true } };
 }
 
+export function indexableLocales(): Locale[] {
+  return (Object.keys(localeRegistry) as Locale[]).filter((code) => getLocale(code)?.indexable);
+}
+
 export function languageAlternates(pathWithoutLocale: string, locales: Locale[]) {
   const languages: Record<string, string> = {};
   for (const locale of locales) {
@@ -32,7 +36,7 @@ export function pageMetadata(opts: {
   const loc = getLocale(opts.locale)!;
   const canonical = absoluteUrl(`/${opts.locale}${opts.pathWithoutLocale}`);
   const index = opts.index ?? loc.indexable;
-  const locales = Object.keys(localeRegistry) as Locale[];
+  const locales = indexableLocales();
   return {
     title: opts.title,
     description: opts.description,
@@ -134,7 +138,7 @@ export function sitemapEntries() {
     lastModified?: string;
     alternates: { languages: Record<string, string> };
   }[] = [];
-  const locales = (Object.keys(localeRegistry) as Locale[]).filter((code) => getLocale(code)?.indexable);
+  const locales = indexableLocales();
   for (const path of pages) {
     for (const locale of locales) {
       urls.push({

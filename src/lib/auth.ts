@@ -49,6 +49,9 @@ export function recordLoginAttempt(email: string, ip: string) {
 }
 
 export async function login(email: string, password: string, ip: string) {
+  if (process.env.NODE_ENV === "production" && (!process.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD === "changeme-freela")) {
+    return { ok: false as const, error: "Production admin password is not configured." };
+  }
   ensureOwner();
   const normalized = email.trim().toLowerCase();
   if (tooManyLogins(normalized, ip)) {

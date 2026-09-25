@@ -11,6 +11,9 @@
     "validate": "tsx scripts/validate-registry.ts",
     "qa": "tsx scripts/qa.ts",
     "typecheck": "tsc --noEmit",
+    "e2e": "playwright test",
+    "a11y": "playwright test e2e/launch.spec.ts -g accessibility",
+    "release": "npm run typecheck && npm test && npm run validate && npm run qa && npm run lint && npm audit --audit-level=high && npm run e2e",
     "prebuild": "tsx scripts/validate-registry.ts && tsx scripts/qa.ts"
   },
   "dependencies": {
@@ -32,6 +35,8 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/bcryptjs": "^2.4.6",
     "@types/better-sqlite3": "^9.6.0",
@@ -39,6 +44,7 @@
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "axe-core": "^4.13.0",
     "drizzle-kit": "^0.31.11",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",

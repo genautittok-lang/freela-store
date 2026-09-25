@@ -19,6 +19,12 @@ export type ExtraMessages = {
   closeMenu: string;
   allCategories: string;
   heroLead: string;
+  openTool: string;
+  privacyFirst: string;
+  popularTasks: string;
+  toolsNav: string;
+  cookieTitle: string;
+  necessaryOnly: string;
 };
 
 export const extras: Record<Locale, ExtraMessages> = {
@@ -42,6 +48,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Close menu",
     allCategories: "All categories",
     heroLead: "Merge PDFs, compress images, format JSON and run calculators without uploading private files.",
+    openTool: "Open tool",
+    privacyFirst: "Privacy first",
+    popularTasks: "Popular tasks",
+    toolsNav: "Tools",
+    cookieTitle: "Privacy first",
+    necessaryOnly: "Necessary only",
   },
   de: {
     trustTitle: "Dateien bleiben auf Ihrem Gerät",
@@ -63,6 +75,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Menü schließen",
     allCategories: "Alle Kategorien",
     heroLead: "PDFs zusammenführen, Bilder komprimieren, JSON formatieren — ohne private Dateien hochzuladen.",
+    openTool: "Werkzeug öffnen",
+    privacyFirst: "Datenschutz zuerst",
+    popularTasks: "Häufige Aufgaben",
+    toolsNav: "Werkzeuge",
+    cookieTitle: "Datenschutz zuerst",
+    necessaryOnly: "Nur notwendige",
   },
   uk: {
     trustTitle: "Файли залишаються на вашому пристрої",
@@ -84,6 +102,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Закрити меню",
     allCategories: "Усі категорії",
     heroLead: "Об’єднуйте PDF, стискайте зображення, форматуйте JSON без вивантаження приватних файлів.",
+    openTool: "Відкрити інструмент",
+    privacyFirst: "Приватність насамперед",
+    popularTasks: "Популярні задачі",
+    toolsNav: "Інструменти",
+    cookieTitle: "Приватність насамперед",
+    necessaryOnly: "Лише необхідні",
   },
   pl: {
     trustTitle: "Pliki zostają na Twoim urządzeniu",
@@ -105,6 +129,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Zamknij menu",
     allCategories: "Wszystkie kategorie",
     heroLead: "Łącz PDF, kompresuj obrazy i formatuj JSON bez wysyłania prywatnych plików.",
+    openTool: "Otwórz narzędzie",
+    privacyFirst: "Prywatność przede wszystkim",
+    popularTasks: "Popularne zadania",
+    toolsNav: "Narzędzia",
+    cookieTitle: "Prywatność przede wszystkim",
+    necessaryOnly: "Tylko niezbędne",
   },
   fr: {
     trustTitle: "Les fichiers restent sur votre appareil",
@@ -126,6 +156,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Fermer le menu",
     allCategories: "Toutes les catégories",
     heroLead: "Fusionnez des PDF, compressez des images, formatez du JSON sans envoyer de fichiers privés.",
+    openTool: "Ouvrir l’outil",
+    privacyFirst: "Confidentialité d’abord",
+    popularTasks: "Tâches fréquentes",
+    toolsNav: "Outils",
+    cookieTitle: "Confidentialité d’abord",
+    necessaryOnly: "Nécessaires uniquement",
   },
   es: {
     trustTitle: "Los archivos se quedan en tu dispositivo",
@@ -147,6 +183,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Cerrar menú",
     allCategories: "Todas las categorías",
     heroLead: "Une PDF, comprime imágenes y formatea JSON sin subir archivos privados.",
+    openTool: "Abrir herramienta",
+    privacyFirst: "Privacidad primero",
+    popularTasks: "Tareas populares",
+    toolsNav: "Herramientas",
+    cookieTitle: "Privacidad primero",
+    necessaryOnly: "Solo necesarias",
   },
   it: {
     trustTitle: "I file restano sul dispositivo",
@@ -168,6 +210,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Chiudi menu",
     allCategories: "Tutte le categorie",
     heroLead: "Unisci PDF, comprimi immagini e formatta JSON senza caricare file privati.",
+    openTool: "Apri strumento",
+    privacyFirst: "Privacy prima di tutto",
+    popularTasks: "Attività frequenti",
+    toolsNav: "Strumenti",
+    cookieTitle: "Privacy prima di tutto",
+    necessaryOnly: "Solo necessari",
   },
   pt: {
     trustTitle: "Os ficheiros ficam no seu dispositivo",
@@ -189,6 +237,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Fechar menu",
     allCategories: "Todas as categorias",
     heroLead: "Junte PDFs, comprima imagens e formate JSON sem enviar ficheiros privados.",
+    openTool: "Abrir ferramenta",
+    privacyFirst: "Privacidade primeiro",
+    popularTasks: "Tarefas populares",
+    toolsNav: "Ferramentas",
+    cookieTitle: "Privacidade primeiro",
+    necessaryOnly: "Apenas necessárias",
   },
   nl: {
     trustTitle: "Bestanden blijven op je apparaat",
@@ -210,6 +264,12 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Menu sluiten",
     allCategories: "Alle categorieën",
     heroLead: "PDF’s samenvoegen, afbeeldingen comprimeren en JSON formatteren zonder privébestanden te uploaden.",
+    openTool: "Tool openen",
+    privacyFirst: "Privacy eerst",
+    popularTasks: "Populaire taken",
+    toolsNav: "Tools",
+    cookieTitle: "Privacy eerst",
+    necessaryOnly: "Alleen noodzakelijk",
   },
   tr: {
     trustTitle: "Dosyalar cihazınızda kalır",
@@ -231,5 +291,11 @@ export const extras: Record<Locale, ExtraMessages> = {
     closeMenu: "Menüyü kapat",
     allCategories: "Tüm kategoriler",
     heroLead: "PDF birleştirin, görselleri sıkıştırın, JSON biçimlendirin — özel dosyaları yüklemeden.",
+    openTool: "Aracı aç",
+    privacyFirst: "Önce gizlilik",
+    popularTasks: "Popüler görevler",
+    toolsNav: "Araçlar",
+    cookieTitle: "Önce gizlilik",
+    necessaryOnly: "Yalnızca gerekli",
   },
 };

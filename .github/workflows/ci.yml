@@ -18,4 +18,6 @@ jobs:
       - run: npm run qa
       - run: npm run lint
       - run: npm audit --audit-level=high
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
       - run: npm run build

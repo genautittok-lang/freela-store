@@ -1,14 +1,26 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { isLocale, localeRegistry, type Locale } from "@/data/locales";
 import { categories } from "@/data/categories";
-import { featuredTools, newestTools, toolsInCategory, visibleTools } from "@/lib/registry";
+import { featuredTools, newestTools, toolById, toolsInCategory, visibleTools } from "@/lib/registry";
 import { pageMetadata } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
 import { AdSlot, CategoryIcon } from "@/components/site-chrome";
 import { PageTracker } from "@/components/page-tracker";
 import { formatNumber } from "@/lib/format";
+import { iconForTool } from "@/lib/tool-icons";
+
+const TASK_CHIPS = [
+  "merge-pdf",
+  "compress-pdf",
+  "resize-image",
+  "json-formatter",
+  "qr-generator",
+  "word-counter",
+  "convert-image",
+];
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -30,49 +42,76 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
   const featured = featuredTools(locale).slice(0, 8);
   const newest = newestTools(locale).slice(0, 8);
   const count = visibleTools(locale).length;
+  const chips = TASK_CHIPS.map((id) => toolById(id)).filter((tool) => tool?.copy[locale]);
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
       <PageTracker locale={locale} />
-      <section className="rounded-3xl border bg-card px-5 py-10 shadow-sm sm:px-10">
-        <p className="text-sm font-medium text-primary">freela.store</p>
-        <h1 className="mt-2 max-w-2xl text-3xl font-semibold tracking-tight sm:text-5xl">{ui.tagline}</h1>
-        <p className="mt-3 max-w-xl text-muted-foreground">{ui.heroLead}</p>
-        <div className="mt-6 max-w-xl">
-          <SearchBox locale={locale} />
+      <section className="grid items-center gap-8 rounded-[1.5rem] border border-border bg-card px-5 py-8 shadow-sm sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:py-10">
+        <div>
+          <p className="text-sm font-semibold text-primary">freela.store</p>
+          <h1 className="mt-2 max-w-xl text-3xl font-semibold tracking-tight sm:text-5xl">{ui.tagline}</h1>
+          <p className="mt-3 max-w-xl text-muted-foreground">{ui.heroLead}</p>
+          <div className="mt-6 max-w-xl">
+            <SearchBox locale={locale} />
+          </div>
+          <p className="mt-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">{ui.popularTasks}</p>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {chips.map((tool) => (
+              <li key={tool!.id}>
+                <Link className="freela-chip" href={`/${locale}/tools/${tool!.copy[locale].slug}`}>
+                  {tool!.copy[locale].name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="overflow-hidden rounded-2xl border border-border bg-secondary">
+          <Image
+            src="/brand/hero.png"
+            alt="Freela browser tools"
+            width={1280}
+            height={720}
+            priority
+            className="h-auto w-full"
+          />
         </div>
       </section>
       {!loc.indexable ? (
         <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900">{ui.noIndexNote}</p>
       ) : null}
+      <ToolGrid locale={locale} title={ui.popular} tools={featured} cta={ui.openTool} />
       <section className="mt-10">
         <h2 className="text-lg font-semibold">{ui.categories}</h2>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {categories.map((cat) => (
             <li key={cat.id}>
-              <Link
-                href={`/${locale}/tools/${cat.copy[locale].slug}`}
-                className="freela-card block h-full p-4 transition-colors hover:border-primary"
-              >
+              <Link href={`/${locale}/tools/${cat.copy[locale].slug}`} className="freela-card block p-3">
                 <CategoryIcon id={cat.id} />
-                <p className="mt-2 font-medium">{cat.copy[locale].name}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{cat.copy[locale].description}</p>
+                <p className="mt-2 text-sm font-medium">{cat.copy[locale].name}</p>
               </Link>
             </li>
           ))}
         </ul>
       </section>
-      <ToolGrid locale={locale} title={ui.popular} tools={featured} />
-      <section className="mt-10 rounded-2xl border bg-emerald-50/60 px-5 py-6">
-        <h2 className="text-lg font-semibold">{ui.trustTitle}</h2>
-        <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{ui.trustBody}</p>
+      <section className="mt-10 flex items-start gap-4 rounded-2xl border border-border bg-accent/70 px-5 py-5">
+        <div>
+          <h2 className="text-lg font-semibold">{ui.trustTitle}</h2>
+          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{ui.trustBody}</p>
+        </div>
       </section>
       <div className="mt-10">
         <AdSlot position="home-mid" />
       </div>
-      <ToolGrid locale={locale} title={ui.newest} tools={newest} />
+      <section className="mt-10 max-w-xl">
+        <h2 className="text-lg font-semibold">{ui.brand}</h2>
+        <video className="mt-3 w-full rounded-2xl border" controls muted playsInline preload="metadata" poster="/brand/hero.png">
+          <source src="/brand/teaser.mp4" type="video/mp4" />
+        </video>
+      </section>
+      <ToolGrid locale={locale} title={ui.newest} tools={newest} cta={ui.openTool} />
       <section className="mt-10">
         <h2 className="text-lg font-semibold">{ui.popularByCategory}</h2>
-        <div className="mt-4 grid gap-6 lg:grid-cols-2">
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
           {categories.slice(0, 6).map((cat) => {
             const tools = toolsInCategory(locale, cat.id).slice(0, 4);
             return (
@@ -106,26 +145,30 @@ function ToolGrid({
   locale,
   title,
   tools,
+  cta,
 }: {
   locale: Locale;
   title: string;
   tools: ReturnType<typeof featuredTools>;
+  cta: string;
 }) {
   return (
     <section className="mt-10">
       <h2 className="text-lg font-semibold">{title}</h2>
       <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {tools.map((tool) => (
-          <li key={tool.id}>
-            <Link
-              href={`/${locale}/tools/${tool.copy[locale].slug}`}
-              className="freela-card block h-full p-4 transition-colors hover:border-primary"
-            >
-              <p className="font-medium">{tool.copy[locale].name}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{tool.copy[locale].description}</p>
-            </Link>
-          </li>
-        ))}
+        {tools.map((tool) => {
+          const Icon = iconForTool(tool.id, tool.category);
+          return (
+            <li key={tool.id}>
+              <Link href={`/${locale}/tools/${tool.copy[locale].slug}`} className="freela-card block h-full p-4">
+                <Icon className="h-5 w-5 text-primary" aria-hidden />
+                <p className="mt-2 font-medium">{tool.copy[locale].name}</p>
+                <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{tool.copy[locale].description}</p>
+                <span className="mt-3 inline-flex text-sm font-medium text-primary">{cta}</span>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

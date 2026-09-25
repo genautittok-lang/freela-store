@@ -17,6 +17,8 @@ import { AdSlot, CategoryIcon } from "@/components/site-chrome";
 import { PageTracker } from "@/components/page-tracker";
 import { absoluteUrl } from "@/lib/site";
 import { formatBytes } from "@/lib/format";
+import { iconForTool } from "@/lib/tool-icons";
+import { privacyLabel } from "@/lib/privacy";
 
 const ToolRunner = dynamic(() => import("@/components/tool-runner").then((m) => m.ToolRunner), {
   loading: () => <div className="h-48 animate-pulse rounded-2xl bg-muted" />,
@@ -80,6 +82,7 @@ async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Loc
   const cat = categories.find((c) => c.id === tool.category)!;
   const related = relatedToolsFor(tool, locale);
   const loc = localeRegistry[locale];
+  const Icon = iconForTool(tool.id, tool.category);
   const crumbs = [
     { name: ui.home, url: absoluteUrl(`/${locale}`) },
     { name: cat.copy[locale].name, url: absoluteUrl(`/${locale}/tools/${cat.copy[locale].slug}`) },
@@ -106,18 +109,26 @@ async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Loc
           <li>{copy.name}</li>
         </ol>
       </nav>
-      <h1 id="tool-heading" className="mt-3 text-3xl font-semibold tracking-tight">
-        {copy.h1}
-      </h1>
-      <p className="mt-2 text-muted-foreground">{copy.description}</p>
+      <div className="mt-4 flex items-start gap-3">
+        <Icon className="mt-1 h-8 w-8 shrink-0 text-primary" aria-hidden />
+        <div>
+          <h1 id="tool-heading" className="text-3xl font-semibold tracking-tight">
+            {copy.h1}
+          </h1>
+          <p className="mt-2 text-muted-foreground">{copy.description}</p>
+        </div>
+      </div>
       {!loc.indexable ? <p className="mt-3 text-sm text-amber-800">{ui.noIndexNote}</p> : null}
+      <p className="mt-3 inline-flex rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
+        {privacyLabel(tool.processingMode, locale)}
+      </p>
+      <div className="mt-4">
+        <ToolRunner tool={tool} locale={locale} />
+      </div>
       <p className="mt-3 text-xs text-muted-foreground">
         {ui.formats}: {copy.formats}
         {tool.maxFileSize > 0 ? ` · ${ui.sizeLimit} ${formatBytes(locale, tool.maxFileSize)}` : null}
       </p>
-      <div className="mt-5">
-        <ToolRunner tool={tool} locale={locale} />
-      </div>
       <section className="mt-8">
         <h2 className="font-semibold">{ui.howTo}</h2>
         <ol className="mt-2 list-decimal space-y-1 ps-5 text-sm">
@@ -188,8 +199,13 @@ async function CategoryPage({ locale, slug }: { locale: import("@/data/locales")
         {tools.map((tool) => (
           <li key={tool.id}>
             <Link href={`/${locale}/tools/${tool.copy[locale].slug}`} className="freela-card block h-full p-4 hover:border-primary">
-              <p className="font-medium">{tool.copy[locale].name}</p>
+              {(() => {
+                const ToolIcon = iconForTool(tool.id, tool.category);
+                return <ToolIcon className="h-5 w-5 text-primary" aria-hidden />;
+              })()}
+              <p className="mt-2 font-medium">{tool.copy[locale].name}</p>
               <p className="mt-1 text-sm text-muted-foreground">{tool.copy[locale].description}</p>
+              <span className="mt-3 inline-flex text-sm font-medium text-primary">{ui.openTool}</span>
             </Link>
           </li>
         ))}

@@ -52,6 +52,13 @@ describe("seo gates", () => {
     expect(langs.en).toContain("/en/about");
     expect(langs["x-default"]).toContain("/en/about");
   });
+  it("sitemap lists only English until other locales pass QA", () => {
+    const urls = sitemapEntries().map((u) => u.url);
+    expect(urls.every((u) => u.includes("/en"))).toBe(true);
+    expect(urls.some((u) => u.includes("/uk"))).toBe(false);
+    const langs = sitemapEntries()[0]?.alternates.languages ?? {};
+    expect(Object.keys(langs).filter((k) => k !== "x-default")).toEqual(["en"]);
+  });
   it("robots disallows admin and search", () => {
     const r = robots();
     const rules = Array.isArray(r.rules) ? r.rules : [r.rules];

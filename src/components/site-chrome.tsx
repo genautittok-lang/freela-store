@@ -10,24 +10,12 @@ import { SearchBox } from "@/components/search-box";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { FileText, Image as ImageIcon, Type, Code2, Search, Calculator, ArrowRightLeft, Palette, Sparkles, Calendar, Menu, X } from "lucide-react";
+import { categoryIcons } from "@/lib/tool-icons";
+import { Menu, X } from "lucide-react";
 import type { CategoryId } from "@/data/categories";
 
-const icons: Record<CategoryId, typeof FileText> = {
-  "pdf-documents": FileText,
-  images: ImageIcon,
-  text: Type,
-  developer: Code2,
-  seo: Search,
-  calculators: Calculator,
-  converters: ArrowRightLeft,
-  color: Palette,
-  generators: Sparkles,
-  "date-time": Calendar,
-};
-
 export function CategoryIcon({ id, className }: { id: CategoryId; className?: string }) {
-  const Icon = icons[id];
+  const Icon = categoryIcons[id];
   return <Icon className={className ?? "h-5 w-5 text-primary"} aria-hidden />;
 }
 
@@ -35,25 +23,28 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   const ui = t(locale);
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
-        <Logo locale={locale} />
-        <nav className="hidden flex-1 items-center justify-center gap-4 text-sm lg:flex" aria-label={ui.allCategories}>
-          {categories.slice(0, 6).map((cat) => (
+    <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
+        <Logo locale={locale} compact />
+        <nav className="hidden items-center gap-5 text-sm lg:flex" aria-label={ui.toolsNav}>
+          <Link className="font-medium text-foreground" href={`/${locale}`}>
+            {ui.home}
+          </Link>
+          {categories.slice(0, 5).map((cat) => (
             <Link
               key={cat.id}
-              className="text-muted-foreground transition-colors hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground"
               href={`/${locale}/tools/${cat.copy[locale].slug}`}
             >
               {cat.copy[locale].name}
             </Link>
           ))}
         </nav>
-        <div className="ms-auto flex min-w-0 flex-1 items-center justify-end gap-2 lg:max-w-md lg:flex-none">
-          <div className="hidden min-w-0 flex-1 sm:block">
+        <div className="ms-auto flex min-w-0 flex-1 items-center justify-end gap-2 lg:max-w-sm">
+          <div className="hidden min-w-0 flex-1 max-lg:hidden lg:block">
             <SearchBox locale={locale} />
           </div>
-          <div className="hidden sm:block">
+          <div className="max-lg:hidden">
             <LanguageSwitcher locale={locale} pathname={pathname} />
           </div>
           <Button
@@ -150,7 +141,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 export function AdSlot({ position }: { position: string }) {
   return (
     <aside
-      className="rounded-xl border border-dashed border-border bg-muted/40 px-4 py-6 text-center text-xs text-muted-foreground"
+      className="rounded-xl border border-dashed border-border bg-muted/50 px-4 py-5 text-center text-xs text-muted-foreground"
       aria-label="Advertisement"
     >
       Ad slot ({position}) — labeled inventory, never mixed with tool actions.
