@@ -3,8 +3,6 @@ import { PREPARED_LOCALES } from "@/data/locales";
 
 /** Chrome drafts for prepared locales. Not routed and not indexable until human QA. */
 export const preparedUi: Record<PreparedLocale, { tagline: string; searchPlaceholder: string; openTool: string }> = {
-  ar: { tagline: "أدوات مجانية تعمل في متصفحك", searchPlaceholder: "ابحث عن أداة…", openTool: "افتح الأداة" },
-  he: { tagline: "כלים חינמיים בדפדפן", searchPlaceholder: "חיפוש כלים…", openTool: "פתח כלי" },
   ja: { tagline: "ブラウザで動く無料ツール", searchPlaceholder: "ツールを検索…", openTool: "ツールを開く" },
   ko: { tagline: "브라우저에서 실행되는 무료 도구", searchPlaceholder: "도구 검색…", openTool: "도구 열기" },
   "zh-CN": { tagline: "在浏览器中运行的免费工具", searchPlaceholder: "搜索工具…", openTool: "打开工具" },

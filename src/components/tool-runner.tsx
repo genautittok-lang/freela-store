@@ -59,6 +59,7 @@ import {
 } from "@/lib/tools/web";
 import { privacyLabel, privacyNotice } from "@/lib/privacy";
 import { actionLabel } from "@/lib/tool-ux";
+import { rl } from "@/i18n/runner";
 import Link from "next/link";
 
 function pdfBlob(bytes: Uint8Array) {
@@ -401,10 +402,10 @@ function TextTool({
     <div className="grid gap-3">
       {(tool.runtime.action === "words" || tool.runtime.action === "chars" || tool.runtime.action === "full") && (
         <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          <Stat label="Words" value={stats.words} locale={locale} />
-          <Stat label="Characters" value={stats.characters} locale={locale} />
-          <Stat label="Sentences" value={stats.sentences} locale={locale} />
-          <Stat label="Minutes" value={Number(stats.readingMinutes.toFixed(1))} locale={locale} />
+          <Stat label={rl(locale, "words")} value={stats.words} locale={locale} />
+          <Stat label={rl(locale, "characters")} value={stats.characters} locale={locale} />
+          <Stat label={rl(locale, "sentences")} value={stats.sentences} locale={locale} />
+          <Stat label={rl(locale, "minutes")} value={Number(stats.readingMinutes.toFixed(1))} locale={locale} />
         </dl>
       )}
       {tool.runtime.action === "meta" ? (
@@ -506,10 +507,10 @@ function RegexTool({
   const [output, setOutput] = useState("");
   return (
     <div className="grid gap-3">
-      <Field label="Pattern">
+      <Field label={rl(locale, "pattern")}>
         <Input value={pattern} onChange={(e) => setPattern(e.target.value)} />
       </Field>
-      <Field label="Flags">
+      <Field label={rl(locale, "flags")}>
         <Input value={flags} onChange={(e) => setFlags(e.target.value)} />
       </Field>
       <Textarea value={sample} onChange={(e) => setSample(e.target.value)} rows={8} />
@@ -622,10 +623,10 @@ function PdfTool({
     const { PDFDocument } = await import("pdf-lib");
     if (file.size > tool.maxFileSize) throw new Error(`Max file size is ${Math.round(tool.maxFileSize / 1024 / 1024)} MB.`);
     if (file.type && file.type !== "application/pdf" && action !== "images-to-pdf") {
-      throw new Error("Please choose a PDF file.");
+      throw new Error(rl(locale, "choosePdf"));
     }
     if (!file.type && action !== "images-to-pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
-      throw new Error("Please choose a PDF file.");
+      throw new Error(rl(locale, "choosePdf"));
     }
     return PDFDocument.load(await file.arrayBuffer());
   }
@@ -671,7 +672,7 @@ function PdfTool({
         </select>
       ) : null}
       {action === "extract" || action === "split" ? (
-        <Field label="Pages (e.g. 1-3,5)">
+        <Field label={rl(locale, "pages")}>
           <Input value={pages} onChange={(e) => setPages(e.target.value)} />
         </Field>
       ) : null}
@@ -682,7 +683,7 @@ function PdfTool({
             const { PDFDocument, degrees } = await import("pdf-lib");
             const native = fileRef.current ?? ([...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined);
             const selected = files.length ? files : [...(native?.files ?? [])];
-            if (!selected.length) throw new Error("Choose a file first.");
+            if (!selected.length) throw new Error(rl(locale, "chooseFile"));
             if (cancelled.current) return;
             if (action === "metadata") {
               const pdf = await load(selected[0]);
@@ -863,12 +864,12 @@ function ImageTool({
         <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} />
       )}
       {action === "compress" || action === "convert" ? (
-        <Field label="Quality">
+        <Field label={rl(locale, "quality")}>
           <Input type="number" min={0.4} max={0.95} step={0.05} value={quality} onChange={(e) => setQuality(Number(e.target.value))} />
         </Field>
       ) : null}
       {action === "resize" ? (
-        <Field label="Width (px)">
+        <Field label={rl(locale, "width")}>
           <Input type="number" value={width} onChange={(e) => setWidth(Number(e.target.value))} />
         </Field>
       ) : null}
@@ -890,12 +891,12 @@ function ImageTool({
         onClick={() =>
           wrap(async () => {
             if (action === "from-base64") {
-              if (text.length > 8_000_000) throw new Error("Payload is too large.");
+              if (text.length > 8_000_000) throw new Error(rl(locale, "payloadLarge"));
               const raw = text.trim();
               const url = raw.startsWith("data:") ? raw : `data:image/png;base64,${raw}`;
               setPreview(url);
               const comma = url.indexOf(",");
-              if (comma < 0) throw new Error("Paste a data URL or raw base64.");
+              if (comma < 0) throw new Error(rl(locale, "badBase64"));
               const b64 = url.slice(comma + 1);
               const bin = atob(b64);
               const bytes = Uint8Array.from(bin, (ch) => ch.charCodeAt(0));
@@ -905,8 +906,8 @@ function ImageTool({
             }
             const native = fileRef.current ?? ([...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined);
             const chosen = file || native?.files?.[0] || null;
-            if (!chosen) throw new Error("Choose an image first.");
-            if (chosen.size > tool.maxFileSize) throw new Error("File is too large.");
+            if (!chosen) throw new Error(rl(locale, "chooseImage"));
+            if (chosen.size > tool.maxFileSize) throw new Error(rl(locale, "tooLarge"));
             if (action === "to-base64") {
               const data = await chosen.arrayBuffer();
               const b64 = btoa(String.fromCharCode(...new Uint8Array(data)));
@@ -916,7 +917,7 @@ function ImageTool({
             const img = await loadImage(chosen);
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-            if (!ctx) throw new Error("Canvas is not available.");
+            if (!ctx) throw new Error(rl(locale, "noCanvas"));
             if (action === "resize") {
               const ratio = img.height / img.width;
               canvas.width = width;
@@ -1033,20 +1034,20 @@ function CalcTool({
         <Field
           label={
             action === "bmi"
-              ? "Weight (kg)"
+              ? rl(locale, "weightKg")
               : action === "percentage"
-                ? "Percentage"
+                ? rl(locale, "percentage")
                 : action === "vat"
-                  ? "Amount"
+                  ? rl(locale, "amount")
                   : action === "discount"
-                    ? "Price"
+                    ? rl(locale, "price")
                     : action === "margin"
-                      ? "Cost"
+                      ? rl(locale, "cost")
                       : action === "invoice"
-                        ? "Quantity"
+                        ? rl(locale, "quantity")
                         : action === "date-diff"
-                          ? "Start date"
-                          : "Value A"
+                          ? rl(locale, "startDate")
+                          : rl(locale, "valueA")
           }
         >
           {action === "date-diff" ? (
@@ -1058,20 +1059,20 @@ function CalcTool({
         <Field
           label={
             action === "bmi"
-              ? "Height (m)"
+              ? rl(locale, "heightM")
               : action === "percentage"
-                ? "Number"
+                ? rl(locale, "number")
                 : action === "vat"
-                  ? "VAT %"
+                  ? rl(locale, "taxPct")
                   : action === "discount"
-                    ? "Discount %"
+                    ? rl(locale, "discountPct")
                     : action === "margin"
-                      ? "Selling price"
+                      ? rl(locale, "sellingPrice")
                       : action === "invoice"
-                        ? "Unit price"
+                        ? rl(locale, "unitPrice")
                         : action === "date-diff"
-                          ? "End date"
-                          : "Value B"
+                          ? rl(locale, "endDate")
+                          : rl(locale, "valueB")
           }
         >
           {action === "date-diff" ? (
@@ -1095,7 +1096,7 @@ function CalcTool({
         </select>
       ) : null}
       {action === "invoice" ? (
-        <Field label="Tax %">
+        <Field label={rl(locale, "taxPct")}>
           <Input value={mode} onChange={(e) => setMode(e.target.value)} />
         </Field>
       ) : null}
@@ -1175,7 +1176,7 @@ function ConverterTool({
   const list = action === "data-size" ? (system === "si" ? siUnits : iecUnits) : units;
   return (
     <div className="grid gap-3">
-      <Field label="Value">
+      <Field label={rl(locale, "value")}>
         <Input type="number" value={value} onChange={(e) => setValue(e.target.value)} />
       </Field>
       {action === "data-size" ? (
@@ -1185,7 +1186,7 @@ function ConverterTool({
         </select>
       ) : null}
       <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-2">
-        <Field label="From">
+        <Field label={rl(locale, "from")}>
           <select className="h-9 w-full rounded-lg border px-2" value={from} onChange={(e) => setFrom(e.target.value)}>
             {list.map((u) => (
               <option key={u}>{u}</option>
@@ -1204,7 +1205,7 @@ function ConverterTool({
         >
           {ui.swap}
         </Button>
-        <Field label="To">
+        <Field label={rl(locale, "to")}>
           <select className="h-9 w-full rounded-lg border px-2" value={to} onChange={(e) => setTo(e.target.value)}>
             {list.map((u) => (
               <option key={u}>{u}</option>
@@ -1253,14 +1254,14 @@ function ColorTool({
   return (
     <div className="grid gap-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field label="Color A">
+        <Field label={rl(locale, "colorA")}>
           <div className="flex gap-2">
             <Input type="color" value={a.startsWith("#") ? a.slice(0, 7) : "#1a2b3c"} onChange={(e) => setA(e.target.value)} className="h-10 w-14 p-1" />
             <Input value={a} onChange={(e) => setA(e.target.value)} />
           </div>
         </Field>
         {action === "contrast" || action === "gradient" ? (
-          <Field label="Color B">
+          <Field label={rl(locale, "colorB")}>
             <Input value={b} onChange={(e) => setB(e.target.value)} />
           </Field>
         ) : null}
@@ -1327,10 +1328,10 @@ function GeneratorTool({
   return (
     <div className="grid gap-3">
       <div className="grid grid-cols-2 gap-2">
-        <Field label="Count">
+        <Field label={rl(locale, "count")}>
           <Input type="number" value={count} onChange={(e) => setCount(Number(e.target.value))} />
         </Field>
-        <Field label="Length">
+        <Field label={rl(locale, "length")}>
           <Input type="number" value={length} onChange={(e) => setLength(Number(e.target.value))} />
         </Field>
       </div>
@@ -1429,32 +1430,32 @@ function DateTimeTool({
     <div className="grid gap-3">
       {action === "ics" ? (
         <>
-          <Field label="Event title">
+          <Field label={rl(locale, "eventTitle")}>
             <Input value={from} onChange={(e) => setFrom(e.target.value)} />
           </Field>
-          <Field label="Start">
+          <Field label={rl(locale, "start")}>
             <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
           </Field>
-          <Field label="End">
+          <Field label={rl(locale, "end")}>
             <Input type="datetime-local" value={to || "2026-01-15T11:00"} onChange={(e) => setTo(e.target.value)} />
           </Field>
         </>
       ) : null}
       {action === "unix" ? (
-        <Field label="Unix timestamp (seconds or ms)">
+        <Field label={rl(locale, "unix")}>
           <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder="1735689600" />
         </Field>
       ) : null}
       {action === "timezone" ? (
         <>
-          <Field label="Date and time">
+          <Field label={rl(locale, "dateTime")}>
             <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
           </Field>
           <div className="grid grid-cols-2 gap-2">
-            <Field label="From time zone">
+            <Field label={rl(locale, "fromTz")}>
               <Input value={from} onChange={(e) => setFrom(e.target.value)} />
             </Field>
-            <Field label="To time zone">
+            <Field label={rl(locale, "toTz")}>
               <Input value={to} onChange={(e) => setTo(e.target.value)} />
             </Field>
           </div>
@@ -1468,17 +1469,17 @@ function DateTimeTool({
               const n = Number(value);
               const ms = n > 1e12 ? n : n * 1000;
               const d = new Date(ms);
-              if (Number.isNaN(d.getTime())) throw new Error("Invalid timestamp.");
+              if (Number.isNaN(d.getTime())) throw new Error(rl(locale, "invalidTs"));
               setOut(
                 `${d.toISOString()}\n${new Intl.DateTimeFormat(locale, { dateStyle: "full", timeStyle: "long" }).format(d)}\n${Math.floor(d.getTime() / 1000)} s · ${d.getTime()} ms`,
               );
             } else if (action === "ics") {
-              if (!value) throw new Error("Choose a start date and time.");
+              if (!value) throw new Error(rl(locale, "chooseStart"));
               const end = to || value;
               setOut(icsEvent(from, new Date(value).toISOString(), new Date(end).toISOString()));
             } else {
               const d = new Date(value);
-              if (Number.isNaN(d.getTime())) throw new Error("Invalid date-time.");
+              if (Number.isNaN(d.getTime())) throw new Error(rl(locale, "invalidDate"));
               const fmt = (tz: string) =>
                 new Intl.DateTimeFormat(locale, { dateStyle: "full", timeStyle: "long", timeZone: tz }).format(d);
               setOut(`${fmt(from)}\n${fmt(to)}`);

@@ -8,42 +8,50 @@ const png = Buffer.from(
   "base64",
 );
 
-test("RTL Arabic home is live, dir=rtl, and noindex", async ({ page }) => {
+test("RTL Arabic home is live, dir=rtl, and indexable", async ({ page }) => {
   const res = await page.goto(`${base}/ar`);
   expect(res?.ok()).toBeTruthy();
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   await expect(page.locator("html")).toHaveAttribute("lang", "ar");
   const robots = await page.locator('meta[name="robots"]').getAttribute("content");
-  expect(robots || "").toMatch(/noindex/i);
+  expect(robots || "").not.toMatch(/noindex/i);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
-test("RTL Hebrew home is live, dir=rtl, and noindex", async ({ page }) => {
+test("RTL Hebrew home is live, dir=rtl, and indexable", async ({ page }) => {
   const res = await page.goto(`${base}/he`);
   expect(res?.ok()).toBeTruthy();
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   const robots = await page.locator('meta[name="robots"]').getAttribute("content");
-  expect(robots || "").toMatch(/noindex/i);
+  expect(robots || "").not.toMatch(/noindex/i);
 });
 
-test("sitemap stays English-only", async ({ request }) => {
+test("sitemap includes routed locales", async ({ request }) => {
   const sm = await request.get(`${base}/sitemap.xml`);
   const xml = await sm.text();
   expect(xml).toContain("/en/");
-  expect(xml).not.toContain("/ar/");
-  expect(xml).not.toContain("/he/");
-  expect(xml).not.toContain("/uk/");
+  expect(xml).toContain("/ar/");
+  expect(xml).toContain("/he/");
+  expect(xml).toContain("/uk/");
+  expect(xml).toContain("/de/");
 });
 
-test("core locales are reachable and noindex except en", async ({ page }) => {
-  for (const locale of ["de", "uk", "fr", "es"]) {
+test("core locales are reachable and indexable", async ({ page }) => {
+  for (const locale of ["de", "uk", "fr", "es", "en"]) {
     await page.goto(`${base}/${locale}`);
     const robots = await page.locator('meta[name="robots"]').getAttribute("content");
-    expect(robots || "").toMatch(/noindex/i);
+    expect(robots || "").not.toMatch(/noindex/i);
   }
-  await page.goto(`${base}/en`);
-  const robots = await page.locator('meta[name="robots"]').getAttribute("content");
-  expect(robots || "").not.toMatch(/noindex/i);
+});
+
+test("German and Arabic tools show locale copy and CTAs", async ({ page }) => {
+  await page.goto(`${base}/de/tools/word-counter`);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/Wörter|zählen|Wort/i);
+  await expect(page.locator("#tool").getByRole("button", { name: "Wörter zählen" })).toBeVisible();
+  await page.goto(`${base}/ar/tools/merge-pdf`);
+  await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("دمج");
+  await expect(page.locator("#tool").getByRole("button", { name: "دمج PDF" })).toBeVisible();
 });
 
 test("word-counter empty/reset path", async ({ page }) => {

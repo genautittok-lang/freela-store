@@ -98,6 +98,8 @@ Questo strumento viene eseguito interamente nel browser. I file non vengono cari
 Esta ferramenta corre inteiramente no navegador. Os ficheiros não são enviados para servidores Freela e são descartados ao fechar o separador.
 Deze tool draait volledig in je browser. Bestanden worden niet naar Freela-servers geüpload en verdwijnen als je het tabblad sluit.
 Bu araç tamamen tarayıcınızda çalışır. Dosyalar Freela sunucularına yüklenmez ve sekmeyi kapattığınızda silinir.
+تعمل هذه الأداة بالكامل في المتصفح. لا تُرفع الملفات إلى خوادم Freela وتُحذف عند إغلاق التبويب.
+הכלי רץ כולו בדפדפן. קבצים לא מועלים לשרתי Freela ונמחקים בסגירת הלשונית.
 `;
 
 export const privacyText = l`
@@ -111,6 +113,8 @@ Tutto il testo resta nel browser. Freela non riceve, non memorizza e non addestr
 Todo o texto fica no navegador. A Freela não recebe, guarda nem treina modelos com o conteúdo colado.
 Alle tekst blijft in je browser. Freela ontvangt, bewaart of traint niet op de inhoud die je plakt.
 Tüm metin tarayıcınızda kalır. Freela yapıştırdığınız içeriği almaz, saklamaz ve onunla model eğitmez.
+يبقى كل النص في المتصفح. Freela لا تستلم المحتوى ولا تخزّنه ولا تتدرب عليه.
+כל הטקסט נשאר בדפדפן. Freela לא מקבלת, לא שומרת ולא מאמנת מודלים על התוכן שהדבקתם.
 `;
 
 export const baseMeta = {

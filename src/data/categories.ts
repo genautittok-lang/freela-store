@@ -56,6 +56,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["PDF e documentos", "pdf", "Junte, divida, rode e inspecione PDFs no navegador.", "Ferramentas PDF"],
     nl: ["PDF en documenten", "pdf", "PDF's samenvoegen, splitsen, draaien en inspecteren in de browser.", "PDF-tools"],
     tr: ["PDF ve belgeler", "pdf", "PDF dosyalarını tarayıcıda birleştirin, bölün, döndürün ve inceleyin.", "PDF araçları"],
+    ar: ["PDF والمستندات", "pdf", "ادمج وقسّم وأدر وافحص ملفات PDF في المتصفح.", "أدوات PDF"],
+    he: ["PDF ומסמכים", "pdf", "מזגו, פצלו, סובבו ובדקו PDF בדפדפן.", "כלי PDF"],
   }),
   C("images", true, {
     en: ["Images", "images", "Compress, resize, convert and encode images locally.", "Image tools"],
@@ -68,6 +70,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Imagens", "imagens", "Comprima, redimensione, converta e codifique imagens localmente.", "Ferramentas de imagem"],
     nl: ["Afbeeldingen", "afbeeldingen", "Afbeeldingen lokaal comprimeren, schalen, converteren en encoderen.", "Afbeeldingstools"],
     tr: ["Görseller", "gorseller", "Görselleri yerelde sıkıştırın, boyutlandırın, dönüştürün ve kodlayın.", "Görsel araçları"],
+    ar: ["صور", "images", "اضغط وغيّر الحجم وحوّل وكوّد الصور محليًا.", "أدوات الصور"],
+    he: ["תמונות", "images", "דחיסה, שינוי גודל, המרה וקידוד תמונות במכשיר.", "כלי תמונה"],
   }),
   C("text", true, {
     en: ["Text", "text", "Count words, clean lists, generate slugs and inspect text stats.", "Text tools"],
@@ -80,6 +84,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Texto", "texto", "Conte palavras, limpe listas, gere slugs e analise texto.", "Ferramentas de texto"],
     nl: ["Tekst", "tekst", "Woorden tellen, lijsten opschonen, slugs maken en tekststatistieken.", "Teksttools"],
     tr: ["Metin", "metin", "Kelime sayın, listeleri temizleyin, slug oluşturun ve metni analiz edin.", "Metin araçları"],
+    ar: ["نص", "text", "عدّ الكلمات ونظّف القوائم وأنشئ slug وحلّل النص.", "أدوات النص"],
+    he: ["טקסט", "text", "ספירת מילים, ניקוי רשימות, slug וסטטיסטיקת טקסט.", "כלי טקסט"],
   }),
   C("developer", true, {
     en: ["Developer", "developer", "Format JSON, encode URLs, hash strings and decode sample JWTs.", "Developer tools"],
@@ -92,6 +98,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Programador", "programador", "Formate JSON, codifique URLs, gere hashes e descodifique JWT de exemplo.", "Ferramentas de programador"],
     nl: ["Ontwikkelaar", "ontwikkelaar", "JSON formatteren, URL's encoderen, hashes maken en voorbeeld-JWTs decoderen.", "Ontwikkelaarstools"],
     tr: ["Geliştirici", "gelistirici", "JSON biçimlendirin, URL kodlayın, hash üretin ve örnek JWT çözün.", "Geliştirici araçları"],
+    ar: ["للمطوّرين", "developer", "نسّق JSON وكوّد URL واحسب التجزئة وفك عيّنات JWT.", "أدوات المطوّر"],
+    he: ["למפתחים", "developer", "עיצוב JSON, קידוד URL, hash ופענוח JWT לדוגמה.", "כלי מפתחים"],
   }),
   C("seo", true, {
     en: ["SEO", "seo", "Build meta tags, robots.txt, hreflang sets and SERP previews.", "SEO tools"],
@@ -104,6 +112,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["SEO", "seo", "Crie meta tags, robots.txt, conjuntos hreflang e pré-visualizações SERP.", "Ferramentas SEO"],
     nl: ["SEO", "seo", "Meta-tags, robots.txt, hreflang-sets en SERP-previews maken.", "SEO-tools"],
     tr: ["SEO", "seo", "Meta etiketleri, robots.txt, hreflang kümeleri ve SERP önizlemeleri oluşturun.", "SEO araçları"],
+    ar: ["SEO", "seo", "أنشئ وسوم meta وrobots.txt ومجموعات hreflang ومعاينات SERP.", "أدوات SEO"],
+    he: ["SEO", "seo", "תגי meta, robots.txt, hreflang ותצוגות SERP.", "כלי SEO"],
   }),
   C("calculators", true, {
     en: ["Calculators", "calculators", "Percentage, VAT, discount, margin, BMI and date math.", "Calculators"],
@@ -116,6 +126,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Calculadoras", "calculadoras", "Percentagem, IVA, desconto, margem, IMC e diferença de datas.", "Calculadoras"],
     nl: ["Rekenmachines", "rekenmachines", "Percentage, btw, korting, marge, BMI en datumverschil.", "Rekenmachines"],
     tr: ["Hesaplayıcılar", "hesaplayicilar", "Yüzde, KDV, indirim, marj, BMI ve tarih farkı.", "Hesaplayıcılar"],
+    ar: ["حاسبات", "calculators", "نسبة مئوية وضريبة وخصم وهامش ومؤشر كتلة الجسم وتواريخ.", "الحاسبات"],
+    he: ["מחשבונים", "calculators", "אחוזים, מע\"מ, הנחה, מרווח, BMI והפרש תאריכים.", "מחשבונים"],
   }),
   C("converters", true, {
     en: ["Converters", "converters", "Convert length, weight, temperature and data sizes with locale-aware units.", "Unit converters"],
@@ -128,6 +140,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Conversores", "conversores", "Converta comprimento, peso, temperatura e tamanho de dados.", "Conversores de unidades"],
     nl: ["Converters", "converters", "Lengte, gewicht, temperatuur en datagrootte omrekenen.", "Eenhedenconverters"],
     tr: ["Dönüştürücüler", "donusturuculer", "Uzunluk, ağırlık, sıcaklık ve veri boyutunu dönüştürün.", "Birim dönüştürücüler"],
+    ar: ["محوّلات", "converters", "حوّل الطول والوزن ودرجة الحرارة وحجم البيانات.", "محوّلات الوحدات"],
+    he: ["ממירים", "converters", "המרת אורך, משקל, טמפרטורה וגודל נתונים.", "ממירי יחידות"],
   }),
   C("color", false, {
     en: ["Color", "color", "Convert HEX/RGB/HSL, check contrast and build palettes.", "Color tools"],
@@ -140,6 +154,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Cor", "cor", "Converta HEX/RGB/HSL, verifique contraste e crie paletas.", "Ferramentas de cor"],
     nl: ["Kleur", "kleur", "HEX/RGB/HSL omzetten, contrast controleren en paletten maken.", "Kleurtools"],
     tr: ["Renk", "renk", "HEX/RGB/HSL dönüştürün, kontrast kontrol edin ve palet oluşturun.", "Renk araçları"],
+    ar: ["لون", "color", "حوّل HEX/RGB/HSL وافحص التباين وابنِ لوحات.", "أدوات اللون"],
+    he: ["צבע", "color", "המרת HEX/RGB/HSL, בדיקת ניגודיות ופלטות.", "כלי צבע"],
   }),
   C("generators", false, {
     en: ["Generators", "generators", "Create passwords, QR codes and random strings on-device.", "Generators"],
@@ -152,6 +168,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Geradores", "geradores", "Crie palavras-passe, códigos QR e cadeias aleatórias no dispositivo.", "Geradores"],
     nl: ["Generatoren", "generatoren", "Wachtwoorden, QR-codes en willekeurige strings op het apparaat maken.", "Generatoren"],
     tr: ["Üreticiler", "ureticiler", "Cihazda parola, QR kodu ve rastgele dizeler oluşturun.", "Üreticiler"],
+    ar: ["مولّدات", "generators", "أنشئ كلمات مرور ورموز QR وسلاسل عشوائية على الجهاز.", "المولّدات"],
+    he: ["מחוללים", "generators", "סיסמאות, קודי QR ומחרוזות אקראיות במכשיר.", "מחוללים"],
   }),
   C("date-time", false, {
     en: ["Date & Time", "date-time", "Unix timestamps and timezone conversion without sending data away.", "Date & time tools"],
@@ -164,6 +182,8 @@ export const categories: CategoryDefinition[] = [
     pt: ["Data e hora", "data-hora", "Carimbos Unix e fusos horários sem enviar dados.", "Ferramentas de data e hora"],
     nl: ["Datum en tijd", "datum-tijd", "Unix-tijdstempels en tijdzones zonder data te versturen.", "Datum- en tijdtools"],
     tr: ["Tarih ve saat", "tarih-saat", "Veri göndermeden Unix zaman damgası ve saat dilimi dönüştürme.", "Tarih ve saat araçları"],
+    ar: ["التاريخ والوقت", "date-time", "طوابع Unix والمناطق الزمنية دون إرسال بيانات.", "أدوات التاريخ والوقت"],
+    he: ["תאריך ושעה", "date-time", "חותמות Unix ואזורי זמן בלי לשלוח נתונים.", "כלי תאריך ושעה"],
   }),
 ];
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T01:57:59.381Z",
+  "generatedAt": "2026-09-25T10:14:36.169Z",
   "published": 77,
   "workflowPass": 77,
   "locales": [
@@ -14,88 +14,88 @@
     {
       "code": "de",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Deutsch"
     },
     {
       "code": "uk",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Українська"
     },
     {
       "code": "pl",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Polski"
     },
     {
       "code": "fr",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Français"
     },
     {
       "code": "es",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Español"
     },
     {
       "code": "it",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Italiano"
     },
     {
       "code": "pt",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Português"
     },
     {
       "code": "nl",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Nederlands"
     },
     {
       "code": "tr",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Türkçe"
     },
     {
       "code": "ar",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "rtl",
       "nativeName": "العربية"
     },
     {
       "code": "he",
       "routed": true,
-      "indexable": false,
-      "translationReviewed": false,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "rtl",
       "nativeName": "עברית"
     },
@@ -293,7 +293,18 @@
     }
   ],
   "indexableLocales": [
-    "en"
+    "en",
+    "de",
+    "uk",
+    "pl",
+    "fr",
+    "es",
+    "it",
+    "pt",
+    "nl",
+    "tr",
+    "ar",
+    "he"
   ],
   "tools": [
     {
@@ -325,7 +336,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -361,7 +372,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -397,7 +408,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -434,7 +445,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -470,7 +481,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -503,7 +514,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -537,7 +548,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -576,7 +587,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -615,7 +626,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -654,7 +665,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -693,7 +704,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -732,7 +743,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -767,7 +778,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -804,7 +815,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -841,7 +852,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"
@@ -875,7 +886,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -909,7 +920,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -945,7 +956,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -982,7 +993,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -1017,7 +1028,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -1051,7 +1062,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -1087,7 +1098,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -1121,7 +1132,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -1155,7 +1166,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -1191,7 +1202,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1225,7 +1236,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1262,7 +1273,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1298,7 +1309,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1334,7 +1345,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1370,7 +1381,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1406,7 +1417,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1442,7 +1453,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1478,7 +1489,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1513,7 +1524,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -1547,7 +1558,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -1581,7 +1592,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -1615,7 +1626,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -1648,7 +1659,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -1684,7 +1695,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Calculators"
@@ -1720,7 +1731,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Calculators"
@@ -1754,7 +1765,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Calculators"
@@ -1788,7 +1799,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Calculators"
@@ -1821,7 +1832,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Calculators"
@@ -1854,7 +1865,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Calculators"
@@ -1888,7 +1899,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -1922,7 +1933,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -1956,7 +1967,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -1992,7 +2003,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -2026,7 +2037,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Color"
@@ -2059,7 +2070,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Color"
@@ -2092,7 +2103,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Color"
@@ -2128,7 +2139,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Generators"
@@ -2164,7 +2175,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Generators"
@@ -2199,7 +2210,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Generators"
@@ -2232,7 +2243,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Date & Time"
@@ -2265,7 +2276,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Date & Time"
@@ -2298,7 +2309,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "PDF & Documents"
@@ -2331,7 +2342,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -2365,7 +2376,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -2398,7 +2409,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -2431,7 +2442,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -2464,7 +2475,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -2497,7 +2508,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "SEO"
@@ -2530,7 +2541,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -2563,7 +2574,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -2596,7 +2607,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -2629,7 +2640,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -2662,7 +2673,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -2695,7 +2706,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
@@ -2728,7 +2739,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Color"
@@ -2761,7 +2772,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -2794,7 +2805,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Developer"
@@ -2829,7 +2840,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Calculators"
@@ -2862,7 +2873,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -2895,7 +2906,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Text"
@@ -2928,7 +2939,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "unit workflow PASS",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Date & Time"
@@ -2964,7 +2975,7 @@
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
       "tests": "Playwright image family",
-      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Images"

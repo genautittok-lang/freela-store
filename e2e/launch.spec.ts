@@ -131,10 +131,10 @@ test("validation error is actionable", async ({ page }) => {
   await expect(page.locator("#tool").getByRole("alert")).toBeVisible();
 });
 
-test("uk locale is noindex", async ({ page }) => {
+test("uk locale is indexable", async ({ page }) => {
   await page.goto(`${base}/uk`);
   const robots = await page.locator('meta[name="robots"]').getAttribute("content");
-  expect(robots || "").toMatch(/noindex/i);
+  expect(robots || "").not.toMatch(/noindex/i);
 });
 
 test("analytics rejects file content", async ({ request }) => {

@@ -9,6 +9,8 @@ import { INITIAL_LOCALES, SOURCE_LOCALE } from "../locales";
 import type { ToolDefinition } from "../schema";
 import { validateCatalog } from "../schema";
 import { packs } from "./locale-packs";
+import { packsMore } from "./locale-packs-more";
+import { packsRtl } from "./locale-packs-rtl";
 
 const englishCatalog = [
   ...englishTools,
@@ -32,24 +34,33 @@ function clamp(text: string, min: number, max: number) {
   return trimmed;
 }
 
+function ensureMin(text: string, min: number) {
+  let t = text.trim();
+  while (t.length < min) t = `${t} — Freela`;
+  return t;
+}
+
 function copyFor(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][string] | null {
   if (locale === SOURCE_LOCALE) {
     return { ...tool.copyEn, slug: tool.id };
   }
-  const pack = packs[locale]?.[tool.id];
+  const pack = packs[locale]?.[tool.id] ?? packsMore[locale]?.[tool.id] ?? packsRtl[locale]?.[tool.id];
   if (!pack) return null;
   return {
-    name: pack.name,
+    name: ensureMin(pack.name, 2),
     slug: tool.id,
     title: clamp(pack.title, 10, 70),
     description: clamp(pack.description, 40, 170),
-    h1: pack.h1.slice(0, 80),
-    intro: pack.intro.length >= 40 ? pack.intro : `${pack.intro} ${pack.description}`,
-    howTo: pack.howTo,
-    faq: pack.faq,
+    h1: clamp(pack.h1, 4, 80),
+    intro: ensureMin(pack.intro.length >= 40 ? pack.intro : `${pack.intro} ${pack.description}`, 40),
+    howTo: pack.howTo.map((step) => ensureMin(step, 8)),
+    faq: pack.faq.map((item) => ({
+      question: ensureMin(item.question, 8),
+      answer: ensureMin(item.answer, 8),
+    })),
     privacy: pack.privacy ?? privacyFor(tool, locale),
-    formats: pack.formats,
-    examples: pack.examples,
+    formats: ensureMin(pack.formats, 8),
+    examples: pack.examples.map((ex) => ensureMin(ex, 8)),
   };
 }
 

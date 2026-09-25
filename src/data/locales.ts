@@ -12,14 +12,14 @@ export const INITIAL_LOCALES = [
   "pt",
   "nl",
   "tr",
+  "ar",
+  "he",
 ] as const;
 
 export type Locale = (typeof INITIAL_LOCALES)[number];
 
 /** Prepared for future publication; no public URLs until translations pass QA. */
 export const PREPARED_LOCALES = [
-  "ar",
-  "he",
   "ja",
   "ko",
   "zh-CN",
@@ -91,20 +91,66 @@ export const localeRegistry: Record<Locale, LocaleRecord> = {
     translationReviewed: true,
     routed: true,
   }),
-  de: base("de", "German", "Deutsch", "de", "de_DE", "de-DE", "🇩🇪", { routed: true }),
-  uk: base("uk", "Ukrainian", "Українська", "uk", "uk_UA", "uk-UA", "🇺🇦", { routed: true }),
-  pl: base("pl", "Polish", "Polski", "pl", "pl_PL", "pl-PL", "🇵🇱", { routed: true }),
-  fr: base("fr", "French", "Français", "fr", "fr_FR", "fr-FR", "🇫🇷", { routed: true }),
-  es: base("es", "Spanish", "Español", "es", "es_ES", "es-ES", "🇪🇸", { routed: true }),
-  it: base("it", "Italian", "Italiano", "it", "it_IT", "it-IT", "🇮🇹", { routed: true }),
-  pt: base("pt", "Portuguese", "Português", "pt", "pt_PT", "pt-PT", "🇵🇹", { routed: true }),
-  nl: base("nl", "Dutch", "Nederlands", "nl", "nl_NL", "nl-NL", "🇳🇱", { routed: true }),
-  tr: base("tr", "Turkish", "Türkçe", "tr", "tr_TR", "tr-TR", "🇹🇷", { routed: true }),
+  de: base("de", "German", "Deutsch", "de", "de_DE", "de-DE", "🇩🇪", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  uk: base("uk", "Ukrainian", "Українська", "uk", "uk_UA", "uk-UA", "🇺🇦", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  pl: base("pl", "Polish", "Polski", "pl", "pl_PL", "pl-PL", "🇵🇱", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  fr: base("fr", "French", "Français", "fr", "fr_FR", "fr-FR", "🇫🇷", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  es: base("es", "Spanish", "Español", "es", "es_ES", "es-ES", "🇪🇸", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  it: base("it", "Italian", "Italiano", "it", "it_IT", "it-IT", "🇮🇹", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  pt: base("pt", "Portuguese", "Português", "pt", "pt_PT", "pt-PT", "🇵🇹", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  nl: base("nl", "Dutch", "Nederlands", "nl", "nl_NL", "nl-NL", "🇳🇱", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  tr: base("tr", "Turkish", "Türkçe", "tr", "tr_TR", "tr-TR", "🇹🇷", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  ar: base("ar", "Arabic", "العربية", "ar", "ar_SA", "ar-SA", "🇸🇦", {
+    dir: "rtl",
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  he: base("he", "Hebrew", "עברית", "he", "he_IL", "he-IL", "🇮🇱", {
+    dir: "rtl",
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
 };
 
 export const preparedLocaleRegistry: Record<PreparedLocale, LocaleRecord> = {
-  ar: base("ar", "Arabic", "العربية", "ar", "ar_SA", "ar-SA", "🇸🇦", { dir: "rtl", routed: true }),
-  he: base("he", "Hebrew", "עברית", "he", "he_IL", "he-IL", "🇮🇱", { dir: "rtl", routed: true }),
   ja: base("ja", "Japanese", "日本語", "ja", "ja_JP", "ja-JP", "🇯🇵"),
   ko: base("ko", "Korean", "한국어", "ko", "ko_KR", "ko-KR", "🇰🇷"),
   "zh-CN": base("zh-CN", "Chinese (Simplified)", "简体中文", "zh-CN", "zh_CN", "zh-CN", "🇨🇳"),
@@ -132,8 +178,8 @@ export const preparedLocaleRegistry: Record<PreparedLocale, LocaleRecord> = {
 };
 
 export const RTL_ROUTED = ["ar", "he"] as const;
-export const ROUTED_LOCALES = [...INITIAL_LOCALES, ...RTL_ROUTED] as const;
-export type RoutedLocale = (typeof ROUTED_LOCALES)[number];
+export const ROUTED_LOCALES = INITIAL_LOCALES;
+export type RoutedLocale = Locale;
 
 export function isLocale(value: string): value is Locale {
   return (INITIAL_LOCALES as readonly string[]).includes(value);
@@ -143,7 +189,7 @@ export function isRoutedLocale(value: string): value is RoutedLocale {
   return (ROUTED_LOCALES as readonly string[]).includes(value);
 }
 
-/** Tool/category copy locale: core languages keep their packs; RTL routes use English body until native QA. */
+/** Tool/category copy: every routed locale uses its own pack. */
 export function contentLocale(code: string): Locale {
   return isLocale(code) ? code : SOURCE_LOCALE;
 }

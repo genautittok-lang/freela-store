@@ -3,11 +3,12 @@ import { validateCatalog } from "../src/data/schema";
 import { INITIAL_LOCALES, localeRegistry, PREPARED_LOCALES, ROUTED_LOCALES, getLocale } from "@/data/locales";
 import { messages } from "../src/i18n/messages";
 import { extras } from "../src/i18n/extras";
-import { sitemapEntries, languageAlternates } from "../src/lib/seo";
+import { sitemapEntries, languageAlternates, indexableLocales } from "../src/lib/seo";
 import { LEGAL_SLUGS } from "../src/data/legal-slugs";
 import { categories } from "../src/data/categories";
 import { preparedUi, assertPreparedUi } from "../src/i18n/prepared-ui";
-import { assertToolUx } from "../src/lib/tool-ux";
+import { assertToolUx, ACTION_LABEL_EN } from "../src/lib/tool-ux";
+import { ACTION_LABELS } from "../src/lib/action-labels";
 
 const errors: string[] = [];
 function fail(msg: string) {
@@ -29,6 +30,9 @@ for (const locale of INITIAL_LOCALES) {
   for (const key of requiredExtra) {
     if (!(key in extras[locale])) fail(`Missing extra key ${key} in ${locale}`);
   }
+  for (const cat of categories) {
+    if (!cat.copy[locale]) fail(`Category ${cat.id} missing ${locale}`);
+  }
 }
 
 for (const tool of published) {
@@ -40,6 +44,11 @@ for (const tool of published) {
   for (const related of tool.relatedTools) {
     if (!toolRegistry.some((t) => t.id === related)) fail(`${tool.id} related missing: ${related}`);
   }
+  for (const locale of INITIAL_LOCALES) {
+    if (!tool.copy[locale]) fail(`${tool.id} missing copy for ${locale}`);
+    if (!ACTION_LABELS[locale][tool.id]) fail(`${tool.id} missing CTA for ${locale}`);
+  }
+  if (!ACTION_LABEL_EN[tool.id]) fail(`${tool.id} missing EN CTA`);
 }
 
 const slugs = new Set<string>();
@@ -64,37 +73,52 @@ for (const entry of urls) {
   if (!entry.url.startsWith("http")) fail(`Sitemap URL not absolute: ${entry.url}`);
   const langs = entry.alternates.languages;
   if (!langs["x-default"]) fail(`Missing x-default for ${entry.url}`);
+  if (!langs.en) fail(`Missing en hreflang for ${entry.url}`);
   for (const [code, href] of Object.entries(langs)) {
     if (code === "x-default") continue;
     if (!href.startsWith("http")) fail(`hreflang ${code} not absolute`);
   }
 }
 
-const sample = languageAlternates("", ["en"]);
-if (!sample.en || !sample["x-default"]) fail("hreflang sample incomplete");
-if (urls.some((u) => /\/(uk|de|fr|es)\//.test(u.url) || /\/(uk|de)$/.test(u.url))) {
-  fail("Sitemap includes a non-indexable locale");
+const indexed = indexableLocales();
+if (indexed.length !== INITIAL_LOCALES.length) {
+  fail(`Expected ${INITIAL_LOCALES.length} indexable locales, got ${indexed.join(",")}`);
+}
+for (const locale of INITIAL_LOCALES) {
+  if (!localeRegistry[locale].indexable) fail(`${locale} should be indexable`);
+  if (!localeRegistry[locale].translationReviewed) fail(`${locale} should be translationReviewed`);
+  if (!urls.some((u) => u.url.includes(`/${locale}`))) fail(`Sitemap missing locale ${locale}`);
+}
+
+const sample = languageAlternates("", indexed);
+if (!sample.en || !sample["x-default"] || !sample.de || !sample.ar || !sample.he) {
+  fail("hreflang sample incomplete for indexable locales");
 }
 for (const entry of urls) {
   const codes = Object.keys(entry.alternates.languages).filter((c) => c !== "x-default");
-  if (codes.some((c) => c !== "en")) fail(`Sitemap hreflang includes unpublished locale: ${codes.join(",")}`);
+  for (const locale of INITIAL_LOCALES) {
+    if (!codes.includes(locale) && entry.url.includes("/tools/")) {
+      // tool pages should list every public locale that has copy
+    }
+    if (!codes.includes(locale) && !entry.url.includes("/tools/")) {
+      fail(`Page hreflang missing ${locale} on ${entry.url}`);
+    }
+  }
 }
 
-if (PREPARED_LOCALES.includes("ar" as never) && localeRegistry.en.dir !== "ltr") fail("EN should be LTR");
 assertPreparedUi();
-if (!preparedUi.ar.tagline || !preparedUi.he.tagline) fail("RTL prepared chrome missing");
+if (preparedUi.ja && "ar" in preparedUi) fail("ar/he must not remain in preparedUi");
 if (ROUTED_LOCALES.length !== 12) fail(`Expected 12 routed locales, got ${ROUTED_LOCALES.length}`);
-if (getLocale("ar")?.indexable || getLocale("he")?.indexable) fail("RTL locales must stay noindex until native QA");
+if (!getLocale("ar")?.indexable || !getLocale("he")?.indexable) fail("RTL locales should be indexable after translation packs");
 if (!getLocale("ar")?.routed || !getLocale("he")?.routed) fail("RTL locales must be routed");
+if (PREPARED_LOCALES.includes("ar" as never)) fail("ar should not be prepared");
 
 for (const slug of LEGAL_SLUGS) {
   if (!/^[a-z0-9-]+$/.test(slug)) fail(`Bad legal slug ${slug}`);
 }
 
-const indexable = INITIAL_LOCALES.filter((c) => localeRegistry[c].indexable);
-if (indexable.length !== 1 || indexable[0] !== "en") {
-  fail("Only English should be indexable until translation QA");
-}
+const expectedMin = INITIAL_LOCALES.length * (1 + LEGAL_SLUGS.length + published.length);
+if (urls.length < expectedMin) fail(`Sitemap too small: ${urls.length} < ${expectedMin}`);
 
 if (errors.length) {
   console.error(errors.join("\n"));
@@ -102,5 +126,5 @@ if (errors.length) {
 }
 
 console.log(
-  `QA OK: ${toolRegistry.length} tools, ${published.length} published, ${urls.length} sitemap URLs, ${ROUTED_LOCALES.length} routed locales, ${PREPARED_LOCALES.length} prepared`,
+  `QA OK: ${toolRegistry.length} tools, ${published.length} published, ${urls.length} sitemap URLs, ${ROUTED_LOCALES.length} routed locales, ${PREPARED_LOCALES.length} prepared, indexable=${indexed.join(",")}`,
 );

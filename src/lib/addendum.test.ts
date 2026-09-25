@@ -48,16 +48,20 @@ describe("seo gates", () => {
     expect(urls.every((u) => u.startsWith("http"))).toBe(true);
   });
   it("hreflang is reciprocal with x-default", () => {
-    const langs = languageAlternates("/about", ["en"]);
+    const langs = languageAlternates("/about", ["en", "de", "uk", "ar"]);
     expect(langs.en).toContain("/en/about");
+    expect(langs.de).toContain("/de/about");
     expect(langs["x-default"]).toContain("/en/about");
   });
-  it("sitemap lists only English until other locales pass QA", () => {
+  it("sitemap includes every indexable locale", () => {
     const urls = sitemapEntries().map((u) => u.url);
-    expect(urls.every((u) => u.includes("/en"))).toBe(true);
-    expect(urls.some((u) => u.includes("/uk"))).toBe(false);
+    for (const locale of ["en", "de", "uk", "pl", "fr", "es", "it", "pt", "nl", "tr", "ar", "he"]) {
+      expect(urls.some((u) => u.includes(`/${locale}`))).toBe(true);
+    }
     const langs = sitemapEntries()[0]?.alternates.languages ?? {};
-    expect(Object.keys(langs).filter((k) => k !== "x-default")).toEqual(["en"]);
+    expect(Object.keys(langs).filter((k) => k !== "x-default").sort()).toEqual(
+      ["ar", "de", "en", "es", "fr", "he", "it", "nl", "pl", "pt", "tr", "uk"].sort(),
+    );
   });
   it("robots disallows admin and search", () => {
     const r = robots();

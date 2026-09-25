@@ -1,6 +1,6 @@
 # Freela STORE
 
-Global directory of **free online tools** (brand: Freela, domain: [freela.store](https://freela.store)). Tools run in the browser whenever the format allows it. Pages are generated from a validated tool registry — unpublished or unreviewed locales are not added to the sitemap.
+Global directory of **free online tools** (brand: Freela, domain: [freela.store](https://freela.store)). Tools run in the browser whenever the format allows it. The 12 routed locales (`en`, `de`, `uk`, `pl`, `fr`, `es`, `it`, `pt`, `nl`, `tr`, `ar`, `he`) are included in the sitemap once tool copy, UI chrome, and CTAs exist for each.
 
 ## Requirements
 
