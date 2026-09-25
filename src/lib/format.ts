@@ -1,15 +1,19 @@
-import { localeRegistry, type Locale } from "@/data/locales";
+import { getLocale, localeRegistry } from "@/data/locales";
 
-export function formatNumber(locale: Locale, value: number, options?: Intl.NumberFormatOptions) {
-  return new Intl.NumberFormat(localeRegistry[locale].dateLocale, options).format(value);
+function dateTag(locale: string) {
+  return (getLocale(locale) ?? localeRegistry.en).dateLocale;
 }
 
-export function formatDate(locale: Locale, date: Date | string, options?: Intl.DateTimeFormatOptions) {
+export function formatNumber(locale: string, value: number, options?: Intl.NumberFormatOptions) {
+  return new Intl.NumberFormat(dateTag(locale), options).format(value);
+}
+
+export function formatDate(locale: string, date: Date | string, options?: Intl.DateTimeFormatOptions) {
   const d = typeof date === "string" ? new Date(date) : date;
-  return new Intl.DateTimeFormat(localeRegistry[locale].dateLocale, options).format(d);
+  return new Intl.DateTimeFormat(dateTag(locale), options).format(d);
 }
 
-export function formatBytes(locale: Locale, bytes: number) {
+export function formatBytes(locale: string, bytes: number) {
   const mb = bytes / (1024 * 1024);
   return `${formatNumber(locale, mb, { maximumFractionDigits: mb < 1 ? 2 : 0 })} MB`;
 }

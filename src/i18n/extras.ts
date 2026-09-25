@@ -29,6 +29,8 @@ export type ExtraMessages = {
   newInput: string;
   swap: string;
   nextTool: string;
+  walkthroughTitle: string;
+  walkthroughLead: string;
 };
 
 export const extras: Record<Locale, ExtraMessages> = {
@@ -62,6 +64,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "New input",
     swap: "Swap",
     nextTool: "Try next",
+    walkthroughTitle: "How Freela works",
+    walkthroughLead: "Search, open a tool, run it in your browser, download the result.",
   },
   de: {
     trustTitle: "Dateien bleiben auf Ihrem Gerät",
@@ -93,6 +97,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Neue Eingabe",
     swap: "Tauschen",
     nextTool: "Als Nächstes",
+    walkthroughTitle: "So funktioniert Freela",
+    walkthroughLead: "Suchen, öffnen, im Browser ausführen, Ergebnis herunterladen.",
   },
   uk: {
     trustTitle: "Файли залишаються на вашому пристрої",
@@ -124,6 +130,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Нове введення",
     swap: "Поміняти",
     nextTool: "Далі",
+    walkthroughTitle: "Як працює Freela",
+    walkthroughLead: "Знайдіть інструмент, запустіть його в браузері, завантажте результат.",
   },
   pl: {
     trustTitle: "Pliki zostają na Twoim urządzeniu",
@@ -155,6 +163,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Nowe dane",
     swap: "Zamień",
     nextTool: "Następne",
+    walkthroughTitle: "Jak działa Freela",
+    walkthroughLead: "Wyszukaj, otwórz narzędzie, uruchom w przeglądarce, pobierz wynik.",
   },
   fr: {
     trustTitle: "Les fichiers restent sur votre appareil",
@@ -186,6 +196,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Nouvelle saisie",
     swap: "Inverser",
     nextTool: "Suivant",
+    walkthroughTitle: "Comment Freela fonctionne",
+    walkthroughLead: "Recherchez, ouvrez un outil, exécutez-le dans le navigateur, téléchargez le résultat.",
   },
   es: {
     trustTitle: "Los archivos se quedan en tu dispositivo",
@@ -217,6 +229,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Nueva entrada",
     swap: "Intercambiar",
     nextTool: "Siguiente",
+    walkthroughTitle: "Cómo funciona Freela",
+    walkthroughLead: "Busca, abre una herramienta, ejecútala en el navegador y descarga el resultado.",
   },
   it: {
     trustTitle: "I file restano sul dispositivo",
@@ -248,6 +262,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Nuovo input",
     swap: "Inverti",
     nextTool: "Prossimo",
+    walkthroughTitle: "Come funziona Freela",
+    walkthroughLead: "Cerca, apri uno strumento, eseguilo nel browser, scarica il risultato.",
   },
   pt: {
     trustTitle: "Os ficheiros ficam no seu dispositivo",
@@ -279,6 +295,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Nova entrada",
     swap: "Trocar",
     nextTool: "Seguinte",
+    walkthroughTitle: "Como a Freela funciona",
+    walkthroughLead: "Pesquise, abra uma ferramenta, execute no browser e descarregue o resultado.",
   },
   nl: {
     trustTitle: "Bestanden blijven op je apparaat",
@@ -310,6 +328,8 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Nieuwe invoer",
     swap: "Wissel",
     nextTool: "Volgende",
+    walkthroughTitle: "Hoe Freela werkt",
+    walkthroughLead: "Zoek, open een tool, voer die in de browser uit, download het resultaat.",
   },
   tr: {
     trustTitle: "Dosyalar cihazınızda kalır",
@@ -341,5 +361,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     newInput: "Yeni girdi",
     swap: "Değiştir",
     nextTool: "Sonraki",
+    walkthroughTitle: "Freela nasıl çalışır",
+    walkthroughLead: "Arayın, bir araç açın, tarayıcıda çalıştırın, sonucu indirin.",
   },
 };

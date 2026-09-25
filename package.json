@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "validate": "tsx scripts/validate-registry.ts",
-    "qa": "tsx scripts/qa.ts",
+    "qa": "tsx scripts/qa.ts && tsx scripts/audit-matrix.ts",
     "typecheck": "tsc --noEmit",
     "e2e": "playwright test",
     "a11y": "playwright test e2e/launch.spec.ts -g accessibility",

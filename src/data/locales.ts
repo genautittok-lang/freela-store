@@ -103,8 +103,8 @@ export const localeRegistry: Record<Locale, LocaleRecord> = {
 };
 
 export const preparedLocaleRegistry: Record<PreparedLocale, LocaleRecord> = {
-  ar: base("ar", "Arabic", "العربية", "ar", "ar_SA", "ar-SA", "🇸🇦", { dir: "rtl" }),
-  he: base("he", "Hebrew", "עברית", "he", "he_IL", "he-IL", "🇮🇱", { dir: "rtl" }),
+  ar: base("ar", "Arabic", "العربية", "ar", "ar_SA", "ar-SA", "🇸🇦", { dir: "rtl", routed: true }),
+  he: base("he", "Hebrew", "עברית", "he", "he_IL", "he-IL", "🇮🇱", { dir: "rtl", routed: true }),
   ja: base("ja", "Japanese", "日本語", "ja", "ja_JP", "ja-JP", "🇯🇵"),
   ko: base("ko", "Korean", "한국어", "ko", "ko_KR", "ko-KR", "🇰🇷"),
   "zh-CN": base("zh-CN", "Chinese (Simplified)", "简体中文", "zh-CN", "zh_CN", "zh-CN", "🇨🇳"),
@@ -131,8 +131,21 @@ export const preparedLocaleRegistry: Record<PreparedLocale, LocaleRecord> = {
   lt: base("lt", "Lithuanian", "Lietuvių", "lt", "lt_LT", "lt-LT", "🇱🇹"),
 };
 
+export const RTL_ROUTED = ["ar", "he"] as const;
+export const ROUTED_LOCALES = [...INITIAL_LOCALES, ...RTL_ROUTED] as const;
+export type RoutedLocale = (typeof ROUTED_LOCALES)[number];
+
 export function isLocale(value: string): value is Locale {
   return (INITIAL_LOCALES as readonly string[]).includes(value);
+}
+
+export function isRoutedLocale(value: string): value is RoutedLocale {
+  return (ROUTED_LOCALES as readonly string[]).includes(value);
+}
+
+/** Tool/category copy locale: core languages keep their packs; RTL routes use English body until native QA. */
+export function contentLocale(code: string): Locale {
+  return isLocale(code) ? code : SOURCE_LOCALE;
 }
 
 export function getLocale(code: string): LocaleRecord | undefined {

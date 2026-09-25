@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { isLocale } from "@/data/locales";
+import { isRoutedLocale } from "@/data/locales";
 import { searchRegistry } from "@/lib/search";
 import { pageMetadata } from "@/lib/seo";
 import { t } from "@/i18n/messages";
@@ -9,6 +9,7 @@ import { SearchBox } from "@/components/search-box";
 import { PageTracker } from "@/components/page-tracker";
 import { iconForTool } from "@/lib/tool-icons";
 import { categories } from "@/data/categories";
+import { copyForCategory, copyForTool } from "@/lib/registry";
 
 export async function generateMetadata({
   params,
@@ -16,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isRoutedLocale(locale)) return {};
   const ui = t(locale);
   return {
     ...pageMetadata({
@@ -39,7 +40,7 @@ export default async function SearchPage({
 }) {
   const { locale } = await params;
   const { q = "" } = await searchParams;
-  if (!isLocale(locale)) notFound();
+  if (!isRoutedLocale(locale)) notFound();
   const ui = t(locale);
   const hits = q ? searchRegistry(locale, q) : [];
   return (
@@ -54,7 +55,7 @@ export default async function SearchPage({
       <ul className="mt-6 grid gap-3">
         {hits.map((hit) => {
           if (hit.kind === "tool") {
-            const copy = hit.tool.copy[locale];
+            const copy = copyForTool(hit.tool, locale);
             const cat = categories.find((c) => c.id === hit.tool.category);
             return (
               <li key={hit.tool.id}>
@@ -66,7 +67,7 @@ export default async function SearchPage({
                   <span>
                     <span className="font-medium">{copy.name}</span>
                     {cat ? (
-                      <span className="ms-2 text-xs text-muted-foreground">{cat.copy[locale].name}</span>
+                      <span className="ms-2 text-xs text-muted-foreground">{copyForCategory(cat, locale).name}</span>
                     ) : null}
                     <span className="mt-1 block text-sm text-muted-foreground">{copy.description}</span>
                   </span>
@@ -77,8 +78,8 @@ export default async function SearchPage({
           const cat = hit.category;
           return (
             <li key={cat.id}>
-              <Link href={`/${locale}/tools/${cat.copy[locale].slug}`} className="block rounded-xl border p-4">
-                {cat.copy[locale].name}
+              <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="block rounded-xl border p-4">
+                {copyForCategory(cat, locale).name}
               </Link>
             </li>
           );

@@ -10,7 +10,7 @@ import { track } from "@/components/analytics-provider";
 
 type Hit = { kind: string; id: string; label: string; href: string; description?: string; category?: string };
 
-export function SearchBox({ locale, initial = "" }: { locale: Locale; initial?: string }) {
+export function SearchBox({ locale, initial = "" }: { locale: string; initial?: string }) {
   const ui = t(locale);
   const router = useRouter();
   const [q, setQ] = useState(initial);

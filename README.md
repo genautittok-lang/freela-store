@@ -51,7 +51,7 @@ Or `npm run release` (typecheck, unit, validate, qa, lint, audit, e2e). Producti
 ## What is in this ship
 
 - 77 published tools; all `LOCAL_ONLY` (no file bytes leave the device)
-- Locales: English is the only **indexable** locale. Routed UI also exists for `de uk pl fr es it pt nl tr` with `noindex` until human QA. 26 further locales have prepared chrome drafts only (including RTL `ar`/`he`) — no public URLs.
+- Locales: English is the only **indexable** locale. Routed UI exists for `de uk pl fr es it pt nl tr` plus live RTL chrome for `ar` and `he`, all `noindex` until native-quality QA. Remaining prepared locales stay unrouted.
 - Search (registry-backed; search URLs `noindex`)
 - Sitemap, robots.txt, canonical, hreflang + x-default (indexable locales only), WebApplication + FAQ + breadcrumb JSON-LD
 - Admin dashboard: usage, success/error rates, languages, SEO, translation completeness, processing modes, retention, audit log, CSV export

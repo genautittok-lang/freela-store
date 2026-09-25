@@ -1,4 +1,3 @@
-import type { Locale } from "@/data/locales";
 import type { ToolDefinition } from "@/data/schema";
 
 export type InputKind =
@@ -275,7 +274,7 @@ function outputKind(tool: ToolDefinition): OutputKind {
   return "text";
 }
 
-export function actionLabel(tool: ToolDefinition, locale: Locale): string {
+export function actionLabel(tool: ToolDefinition, locale: string): string {
   if (locale === "uk") return ACTION_LABEL_UK[tool.id] || ACTION_LABEL_EN[tool.id] || "Run";
   return ACTION_LABEL_EN[tool.id] || "Run";
 }

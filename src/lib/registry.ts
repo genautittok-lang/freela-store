@@ -1,14 +1,16 @@
 import { toolRegistry } from "@/data/tools";
 import { categories, categoryById, categoryBySlug } from "@/data/categories";
-import { getLocale, isLocale, type Locale } from "@/data/locales";
+import { getLocale, isLocale, contentLocale, type Locale } from "@/data/locales";
 import type { ToolDefinition } from "@/data/schema";
+export { copyForTool, copyForCategory } from "@/lib/copy";
 
 export function publishedTools(): ToolDefinition[] {
   return toolRegistry.filter((tool) => tool.status === "published");
 }
 
-export function visibleTools(locale: Locale): ToolDefinition[] {
-  return publishedTools().filter((tool) => Boolean(tool.copy[locale]));
+export function visibleTools(locale: string): ToolDefinition[] {
+  const code = contentLocale(locale);
+  return publishedTools().filter((tool) => Boolean(tool.copy[code] || tool.copy.en));
 }
 
 export function indexableTools(locale: Locale): ToolDefinition[] {
@@ -23,28 +25,29 @@ export function toolById(id: string) {
   return toolRegistry.find((tool) => tool.id === id);
 }
 
-export function toolBySlug(locale: Locale, slug: string) {
-  return toolRegistry.find((tool) => tool.copy[locale]?.slug === slug);
+export function toolBySlug(locale: string, slug: string) {
+  return toolRegistry.find((tool) => (tool.copy[contentLocale(locale)] ?? tool.copy.en)?.slug === slug);
 }
 
-export function toolsInCategory(locale: Locale, categoryId: string) {
+export function toolsInCategory(locale: string, categoryId: string) {
   return visibleTools(locale).filter((tool) => tool.category === categoryId);
 }
 
-export function featuredTools(locale: Locale) {
+export function featuredTools(locale: string) {
   return visibleTools(locale).filter((tool) => tool.featured);
 }
 
-export function newestTools(locale: Locale) {
+export function newestTools(locale: string) {
   return [...visibleTools(locale)].sort((a, b) =>
     b.lastModified.localeCompare(a.lastModified),
   );
 }
 
-export function relatedToolsFor(tool: ToolDefinition, locale: Locale, limit = 6) {
+export function relatedToolsFor(tool: ToolDefinition, locale: string, limit = 6) {
+  const code = contentLocale(locale);
   const related = tool.relatedTools
     .map((id) => toolById(id))
-    .filter((item): item is ToolDefinition => Boolean(item && item.copy[locale]));
+    .filter((item): item is ToolDefinition => Boolean(item && (item.copy[code] || item.copy.en)));
   const sameCategory = visibleTools(locale).filter(
     (item) => item.category === tool.category && item.id !== tool.id && !related.some((r) => r.id === item.id),
   );

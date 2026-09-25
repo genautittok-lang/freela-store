@@ -18,7 +18,7 @@ function readConsent() {
   return localStorage.getItem("freela_consent");
 }
 
-export function CookieBanner({ locale }: { locale: Locale }) {
+export function CookieBanner({ locale }: { locale: string }) {
   const ui = t(locale);
   const consent = useSyncExternalStore(subscribe, readConsent, () => "ssr");
   if (consent === "ssr" || consent === "yes" || consent === "no") return null;

@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
-import { isLocale, type Locale } from "@/data/locales";
+import { isRoutedLocale } from "@/data/locales";
 import { pageMetadata } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { PageTracker } from "@/components/page-tracker";
 import { dataInventory, vendors } from "@/data/privacy-ops";
 
 import { type LegalSlug } from "@/data/legal-slugs";
-const pages: Record<LegalSlug, { title: (locale: Locale) => string; body: string[] }> = {
+const pages: Record<LegalSlug, { title: (locale: string) => string; body: string[] }> = {
   about: {
     title: (locale) => t(locale).about,
     body: [
@@ -116,7 +116,7 @@ export function makeLegalPage(slug: LegalSlug) {
   return {
     generateMetadata: async ({ params }: { params: Promise<{ locale: string }> }) => {
       const { locale } = await params;
-      if (!isLocale(locale)) return {};
+      if (!isRoutedLocale(locale)) return {};
       return pageMetadata({
         locale,
         title: pages[slug].title(locale),
@@ -126,7 +126,7 @@ export function makeLegalPage(slug: LegalSlug) {
     },
     Page: async ({ params }: { params: Promise<{ locale: string }> }) => {
       const { locale } = await params;
-      if (!isLocale(locale)) notFound();
+      if (!isRoutedLocale(locale)) notFound();
       return (
         <article className="mx-auto max-w-2xl px-4 py-10">
           <PageTracker locale={locale} />

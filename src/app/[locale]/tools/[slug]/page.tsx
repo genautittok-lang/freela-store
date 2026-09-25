@@ -2,11 +2,12 @@ import Link from "next/link";
 import { createElement } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
-import { isLocale, localeRegistry } from "@/data/locales";
-import { INITIAL_LOCALES } from "@/data/locales";
+import { isRoutedLocale, ROUTED_LOCALES, contentLocale, getLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
 import {
   categoryBySlug,
+  copyForCategory,
+  copyForTool,
   relatedToolsFor,
   toolBySlug,
   toolsInCategory,
@@ -27,12 +28,13 @@ const ToolRunner = dynamic(() => import("@/components/tool-runner").then((m) => 
 
 export function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
-  for (const locale of INITIAL_LOCALES) {
+  for (const locale of ROUTED_LOCALES) {
+    const code = contentLocale(locale);
     for (const cat of categories) {
-      params.push({ locale, slug: cat.copy[locale].slug });
+      params.push({ locale, slug: cat.copy[code].slug });
     }
     for (const tool of visibleTools(locale)) {
-      params.push({ locale, slug: tool.copy[locale].slug });
+      params.push({ locale, slug: copyForTool(tool, locale).slug });
     }
   }
   return params;
@@ -44,16 +46,17 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isRoutedLocale(locale)) return {};
   const tool = toolBySlug(locale, slug);
   if (tool) return toolMetadata(tool, locale);
   const cat = categoryBySlug(locale, slug);
   if (cat) {
+    const copy = copyForCategory(cat, locale);
     return pageMetadata({
       locale,
-      title: cat.copy[locale].h1,
-      description: cat.copy[locale].description,
-      pathWithoutLocale: `/tools/${cat.copy[locale].slug}`,
+      title: copy.h1,
+      description: copy.description,
+      pathWithoutLocale: `/tools/${copy.slug}`,
     });
   }
   return {};
@@ -65,7 +68,7 @@ export default async function ToolsSlugPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  if (!isLocale(locale)) notFound();
+  if (!isRoutedLocale(locale)) notFound();
   const tool = toolBySlug(locale, slug);
   if (tool) {
     if (tool.status === "draft" || tool.status === "review") notFound();
@@ -76,16 +79,17 @@ export default async function ToolsSlugPage({
   notFound();
 }
 
-async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Locale; slug: string }) {
+async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
   const tool = toolBySlug(locale, slug)!;
-  const copy = tool.copy[locale];
+  const copy = copyForTool(tool, locale);
   const ui = t(locale);
   const cat = categories.find((c) => c.id === tool.category)!;
   const related = relatedToolsFor(tool, locale);
-  const loc = localeRegistry[locale];
+  const loc = getLocale(locale)!;
+  const catCopy = copyForCategory(cat, locale);
   const crumbs = [
     { name: ui.home, url: absoluteUrl(`/${locale}`) },
-    { name: cat.copy[locale].name, url: absoluteUrl(`/${locale}/tools/${cat.copy[locale].slug}`) },
+    { name: catCopy.name, url: absoluteUrl(`/${locale}/tools/${catCopy.slug}`) },
     { name: copy.name, url: absoluteUrl(`/${locale}/tools/${copy.slug}`) },
   ];
   return (
@@ -103,7 +107,7 @@ async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Loc
             <span aria-hidden> / </span>
           </li>
           <li>
-            <Link href={`/${locale}/tools/${cat.copy[locale].slug}`}>{cat.copy[locale].name}</Link>
+            <Link href={`/${locale}/tools/${catCopy.slug}`}>{catCopy.name}</Link>
             <span aria-hidden> / </span>
           </li>
           <li>{copy.name}</li>
@@ -169,8 +173,8 @@ async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Loc
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {related.map((item) => (
             <li key={item.id}>
-              <Link className="freela-card block p-3 hover:border-primary" href={`/${locale}/tools/${item.copy[locale].slug}`}>
-                {item.copy[locale].name}
+              <Link className="freela-card block p-3 hover:border-primary" href={`/${locale}/tools/${copyForTool(item, locale).slug}`}>
+                {copyForTool(item, locale).name}
               </Link>
             </li>
           ))}
@@ -180,11 +184,11 @@ async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Loc
   );
 }
 
-async function CategoryPage({ locale, slug }: { locale: import("@/data/locales").Locale; slug: string }) {
+async function CategoryPage({ locale, slug }: { locale: string; slug: string }) {
   const cat = categoryBySlug(locale, slug)!;
   const ui = t(locale);
   const tools = toolsInCategory(locale, cat.id);
-  const copy = cat.copy[locale];
+  const copy = copyForCategory(cat, locale);
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <PageTracker locale={locale} />
@@ -201,13 +205,13 @@ async function CategoryPage({ locale, slug }: { locale: import("@/data/locales")
       <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <li key={tool.id}>
-            <Link href={`/${locale}/tools/${tool.copy[locale].slug}`} className="freela-card block h-full p-4 hover:border-primary">
+            <Link href={`/${locale}/tools/${copyForTool(tool, locale).slug}`} className="freela-card block h-full p-4 hover:border-primary">
               {createElement(iconForTool(tool.id, tool.category), {
                 className: "h-5 w-5 text-primary",
                 "aria-hidden": true,
               })}
-              <p className="mt-2 font-medium">{tool.copy[locale].name}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{tool.copy[locale].description}</p>
+              <p className="mt-2 font-medium">{copyForTool(tool, locale).name}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{copyForTool(tool, locale).description}</p>
               <span className="mt-3 inline-flex text-sm font-medium text-primary">{ui.openTool}</span>
             </Link>
           </li>

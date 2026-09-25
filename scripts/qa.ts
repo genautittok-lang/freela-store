@@ -1,6 +1,6 @@
 import { toolRegistry } from "../src/data/tools";
 import { validateCatalog } from "../src/data/schema";
-import { INITIAL_LOCALES, localeRegistry, PREPARED_LOCALES } from "../src/data/locales";
+import { INITIAL_LOCALES, localeRegistry, PREPARED_LOCALES, ROUTED_LOCALES, getLocale } from "@/data/locales";
 import { messages } from "../src/i18n/messages";
 import { extras } from "../src/i18n/extras";
 import { sitemapEntries, languageAlternates } from "../src/lib/seo";
@@ -83,6 +83,9 @@ for (const entry of urls) {
 if (PREPARED_LOCALES.includes("ar" as never) && localeRegistry.en.dir !== "ltr") fail("EN should be LTR");
 assertPreparedUi();
 if (!preparedUi.ar.tagline || !preparedUi.he.tagline) fail("RTL prepared chrome missing");
+if (ROUTED_LOCALES.length !== 12) fail(`Expected 12 routed locales, got ${ROUTED_LOCALES.length}`);
+if (getLocale("ar")?.indexable || getLocale("he")?.indexable) fail("RTL locales must stay noindex until native QA");
+if (!getLocale("ar")?.routed || !getLocale("he")?.routed) fail("RTL locales must be routed");
 
 for (const slug of LEGAL_SLUGS) {
   if (!/^[a-z0-9-]+$/.test(slug)) fail(`Bad legal slug ${slug}`);
@@ -99,5 +102,5 @@ if (errors.length) {
 }
 
 console.log(
-  `QA OK: ${toolRegistry.length} tools, ${published.length} published, ${urls.length} sitemap URLs, ${INITIAL_LOCALES.length} routed locales, ${PREPARED_LOCALES.length} prepared`,
+  `QA OK: ${toolRegistry.length} tools, ${published.length} published, ${urls.length} sitemap URLs, ${ROUTED_LOCALES.length} routed locales, ${PREPARED_LOCALES.length} prepared`,
 );

@@ -42,13 +42,18 @@ const notices: Record<ProcessingMode, Record<"en" | "uk", string> & Partial<Reco
   },
 };
 
-export function privacyNotice(mode: ProcessingMode, locale: Locale) {
-  return notices[mode][locale] || notices[mode].en;
+export function privacyNotice(mode: ProcessingMode, locale: string) {
+  const code = locale as Locale;
+  return notices[mode][code] || notices[mode].en;
 }
 
-export function privacyLabel(mode: ProcessingMode, locale: Locale) {
+export function privacyLabel(mode: ProcessingMode, locale: string) {
   if (mode === "LOCAL_ONLY") {
-    return locale === "uk" ? "Лише на пристрої" : locale === "de" ? "Nur lokal" : "Local only";
+    if (locale === "uk") return "Лише на пристрої";
+    if (locale === "de") return "Nur lokal";
+    if (locale === "ar") return "محلي فقط";
+    if (locale === "he") return "מקומי בלבד";
+    return "Local only";
   }
   if (mode === "SERVER_PROCESSING") {
     return locale === "uk" ? "Сервер Freela" : "Freela server";

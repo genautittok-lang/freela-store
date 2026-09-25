@@ -1,5 +1,7 @@
 import type { Locale } from "@/data/locales";
 import { extras, type ExtraMessages } from "@/i18n/extras";
+import { rtlChrome } from "@/i18n/rtl-chrome";
+import { isLocale } from "@/data/locales";
 
 export type Messages = {
   brand: string;
@@ -534,6 +536,8 @@ export const messages: Record<Locale, Messages> = {
 
 export type UiMessages = Messages & ExtraMessages;
 
-export function t(locale: Locale): UiMessages {
-  return { ...messages[locale], ...extras[locale] };
+export function t(locale: string): UiMessages {
+  if (isLocale(locale)) return { ...messages[locale], ...extras[locale] };
+  if (locale === "ar" || locale === "he") return rtlChrome[locale] as UiMessages;
+  return { ...messages.en, ...extras.en };
 }

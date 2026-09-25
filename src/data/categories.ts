@@ -1,4 +1,5 @@
 import type { Locale } from "./locales";
+import { SOURCE_LOCALE, isLocale } from "./locales";
 
 export const CATEGORY_IDS = [
   "pdf-documents",
@@ -170,6 +171,7 @@ export function categoryById(id: string) {
   return categories.find((c) => c.id === id);
 }
 
-export function categoryBySlug(locale: Locale, slug: string) {
-  return categories.find((c) => c.copy[locale].slug === slug);
+export function categoryBySlug(locale: string, slug: string) {
+  const code = isLocale(locale) ? locale : SOURCE_LOCALE;
+  return categories.find((c) => c.copy[code].slug === slug);
 }

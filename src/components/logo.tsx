@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Locale } from "@/data/locales";
 
-export function Logo({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
+export function Logo({ locale, compact = false }: { locale: string; compact?: boolean }) {
   return (
     <Link href={`/${locale}`} className="group inline-flex items-center gap-2" aria-label="Freela home">
       <span className="relative inline-flex items-baseline font-semibold tracking-tight text-primary">

@@ -1,0 +1,2973 @@
+{
+  "generatedAt": "2026-09-25T01:57:59.381Z",
+  "published": 77,
+  "workflowPass": 77,
+  "locales": [
+    {
+      "code": "en",
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
+      "dir": "ltr",
+      "nativeName": "English"
+    },
+    {
+      "code": "de",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Deutsch"
+    },
+    {
+      "code": "uk",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Українська"
+    },
+    {
+      "code": "pl",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Polski"
+    },
+    {
+      "code": "fr",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Français"
+    },
+    {
+      "code": "es",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Español"
+    },
+    {
+      "code": "it",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Italiano"
+    },
+    {
+      "code": "pt",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Português"
+    },
+    {
+      "code": "nl",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Nederlands"
+    },
+    {
+      "code": "tr",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Türkçe"
+    },
+    {
+      "code": "ar",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "rtl",
+      "nativeName": "العربية"
+    },
+    {
+      "code": "he",
+      "routed": true,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "rtl",
+      "nativeName": "עברית"
+    },
+    {
+      "code": "ja",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "日本語"
+    },
+    {
+      "code": "ko",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "한국어"
+    },
+    {
+      "code": "zh-CN",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "简体中文"
+    },
+    {
+      "code": "zh-TW",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "繁體中文"
+    },
+    {
+      "code": "hi",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "हिन्दी"
+    },
+    {
+      "code": "id",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Bahasa Indonesia"
+    },
+    {
+      "code": "vi",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Tiếng Việt"
+    },
+    {
+      "code": "th",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "ไทย"
+    },
+    {
+      "code": "ro",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Română"
+    },
+    {
+      "code": "cs",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Čeština"
+    },
+    {
+      "code": "sk",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Slovenčina"
+    },
+    {
+      "code": "hu",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Magyar"
+    },
+    {
+      "code": "el",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Ελληνικά"
+    },
+    {
+      "code": "bg",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Български"
+    },
+    {
+      "code": "hr",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Hrvatski"
+    },
+    {
+      "code": "sr",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Српски"
+    },
+    {
+      "code": "sl",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Slovenščina"
+    },
+    {
+      "code": "sv",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Svenska"
+    },
+    {
+      "code": "da",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Dansk"
+    },
+    {
+      "code": "no",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Norsk"
+    },
+    {
+      "code": "fi",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Suomi"
+    },
+    {
+      "code": "et",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Eesti"
+    },
+    {
+      "code": "lv",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Latviešu"
+    },
+    {
+      "code": "lt",
+      "routed": false,
+      "indexable": false,
+      "translationReviewed": false,
+      "dir": "ltr",
+      "nativeName": "Lietuvių"
+    }
+  ],
+  "indexableLocales": [
+    "en"
+  ],
+  "tools": [
+    {
+      "id": "merge-pdf",
+      "slug": "merge-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/merge-pdf",
+      "purpose": "Combine several PDF documents into one file on your device. Nothing is uploaded.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [],
+      "primaryCta": "Merge PDFs",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Combine signed contracts into one packet for a client.",
+      "relatedTools": [
+        "split-pdf",
+        "reorder-pdf",
+        "extract-pdf-pages"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "split-pdf",
+      "slug": "split-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/split-pdf",
+      "purpose": "Cut a PDF into individual page files in your browser. Choose a range or export every page.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [
+        "pages: 1-1 (default) or all"
+      ],
+      "primaryCta": "Split PDF",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Detach an appendix before sending the main report.",
+      "relatedTools": [
+        "merge-pdf",
+        "extract-pdf-pages",
+        "reorder-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "rotate-pdf",
+      "slug": "rotate-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/rotate-pdf",
+      "purpose": "Turn sideways scans upright without re-printing. Rotation is applied locally with pdf-lib.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [
+        "angle: 90 (default), 180, 270"
+      ],
+      "primaryCta": "Rotate PDF",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Correct phone scans of signed letters.",
+      "relatedTools": [
+        "reorder-pdf",
+        "pdf-metadata",
+        "merge-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "images-to-pdf",
+      "slug": "images-to-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/images-to-pdf",
+      "purpose": "Turn JPG, PNG or WebP photos into a paginated PDF. Images never leave this browser tab.",
+      "userInput": "file",
+      "supportedFormats": [
+        "png",
+        "jpg",
+        "jpeg",
+        "webp"
+      ],
+      "maxFileSize": 15728640,
+      "options": [],
+      "primaryCta": "Convert images to PDF",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Bundle travel receipts into one expense PDF.",
+      "relatedTools": [
+        "merge-pdf",
+        "convert-image",
+        "compress-image"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "extract-pdf-pages",
+      "slug": "extract-pdf-pages",
+      "category": "pdf-documents",
+      "url": "/en/tools/extract-pdf-pages",
+      "purpose": "Keep only the pages you list. The rest of the document is ignored and never uploaded.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [
+        "pages: 1-1 (default)"
+      ],
+      "primaryCta": "Extract pages",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Pull a signature page out of a longer agreement.",
+      "relatedTools": [
+        "split-pdf",
+        "reorder-pdf",
+        "merge-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "pdf-metadata",
+      "slug": "pdf-metadata",
+      "category": "pdf-documents",
+      "url": "/en/tools/pdf-metadata",
+      "purpose": "Inspect document information dictionaries locally. Useful before you share a file that still contains author names.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [],
+      "primaryCta": "Read metadata",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Check whether a resume PDF still lists a previous employer as author.",
+      "relatedTools": [
+        "exif-strip",
+        "rotate-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "reorder-pdf",
+      "slug": "reorder-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/reorder-pdf",
+      "purpose": "Shuffle page order in the browser. Reverse a scan or move a cover to the front without extra software.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [],
+      "primaryCta": "Reverse page order",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Move a title page that was scanned last.",
+      "relatedTools": [
+        "merge-pdf",
+        "extract-pdf-pages",
+        "rotate-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "compress-image",
+      "slug": "compress-image",
+      "category": "images",
+      "url": "/en/tools/compress-image",
+      "purpose": "Shrink image files with a quality slider. Encoding happens on a canvas in your browser.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 12582912,
+      "options": [
+        "quality: 0.8 default"
+      ],
+      "primaryCta": "Compress image",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Reduce a 5 MB photo before attaching it to email.",
+      "relatedTools": [
+        "resize-image",
+        "convert-image",
+        "favicon-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "resize-image",
+      "slug": "resize-image",
+      "category": "images",
+      "url": "/en/tools/resize-image",
+      "purpose": "Scale photos to exact dimensions while locking aspect ratio. Useful for thumbnails and social crops.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 12582912,
+      "options": [
+        "width: 800 default"
+      ],
+      "primaryCta": "Resize image",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Make a 1280-pixel-wide blog hero from a camera file.",
+      "relatedTools": [
+        "crop-image",
+        "compress-image",
+        "favicon-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "crop-image",
+      "slug": "crop-image",
+      "category": "images",
+      "url": "/en/tools/crop-image",
+      "purpose": "Cut unused margins from screenshots and photos. The crop runs locally on a canvas.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 12582912,
+      "options": [
+        "x,y,w,h: 0,0,256,256 default"
+      ],
+      "primaryCta": "Crop image",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Remove desktop clutter from a screenshot.",
+      "relatedTools": [
+        "resize-image",
+        "compress-image",
+        "convert-image"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "convert-image",
+      "slug": "convert-image",
+      "category": "images",
+      "url": "/en/tools/convert-image",
+      "purpose": "Switch between JPEG, PNG and WebP in the tab you already have open. Transparency becomes a chosen matte on JPEG.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 12582912,
+      "options": [
+        "output: WebP"
+      ],
+      "primaryCta": "Convert to WebP",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Turn a PNG icon into WebP for a landing page.",
+      "relatedTools": [
+        "compress-image",
+        "image-to-base64",
+        "images-to-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "image-to-base64",
+      "slug": "image-to-base64",
+      "category": "images",
+      "url": "/en/tools/image-to-base64",
+      "purpose": "Create a data URL for CSS or HTML prototypes. Encoding uses the FileReader API in your browser.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp",
+        "gif",
+        "svg"
+      ],
+      "maxFileSize": 5242880,
+      "options": [],
+      "primaryCta": "Encode image",
+      "output": "text",
+      "postAction": "copy",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Embed a 1 KB chevron in an email snippet.",
+      "relatedTools": [
+        "base64-to-image",
+        "base64",
+        "favicon-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "base64-to-image",
+      "slug": "base64-to-image",
+      "category": "images",
+      "url": "/en/tools/base64-to-image",
+      "purpose": "Paste a data URL or raw Base64 and preview the picture. Decoding never calls a server.",
+      "userInput": "text",
+      "supportedFormats": [
+        "png",
+        "jpg",
+        "webp"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Decode image",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Recover an icon that only exists as a data URL in CSS.",
+      "relatedTools": [
+        "image-to-base64",
+        "base64"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "exif-strip",
+      "slug": "exif-strip",
+      "category": "images",
+      "url": "/en/tools/exif-strip",
+      "purpose": "Download a copy of a JPEG or PNG without metadata. Stripping is done by redrawing the image on a canvas.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 12582912,
+      "options": [],
+      "primaryCta": "Strip metadata",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Share a holiday photo without GPS coordinates.",
+      "relatedTools": [
+        "compress-image",
+        "pdf-metadata",
+        "crop-image"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "favicon-generator",
+      "slug": "favicon-generator",
+      "category": "images",
+      "url": "/en/tools/favicon-generator",
+      "purpose": "Create PNG favicon sizes from a square logo. Scaling runs in the browser canvas.",
+      "userInput": "file",
+      "supportedFormats": [
+        "png",
+        "jpg",
+        "jpeg",
+        "webp"
+      ],
+      "maxFileSize": 5242880,
+      "options": [],
+      "primaryCta": "Generate favicons",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Pack a new brand mark for a static site header.",
+      "relatedTools": [
+        "resize-image",
+        "convert-image",
+        "compress-image"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "word-counter",
+      "slug": "word-counter",
+      "category": "text",
+      "url": "/en/tools/word-counter",
+      "purpose": "Get a live word, sentence and paragraph count as you type. Counting uses locale-aware segmentation where the browser supports it.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Count words",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Check an essay is under a 1,500-word limit.",
+      "relatedTools": [
+        "character-counter",
+        "text-statistics",
+        "whitespace-cleaner"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "character-counter",
+      "slug": "character-counter",
+      "category": "text",
+      "url": "/en/tools/character-counter",
+      "purpose": "Measure characters, spaces and lines for bios, ads and SMS. Useful next to a 160-character or 70-character title limit.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Count characters",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Fit a meta description under 160 characters.",
+      "relatedTools": [
+        "word-counter",
+        "slug-generator",
+        "meta-tag-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "case-converter",
+      "slug": "case-converter",
+      "category": "text",
+      "url": "/en/tools/case-converter",
+      "purpose": "Switch casing without a word processor. Title case uses simple English rules, not a full editorial style guide.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "upper, lower, title, sentence, invert"
+      ],
+      "primaryCta": "Convert case",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Normalize a shouty pasted heading.",
+      "relatedTools": [
+        "slug-generator",
+        "whitespace-cleaner",
+        "word-counter"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "remove-duplicate-lines",
+      "slug": "remove-duplicate-lines",
+      "category": "text",
+      "url": "/en/tools/remove-duplicate-lines",
+      "purpose": "Keep the first occurrence of each line. Optional case-insensitive mode helps clean mixed exports.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt",
+        "csv"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "sensitive | insensitive"
+      ],
+      "primaryCta": "Remove duplicates",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Unique a newsletter email dump.",
+      "relatedTools": [
+        "sort-lines",
+        "whitespace-cleaner",
+        "text-statistics"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "sort-lines",
+      "slug": "sort-lines",
+      "category": "text",
+      "url": "/en/tools/sort-lines",
+      "purpose": "Order lists with locale collation. Choose A–Z, Z–A or numeric sort for version-looking strings.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "asc | desc | numeric"
+      ],
+      "primaryCta": "Sort lines",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Alphabetize a glossary.",
+      "relatedTools": [
+        "remove-duplicate-lines",
+        "whitespace-cleaner"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "slug-generator",
+      "slug": "slug-generator",
+      "category": "text",
+      "url": "/en/tools/slug-generator",
+      "purpose": "Turn a heading into a lowercase hyphenated slug. Accents are folded; punctuation is stripped.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Make slug",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Slug a blog title before publishing.",
+      "relatedTools": [
+        "case-converter",
+        "whitespace-cleaner",
+        "meta-tag-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "whitespace-cleaner",
+      "slug": "whitespace-cleaner",
+      "category": "text",
+      "url": "/en/tools/whitespace-cleaner",
+      "purpose": "Remove extra spaces, tabs and blank lines from pasted text. Handy after copying from PDFs or slides.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "keep | drop empty lines"
+      ],
+      "primaryCta": "Clean whitespace",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Clean a paragraph copied from a slide.",
+      "relatedTools": [
+        "remove-duplicate-lines",
+        "case-converter",
+        "json-formatter"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "text-statistics",
+      "slug": "text-statistics",
+      "category": "text",
+      "url": "/en/tools/text-statistics",
+      "purpose": "See words, unique words, average word length and estimated reading time for a passage.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Analyze text",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Compare two intro drafts by length and variety.",
+      "relatedTools": [
+        "word-counter",
+        "character-counter",
+        "text-diff"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "text-diff",
+      "slug": "text-diff",
+      "category": "text",
+      "url": "/en/tools/text-diff",
+      "purpose": "Highlight lines that were added, removed or changed. The diff runs locally with a simple LCS algorithm.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Compare texts",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Check what a colleague changed in a policy paragraph.",
+      "relatedTools": [
+        "whitespace-cleaner",
+        "json-formatter",
+        "sort-lines"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "json-formatter",
+      "slug": "json-formatter",
+      "category": "developer",
+      "url": "/en/tools/json-formatter",
+      "purpose": "Pretty-print or compact JSON with a syntax check. Invalid documents show the parser message, not a stack trace.",
+      "userInput": "text",
+      "supportedFormats": [
+        "json"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "pretty | min"
+      ],
+      "primaryCta": "Format JSON",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Pretty-print a webhook body before filing a bug.",
+      "relatedTools": [
+        "json-validator",
+        "csv-json",
+        "whitespace-cleaner"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "json-validator",
+      "slug": "json-validator",
+      "category": "developer",
+      "url": "/en/tools/json-validator",
+      "purpose": "Check whether a string is valid JSON. Errors mention the parser’s message without sending the payload away.",
+      "userInput": "text",
+      "supportedFormats": [
+        "json"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Validate JSON",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Sanity-check a .json config before deploy.",
+      "relatedTools": [
+        "json-formatter",
+        "csv-json",
+        "jwt-decoder"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "csv-json",
+      "slug": "csv-json",
+      "category": "developer",
+      "url": "/en/tools/csv-json",
+      "purpose": "Turn CSV tables into arrays of objects, or flatten JSON arrays to CSV. Parsing understands quoted commas.",
+      "userInput": "text",
+      "supportedFormats": [
+        "csv",
+        "json"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "to json | to csv"
+      ],
+      "primaryCta": "Convert",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Turn a spreadsheet export into JSON for a prototype.",
+      "relatedTools": [
+        "json-formatter",
+        "sort-lines",
+        "remove-duplicate-lines"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "base64",
+      "slug": "base64",
+      "category": "developer",
+      "url": "/en/tools/base64",
+      "purpose": "Encode UTF-8 text to Base64 or decode it back. Invalid payloads show an error instead of mojibake.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "encode | decode"
+      ],
+      "primaryCta": "Encode or decode",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Decode a Basic auth demo string in a tutorial.",
+      "relatedTools": [
+        "url-codec",
+        "image-to-base64",
+        "hash-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "url-codec",
+      "slug": "url-codec",
+      "category": "developer",
+      "url": "/en/tools/url-codec",
+      "purpose": "Apply encodeURIComponent or decodeURIComponent to a string. Handy when a parameter contains spaces or Unicode.",
+      "userInput": "url",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "encode | decode"
+      ],
+      "primaryCta": "Encode or decode",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Encode a search term that contains ampersands.",
+      "relatedTools": [
+        "base64",
+        "html-entities",
+        "slug-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "html-entities",
+      "slug": "html-entities",
+      "category": "developer",
+      "url": "/en/tools/html-entities",
+      "purpose": "Escape <, > and & for safe HTML text nodes, or decode entities back to characters.",
+      "userInput": "text",
+      "supportedFormats": [
+        "html",
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "encode | decode"
+      ],
+      "primaryCta": "Encode or decode",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Escape a snippet before putting it in a blog as code.",
+      "relatedTools": [
+        "url-codec",
+        "whitespace-cleaner"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "uuid-generator",
+      "slug": "uuid-generator",
+      "category": "developer",
+      "url": "/en/tools/uuid-generator",
+      "purpose": "Create RFC 4122 version 4 UUIDs with crypto.getRandomValues. Nothing is logged.",
+      "userInput": "none",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "count"
+      ],
+      "primaryCta": "Generate UUIDs",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Fill test databases with primary keys.",
+      "relatedTools": [
+        "password-generator",
+        "random-string",
+        "hash-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "hash-generator",
+      "slug": "hash-generator",
+      "category": "developer",
+      "url": "/en/tools/hash-generator",
+      "purpose": "Hash text with Web Crypto. Use it for checksums, not for storing passwords — that needs a slow salted KDF.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "SHA-1, SHA-256 (default), SHA-384, SHA-512"
+      ],
+      "primaryCta": "Hash text",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Compare a published SHA-256 checksum for a snippet.",
+      "relatedTools": [
+        "base64",
+        "jwt-decoder",
+        "password-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "regex-tester",
+      "slug": "regex-tester",
+      "category": "developer",
+      "url": "/en/tools/regex-tester",
+      "purpose": "Run a pattern against sample text and see matches. Invalid patterns fail with the engine’s error message.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "pattern, flags (g default)"
+      ],
+      "primaryCta": "Test regex",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Debug an email-like pattern before putting it in a form.",
+      "relatedTools": [
+        "text-diff",
+        "slug-generator",
+        "json-validator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "jwt-decoder",
+      "slug": "jwt-decoder",
+      "category": "developer",
+      "url": "/en/tools/jwt-decoder",
+      "purpose": "Inspect non-secret sample JWTs. Signatures are displayed, not verified, and tokens are never sent to Freela.",
+      "userInput": "text",
+      "supportedFormats": [
+        "jwt",
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Decode JWT",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Inspect exp and sub on a documentation example token.",
+      "relatedTools": [
+        "base64",
+        "json-formatter",
+        "hash-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "meta-tag-generator",
+      "slug": "meta-tag-generator",
+      "category": "seo",
+      "url": "/en/tools/meta-tag-generator",
+      "purpose": "Build title, description and basic Open Graph tags from fields you type. It does not fetch or rewrite live pages.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "html"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate tags",
+      "output": "code",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Draft tags for a new landing page.",
+      "relatedTools": [
+        "serp-preview",
+        "robots-txt-generator",
+        "hreflang-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "robots-txt-generator",
+      "slug": "robots-txt-generator",
+      "category": "seo",
+      "url": "/en/tools/robots-txt-generator",
+      "purpose": "Emit a robots.txt with allow/disallow paths you list. It does not crawl your site or prove what Google will fetch.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate robots.txt",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Block /admin and /api on a public marketing site.",
+      "relatedTools": [
+        "meta-tag-generator",
+        "hreflang-generator",
+        "serp-preview"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "serp-preview",
+      "slug": "serp-preview",
+      "category": "seo",
+      "url": "/en/tools/serp-preview",
+      "purpose": "See how a title, URL and description might wrap in a generic results layout. This is not a live SERP from Google.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Preview snippet",
+      "output": "preview",
+      "postAction": "copy",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Check a 60-character title still reads well.",
+      "relatedTools": [
+        "meta-tag-generator",
+        "character-counter",
+        "slug-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "hreflang-generator",
+      "slug": "hreflang-generator",
+      "category": "seo",
+      "url": "/en/tools/hreflang-generator",
+      "purpose": "Build link rel=alternate hreflang tags plus x-default from a list of locale URLs you provide.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "html"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate hreflang",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Draft tags for English and German product pages.",
+      "relatedTools": [
+        "meta-tag-generator",
+        "robots-txt-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "percentage",
+      "slug": "percentage",
+      "category": "calculators",
+      "url": "/en/tools/percentage",
+      "purpose": "Find a percent of a number, or the percent change between two values. Arithmetic is done in JavaScript decimals.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "X% of Y | X is what % of Y | percent change"
+      ],
+      "primaryCta": "Calculate",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "What is 18% of 240?",
+      "relatedTools": [
+        "discount",
+        "vat-calculator",
+        "profit-margin"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Calculators"
+    },
+    {
+      "id": "vat-calculator",
+      "slug": "vat-calculator",
+      "category": "calculators",
+      "url": "/en/tools/vat-calculator",
+      "purpose": "Convert between net and gross using a VAT rate you enter. Country rules are not applied automatically.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "net | gross, rate in Value B"
+      ],
+      "primaryCta": "Calculate VAT",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Add 19% German VAT to a net consulting fee.",
+      "relatedTools": [
+        "percentage",
+        "discount",
+        "profit-margin"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Calculators"
+    },
+    {
+      "id": "discount",
+      "slug": "discount",
+      "category": "calculators",
+      "url": "/en/tools/discount",
+      "purpose": "Apply a percent off a list price and see the savings. Stacked coupons are not modeled.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Calculate discount",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Check a 25% off €80 jacket.",
+      "relatedTools": [
+        "percentage",
+        "profit-margin",
+        "vat-calculator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Calculators"
+    },
+    {
+      "id": "profit-margin",
+      "slug": "profit-margin",
+      "category": "calculators",
+      "url": "/en/tools/profit-margin",
+      "purpose": "Derive margin and markup from cost and selling price. Labels follow standard retail definitions.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Calculate margin",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Price a handmade item that costs 12 to make.",
+      "relatedTools": [
+        "discount",
+        "percentage",
+        "vat-calculator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Calculators"
+    },
+    {
+      "id": "bmi-calculator",
+      "slug": "bmi-calculator",
+      "category": "calculators",
+      "url": "/en/tools/bmi-calculator",
+      "purpose": "Compute BMI from height and weight as a generic index. It is not a diagnosis and ignores muscle mass.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Calculate BMI",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Convert 180 cm and 75 kg to BMI.",
+      "relatedTools": [
+        "percentage",
+        "date-difference"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Calculators"
+    },
+    {
+      "id": "date-difference",
+      "slug": "date-difference",
+      "category": "calculators",
+      "url": "/en/tools/date-difference",
+      "purpose": "Count whole days and an approximate years/months breakdown between two calendar dates in your local timezone.",
+      "userInput": "date",
+      "supportedFormats": [
+        "date"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Calculate difference",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "See how many days remain until a visa expiry.",
+      "relatedTools": [
+        "unix-timestamp",
+        "timezone-convert"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Calculators"
+    },
+    {
+      "id": "temperature",
+      "slug": "temperature",
+      "category": "converters",
+      "url": "/en/tools/temperature",
+      "purpose": "Convert temperatures with standard formulas. Kelvin cannot go below zero in the output.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Convert a 180°C oven setting to Fahrenheit.",
+      "relatedTools": [
+        "length",
+        "weight",
+        "data-size"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "length",
+      "slug": "length",
+      "category": "converters",
+      "url": "/en/tools/length",
+      "purpose": "Convert common length units through metres. Results use locale number formatting.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Turn 5 ft 10 in into centimetres (use inches).",
+      "relatedTools": [
+        "weight",
+        "temperature",
+        "data-size"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "weight",
+      "slug": "weight",
+      "category": "converters",
+      "url": "/en/tools/weight",
+      "purpose": "Convert mass units via kilograms. This is mass, not planetary weight, despite the everyday label.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Convert 70 kg to pounds.",
+      "relatedTools": [
+        "length",
+        "bmi-calculator",
+        "data-size"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "data-size",
+      "slug": "data-size",
+      "category": "converters",
+      "url": "/en/tools/data-size",
+      "purpose": "Convert file sizes using SI (1000) or IEC (1024) units. Labels stay explicit so KiB is not called KB.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "SI 1000 | IEC 1024"
+      ],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "See how many bytes are in 1.5 GB.",
+      "relatedTools": [
+        "length",
+        "hash-generator",
+        "compress-image"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "hex-rgb-hsl",
+      "slug": "hex-rgb-hsl",
+      "category": "color",
+      "url": "/en/tools/hex-rgb-hsl",
+      "purpose": "Translate color notations used in CSS. Invalid hex strings are rejected instead of silently clamped.",
+      "userInput": "color",
+      "supportedFormats": [
+        "hex",
+        "rgb"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert color",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Turn a brand HEX into HSL for CSS.",
+      "relatedTools": [
+        "contrast-checker",
+        "palette-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Color"
+    },
+    {
+      "id": "contrast-checker",
+      "slug": "contrast-checker",
+      "category": "color",
+      "url": "/en/tools/contrast-checker",
+      "purpose": "Compute the contrast ratio of a foreground and background pair against WCAG 2 AA and AAA thresholds.",
+      "userInput": "color",
+      "supportedFormats": [
+        "hex"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Check contrast",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Test body text #333 on a white card.",
+      "relatedTools": [
+        "hex-rgb-hsl",
+        "palette-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Color"
+    },
+    {
+      "id": "palette-generator",
+      "slug": "palette-generator",
+      "category": "color",
+      "url": "/en/tools/palette-generator",
+      "purpose": "Generate lighter and darker HEX steps from a base color by mixing with white and black in sRGB.",
+      "userInput": "color",
+      "supportedFormats": [
+        "hex"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate palette",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Build a gray-ish ramp from a blue brand color.",
+      "relatedTools": [
+        "hex-rgb-hsl",
+        "contrast-checker"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Color"
+    },
+    {
+      "id": "password-generator",
+      "slug": "password-generator",
+      "category": "generators",
+      "url": "/en/tools/password-generator",
+      "purpose": "Create passwords with crypto.getRandomValues. Length and character classes are under your control.",
+      "userInput": "none",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "count, length"
+      ],
+      "primaryCta": "Generate passwords",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Mint a 20-character password for a new account.",
+      "relatedTools": [
+        "random-string",
+        "uuid-generator",
+        "hash-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Generators"
+    },
+    {
+      "id": "qr-generator",
+      "slug": "qr-generator",
+      "category": "generators",
+      "url": "/en/tools/qr-generator",
+      "purpose": "Encode text into a QR PNG entirely in the browser. We do not shorten URLs or track scans.",
+      "userInput": "text",
+      "supportedFormats": [
+        "png"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "content text"
+      ],
+      "primaryCta": "Generate QR code",
+      "output": "preview",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Put a Wi-Fi-less URL on a poster.",
+      "relatedTools": [
+        "url-codec",
+        "slug-generator",
+        "meta-tag-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Generators"
+    },
+    {
+      "id": "random-string",
+      "slug": "random-string",
+      "category": "generators",
+      "url": "/en/tools/random-string",
+      "purpose": "Produce random tokens for test data. Not a password manager and not a lottery.",
+      "userInput": "none",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "count, length"
+      ],
+      "primaryCta": "Generate strings",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Fill a staging coupon code field.",
+      "relatedTools": [
+        "password-generator",
+        "uuid-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Generators"
+    },
+    {
+      "id": "unix-timestamp",
+      "slug": "unix-timestamp",
+      "category": "date-time",
+      "url": "/en/tools/unix-timestamp",
+      "purpose": "Switch between Unix seconds, milliseconds and ISO-8601 strings using your locale’s date formatting.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert timestamp",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Decode a 1710000000 log line.",
+      "relatedTools": [
+        "timezone-convert",
+        "date-difference"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Date & Time"
+    },
+    {
+      "id": "timezone-convert",
+      "slug": "timezone-convert",
+      "category": "date-time",
+      "url": "/en/tools/timezone-convert",
+      "purpose": "Show the same instant in several IANA timezones using Intl.DateTimeFormat. DST rules come from the browser.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert timezone",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "See a 09:00 Berlin call in New York.",
+      "relatedTools": [
+        "unix-timestamp",
+        "date-difference"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Date & Time"
+    },
+    {
+      "id": "compress-pdf",
+      "slug": "compress-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/compress-pdf",
+      "purpose": "Rewrite a PDF with object streams to often shrink size. No upload. Heavily encoded scans may not get smaller.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [],
+      "primaryCta": "Compress PDF",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Shrink a text-heavy report before email.",
+      "relatedTools": [
+        "merge-pdf",
+        "split-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "xml-formatter",
+      "slug": "xml-formatter",
+      "category": "developer",
+      "url": "/en/tools/xml-formatter",
+      "purpose": "Indent XML-like markup in the browser. This is a structural pretty-printer, not a schema validator.",
+      "userInput": "text",
+      "supportedFormats": [
+        "xml"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Format XML",
+      "output": "code",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Read a SOAP envelope.",
+      "relatedTools": [
+        "json-formatter",
+        "html-entities"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "yaml-json",
+      "slug": "yaml-json",
+      "category": "developer",
+      "url": "/en/tools/yaml-json",
+      "purpose": "Turn flat key: value YAML into JSON. Nested documents, anchors and multiline blocks are not supported.",
+      "userInput": "text",
+      "supportedFormats": [
+        "yaml",
+        "json"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert YAML",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Turn a tiny .env-like YAML into JSON.",
+      "relatedTools": [
+        "json-formatter",
+        "csv-json"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "sitemap-helper",
+      "slug": "sitemap-helper",
+      "category": "seo",
+      "url": "/en/tools/sitemap-helper",
+      "purpose": "Turn a list of absolute URLs into a urlset. It does not crawl your site or prove indexing.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "xml"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate sitemap",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Draft a sitemap for five landing pages.",
+      "relatedTools": [
+        "robots-txt-generator",
+        "canonical-helper"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "canonical-helper",
+      "slug": "canonical-helper",
+      "category": "seo",
+      "url": "/en/tools/canonical-helper",
+      "purpose": "Emit a single rel=canonical tag for an absolute URL. It does not rewrite your site.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "html"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate canonical",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Tag a product URL that has tracking parameters you want ignored.",
+      "relatedTools": [
+        "hreflang-generator",
+        "meta-tag-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "schema-generator",
+      "slug": "schema-generator",
+      "category": "seo",
+      "url": "/en/tools/schema-generator",
+      "purpose": "Build a WebPage/WebApplication JSON-LD object from fields you type. Review and rating types are blocked.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "json"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate schema",
+      "output": "code",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Describe a real tool page.",
+      "relatedTools": [
+        "meta-tag-generator",
+        "og-preview"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "og-preview",
+      "slug": "og-preview",
+      "category": "seo",
+      "url": "/en/tools/og-preview",
+      "purpose": "Sketch how an og:title and description might appear. We do not fetch the live image from your server.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "html"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate Open Graph",
+      "output": "code",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Check a launch post title length.",
+      "relatedTools": [
+        "meta-tag-generator",
+        "serp-preview"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "speed",
+      "slug": "speed",
+      "category": "converters",
+      "url": "/en/tools/speed",
+      "purpose": "Convert everyday speed units through metres per second. Not a vehicle computer.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Convert a 50 km/h limit to mph.",
+      "relatedTools": [
+        "length",
+        "temperature"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "area",
+      "slug": "area",
+      "category": "converters",
+      "url": "/en/tools/area",
+      "purpose": "Convert land and floor areas through square metres. Survey-specific acres are not modeled.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Turn 80 m² into square feet.",
+      "relatedTools": [
+        "length",
+        "volume"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "volume",
+      "slug": "volume",
+      "category": "converters",
+      "url": "/en/tools/volume",
+      "purpose": "Convert common volumes using the US liquid gallon. UK gallons are not included in this set.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Convert 2 L to cups.",
+      "relatedTools": [
+        "area",
+        "weight"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "pressure",
+      "slug": "pressure",
+      "category": "converters",
+      "url": "/en/tools/pressure",
+      "purpose": "Convert pressure units through pascals. Not a medical or industrial certification tool.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Convert 2.2 bar to psi.",
+      "relatedTools": [
+        "energy",
+        "temperature"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "energy",
+      "slug": "energy",
+      "category": "converters",
+      "url": "/en/tools/energy",
+      "purpose": "Convert energy units through joules. Food calories here are thermochemical kilocalories.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Convert 1 kWh to kJ.",
+      "relatedTools": [
+        "pressure",
+        "data-size"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "duration",
+      "slug": "duration",
+      "category": "converters",
+      "url": "/en/tools/duration",
+      "purpose": "Convert durations through seconds. This is elapsed time, not calendar dates or DST.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Convert",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "See how many hours are in 10000 seconds.",
+      "relatedTools": [
+        "date-difference",
+        "unix-timestamp"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Converters"
+    },
+    {
+      "id": "gradient-generator",
+      "slug": "gradient-generator",
+      "category": "color",
+      "url": "/en/tools/gradient-generator",
+      "purpose": "Emit a linear-gradient CSS snippet from two HEX colors and an angle. Colors stay in sRGB.",
+      "userInput": "color",
+      "supportedFormats": [
+        "css"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Generate CSS",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Make a hero wash from brand green to white.",
+      "relatedTools": [
+        "hex-rgb-hsl",
+        "palette-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Color"
+    },
+    {
+      "id": "url-parser",
+      "slug": "url-parser",
+      "category": "developer",
+      "url": "/en/tools/url-parser",
+      "purpose": "Parse an absolute URL with the browser URL API. The tool does not request the address.",
+      "userInput": "url",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Parse URL",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Inspect a campaign URL.",
+      "relatedTools": [
+        "url-codec",
+        "query-parser"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "query-parser",
+      "slug": "query-parser",
+      "category": "developer",
+      "url": "/en/tools/query-parser",
+      "purpose": "Turn a query string or full URL into a key/value map using URLSearchParams. Duplicate keys keep the last value.",
+      "userInput": "url",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Parse query",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Read utm_* from a copied link.",
+      "relatedTools": [
+        "url-parser",
+        "url-codec"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Developer"
+    },
+    {
+      "id": "invoice-math",
+      "slug": "invoice-math",
+      "category": "calculators",
+      "url": "/en/tools/invoice-math",
+      "purpose": "Multiply quantity by unit price and apply a tax rate. Not an invoicing product or tax filing tool.",
+      "userInput": "number",
+      "supportedFormats": [
+        "number"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "qty, unit price, tax %"
+      ],
+      "primaryCta": "Calculate invoice",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Two hours at 80 with 19% VAT.",
+      "relatedTools": [
+        "vat-calculator",
+        "profit-margin"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Calculators"
+    },
+    {
+      "id": "resume-bullets",
+      "slug": "resume-bullets",
+      "category": "text",
+      "url": "/en/tools/resume-bullets",
+      "purpose": "Prefix trimmed lines with a bullet and collapse spaces. This is a writing aid, not career advice.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Format bullets",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Clean a list of project notes.",
+      "relatedTools": [
+        "whitespace-cleaner",
+        "case-converter"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "cover-letter-template",
+      "slug": "cover-letter-template",
+      "category": "text",
+      "url": "/en/tools/cover-letter-template",
+      "purpose": "Assemble a three-paragraph letter from role, company and your notes. Not legal or immigration advice.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Build template",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Start a letter for a product role.",
+      "relatedTools": [
+        "resume-bullets",
+        "whitespace-cleaner"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Text"
+    },
+    {
+      "id": "ics-event",
+      "slug": "ics-event",
+      "category": "date-time",
+      "url": "/en/tools/ics-event",
+      "purpose": "Build a VEVENT from a title and start/end. Timezone folding is the browser’s. Not a calendar product.",
+      "userInput": "text",
+      "supportedFormats": [
+        "ics"
+      ],
+      "maxFileSize": 0,
+      "options": [],
+      "primaryCta": "Create ICS",
+      "output": "code",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Invite yourself to a local reminder.",
+      "relatedTools": [
+        "timezone-convert",
+        "date-difference"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Date & Time"
+    },
+    {
+      "id": "color-extract",
+      "slug": "color-extract",
+      "category": "images",
+      "url": "/en/tools/color-extract",
+      "purpose": "Average pixels on a downscaled canvas to suggest a few HEX colors. Not a professional color profiler.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 8388608,
+      "options": [],
+      "primaryCta": "Extract colors",
+      "output": "text",
+      "postAction": "copy",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Pull a brand-ish green from a logo PNG.",
+      "relatedTools": [
+        "hex-rgb-hsl",
+        "palette-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "EN reviewed; other locales routed noindex until native QA",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    }
+  ]
+}

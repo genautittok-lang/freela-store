@@ -1,5 +1,5 @@
 import { ANALYTICS_EVENTS, type AnalyticsEventName } from "@/lib/analytics-events";
-import { isLocale } from "@/data/locales";
+import { isRoutedLocale } from "@/data/locales";
 
 const BLOCKED_KEYS = [
   "content",
@@ -83,7 +83,7 @@ export function sanitizeAnalyticsPayload(input: unknown): SanitizedEvent | null 
   const toolId = raw.toolId == null || raw.toolId === "" ? null : String(raw.toolId);
   if (toolId && !/^[a-z0-9-]{1,80}$/.test(toolId)) return null;
   const locale = raw.locale == null || raw.locale === "" ? null : String(raw.locale);
-  if (locale && !isLocale(locale)) return null;
+  if (locale && !isRoutedLocale(locale)) return null;
   const mode = raw.processingMode == null || raw.processingMode === "" ? null : String(raw.processingMode);
   if (mode && mode !== "LOCAL_ONLY" && mode !== "SERVER_PROCESSING" && mode !== "THIRD_PARTY_PROCESSING") {
     return null;

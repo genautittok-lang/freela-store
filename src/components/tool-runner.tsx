@@ -2,12 +2,13 @@
 
 import { useMemo, useRef, useState } from "react";
 import type { ToolDefinition } from "@/data/schema";
-import type { Locale } from "@/data/locales";
 import { t } from "@/i18n/messages";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { track } from "@/components/analytics-provider";
+import { FormatBadges } from "@/components/format-badges";
+import { copyForTool } from "@/lib/copy";
 import {
   cleanWhitespace,
   convertCase,
@@ -93,9 +94,9 @@ export function ToolRunner({
   locale,
 }: {
   tool: ToolDefinition;
-  locale: Locale;
+  locale: string;
 }) {
-  const copy = tool.copy[locale];
+  const copy = copyForTool(tool, locale);
   const ui = t(locale);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -197,6 +198,46 @@ export function ToolRunner({
   );
 }
 
+function defaultTextInput(action: string) {
+  switch (action) {
+    case "format":
+    case "validate":
+      return '{"ok":true,"n":1}';
+    case "csv-json":
+      return "name,value\nalpha,1\nbeta,2";
+    case "url-parse":
+      return "https://freela.store/en/tools/word-counter?q=1";
+    case "query":
+      return "q=pdf&lang=en";
+    case "canonical":
+      return "https://freela.store/en/";
+    case "sitemap":
+      return "https://freela.store/en/\nhttps://freela.store/en/about";
+    case "yaml":
+      return "name: Freela\nlocal: true";
+    case "xml":
+      return "<root><item>1</item></root>";
+    case "meta":
+    case "serp":
+    case "og":
+      return "Freela\nFree browser tools that stay on your device.\nhttps://freela.store/en/";
+    case "schema":
+      return "WebPage\nFreela\nFree browser tools\nhttps://freela.store/en/";
+    case "hreflang":
+      return "en https://freela.store/en/\nx-default https://freela.store/en/";
+    case "robots":
+      return "https://freela.store/sitemap.xml\n/admin";
+    case "cover":
+      return "Product designer\nFreela\nI ship local-first tools.";
+    case "base64":
+      return "Freela";
+    case "url":
+      return "https://freela.store/en/?q=pdf merge";
+    default:
+      return "Freela runs tools in your browser.\nLine two.";
+  }
+}
+
 function TextTool({
   tool,
   locale,
@@ -204,15 +245,27 @@ function TextTool({
   cta,
 }: {
   tool: ToolDefinition;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => void) => Promise<void>;
   cta: string;
 }) {
   const ui = t(locale);
-  const [input, setInput] = useState("");
-  const [inputB, setInputB] = useState("");
+  const [input, setInput] = useState(defaultTextInput(tool.runtime.action));
+  const [inputB, setInputB] = useState("Freela runs tools on the device.\nLine two.");
   const [output, setOutput] = useState("");
-  const [mode, setMode] = useState("upper");
+  const [mode, setMode] = useState(
+    tool.runtime.action === "csv-json"
+      ? "json"
+      : tool.runtime.action === "format"
+        ? "pretty"
+        : tool.runtime.action === "whitespace"
+          ? "keep"
+          : tool.runtime.action === "sort-lines"
+            ? "asc"
+            : tool.runtime.action === "dedupe-lines"
+              ? "sensitive"
+              : "upper",
+  );
   const stats = useMemo(() => countText(input), [input]);
 
   function run() {
@@ -369,7 +422,12 @@ function TextTool({
       {tool.runtime.action === "schema" ? (
         <p className="text-xs text-muted-foreground">One field per line: schema type, name, description, URL. Review types are blocked.</p>
       ) : null}
-      <Textarea value={input} onChange={(e) => setInput(e.target.value)} rows={needsSecond ? 6 : 10} />
+      <Textarea
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        rows={needsSecond ? 6 : 10}
+        placeholder={copyForTool(tool, locale).examples[0]}
+      />
       {needsSecond ? <Textarea value={inputB} onChange={(e) => setInputB(e.target.value)} rows={6} /> : null}
       {select.length ? (
         <select className="h-9 rounded-lg border px-2 text-sm" value={mode} onChange={(e) => setMode(e.target.value)}>
@@ -437,14 +495,14 @@ function RegexTool({
   wrap,
   cta,
 }: {
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => void) => Promise<void>;
   tool?: ToolDefinition;
   cta: string;
 }) {
-  const [pattern, setPattern] = useState("");
+  const [pattern, setPattern] = useState("\\w+");
   const [flags, setFlags] = useState("g");
-  const [sample, setSample] = useState("");
+  const [sample, setSample] = useState("hello world");
   const [output, setOutput] = useState("");
   return (
     <div className="grid gap-3">
@@ -484,8 +542,10 @@ function RegexTool({
   );
 }
 
-function JwtTool({ wrap, cta }: { locale: Locale; wrap: (fn: () => void) => Promise<void>; cta: string }) {
-  const [token, setToken] = useState("");
+function JwtTool({ wrap, cta }: { locale: string; wrap: (fn: () => void) => Promise<void>; cta: string }) {
+  const [token, setToken] = useState(
+    "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJkZW1vIiwiaXNzIjoiZnJlZWxhIn0.sample",
+  );
   const [output, setOutput] = useState("");
   return (
     <div className="grid gap-3">
@@ -508,8 +568,8 @@ function JwtTool({ wrap, cta }: { locale: Locale; wrap: (fn: () => void) => Prom
   );
 }
 
-function HashTool({ wrap, cta }: { locale: Locale; wrap: (fn: () => void) => Promise<void>; cta: string }) {
-  const [text, setText] = useState("");
+function HashTool({ wrap, cta }: { locale: string; wrap: (fn: () => void) => Promise<void>; cta: string }) {
+  const [text, setText] = useState("freela.store");
   const [algo, setAlgo] = useState("SHA-256");
   const [output, setOutput] = useState("");
   return (
@@ -545,7 +605,7 @@ function PdfTool({
   cta,
 }: {
   action: string;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => Promise<void>) => Promise<void>;
   tool: ToolDefinition;
   cancelled: React.MutableRefObject<boolean>;
@@ -594,8 +654,9 @@ function PdfTool({
             if (list.length) track("file_selected", { toolId: tool.id, locale });
           }}
         />
-        {files.length ? <span className="text-xs text-muted-foreground">{files.map((f) => f.name).join(", ")}</span> : null}
-        <span className="text-xs text-muted-foreground">Max {Math.round(tool.maxFileSize / 1024 / 1024)} MB · {tool.supportedFormats.join(", ")}</span>
+        {files.length ?         <span className="text-xs text-muted-foreground">{files.map((f) => f.name).join(", ")}</span> : null}
+        <FormatBadges formats={tool.supportedFormats} />
+        <span className="text-xs text-muted-foreground">Max {Math.round(tool.maxFileSize / 1024 / 1024)} MB</span>
       </label>
       {action === "reorder" ? (
         <p className="text-sm text-muted-foreground">This reverses the current page order. There is no drag-and-drop reorder list.</p>
@@ -734,7 +795,7 @@ function ImageTool({
   cta,
 }: {
   action: string;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => Promise<void>) => Promise<void>;
   tool: ToolDefinition;
   cta: string;
@@ -789,8 +850,9 @@ function ImageTool({
             }}
           />
           {file ? <span className="text-xs text-muted-foreground">{file.name}</span> : null}
+          <FormatBadges formats={tool.supportedFormats} />
           <span className="text-xs text-muted-foreground">
-            {ui.sizeLimit} {Math.round(tool.maxFileSize / 1024 / 1024)} MB · {tool.supportedFormats.join(", ")}
+            {ui.sizeLimit} {Math.round(tool.maxFileSize / 1024 / 1024)} MB
           </span>
         </label>
       ) : (
@@ -935,7 +997,7 @@ function CalcTool({
   cta,
 }: {
   action: string;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => void) => Promise<void>;
   cta: string;
 }) {
@@ -1083,7 +1145,7 @@ function ConverterTool({
   cta,
 }: {
   action: string;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => void) => Promise<void>;
   cta: string;
 }) {
@@ -1165,7 +1227,7 @@ function ColorTool({
   cta,
 }: {
   action: string;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => void) => Promise<void>;
   cta: string;
 }) {
@@ -1233,7 +1295,7 @@ function GeneratorTool({
   cta,
 }: {
   action: string;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => void) => Promise<void>;
   cta: string;
 }) {
@@ -1293,7 +1355,7 @@ function GeneratorTool({
   );
 }
 
-function QrTool({ locale, wrap, cta }: { locale: Locale; wrap: (fn: () => Promise<void>) => Promise<void>; cta: string }) {
+function QrTool({ locale, wrap, cta }: { locale: string; wrap: (fn: () => Promise<void>) => Promise<void>; cta: string }) {
   const ui = t(locale);
   const [text, setText] = useState("https://freela.store/en/");
   const [src, setSrc] = useState("");
@@ -1339,13 +1401,13 @@ function DateTimeTool({
   cta,
 }: {
   action: string;
-  locale: Locale;
+  locale: string;
   wrap: (fn: () => void) => Promise<void>;
   cta: string;
 }) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(action === "unix" ? "1735689600" : "2026-01-15T10:00");
   const [from, setFrom] = useState(action === "ics" ? "Freela event" : "Europe/Berlin");
-  const [to, setTo] = useState(action === "ics" ? "" : "America/New_York");
+  const [to, setTo] = useState(action === "ics" ? "2026-01-15T11:00" : "America/New_York");
   const [out, setOut] = useState("");
   return (
     <div className="grid gap-3">
@@ -1358,7 +1420,7 @@ function DateTimeTool({
             <Input type="datetime-local" value={value} onChange={(e) => setValue(e.target.value)} />
           </Field>
           <Field label="End">
-            <Input type="datetime-local" value={to} onChange={(e) => setTo(e.target.value)} />
+            <Input type="datetime-local" value={to || "2026-01-15T11:00"} onChange={(e) => setTo(e.target.value)} />
           </Field>
         </>
       ) : null}

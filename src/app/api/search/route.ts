@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isLocale } from "@/data/locales";
+import { isRoutedLocale } from "@/data/locales";
 import { searchRegistry } from "@/lib/search";
-import { categoryById } from "@/lib/registry";
+import { copyForCategory, copyForTool } from "@/lib/registry";
 import { clientIp, rateLimit } from "@/lib/security";
 
 export function GET(request: NextRequest) {
@@ -10,24 +10,26 @@ export function GET(request: NextRequest) {
   }
   const q = (request.nextUrl.searchParams.get("q") || "").slice(0, 80);
   const locale = request.nextUrl.searchParams.get("locale") || "en";
-  if (!isLocale(locale)) return NextResponse.json({ hits: [] });
+  if (!isRoutedLocale(locale)) return NextResponse.json({ hits: [] });
   const hits = searchRegistry(locale, q).map((hit) => {
     if (hit.kind === "tool") {
+      const copy = copyForTool(hit.tool, locale);
       return {
         kind: "tool",
         id: hit.tool.id,
-        label: hit.tool.copy[locale].name,
-        description: hit.tool.copy[locale].description,
+        label: copy.name,
+        description: copy.description,
         category: hit.tool.category,
-        href: `/${locale}/tools/${hit.tool.copy[locale].slug}`,
+        href: `/${locale}/tools/${copy.slug}`,
       };
     }
-    const cat = "category" in hit ? hit.category : categoryById("");
+    const cat = hit.category;
+    const catCopy = cat ? copyForCategory(cat, locale) : undefined;
     return {
       kind: "category",
       id: cat?.id,
-      label: cat?.copy[locale].name,
-      href: `/${locale}/tools/${cat?.copy[locale].slug}`,
+      label: catCopy?.name,
+      href: `/${locale}/tools/${catCopy?.slug}`,
     };
   });
   return NextResponse.json({ hits }, { headers: { "x-robots-tag": "noindex" } });

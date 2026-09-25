@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/data/locales";
-import { getLocale, localeRegistry, SOURCE_LOCALE } from "@/data/locales";
+import { contentLocale, getLocale, localeRegistry, SOURCE_LOCALE } from "@/data/locales";
 import { LEGAL_SLUGS } from "@/data/legal-slugs";
 import { absoluteUrl } from "@/lib/site";
 import { indexableTools, publicLocalesForTool } from "@/lib/registry";
 import type { ToolDefinition } from "@/data/schema";
 
-export function robotsFor(locale: Locale, extraIndex = true): Metadata["robots"] {
+export function robotsFor(locale: string, extraIndex = true): Metadata["robots"] {
   const loc = getLocale(locale);
   const index = Boolean(loc?.indexable && extraIndex);
   return { index, follow: true, googleBot: { index, follow: true } };
@@ -16,7 +16,7 @@ export function indexableLocales(): Locale[] {
   return (Object.keys(localeRegistry) as Locale[]).filter((code) => getLocale(code)?.indexable);
 }
 
-export function languageAlternates(pathWithoutLocale: string, locales: Locale[]) {
+export function languageAlternates(pathWithoutLocale: string, locales: string[]) {
   const languages: Record<string, string> = {};
   for (const locale of locales) {
     languages[locale] = absoluteUrl(`/${locale}${pathWithoutLocale}`);
@@ -26,14 +26,14 @@ export function languageAlternates(pathWithoutLocale: string, locales: Locale[])
 }
 
 export function pageMetadata(opts: {
-  locale: Locale;
+  locale: string;
   title: string;
   description: string;
   pathWithoutLocale: string;
   index?: boolean;
   ogType?: "website" | "article";
 }): Metadata {
-  const loc = getLocale(opts.locale)!;
+  const loc = getLocale(opts.locale) ?? getLocale("en")!;
   const canonical = absoluteUrl(`/${opts.locale}${opts.pathWithoutLocale}`);
   const index = opts.index ?? loc.indexable;
   const locales = indexableLocales();
@@ -61,8 +61,8 @@ export function pageMetadata(opts: {
   };
 }
 
-export function toolMetadata(tool: ToolDefinition, locale: Locale): Metadata {
-  const copy = tool.copy[locale];
+export function toolMetadata(tool: ToolDefinition, locale: string): Metadata {
+  const copy = tool.copy[contentLocale(locale)] ?? tool.copy.en;
   const loc = getLocale(locale)!;
   const index = loc.indexable && tool.status === "published" && loc.translationReviewed;
   const path = `/tools/${copy.slug}`;
@@ -104,8 +104,8 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
   };
 }
 
-export function softwareJsonLd(tool: ToolDefinition, locale: Locale) {
-  const copy = tool.copy[locale];
+export function softwareJsonLd(tool: ToolDefinition, locale: string) {
+  const copy = tool.copy[contentLocale(locale)] ?? tool.copy.en;
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",

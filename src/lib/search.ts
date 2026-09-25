@@ -1,5 +1,5 @@
-import type { Locale } from "@/data/locales";
 import { visibleTools, categories } from "@/lib/registry";
+import { copyForTool, copyForCategory } from "@/lib/copy";
 
 function normalize(text: string) {
   return text
@@ -41,7 +41,7 @@ function distance(a: string, b: string) {
   return dp[a.length][b.length];
 }
 
-export function searchRegistry(locale: Locale, query: string, category?: string) {
+export function searchRegistry(locale: string, query: string, category?: string) {
   const q = query.trim();
   const tools = visibleTools(locale).filter((tool) => !category || tool.category === category);
   if (!q) {
@@ -49,7 +49,7 @@ export function searchRegistry(locale: Locale, query: string, category?: string)
   }
   const toolHits = tools
     .map((tool) => {
-      const copy = tool.copy[locale];
+      const copy = copyForTool(tool, locale);
       const s = Math.max(
         score(copy.name, q),
         score(copy.title, q),
@@ -66,13 +66,16 @@ export function searchRegistry(locale: Locale, query: string, category?: string)
     .filter((cat) => !category)
     .map((cat) => ({
       category: cat,
-      score: Math.max(score(cat.copy[locale].name, q), score(cat.copy[locale].description, q)),
+      score: Math.max(
+        score(copyForCategory(cat, locale).name, q),
+        score(copyForCategory(cat, locale).description, q),
+      ),
       kind: "category" as const,
     }))
     .filter((hit) => hit.score > 0);
   return [...toolHits, ...catHits].sort((a, b) => b.score - a.score).slice(0, 30);
 }
 
-export function suggestRegistry(locale: Locale, query: string) {
+export function suggestRegistry(locale: string, query: string) {
   return searchRegistry(locale, query).slice(0, 8);
 }

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isLocale } from "@/data/locales";
+import { isRoutedLocale } from "@/data/locales";
 import { toolBySlug, categoryBySlug } from "@/lib/registry";
-import type { Locale } from "@/data/locales";
 import { toolRegistry } from "@/data/tools";
 
 export function middleware(request: NextRequest) {
@@ -27,11 +26,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/en", request.url));
   }
 
-  if (!isLocale(first)) {
+  if (!isRoutedLocale(first)) {
     return NextResponse.next();
   }
 
-  const locale = first as Locale;
+  const locale = first;
   requestHeaders.set("x-locale", locale);
   requestHeaders.set("x-pathname", pathname);
 

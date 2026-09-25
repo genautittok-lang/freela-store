@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { Locale } from "@/data/locales";
-import { INITIAL_LOCALES, localeRegistry } from "@/data/locales";
+import { ROUTED_LOCALES, contentLocale, getLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
@@ -19,8 +19,9 @@ export function CategoryIcon({ id, className }: { id: CategoryId; className?: st
   return <Icon className={className ?? "h-5 w-5 text-primary"} aria-hidden />;
 }
 
-export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: string }) {
+export function SiteHeader({ locale, pathname }: { locale: string; pathname: string }) {
   const ui = t(locale);
+  const cl = contentLocale(locale);
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
@@ -34,9 +35,9 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
             <Link
               key={cat.id}
               className="text-muted-foreground hover:text-foreground"
-              href={`/${locale}/tools/${cat.copy[locale].slug}`}
+              href={`/${locale}/tools/${cat.copy[cl].slug}`}
             >
-              {cat.copy[locale].name}
+              {cat.copy[cl].name}
             </Link>
           ))}
         </nav>
@@ -69,11 +70,11 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
                 <Link
                   key={cat.id}
                   className="flex items-center gap-2 rounded-lg px-2 py-2 hover:bg-muted"
-                  href={`/${locale}/tools/${cat.copy[locale].slug}`}
+                  href={`/${locale}/tools/${cat.copy[cl].slug}`}
                   onClick={() => setOpen(false)}
                 >
                   <CategoryIcon id={cat.id} />
-                  {cat.copy[locale].name}
+                  {cat.copy[cl].name}
                 </Link>
               ))}
             </nav>
@@ -84,7 +85,7 @@ export function SiteHeader({ locale, pathname }: { locale: Locale; pathname: str
   );
 }
 
-export const legalLinks = (locale: Locale) => {
+export const legalLinks = (locale: string) => {
   const ui = t(locale);
   return [
     { href: `/${locale}/about`, label: ui.about },
@@ -102,7 +103,7 @@ export const legalLinks = (locale: Locale) => {
   ];
 };
 
-export function SiteFooter({ locale }: { locale: Locale }) {
+export function SiteFooter({ locale }: { locale: string }) {
   const ui = t(locale);
   return (
     <footer className="mt-auto border-t bg-card">
@@ -121,13 +122,16 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         <div>
           <p className="text-sm font-medium">{ui.language}</p>
           <ul className="mt-2 flex flex-wrap gap-2 text-sm">
-            {INITIAL_LOCALES.map((code) => (
-              <li key={code}>
-                <Link className="text-muted-foreground hover:text-foreground" href={`/${code}`}>
-                  {localeRegistry[code].flag} {localeRegistry[code].nativeName}
-                </Link>
-              </li>
-            ))}
+            {ROUTED_LOCALES.map((code) => {
+              const rec = getLocale(code);
+              return (
+                <li key={code}>
+                  <Link className="text-muted-foreground hover:text-foreground" href={`/${code}`}>
+                    {rec?.flag} {rec?.nativeName}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

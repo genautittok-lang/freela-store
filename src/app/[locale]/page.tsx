@@ -1,9 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { isLocale, localeRegistry, type Locale } from "@/data/locales";
+import { isRoutedLocale, contentLocale, getLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
-import { featuredTools, newestTools, toolById, toolsInCategory, visibleTools } from "@/lib/registry";
+import {
+  copyForCategory,
+  copyForTool,
+  featuredTools,
+  newestTools,
+  toolById,
+  toolsInCategory,
+  visibleTools,
+} from "@/lib/registry";
 import { pageMetadata } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
@@ -24,7 +32,7 @@ const TASK_CHIPS = [
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isRoutedLocale(locale)) return {};
   const ui = t(locale);
   return pageMetadata({
     locale,
@@ -36,13 +44,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function LocaleHome({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  if (!isLocale(locale)) notFound();
+  if (!isRoutedLocale(locale)) notFound();
   const ui = t(locale);
-  const loc = localeRegistry[locale as Locale];
-  const featured = featuredTools(locale).slice(0, 8);
-  const newest = newestTools(locale).slice(0, 8);
-  const count = visibleTools(locale).length;
-  const chips = TASK_CHIPS.map((id) => toolById(id)).filter((tool) => tool?.copy[locale]);
+  const cl = contentLocale(locale);
+  const loc = getLocale(locale)!;
+  const featured = featuredTools(cl).slice(0, 8);
+  const newest = newestTools(cl).slice(0, 8);
+  const count = visibleTools(cl).length;
+  const chips = TASK_CHIPS.map((id) => toolById(id)).filter((tool) => tool && copyForTool(tool, cl));
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
       <PageTracker locale={locale} />
@@ -58,8 +67,8 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           <ul className="mt-2 flex flex-wrap gap-2">
             {chips.map((tool) => (
               <li key={tool!.id}>
-                <Link className="freela-chip" href={`/${locale}/tools/${tool!.copy[locale].slug}`}>
-                  {tool!.copy[locale].name}
+                <Link className="freela-chip" href={`/${locale}/tools/${copyForTool(tool!, locale).slug}`}>
+                  {copyForTool(tool!, locale).name}
                 </Link>
               </li>
             ))}
@@ -85,9 +94,9 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {categories.map((cat) => (
             <li key={cat.id}>
-              <Link href={`/${locale}/tools/${cat.copy[locale].slug}`} className="freela-card block p-3">
+              <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="freela-card block p-3">
                 <CategoryIcon id={cat.id} />
-                <p className="mt-2 text-sm font-medium">{cat.copy[locale].name}</p>
+                <p className="mt-2 text-sm font-medium">{copyForCategory(cat, locale).name}</p>
               </Link>
             </li>
           ))}
@@ -103,8 +112,8 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         <AdSlot position="home-mid" />
       </div>
       <section className="mt-10 max-w-xl">
-        <h2 className="text-lg font-semibold">How Freela works</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Search, open a tool, run it in your browser, download the result.</p>
+        <h2 className="text-lg font-semibold">{ui.walkthroughTitle}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{ui.walkthroughLead}</p>
         <video className="mt-3 w-full rounded-2xl border" controls muted playsInline preload="metadata" poster="/brand/hero.png">
           <source src="/brand/teaser.mp4" type="video/mp4" />
         </video>
@@ -117,15 +126,15 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
             const tools = toolsInCategory(locale, cat.id).slice(0, 4);
             return (
               <div key={cat.id} className="freela-card p-4">
-                <Link href={`/${locale}/tools/${cat.copy[locale].slug}`} className="flex items-center gap-2 font-medium">
+                <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="flex items-center gap-2 font-medium">
                   <CategoryIcon id={cat.id} />
-                  {cat.copy[locale].name}
+                  {copyForCategory(cat, locale).name}
                 </Link>
                 <ul className="mt-3 grid gap-1 text-sm">
                   {tools.map((tool) => (
                     <li key={tool.id}>
-                      <Link className="text-muted-foreground hover:text-foreground" href={`/${locale}/tools/${tool.copy[locale].slug}`}>
-                        {tool.copy[locale].name}
+                      <Link className="text-muted-foreground hover:text-foreground" href={`/${locale}/tools/${copyForTool(tool, locale).slug}`}>
+                        {copyForTool(tool, locale).name}
                       </Link>
                     </li>
                   ))}
@@ -136,7 +145,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         </div>
       </section>
       <p className="mt-8 text-sm text-muted-foreground">
-        {formatNumber(locale as Locale, count)} {ui.allTools.toLowerCase()}
+        {formatNumber(locale, count)} {ui.allTools.toLowerCase()}
       </p>
     </div>
   );
@@ -148,7 +157,7 @@ function ToolGrid({
   tools,
   cta,
 }: {
-  locale: Locale;
+  locale: string;
   title: string;
   tools: ReturnType<typeof featuredTools>;
   cta: string;
@@ -159,12 +168,13 @@ function ToolGrid({
       <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {tools.map((tool) => {
           const Icon = iconForTool(tool.id, tool.category);
+          const copy = copyForTool(tool, locale);
           return (
             <li key={tool.id}>
-              <Link href={`/${locale}/tools/${tool.copy[locale].slug}`} className="freela-card block h-full p-4">
+              <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card block h-full p-4">
                 <Icon className="h-5 w-5 text-primary" aria-hidden />
-                <p className="mt-2 font-medium">{tool.copy[locale].name}</p>
-                <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{tool.copy[locale].description}</p>
+                <p className="mt-2 font-medium">{copy.name}</p>
+                <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{copy.description}</p>
                 <span className="mt-3 inline-flex text-sm font-medium text-primary">{cta}</span>
               </Link>
             </li>
