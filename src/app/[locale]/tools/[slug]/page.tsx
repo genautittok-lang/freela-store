@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { createElement } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { isLocale, localeRegistry } from "@/data/locales";
@@ -82,7 +83,6 @@ async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Loc
   const cat = categories.find((c) => c.id === tool.category)!;
   const related = relatedToolsFor(tool, locale);
   const loc = localeRegistry[locale];
-  const Icon = iconForTool(tool.id, tool.category);
   const crumbs = [
     { name: ui.home, url: absoluteUrl(`/${locale}`) },
     { name: cat.copy[locale].name, url: absoluteUrl(`/${locale}/tools/${cat.copy[locale].slug}`) },
@@ -110,7 +110,10 @@ async function ToolPage({ locale, slug }: { locale: import("@/data/locales").Loc
         </ol>
       </nav>
       <div className="mt-4 flex items-start gap-3">
-        <Icon className="mt-1 h-8 w-8 shrink-0 text-primary" aria-hidden />
+        {createElement(iconForTool(tool.id, tool.category), {
+          className: "mt-1 h-8 w-8 shrink-0 text-primary",
+          "aria-hidden": true,
+        })}
         <div>
           <h1 id="tool-heading" className="text-3xl font-semibold tracking-tight">
             {copy.h1}
@@ -199,10 +202,10 @@ async function CategoryPage({ locale, slug }: { locale: import("@/data/locales")
         {tools.map((tool) => (
           <li key={tool.id}>
             <Link href={`/${locale}/tools/${tool.copy[locale].slug}`} className="freela-card block h-full p-4 hover:border-primary">
-              {(() => {
-                const ToolIcon = iconForTool(tool.id, tool.category);
-                return <ToolIcon className="h-5 w-5 text-primary" aria-hidden />;
-              })()}
+              {createElement(iconForTool(tool.id, tool.category), {
+                className: "h-5 w-5 text-primary",
+                "aria-hidden": true,
+              })}
               <p className="mt-2 font-medium">{tool.copy[locale].name}</p>
               <p className="mt-1 text-sm text-muted-foreground">{tool.copy[locale].description}</p>
               <span className="mt-3 inline-flex text-sm font-medium text-primary">{ui.openTool}</span>

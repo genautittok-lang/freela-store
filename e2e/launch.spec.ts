@@ -22,7 +22,7 @@ test("search finds and opens a tool", async ({ page }) => {
 test("text tool completes", async ({ page }) => {
   await page.goto(`${base}/en/tools/word-counter`);
   await page.locator("textarea").first().fill("one two three four");
-  await expect(page.getByText("Local only")).toBeVisible();
+  await expect(page.getByText("Local only", { exact: true }).first()).toBeVisible();
   await page.getByRole("button", { name: "Run" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible();
 });
@@ -61,11 +61,11 @@ test("pdf merge completes", async ({ page }) => {
   pdf.addPage();
   const bytes = await pdf.save();
   await page.goto(`${base}/en/tools/merge-pdf`);
-  await page.locator('input[type="file"]').setInputFiles({
-    name: "a.pdf",
-    mimeType: "application/pdf",
-    buffer: Buffer.from(bytes),
-  });
+  const picker = page.locator("#files-merge-pdf");
+  await picker.setInputFiles([
+    { name: "a.pdf", mimeType: "application/pdf", buffer: Buffer.from(bytes) },
+    { name: "b.pdf", mimeType: "application/pdf", buffer: Buffer.from(bytes) },
+  ]);
   await page.getByRole("button", { name: "Run" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible({ timeout: 20_000 });
 });
@@ -127,7 +127,7 @@ test("validation error is actionable", async ({ page }) => {
   await page.goto(`${base}/en/tools/json-formatter`);
   await page.locator("textarea").first().fill("{not-json");
   await page.getByRole("button", { name: "Run" }).click();
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator("#tool").getByRole("alert")).toBeVisible();
 });
 
 test("uk locale is noindex", async ({ page }) => {

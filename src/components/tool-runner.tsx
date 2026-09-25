@@ -556,6 +556,7 @@ function PdfTool({
       >
         {ui.dropFiles}
         <input
+          id={`files-${tool.id}`}
           type="file"
           className="mx-auto"
           multiple={action === "merge" || action === "images-to-pdf"}
@@ -586,10 +587,12 @@ function PdfTool({
         onClick={() =>
           wrap(async () => {
             const { PDFDocument, degrees } = await import("pdf-lib");
-            if (!files.length) throw new Error("Choose a file first.");
+            const native = document.getElementById(`files-${tool.id}`) as HTMLInputElement | null;
+            const selected = files.length ? files : [...(native?.files ?? [])];
+            if (!selected.length) throw new Error("Choose a file first.");
             if (cancelled.current) return;
             if (action === "metadata") {
-              const pdf = await load(files[0]);
+              const pdf = await load(selected[0]);
               setMeta(
                 JSON.stringify(
                   {
@@ -609,7 +612,7 @@ function PdfTool({
             }
             if (action === "merge") {
               const out = await PDFDocument.create();
-              for (const file of files) {
+              for (const file of selected) {
                 const src = await load(file);
                 const copied = await out.copyPages(src, src.getPageIndices());
                 copied.forEach((p) => out.addPage(p));
@@ -620,7 +623,7 @@ function PdfTool({
             }
             if (action === "images-to-pdf") {
               const out = await PDFDocument.create();
-              for (const file of files) {
+              for (const file of selected) {
                 const bytes = new Uint8Array(await file.arrayBuffer());
                 const img = file.type.includes("png")
                   ? await out.embedPng(bytes)
@@ -633,12 +636,12 @@ function PdfTool({
               return;
             }
             if (action === "compress") {
-              const src = await load(files[0]);
+              const src = await load(selected[0]);
               downloadBlob(pdfBlob(await src.save({ useObjectStreams: true })), "compressed.pdf");
               track("file_download", { toolId: tool.id, locale });
               return;
             }
-            const src = await load(files[0]);
+            const src = await load(selected[0]);
             const out = await PDFDocument.create();
             if (action === "rotate") {
               src.getPages().forEach((page) => page.setRotation(degrees((page.getRotation().angle + angle) % 360)));
@@ -743,6 +746,7 @@ function ImageTool({
         >
           {ui.dropFiles}
           <input
+            id={`files-${tool.id}`}
             type="file"
             accept="image/*"
             className="mx-auto"
@@ -798,15 +802,17 @@ function ImageTool({
               track("file_download", { toolId: tool.id, locale });
               return;
             }
-            if (!file) throw new Error("Choose an image first.");
-            if (file.size > tool.maxFileSize) throw new Error("File is too large.");
+            const native = document.getElementById(`files-${tool.id}`) as HTMLInputElement | null;
+            const chosen = file || native?.files?.[0] || null;
+            if (!chosen) throw new Error("Choose an image first.");
+            if (chosen.size > tool.maxFileSize) throw new Error("File is too large.");
             if (action === "to-base64") {
-              const data = await file.arrayBuffer();
+              const data = await chosen.arrayBuffer();
               const b64 = btoa(String.fromCharCode(...new Uint8Array(data)));
-              setText(`data:${file.type};base64,${b64}`);
+              setText(`data:${chosen.type};base64,${b64}`);
               return;
             }
-            const img = await loadImage(file);
+            const img = await loadImage(chosen);
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
             if (!ctx) throw new Error("Canvas is not available.");
@@ -862,7 +868,7 @@ function ImageTool({
               ctx.drawImage(img, 0, 0);
             }
             const type =
-              action === "convert" && quality < 1 ? "image/jpeg" : file.type === "image/png" ? "image/png" : "image/jpeg";
+              action === "convert" && quality < 1 ? "image/jpeg" : chosen.type === "image/png" ? "image/png" : "image/jpeg";
             await new Promise<void>((resolve, reject) => {
               canvas.toBlob(
                 (blob) => {
