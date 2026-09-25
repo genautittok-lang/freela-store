@@ -1,5 +1,6 @@
 import type { Locale } from "@/data/locales";
 import { extras, type ExtraMessages } from "@/i18n/extras";
+import { uxChrome, type UxChrome } from "@/i18n/ux";
 import { isLocale } from "@/data/locales";
 
 export type Messages = {
@@ -627,9 +628,9 @@ export const messages: Record<Locale, Messages> = {
   },
 };
 
-export type UiMessages = Messages & ExtraMessages;
+export type UiMessages = Messages & ExtraMessages & UxChrome;
 
 export function t(locale: string): UiMessages {
-  if (isLocale(locale)) return { ...messages[locale], ...extras[locale] };
-  return { ...messages.en, ...extras.en };
+  if (isLocale(locale)) return { ...messages[locale], ...extras[locale], ...uxChrome[locale] };
+  return { ...messages.en, ...extras.en, ...uxChrome.en };
 }

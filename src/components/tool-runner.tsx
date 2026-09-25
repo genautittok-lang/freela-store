@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { track } from "@/components/analytics-provider";
-import { FormatBadges } from "@/components/format-badges";
+import { FormatBadges, FormatMark, FormatPath } from "@/components/format-badges";
 import { copyForTool } from "@/lib/copy";
 import {
   cleanWhitespace,
@@ -633,6 +633,17 @@ function PdfTool({
 
   return (
     <div className="grid gap-3">
+      <FormatPath
+        from={action === "images-to-pdf" ? ["JPG", "PNG", "WebP"] : ["PDF"]}
+        to={["PDF"]}
+      />
+      <p className="text-sm text-muted-foreground">
+        {action === "merge"
+          ? `${ui.fromLabel}: PDF → ${ui.toLabel}: PDF`
+          : action === "images-to-pdf"
+            ? `${ui.fromLabel}: JPG / PNG / WebP → ${ui.toLabel}: PDF`
+            : `${ui.fromLabel}: PDF → ${ui.toLabel}: PDF`}
+      </p>
       <label
         className="grid cursor-pointer gap-1 rounded-xl border border-dashed border-primary/40 bg-accent/40 px-4 py-8 text-center text-sm"
         onDragOver={(e) => e.preventDefault()}
@@ -811,6 +822,7 @@ function ImageTool({
   const [crop, setCrop] = useState({ x: 0, y: 0, w: 200, h: 200 });
   const [text, setText] = useState("");
   const [preview, setPreview] = useState("");
+  const [outMime, setOutMime] = useState<"image/jpeg" | "image/png" | "image/webp">("image/webp");
 
   function loadImage(src: File) {
     return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -863,6 +875,38 @@ function ImageTool({
       ) : (
         <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} />
       )}
+      {action === "convert" ? (
+        <fieldset className="rounded-xl border border-border p-3">
+          <legend className="px-1 text-sm font-medium">{ui.chooseOutput}</legend>
+          <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+            <span>{ui.fromLabel}</span>
+            <FormatPath from={["JPG", "PNG", "WebP"]} to={[outMime === "image/jpeg" ? "JPG" : outMime === "image/png" ? "PNG" : "WebP"]} />
+          </div>
+          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={ui.chooseOutput}>
+            {(
+              [
+                ["image/jpeg", "JPG"],
+                ["image/png", "PNG"],
+                ["image/webp", "WebP"],
+              ] as const
+            ).map(([mime, label]) => (
+              <button
+                key={mime}
+                type="button"
+                role="radio"
+                aria-checked={outMime === mime}
+                className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium ${
+                  outMime === mime ? "border-primary bg-accent" : "border-border"
+                }`}
+                onClick={() => setOutMime(mime)}
+              >
+                <FormatMark format={label} size="sm" />
+                {label}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+      ) : null}
       {action === "compress" || action === "convert" ? (
         <Field label={rl(locale, "quality")}>
           <Input type="number" min={0.4} max={0.95} step={0.05} value={quality} onChange={(e) => setQuality(Number(e.target.value))} />
@@ -976,7 +1020,7 @@ function ImageTool({
             const type =
               action === "convert" && quality < 1 ? "image/jpeg" : chosen.type === "image/png" ? "image/png" : "image/jpeg";
             await new Promise<void>((resolve, reject) => {
-              const mime = action === "convert" ? "image/webp" : type;
+              const mime = action === "convert" ? outMime : type;
               const finish = (blob: Blob | null, used: string) => {
                 if (!blob) return reject(new Error("Could not encode image."));
                 setPreview(URL.createObjectURL(blob));
@@ -996,7 +1040,9 @@ function ImageTool({
           })
         }
       >
-        {cta}
+        {action === "convert" && outMime !== "image/webp"
+          ? `${ui.convert} → ${outMime === "image/jpeg" ? "JPG" : "PNG"}`
+          : cta}
       </Button>
       {preview ? (
         // eslint-disable-next-line @next/next/no-img-element

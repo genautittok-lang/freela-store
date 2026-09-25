@@ -16,6 +16,7 @@ import { pageMetadata } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
 import { AdSlot, CategoryIcon } from "@/components/site-chrome";
+import { FormatPath } from "@/components/format-badges";
 import { PageTracker } from "@/components/page-tracker";
 import { formatNumber } from "@/lib/format";
 import { iconForTool } from "@/lib/tool-icons";
@@ -85,6 +86,32 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           />
         </div>
       </section>
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold">{ui.convert}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{ui.howItWorksLead}</p>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+          {[
+            { id: "images-to-pdf", from: ["JPG", "PNG", "WebP"], to: ["PDF"] },
+            { id: "convert-image", from: ["JPG", "PNG"], to: ["WebP"] },
+            { id: "merge-pdf", from: ["PDF"], to: ["PDF"] },
+          ].map((row) => {
+            const tool = toolById(row.id);
+            if (!tool) return null;
+            const copy = copyForTool(tool, locale);
+            return (
+              <li key={row.id}>
+                <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card block h-full p-4">
+                  <p className="font-medium">{copy.name}</p>
+                  <div className="mt-3">
+                    <FormatPath from={row.from} to={row.to} />
+                  </div>
+                  <span className="mt-3 inline-flex text-sm font-medium text-primary">{ui.openTool}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
       {!loc.indexable ? (
         <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900">{ui.noIndexNote}</p>
       ) : null}
@@ -109,7 +136,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         </div>
       </section>
       <div className="mt-10">
-        <AdSlot position="home-mid" />
+        <AdSlot position="home-mid" locale={locale} />
       </div>
       <section className="mt-10 max-w-xl">
         <h2 className="text-lg font-semibold">{ui.walkthroughTitle}</h2>

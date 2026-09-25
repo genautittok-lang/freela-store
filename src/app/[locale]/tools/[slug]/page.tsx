@@ -13,9 +13,11 @@ import {
   toolsInCategory,
   visibleTools,
 } from "@/lib/registry";
-import { breadcrumbJsonLd, faqJsonLd, pageMetadata, softwareJsonLd, toolMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, howToJsonLd, pageMetadata, softwareJsonLd, toolMetadata } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { AdSlot, CategoryIcon } from "@/components/site-chrome";
+import { ToolBriefing } from "@/components/tool-briefing";
+import { FormatBadges } from "@/components/format-badges";
 import { PageTracker } from "@/components/page-tracker";
 import { absoluteUrl } from "@/lib/site";
 import { formatBytes } from "@/lib/format";
@@ -100,6 +102,12 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       {copy.faq.length ? (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(copy.faq)) }} />
       ) : null}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(howToJsonLd(copy.h1, copy.howTo, absoluteUrl(`/${locale}/tools/${copy.slug}`))),
+        }}
+      />
       <nav className="text-sm text-muted-foreground" aria-label="Breadcrumb">
         <ol className="flex flex-wrap gap-1">
           <li>
@@ -129,6 +137,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <p className="mt-3 inline-flex rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
         {privacyLabel(tool.processingMode, locale)}
       </p>
+      <ToolBriefing tool={tool} locale={locale} />
       <div className="mt-4">
         <ToolRunner tool={tool} locale={locale} />
       </div>
@@ -136,6 +145,9 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
         {ui.formats}: {copy.formats}
         {tool.maxFileSize > 0 ? ` · ${ui.sizeLimit} ${formatBytes(locale, tool.maxFileSize)}` : null}
       </p>
+      <div className="mt-2">
+        <FormatBadges formats={tool.supportedFormats} />
+      </div>
       <section className="mt-8">
         <h2 className="font-semibold">{ui.howTo}</h2>
         <ol className="mt-2 list-decimal space-y-1 ps-5 text-sm">
@@ -166,7 +178,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
         </section>
       ) : null}
       <div className="mt-8">
-        <AdSlot position="after-result" />
+        <AdSlot position="after-howto" locale={locale} />
       </div>
       <section className="mt-8">
         <h2 className="font-semibold">{ui.related}</h2>
@@ -180,6 +192,9 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
           ))}
         </ul>
       </section>
+      <div className="mt-8">
+        <AdSlot position="after-related" locale={locale} />
+      </div>
     </article>
   );
 }

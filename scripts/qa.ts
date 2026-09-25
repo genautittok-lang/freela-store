@@ -3,6 +3,7 @@ import { validateCatalog } from "../src/data/schema";
 import { INITIAL_LOCALES, localeRegistry, PREPARED_LOCALES, ROUTED_LOCALES, getLocale } from "@/data/locales";
 import { messages } from "../src/i18n/messages";
 import { extras } from "../src/i18n/extras";
+import { uxChrome } from "../src/i18n/ux";
 import { sitemapEntries, languageAlternates, indexableLocales } from "../src/lib/seo";
 import { LEGAL_SLUGS } from "../src/data/legal-slugs";
 import { categories } from "../src/data/categories";
@@ -29,6 +30,9 @@ for (const locale of INITIAL_LOCALES) {
   }
   for (const key of requiredExtra) {
     if (!(key in extras[locale])) fail(`Missing extra key ${key} in ${locale}`);
+  }
+  for (const key of Object.keys(uxChrome.en)) {
+    if (!(key in uxChrome[locale])) fail(`Missing UX chrome key ${key} in ${locale}`);
   }
   for (const cat of categories) {
     if (!cat.copy[locale]) fail(`Category ${cat.id} missing ${locale}`);

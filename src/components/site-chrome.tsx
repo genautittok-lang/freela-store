@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { Locale } from "@/data/locales";
 import { ROUTED_LOCALES, contentLocale, getLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
@@ -105,29 +104,81 @@ export const legalLinks = (locale: string) => {
 
 export function SiteFooter({ locale }: { locale: string }) {
   const ui = t(locale);
+  const cl = contentLocale(locale);
+  const product = legalLinks(locale).filter((l) => /\/(about|contact)$/.test(l.href));
+  const legal = legalLinks(locale).filter((l) => !/\/(about|contact)$/.test(l.href));
+  const converts = [
+    { id: "merge-pdf", label: "PDF → PDF" },
+    { id: "images-to-pdf", label: "JPG / PNG → PDF" },
+    { id: "convert-image", label: "JPG / PNG → WebP" },
+    { id: "compress-image", label: "JPG / PNG" },
+  ];
   return (
-    <footer className="mt-auto border-t bg-card">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-3">
-        <div>
-          <Logo locale={locale} />
-          <p className="mt-3 max-w-xs text-sm text-muted-foreground">{ui.tagline}</p>
+    <footer className="mt-auto border-t border-border bg-card">
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Logo locale={locale} />
+            <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">{ui.tagline}</p>
+            <p className="mt-3 text-xs font-medium text-emerald-800">{ui.processedLocally}</p>
+          </div>
+          <nav aria-label={ui.tools}>
+            <p className="text-sm font-semibold">{ui.tools}</p>
+            <ul className="mt-3 grid gap-2 text-sm">
+              {categories.map((cat) => (
+                <li key={cat.id}>
+                  <Link className="text-muted-foreground hover:text-foreground" href={`/${locale}/tools/${cat.copy[cl].slug}`}>
+                    {cat.copy[cl].name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label={ui.convert}>
+            <p className="text-sm font-semibold">{ui.convert}</p>
+            <ul className="mt-3 grid gap-2 text-sm">
+              {converts.map((row) => (
+                <li key={row.id}>
+                  <Link className="text-muted-foreground hover:text-foreground" href={`/${locale}/tools/${row.id}`}>
+                    {row.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-sm font-semibold">{ui.company}</p>
+            <ul className="mt-3 grid gap-2 text-sm">
+              {product.map((link) => (
+                <li key={link.href}>
+                  <Link className="text-muted-foreground hover:text-foreground" href={link.href}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label={ui.legal}>
+            <p className="text-sm font-semibold">{ui.legal}</p>
+            <ul className="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-1">
+              {legal.map((link) => (
+                <li key={link.href}>
+                  <Link className="text-muted-foreground hover:text-foreground" href={link.href}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
-        <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="Legal">
-          {legalLinks(locale).map((link) => (
-            <Link key={link.href} href={link.href} className="text-muted-foreground hover:text-foreground">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <div>
-          <p className="text-sm font-medium">{ui.language}</p>
-          <ul className="mt-2 flex flex-wrap gap-2 text-sm">
+        <div className="mt-10 border-t border-border pt-6">
+          <p className="text-sm font-semibold">{ui.language}</p>
+          <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {ROUTED_LOCALES.map((code) => {
               const rec = getLocale(code);
               return (
                 <li key={code}>
-                  <Link className="text-muted-foreground hover:text-foreground" href={`/${code}`}>
-                    {rec?.flag} {rec?.nativeName}
+                  <Link className="text-muted-foreground hover:text-foreground" href={`/${code}`} hrefLang={code}>
+                    {rec?.nativeName}
+                    <span className="ms-1 text-xs uppercase text-muted-foreground/80">{code}</span>
                   </Link>
                 </li>
               );
@@ -135,20 +186,26 @@ export function SiteFooter({ locale }: { locale: string }) {
           </ul>
         </div>
       </div>
-      <p className="mx-auto max-w-6xl px-4 pb-8 text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Freela · {ui.adDisclosure}
-      </p>
+      <div className="border-t border-border bg-muted/40">
+        <p className="mx-auto max-w-6xl px-4 py-4 text-xs leading-5 text-muted-foreground">
+          © {new Date().getFullYear()} Freela · {ui.adDisclosure}
+        </p>
+      </div>
     </footer>
   );
 }
 
-export function AdSlot({ position }: { position: string }) {
+export function AdSlot({ position, locale = "en" }: { position: string; locale?: string }) {
+  const ui = t(locale);
   return (
     <aside
-      className="rounded-xl border border-dashed border-border bg-muted/50 px-4 py-5 text-center text-xs text-muted-foreground"
-      aria-label="Advertisement"
+      className="rounded-xl border border-dashed border-border bg-muted/40 px-4 py-4 text-center"
+      aria-label={ui.advertised}
     >
-      Ad slot ({position}) — labeled inventory, never mixed with tool actions.
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{ui.advertised}</p>
+      <p className="mt-1 text-xs text-muted-foreground">
+        {ui.advertisedHint} ({position})
+      </p>
     </aside>
   );
 }

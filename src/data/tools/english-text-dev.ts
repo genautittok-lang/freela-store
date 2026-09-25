@@ -56,9 +56,9 @@ export const textDevSeoTools: EnTool[] = [
     runtime: { kind: "text-stats", action: "words" },
     copyEn: {
       name: "Word counter",
-      title: "Count words and sentences in text",
+      title: "Word counter — count words in your browser",
       description:
-        "Get a live word, sentence and paragraph count as you type. Counting uses locale-aware segmentation where the browser supports it.",
+        "Free online word counter: live word, sentence and character counts as you type. Text stays in your browser.",
       h1: "Word counter",
       intro:
         "Paste a draft and see words, characters, sentences and reading time. Nothing is stored after you leave the page.",
@@ -443,9 +443,9 @@ export const textDevSeoTools: EnTool[] = [
     runtime: { kind: "json-format", action: "format" },
     copyEn: {
       name: "JSON formatter",
-      title: "Format and minify JSON in the browser",
+      title: "JSON formatter — pretty-print JSON online",
       description:
-        "Pretty-print or compact JSON with a syntax check. Invalid documents show the parser message, not a stack trace.",
+        "Format and minify JSON in your browser. Invalid JSON shows a parser message. Nothing is uploaded.",
       h1: "JSON formatter",
       intro:
         "Paste JSON from an API. Choose 2-space formatting or a minified line. Parsing uses JSON.parse in your browser.",

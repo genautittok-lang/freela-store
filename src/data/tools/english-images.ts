@@ -59,10 +59,10 @@ export const moreEnglishTools: EnTool[] = [
     runtime: { kind: "image", action: "compress" },
     copyEn: {
       name: "Compress image",
-      title: "Compress JPG, PNG and WebP images",
+      title: "Compress JPG, PNG and WebP online",
       description:
         "Shrink image files with a quality slider. Encoding happens on a canvas in your browser.",
-      h1: "Compress an image",
+      h1: "Compress JPG, PNG and WebP",
       intro:
         "Choose a quality between 0.4 and 0.95, preview the new size, then download. No cloud optimizer is involved.",
       howTo: [
@@ -191,10 +191,10 @@ export const moreEnglishTools: EnTool[] = [
     runtime: { kind: "image", action: "convert" },
     copyEn: {
       name: "Convert image",
-      title: "Convert JPG, PNG and WebP formats",
+      title: "Convert image to JPG, PNG or WebP",
       description:
-        "Switch between JPEG, PNG and WebP in the tab you already have open. Transparency becomes a chosen matte on JPEG.",
-      h1: "Convert image format",
+        "Convert JPG, PNG and WebP images in your browser. Pick the output format — files stay on your device.",
+      h1: "Convert image to JPG, PNG or WebP",
       intro:
         "Pick a target type and optional quality. PNG keeps sharpness for UI. JPEG is better for photographs. WebP is a smaller web default.",
       howTo: [

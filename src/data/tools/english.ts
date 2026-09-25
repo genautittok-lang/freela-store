@@ -58,9 +58,9 @@ export const englishTools: EnTool[] = [
     runtime: { kind: "pdf", action: "merge" },
     copyEn: {
       name: "Merge PDF",
-      title: "Merge PDF files in your browser",
+      title: "Merge PDF files online in your browser",
       description:
-        "Combine several PDF documents into one file on your device. Nothing is uploaded.",
+        "Combine multiple PDF files into one document on your device. Free merge PDF tool — nothing is uploaded.",
       h1: "Merge PDF files",
       intro:
         "Drop two or more PDFs, reorder them, then download a single document. Pages keep their original size.",
@@ -102,9 +102,9 @@ export const englishTools: EnTool[] = [
     runtime: { kind: "pdf", action: "split" },
     copyEn: {
       name: "Split PDF",
-      title: "Split a PDF into separate pages",
+      title: "Split PDF pages online — free in your browser",
       description:
-        "Cut a PDF into individual page files in your browser. Choose a range or export every page.",
+        "Split a PDF into separate page files or a page range. Runs locally; files stay on your device.",
       h1: "Split PDF pages",
       intro:
         "Upload one PDF and download either each page as its own file or a consecutive range. Processing stays on-device.",
@@ -190,9 +190,9 @@ export const englishTools: EnTool[] = [
     runtime: { kind: "pdf", action: "images-to-pdf" },
     copyEn: {
       name: "Images to PDF",
-      title: "Convert images to a PDF file",
+      title: "Convert JPG, PNG or WebP images to PDF",
       description:
-        "Turn JPG, PNG or WebP photos into a paginated PDF. Images never leave this browser tab.",
+        "Turn JPG, PNG or WebP photos into a paginated PDF in your browser. Images never leave this tab.",
       h1: "Convert images to PDF",
       intro:
         "Each image becomes a page sized to its pixel dimensions. Use this for receipts, sketches or photo packets.",

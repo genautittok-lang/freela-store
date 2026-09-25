@@ -82,7 +82,7 @@ export const addendumTools: EnTool[] = [
     runtime: { kind: "pdf", action: "compress" },
     copyEn: textCopy(
       "Compress PDF",
-      "Compress a PDF in your browser",
+      "Compress PDF files online in your browser",
       "Rewrite a PDF with object streams to often shrink size. No upload. Heavily encoded scans may not get smaller.",
       "Compress PDF",
       "Load a PDF and download a rewritten copy. This is lossless structure compression, not a JPEG recompressor.",

@@ -52,11 +52,13 @@ export function pageMetadata(opts: {
       siteName: "Freela",
       locale: loc.ogLocale,
       type: opts.ogType ?? "website",
+      images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: "Freela" }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: opts.title,
       description: opts.description,
+      images: ["/brand/og.png"],
     },
   };
 }
@@ -82,11 +84,13 @@ export function toolMetadata(tool: ToolDefinition, locale: string): Metadata {
       siteName: "Freela",
       locale: loc.ogLocale,
       type: "website",
+      images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: copy.name }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: copy.title,
       description: copy.description,
+      images: ["/brand/og.png"],
     },
   };
 }
@@ -116,6 +120,22 @@ export function softwareJsonLd(tool: ToolDefinition, locale: string) {
     url: absoluteUrl(`/${locale}/tools/${copy.slug}`),
     description: copy.description,
     inLanguage: locale,
+    featureList: copy.howTo,
+    isAccessibleForFree: true,
+  };
+}
+
+export function howToJsonLd(name: string, steps: string[], url: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    url,
+    step: steps.map((text, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      text,
+    })),
   };
 }
 
