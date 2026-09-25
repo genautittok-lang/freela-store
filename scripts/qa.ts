@@ -11,6 +11,7 @@ import { categories } from "../src/data/categories";
 import { preparedUi, assertPreparedUi } from "../src/i18n/prepared-ui";
 import { assertToolUx, ACTION_LABEL_EN } from "../src/lib/tool-ux";
 import { ACTION_LABELS } from "../src/lib/action-labels";
+import { seoOverlay } from "../src/data/tools/seo-overlay";
 
 const errors: string[] = [];
 function fail(msg: string) {
@@ -54,6 +55,10 @@ for (const tool of published) {
     if (!ACTION_LABELS[locale][tool.id]) fail(`${tool.id} missing CTA for ${locale}`);
   }
   if (!ACTION_LABEL_EN[tool.id]) fail(`${tool.id} missing EN CTA`);
+  if (!seoOverlay[tool.id]?.en) fail(`${tool.id} missing SEO overlay`);
+  if (tool.processingMode !== "LOCAL_ONLY" && tool.status === "published") {
+    fail(`${tool.id} published with non-local processing`);
+  }
 }
 
 const slugs = new Set<string>();

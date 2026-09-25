@@ -2,11 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Locale } from "@/data/locales";
 import { t } from "@/i18n/messages";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { track } from "@/components/analytics-provider";
+
+function queryFingerprint(query: string) {
+  const slug = query
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 40);
+  return slug ? `q.${slug}` : "q.empty";
+}
 
 type Hit = { kind: string; id: string; label: string; href: string; description?: string; category?: string };
 
@@ -34,7 +44,17 @@ export function SearchBox({ locale, initial = "", large = false }: { locale: str
       className="relative w-full"
       onSubmit={(e) => {
         e.preventDefault();
-        track("search_submit", { locale });
+        const hitsNow = hits.length;
+        const fp = queryFingerprint(q);
+        track("search_submit", {
+          locale,
+          result: hitsNow > 0 || q.trim().length < 2 ? "ok" : "error",
+          source: hitsNow ? `hits.${Math.min(hitsNow, 99)}` : "hits.0",
+          path: `/${locale}/search`,
+        });
+        if (q.trim().length >= 2 && hitsNow === 0) {
+          track("zero_result_search", { locale, result: "error", source: fp, path: `/${locale}/search` });
+        }
         router.push(`/${locale}/search?q=${encodeURIComponent(q)}`);
       }}
       role="search"

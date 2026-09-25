@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-25T19:46:53.884Z",
-  "published": 105,
-  "workflowPass": 96,
+  "generatedAt": "2026-09-25T23:18:46.905Z",
+  "published": 113,
+  "workflowPass": 103,
   "locales": [
     {
       "code": "en",
@@ -3979,6 +3979,301 @@
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
       "categoryName": "Converters"
+    },
+    {
+      "id": "text-to-pdf",
+      "slug": "text-to-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/text-to-pdf",
+      "purpose": "Text to PDF. Convert text to PDF on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "text",
+      "supportedFormats": [
+        "txt",
+        "pdf"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "pasted text, A4 Helvetica"
+      ],
+      "primaryCta": "Create PDF",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Turn meeting notes into a one-file PDF.",
+      "relatedTools": [
+        "markdown-to-pdf",
+        "images-to-pdf",
+        "word-counter"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "markdown-to-pdf",
+      "slug": "markdown-to-pdf",
+      "category": "pdf-documents",
+      "url": "/en/tools/markdown-to-pdf",
+      "purpose": "Markdown to PDF. Convert Markdown to PDF on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "text",
+      "supportedFormats": [
+        "md",
+        "pdf"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "markdown stripped to text PDF"
+      ],
+      "primaryCta": "Create PDF",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Archive a README as a PDF.",
+      "relatedTools": [
+        "text-to-pdf",
+        "markdown-html"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "extract-pdf-text",
+      "slug": "extract-pdf-text",
+      "category": "pdf-documents",
+      "url": "/en/tools/extract-pdf-text",
+      "purpose": "Extract PDF text. Convert PDF to text on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [
+        "PDF text layer only, no OCR"
+      ],
+      "primaryCta": "Extract text",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Copy quotes from a contract PDF.",
+      "relatedTools": [
+        "extract-pdf-pages",
+        "pdf-metadata",
+        "text-to-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Image encoding uses the browser canvas; covered by Playwright.",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "BLOCKED",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "delete-pdf-pages",
+      "slug": "delete-pdf-pages",
+      "category": "pdf-documents",
+      "url": "/en/tools/delete-pdf-pages",
+      "purpose": "Delete PDF pages (PDF). Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [
+        "pages: 1 or 2-4"
+      ],
+      "primaryCta": "Delete pages",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Drop a cover sheet before sending a draft.",
+      "relatedTools": [
+        "extract-pdf-pages",
+        "split-pdf",
+        "reorder-pdf"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
+    },
+    {
+      "id": "rotate-image",
+      "slug": "rotate-image",
+      "category": "images",
+      "url": "/en/tools/rotate-image",
+      "purpose": "Rotate image. Convert JPG / PNG / WebP to rotated image on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 12582912,
+      "options": [
+        "angle: 90 (default), 180, 270"
+      ],
+      "primaryCta": "Rotate image",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Fix a sideways phone photo.",
+      "relatedTools": [
+        "flip-image",
+        "resize-image",
+        "crop-image"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "flip-image",
+      "slug": "flip-image",
+      "category": "images",
+      "url": "/en/tools/flip-image",
+      "purpose": "Flip image. Convert JPG / PNG / WebP to flipped image on this landing page. Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "file",
+      "supportedFormats": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxFileSize": 12582912,
+      "options": [
+        "horizontal | vertical"
+      ],
+      "primaryCta": "Flip image",
+      "output": "file",
+      "postAction": "download",
+      "preview": true,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Mirror a product shot.",
+      "relatedTools": [
+        "rotate-image",
+        "crop-image",
+        "compress-image"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "Playwright image family",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Images"
+    },
+    {
+      "id": "utm-builder",
+      "slug": "utm-builder",
+      "category": "seo",
+      "url": "/en/tools/utm-builder",
+      "purpose": "UTM URL builder (URL + UTM). Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "structured",
+      "supportedFormats": [
+        "url"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "url, source, medium, campaign"
+      ],
+      "primaryCta": "Build UTM URL",
+      "output": "text",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Tag a newsletter link with utm_medium=email.",
+      "relatedTools": [
+        "url-parser",
+        "query-parser",
+        "canonical-helper"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "SEO"
+    },
+    {
+      "id": "random-number",
+      "slug": "random-number",
+      "category": "generators",
+      "url": "/en/tools/random-number",
+      "purpose": "Random number generator (integers). Free. Files and text stay on your device — Freela does not upload them.",
+      "userInput": "number",
+      "supportedFormats": [
+        "text"
+      ],
+      "maxFileSize": 0,
+      "options": [
+        "min, max, count"
+      ],
+      "primaryCta": "Generate numbers",
+      "output": "number",
+      "postAction": "copy",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Pick a number between 1 and 100.",
+      "relatedTools": [
+        "random-string",
+        "password-generator",
+        "uuid-generator"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "Generators"
     }
   ]
 }

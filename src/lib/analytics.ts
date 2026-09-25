@@ -64,6 +64,7 @@ export function analyticsSummary(range: string) {
     errors: 0,
     downloads: 0,
     searches: 0,
+    zeroResults: 0,
     uniqueSessions: 0,
     topTools: [] as { id: string; opens: number; starts: number; completions: number; errors: number }[],
     bySuccess: [] as { id: string; opens: number; starts: number; completions: number; errors: number; rate: number }[],
@@ -72,6 +73,7 @@ export function analyticsSummary(range: string) {
     byDay: [] as { day: string; n: number }[],
     sources: [] as { source: string; n: number }[],
     errorTools: [] as { id: string; n: number }[],
+    searchSources: [] as { source: string; n: number }[],
     storage: "none" as "sqlite" | "none",
   };
   const db = tryGetDb();
@@ -142,6 +144,13 @@ export function analyticsSummary(range: string) {
        GROUP BY tool_id ORDER BY n DESC LIMIT 10`,
     )
     .all(since) as { id: string; n: number }[];
+  const searchSources = db
+    .prepare(
+      `SELECT source, COUNT(*) as n FROM events
+       WHERE created_at >= ? AND name IN ('search_submit','zero_result_search') AND source IS NOT NULL AND source != ''
+       GROUP BY source ORDER BY n DESC LIMIT 15`,
+    )
+    .all(since) as { source: string; n: number }[];
   return {
     visits: count("page_view"),
     opens: count("tool_open"),
@@ -150,6 +159,7 @@ export function analyticsSummary(range: string) {
     errors: count("tool_error"),
     downloads: count("file_download"),
     searches: count("search_submit"),
+    zeroResults: count("zero_result_search"),
     uniqueSessions: unique,
     topTools,
     bySuccess,
@@ -158,6 +168,7 @@ export function analyticsSummary(range: string) {
     byDay,
     sources,
     errorTools: errors,
+    searchSources,
     storage: "sqlite" as const,
   };
   } catch {

@@ -3,15 +3,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { isRoutedLocale, contentLocale, getLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
-import {
-  copyForCategory,
-  copyForTool,
-  featuredTools,
-  newestTools,
-  toolById,
-  toolsInCategory,
-  visibleTools,
-} from "@/lib/registry";
+import { newestTools, toolById, visibleTools } from "@/lib/registry";
+import { rankedInCategory, rankedTools } from "@/lib/popularity";
+import { copyForCategory, copyForTool } from "@/lib/registry";
 import { pageMetadata, websiteJsonLd } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
@@ -20,19 +14,6 @@ import { FormatPath } from "@/components/format-badges";
 import { PageTracker } from "@/components/page-tracker";
 import { formatNumber } from "@/lib/format";
 import { iconForTool } from "@/lib/tool-icons";
-
-const TASK_CHIPS = [
-  "universal-converter",
-  "pdf-to-image",
-  "tip-calculator",
-  "merge-pdf",
-  "compress-pdf",
-  "resize-image",
-  "json-formatter",
-  "qr-generator",
-  "word-counter",
-  "convert-image",
-];
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -52,10 +33,10 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
   const ui = t(locale);
   const cl = contentLocale(locale);
   const loc = getLocale(locale)!;
-  const featured = featuredTools(cl).slice(0, 8);
+  const featured = rankedTools(cl, { limit: 8, maxPerCategory: 3 });
   const newest = newestTools(cl).slice(0, 8);
   const count = visibleTools(cl).length;
-  const chips = TASK_CHIPS.map((id) => toolById(id)).filter((tool) => tool && copyForTool(tool, cl));
+  const chips = rankedTools(cl, { limit: 10, maxPerCategory: 2 });
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
       <PageTracker locale={locale} />
@@ -73,9 +54,9 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           <p className="mt-5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{ui.popularTasks}</p>
           <ul className="mt-2 flex flex-wrap gap-2">
             {chips.map((tool) => (
-              <li key={tool!.id}>
-                <Link className="freela-chip" href={`/${locale}/tools/${copyForTool(tool!, locale).slug}`}>
-                  {copyForTool(tool!, locale).name}
+              <li key={tool.id}>
+                <Link className="freela-chip" href={`/${locale}/tools/${copyForTool(tool, locale).slug}`}>
+                  {copyForTool(tool, locale).name}
                 </Link>
               </li>
             ))}
@@ -132,6 +113,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900">{ui.noIndexNote}</p>
       ) : null}
       <ToolGrid locale={locale} title={ui.popular} tools={featured} cta={ui.openTool} />
+      <p className="mt-2 text-xs text-muted-foreground">{ui.rankingNote}</p>
       <section className="mt-12">
         <h2 className="text-2xl font-semibold tracking-tight">{ui.categories}</h2>
         <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
@@ -179,7 +161,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         <h2 className="text-2xl font-semibold tracking-tight">{ui.popularByCategory}</h2>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
           {categories.slice(0, 6).map((cat) => {
-            const tools = toolsInCategory(locale, cat.id).slice(0, 4);
+            const tools = rankedInCategory(locale, cat.id, 4);
             return (
               <div key={cat.id} className="freela-card p-5">
                 <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="flex items-center gap-3 font-semibold">
@@ -217,7 +199,7 @@ function ToolGrid({
 }: {
   locale: string;
   title: string;
-  tools: ReturnType<typeof featuredTools>;
+  tools: ReturnType<typeof rankedTools>;
   cta: string;
 }) {
   return (

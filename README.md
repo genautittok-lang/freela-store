@@ -21,7 +21,10 @@ Development-only admin default (login is refused in production if this value is 
 
 Passwords are stored as bcrypt hashes in SQLite (`data/freela.db`).
 
-## Develop
+## Popular tools
+
+Home ranking uses analytics (opens, starts, success, downloads, errors, search, growth) when SQLite has events. Until then it uses a published seed. Public pages never show invented usage counts.
+
 
 ```bash
 npm run dev
@@ -50,12 +53,12 @@ Or `npm run release` (typecheck, unit, validate, qa, lint, audit, e2e). Producti
 
 ## What is in this ship
 
-- 105 published tools; all `LOCAL_ONLY`
-- Sitemap: 1416 URLs across 12 locales (home + 12 legal pages + 105 tools)
+- 113 published tools; all `LOCAL_ONLY`
+- Sitemap: 1512 URLs across 12 locales (home + 12 legal pages + 113 tools)
 - **12 indexable locales:** `en`, `de`, `uk`, `pl`, `fr`, `es`, `it`, `pt`, `nl`, `tr`, `ar`, `he` (sitemap + hreflang + x-default). Remaining prepared locales stay unrouted.
 - Search (registry-backed; search URLs `noindex`)
 - Sitemap, robots.txt, canonical, hreflang + x-default, WebApplication + FAQ + HowTo + Breadcrumb JSON-LD, OG/Twitter image `/brand/og.png`
-- Admin dashboard: usage, success/error rates, languages, SEO, translation completeness, processing modes, retention, audit log, CSV export
+- Admin dashboard: usage, success/error rates, popularity ranking, search fingerprints, languages, SEO, health, translation completeness, processing modes, retention, audit log, CSV export
 - First-party analytics (no file contents; origin + rate limit)
 - Compact cookie consent for analytics
 - Legal: privacy, terms, contact, about, affiliate, acceptable use, abuse, deletion, vendors, file processing, copyright, data inventory

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { track } from "@/components/analytics-provider";
+import dynamic from "next/dynamic";
 import { FormatBadges, FormatMark, FormatPath } from "@/components/format-badges";
 import { copyForTool } from "@/lib/copy";
 import { toolById } from "@/lib/registry";
@@ -63,8 +64,12 @@ import { actionLabel } from "@/lib/tool-ux";
 import { rl } from "@/i18n/runner";
 import Link from "next/link";
 import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dropzone";
-import { PackToolPanel } from "@/components/pack-runner";
 import { isPackTool } from "@/lib/tools/pack-ids";
+import { buildUtm, parsePageList, randomIntegers } from "@/lib/tools/improve";
+
+const PackToolPanel = dynamic(() => import("@/components/pack-runner").then((m) => m.PackToolPanel), {
+  loading: () => <p className="text-sm text-muted-foreground">Loading tool…</p>,
+});
 
 function pdfBlob(bytes: Uint8Array) {
   return new Blob([bytes as unknown as BlobPart], { type: "application/pdf" });
@@ -233,6 +238,8 @@ function defaultTextInput(action: string) {
       return "Freela";
     case "url":
       return "https://freela.store/en/?q=pdf merge";
+    case "utm":
+      return "https://freela.store/en/\nnewsletter\nemail\nspring-launch";
     default:
       return "Freela runs tools in your browser.\nLine two.";
   }
@@ -374,6 +381,10 @@ function TextTool({
           `Dear hiring team,\n\nI am writing about the ${role || "role"} at ${company || "your company"}. ${notes.filter(Boolean).join(" ")}\n\nThank you for your time.\n`,
         );
       }
+      if (a === "utm") {
+        const [url, source, medium, campaign, term, content] = input.split("\n");
+        setOutput(buildUtm(url || "", source || "", medium || "", campaign || "", term || "", content || ""));
+      }
     });
   }
 
@@ -421,6 +432,9 @@ function TextTool({
       ) : null}
       {tool.runtime.action === "schema" ? (
         <p className="text-xs text-muted-foreground">One field per line: schema type, name, description, URL. Review types are blocked.</p>
+      ) : null}
+      {tool.runtime.action === "utm" ? (
+        <p className="text-xs text-muted-foreground">One field per line: URL, utm_source, utm_medium, utm_campaign, optional term, optional content.</p>
       ) : null}
       <Textarea
         value={input}
@@ -673,7 +687,7 @@ function PdfTool({
           <option value={270}>270°</option>
         </select>
       ) : null}
-      {action === "extract" || action === "split" ? (
+      {action === "extract" || action === "split" || action === "delete" ? (
         <Field label={rl(locale, "pages")}>
           <Input value={pages} onChange={(e) => setPages(e.target.value)} />
         </Field>
@@ -750,6 +764,15 @@ function PdfTool({
               savePdf(pdfBlob(await out.save()), "reordered.pdf");
               return;
             }
+            if (action === "delete") {
+              const drop = parsePageList(pages, src.getPageCount());
+              const keep = src.getPageIndices().filter((i) => !drop.has(i + 1));
+              if (!keep.length) throw new Error("Keep at least one page.");
+              const copied = await out.copyPages(src, keep);
+              copied.forEach((p) => out.addPage(p));
+              savePdf(pdfBlob(await out.save()), "pages-removed.pdf");
+              return;
+            }
             const wanted = parsePages(pages, src.getPageCount(), locale);
             if (action === "split" && pages === "all") {
               let last: { blob: Blob; name: string } | null = null;
@@ -814,6 +837,8 @@ function ImageTool({
   const [text, setText] = useState("");
   const [preview, setPreview] = useState("");
   const [outMime, setOutMime] = useState<"image/jpeg" | "image/png" | "image/webp" | "image/avif">("image/webp");
+  const [angle, setAngle] = useState(90);
+  const [flip, setFlip] = useState<"horizontal" | "vertical">("horizontal");
   const file = files[0] ?? null;
 
   function saveImage(blob: Blob, name: string) {
@@ -914,6 +939,19 @@ function ImageTool({
           ))}
         </div>
       ) : null}
+      {action === "rotate" ? (
+        <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))} aria-label="Rotation angle">
+          <option value={90}>90°</option>
+          <option value={180}>180°</option>
+          <option value={270}>270°</option>
+        </select>
+      ) : null}
+      {action === "flip" ? (
+        <select className="h-9 rounded-lg border px-2" value={flip} onChange={(e) => setFlip(e.target.value as "horizontal" | "vertical")} aria-label="Flip direction">
+          <option value="horizontal">Horizontal</option>
+          <option value="vertical">Vertical</option>
+        </select>
+      ) : null}
       <Button
         type="button"
         size="lg"
@@ -1000,6 +1038,26 @@ function ImageTool({
                 .map(([hex]) => hex);
               setText(top.join("\n"));
               return;
+            } else if (action === "rotate") {
+              const rad = (angle * Math.PI) / 180;
+              const w = angle === 180 ? img.width : img.height;
+              const h = angle === 180 ? img.height : img.width;
+              canvas.width = w;
+              canvas.height = h;
+              ctx.translate(w / 2, h / 2);
+              ctx.rotate(rad);
+              ctx.drawImage(img, -img.width / 2, -img.height / 2);
+            } else if (action === "flip") {
+              canvas.width = img.width;
+              canvas.height = img.height;
+              if (flip === "horizontal") {
+                ctx.translate(img.width, 0);
+                ctx.scale(-1, 1);
+              } else {
+                ctx.translate(0, img.height);
+                ctx.scale(1, -1);
+              }
+              ctx.drawImage(img, 0, 0);
             } else {
               canvas.width = img.width;
               canvas.height = img.height;
@@ -1353,6 +1411,8 @@ function GeneratorTool({
   const ui = t(locale);
   const [count, setCount] = useState(5);
   const [length, setLength] = useState(20);
+  const [min, setMin] = useState(1);
+  const [max, setMax] = useState(100);
   const [out, setOut] = useState("");
   function randomString(len: number, alphabet: string) {
     const bytes = new Uint8Array(len);
@@ -1362,12 +1422,28 @@ function GeneratorTool({
   return (
     <div className="grid gap-3">
       <div className="grid grid-cols-2 gap-2">
-        <Field label={rl(locale, "count")}>
-          <Input type="number" value={count} onChange={(e) => setCount(Number(e.target.value))} />
-        </Field>
-        <Field label={rl(locale, "length")}>
-          <Input type="number" value={length} onChange={(e) => setLength(Number(e.target.value))} />
-        </Field>
+        {action === "random-number" ? (
+          <>
+            <Field label="Min">
+              <Input type="number" value={min} onChange={(e) => setMin(Number(e.target.value))} />
+            </Field>
+            <Field label="Max">
+              <Input type="number" value={max} onChange={(e) => setMax(Number(e.target.value))} />
+            </Field>
+            <Field label={rl(locale, "count")}>
+              <Input type="number" value={count} onChange={(e) => setCount(Number(e.target.value))} />
+            </Field>
+          </>
+        ) : (
+          <>
+            <Field label={rl(locale, "count")}>
+              <Input type="number" value={count} onChange={(e) => setCount(Number(e.target.value))} />
+            </Field>
+            <Field label={rl(locale, "length")}>
+              <Input type="number" value={length} onChange={(e) => setLength(Number(e.target.value))} />
+            </Field>
+          </>
+        )}
       </div>
       <Button
         type="button"
@@ -1383,6 +1459,9 @@ function GeneratorTool({
             if (action === "random") {
               const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
               setOut(Array.from({ length: count }, () => randomString(length, alphabet)).join("\n"));
+            }
+            if (action === "random-number") {
+              setOut(randomIntegers(min, max, count).join("\n"));
             }
           })
         }

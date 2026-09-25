@@ -127,6 +127,19 @@ export function getDb() {
   return db;
 }
 
+export function systemHealth() {
+  const db = tryGetDb();
+  return {
+    service: "freela.store",
+    ok: true,
+    sqlite: Boolean(db),
+    serverless: isServerlessRuntime(),
+    storage: db ? "sqlite" : "none",
+    databaseHint: isServerlessRuntime() ? "/tmp/freela.db (ephemeral on Vercel)" : "data/freela.db",
+    time: new Date().toISOString(),
+  };
+}
+
 export function resetDbForTests() {
   singleton = undefined;
   loadFailed = false;

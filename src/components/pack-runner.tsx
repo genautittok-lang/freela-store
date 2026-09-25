@@ -30,6 +30,7 @@ import {
   blurImage,
   convertDetected,
   docxToTextPdf,
+  extractPdfText,
   formatSql,
   heicToBlob,
   markdownToHtml,
@@ -40,6 +41,7 @@ import {
   xlsxToCsv,
   csvToXlsx,
 } from "@/lib/tools/pack-convert";
+import { linesToPdfBytes, markdownToPlain } from "@/lib/tools/improve";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -79,6 +81,9 @@ export function PackToolPanel({
   if (id === "age-calculator") return <Age locale={locale} wrap={wrap} cta={cta} />;
   if (id === "fuel-cost") return <Fuel locale={locale} wrap={wrap} cta={cta} />;
   if (id === "lorem-ipsum") return <Lorem locale={locale} wrap={wrap} cta={cta} />;
+  if (id === "text-to-pdf" || id === "markdown-to-pdf") {
+    return <TextPdf toolId={id} locale={locale} wrap={wrap} cta={cta} />;
+  }
   if (id === "social-counter") return <Social locale={locale} wrap={wrap} cta={cta} />;
   if (id === "strip-html") return <Strip locale={locale} wrap={wrap} cta={cta} />;
   if (id === "table-markdown") return <TableMd locale={locale} wrap={wrap} cta={cta} />;
@@ -308,6 +313,49 @@ function Lorem({ wrap, cta }: { locale: string; wrap: (fn: () => void) => Promis
         {cta}
       </Button>
       {out ? <Textarea readOnly value={out} rows={8} /> : null}
+    </div>
+  );
+}
+
+function TextPdf({
+  toolId,
+  locale,
+  wrap,
+  cta,
+}: {
+  toolId: string;
+  locale: string;
+  wrap: (fn: () => Promise<void>) => Promise<void>;
+  cta: string;
+}) {
+  const ui = t(locale);
+  const [text, setText] = useState(toolId === "markdown-to-pdf" ? "# Notes\n\nHello **Freela**." : "Hello from Freela.");
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
+  return (
+    <div className="grid gap-3">
+      <Notice>
+        Output is wrapped Helvetica on A4. This is not a Word or CSS print layout.
+      </Notice>
+      <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={10} />
+      <Button
+        type="button"
+        size="lg"
+        onClick={() =>
+          wrap(async () => {
+            const body = toolId === "markdown-to-pdf" ? markdownToPlain(text) : text.trim();
+            if (!body) throw new Error(ui.emptyHint);
+            const bytes = await linesToPdfBytes(body);
+            const blob = new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
+            const name = toolId === "markdown-to-pdf" ? "markdown.pdf" : "text.pdf";
+            setResult({ blob, name });
+            triggerDownload(blob, name);
+            track("file_download", { toolId, locale });
+          })
+        }
+      >
+        {cta}
+      </Button>
+      <DownloadBar locale={locale} blob={result?.blob ?? null} name={result?.name ?? ""} />
     </div>
   );
 }
@@ -596,6 +644,9 @@ function FilePack({
               blob = await pngToIco(file);
               name = "favicon.ico";
               triggerDownload(blob, name);
+            } else if (tool.id === "extract-pdf-text") {
+              setText(await extractPdfText(file));
+              return;
             } else if (tool.id === "video-file-info") {
               setText(await videoInfo(file));
               return;

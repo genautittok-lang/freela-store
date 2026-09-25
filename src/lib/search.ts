@@ -1,5 +1,29 @@
 import { visibleTools, categories } from "@/lib/registry";
 import { copyForTool, copyForCategory } from "@/lib/copy";
+import { popularityScoreById } from "@/lib/popularity";
+
+const SEARCH_ALIASES: Record<string, string[]> = {
+  "merge-pdf": ["combine pdf", "join pdf", "pdf zusammenfuehren", "unir pdf"],
+  "split-pdf": ["cut pdf", "divide pdf", "pdf teilen"],
+  "compress-pdf": ["shrink pdf", "reduce pdf size"],
+  "compress-image": ["shrink image", "reduce jpg", "compress png"],
+  "convert-image": ["jpg to webp", "png to jpg", "webp converter"],
+  "pdf-to-image": ["pdf to jpg", "pdf to png"],
+  "images-to-pdf": ["jpg to pdf", "png to pdf"],
+  "json-formatter": ["pretty json", "beautify json"],
+  "word-counter": ["count words", "word count"],
+  "qr-generator": ["make qr", "qr code"],
+  "utm-builder": ["utm link", "campaign url"],
+  "text-to-pdf": ["txt to pdf", "notes to pdf"],
+  "delete-pdf-pages": ["remove pdf pages", "drop pages"],
+  "extract-pdf-text": ["pdf text", "copy pdf text"],
+};
+
+function aliasScore(toolId: string, needle: string) {
+  const aliases = SEARCH_ALIASES[toolId];
+  if (!aliases) return 0;
+  return Math.max(0, ...aliases.map((alias) => score(alias, needle)));
+}
 
 function normalize(text: string) {
   return text
@@ -44,6 +68,7 @@ function distance(a: string, b: string) {
 export function searchRegistry(locale: string, query: string, category?: string) {
   const q = query.trim();
   const tools = visibleTools(locale).filter((tool) => !category || tool.category === category);
+  const pop = popularityScoreById();
   if (!q) {
     return tools.map((tool) => ({ tool, score: 0, kind: "tool" as const }));
   }
@@ -58,12 +83,14 @@ export function searchRegistry(locale: string, query: string, category?: string)
         score(tool.id, q),
         score(tool.tags.join(" "), q),
         score(tool.supportedFormats.join(" "), q),
+        aliasScore(tool.id, q),
       );
-      return { tool, score: s, kind: "tool" as const };
+      const boosted = s > 0 ? s + Math.min(8, (pop[tool.id] || 0) / 40) : 0;
+      return { tool, score: boosted, kind: "tool" as const };
     })
     .filter((hit) => hit.score > 0);
   const catHits = categories
-    .filter((cat) => !category)
+    .filter(() => !category)
     .map((cat) => ({
       category: cat,
       score: Math.max(

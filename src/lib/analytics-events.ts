@@ -10,6 +10,7 @@ export const ANALYTICS_EVENTS = [
   "share_click",
   "language_change",
   "search_submit",
+  "zero_result_search",
   "related_tool_click",
   "affiliate_click",
 ] as const;

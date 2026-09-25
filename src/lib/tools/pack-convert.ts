@@ -43,6 +43,27 @@ export async function rasterizePdf(file: File, mime: "image/jpeg" | "image/png",
   return blobs;
 }
 
+export async function extractPdfText(file: File) {
+  const pdfjs = await loadPdfJs();
+  const data = new Uint8Array(await file.arrayBuffer());
+  const doc = await pdfjs.getDocument({ data }).promise;
+  const chunks: string[] = [];
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i);
+    const content = await page.getTextContent();
+    const line = content.items
+      .map((item) => ("str" in item ? item.str : ""))
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (line) chunks.push(`--- page ${i} ---\n${line}`);
+  }
+  if (!chunks.length) {
+    throw new Error("No selectable text layer. This is not OCR — scanned pages stay empty.");
+  }
+  return chunks.join("\n\n");
+}
+
 export async function stampPdf(
   file: File,
   mode: "watermark" | "pages",

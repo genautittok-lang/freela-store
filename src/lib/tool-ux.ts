@@ -98,6 +98,14 @@ const OPTIONS: Record<string, string[]> = {
   "image-blur": ["radius px"],
   "cron-generator": ["five UNIX fields"],
   "barcode-generator": ["EAN-13 or Code 128"],
+  "text-to-pdf": ["pasted text, A4 Helvetica"],
+  "markdown-to-pdf": ["markdown stripped to text PDF"],
+  "extract-pdf-text": ["PDF text layer only, no OCR"],
+  "delete-pdf-pages": ["pages: 1 or 2-4"],
+  "rotate-image": ["angle: 90 (default), 180, 270"],
+  "flip-image": ["horizontal | vertical"],
+  "utm-builder": ["url, source, medium, campaign"],
+  "random-number": ["min, max, count"],
 };
 
 function inputKind(tool: ToolDefinition): InputKind {

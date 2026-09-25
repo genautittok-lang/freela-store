@@ -1,5 +1,6 @@
 import type { Locale } from "@/data/locales";
 import { PACK_LABELS } from "@/lib/action-labels-pack";
+import { IMPROVE_LABELS } from "@/lib/action-labels-improve";
 
 const EN: Record<string, string> = {
   "merge-pdf": "Merge PDFs",
@@ -962,18 +963,18 @@ const HE: Record<string, string> = {
 };
 
 export const ACTION_LABELS: Record<Locale, Record<string, string>> = {
-  en: { ...EN, ...PACK_LABELS.en },
-  de: { ...DE, ...PACK_LABELS.de },
-  uk: { ...UK, ...PACK_LABELS.uk },
-  pl: { ...PL, ...PACK_LABELS.pl },
-  fr: { ...FR, ...PACK_LABELS.fr },
-  es: { ...ES, ...PACK_LABELS.es },
-  it: { ...IT, ...PACK_LABELS.it },
-  pt: { ...PT, ...PACK_LABELS.pt },
-  nl: { ...NL, ...PACK_LABELS.nl },
-  tr: { ...TR, ...PACK_LABELS.tr },
-  ar: { ...AR, ...PACK_LABELS.ar },
-  he: { ...HE, ...PACK_LABELS.he },
+  en: { ...EN, ...PACK_LABELS.en, ...IMPROVE_LABELS.en },
+  de: { ...DE, ...PACK_LABELS.de, ...IMPROVE_LABELS.de },
+  uk: { ...UK, ...PACK_LABELS.uk, ...IMPROVE_LABELS.uk },
+  pl: { ...PL, ...PACK_LABELS.pl, ...IMPROVE_LABELS.pl },
+  fr: { ...FR, ...PACK_LABELS.fr, ...IMPROVE_LABELS.fr },
+  es: { ...ES, ...PACK_LABELS.es, ...IMPROVE_LABELS.es },
+  it: { ...IT, ...PACK_LABELS.it, ...IMPROVE_LABELS.it },
+  pt: { ...PT, ...PACK_LABELS.pt, ...IMPROVE_LABELS.pt },
+  nl: { ...NL, ...PACK_LABELS.nl, ...IMPROVE_LABELS.nl },
+  tr: { ...TR, ...PACK_LABELS.tr, ...IMPROVE_LABELS.tr },
+  ar: { ...AR, ...PACK_LABELS.ar, ...IMPROVE_LABELS.ar },
+  he: { ...HE, ...PACK_LABELS.he, ...IMPROVE_LABELS.he },
 };
 
 export const ACTION_LABEL_EN = ACTION_LABELS.en;

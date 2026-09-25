@@ -79,8 +79,8 @@ export function track(
     locale: extra.locale,
     processingMode: extra.processingMode,
     result: extra.result === "ok" || extra.result === "error" ? extra.result : undefined,
-    path: window.location.pathname,
-    source,
+    path: extra.path && extra.path.startsWith("/") ? extra.path : window.location.pathname,
+    source: extra.source && /^[a-z0-9.-]{1,120}$/.test(extra.source) ? extra.source : source,
   };
   fetch("/api/analytics", {
     method: "POST",

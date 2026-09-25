@@ -111,6 +111,14 @@ NAMES: dict[str, list[str]] = {
     "universal-converter": ["Convert any file", "Beliebige Datei umwandeln", "Конвертувати будь-який файл", "Konwertuj dowolny plik", "Convertir n’importe quel fichier", "Convertir cualquier archivo", "Converti qualsiasi file", "Converter qualquer ficheiro", "Elk bestand converteren", "Her dosyayı dönüştür", "تحويل أي ملف", "המרת כל קובץ"],
     "video-file-info": ["Video file info", "Video-Dateiinfo", "Інфо відеофайлу", "Info pliku wideo", "Infos fichier vidéo", "Info de vídeo", "Info file video", "Info de ficheiro vídeo", "Videobestand-info", "Video dosya bilgisi", "معلومات ملف فيديو", "מידע על קובץ וידאו"],
     "convert-video": ["Convert video status", "Video konvertieren Status", "Статус конвертації відео", "Status konwersji wideo", "Statut conversion vidéo", "Estado convertir vídeo", "Stato conversione video", "Estado converter vídeo", "Videoconversie-status", "Video dönüştürme durumu", "حالة تحويل الفيديو", "סטטוס המרת וידאו"],
+    "text-to-pdf": ["Text to PDF", "Text zu PDF", "Текст у PDF", "Tekst do PDF", "Texte vers PDF", "Texto a PDF", "Testo in PDF", "Texto para PDF", "Tekst naar PDF", "Metinden PDF", "نص إلى PDF", "טקסט ל-PDF"],
+    "markdown-to-pdf": ["Markdown to PDF", "Markdown zu PDF", "Markdown у PDF", "Markdown do PDF", "Markdown vers PDF", "Markdown a PDF", "Markdown in PDF", "Markdown para PDF", "Markdown naar PDF", "Markdown’dan PDF", "Markdown إلى PDF", "Markdown ל-PDF"],
+    "extract-pdf-text": ["Extract PDF text", "PDF-Text extrahieren", "Текст із PDF", "Tekst z PDF", "Extraire le texte PDF", "Extraer texto PDF", "Estrai testo PDF", "Extrair texto PDF", "PDF-tekst halen", "PDF metnini çıkar", "استخراج نص PDF", "חילוץ טקסט מ-PDF"],
+    "delete-pdf-pages": ["Delete PDF pages", "PDF-Seiten löschen", "Видалити сторінки PDF", "Usuń strony PDF", "Supprimer des pages PDF", "Borrar páginas PDF", "Elimina pagine PDF", "Apagar páginas PDF", "PDF-pagina's verwijderen", "PDF sayfalarını sil", "حذف صفحات PDF", "מחיקת עמודי PDF"],
+    "rotate-image": ["Rotate image", "Bild drehen", "Повернути зображення", "Obróć obraz", "Pivoter une image", "Rotar imagen", "Ruota immagine", "Rodar imagem", "Afbeelding draaien", "Görseli döndür", "تدوير الصورة", "סיבוב תמונה"],
+    "flip-image": ["Flip image", "Bild spiegeln", "Віддзеркалити зображення", "Odbij obraz", "Retourner une image", "Voltear imagen", "Capovolgi immagine", "Inverter imagem", "Afbeelding spiegelen", "Görseli çevir", "عكس الصورة", "היפוך תמונה"],
+    "utm-builder": ["UTM URL builder", "UTM-URL-Builder", "Конструктор UTM", "Kreator UTM", "Générateur d’URL UTM", "Generador UTM", "Generatore UTM", "Gerador UTM", "UTM-URL-builder", "UTM URL oluşturucu", "منشئ روابط UTM", "בונה כתובות UTM"],
+    "random-number": ["Random number generator", "Zufallszahl", "Випадкове число", "Losowa liczba", "Nombre aléatoire", "Número aleatorio", "Numero casuale", "Número aleatório", "Willekeurig getal", "Rastgele sayı", "مولّد رقم عشوائي", "מחולל מספר אקראי"],
 }
 
 KIND = {}
@@ -154,6 +162,12 @@ for _id in ("image-text-overlay", "image-blur", "png-to-ico"):
 KIND["universal-converter"] = "fileconv"
 KIND["video-file-info"] = "video"
 KIND["convert-video"] = "video"
+for _id in ("text-to-pdf", "markdown-to-pdf", "extract-pdf-text", "delete-pdf-pages"):
+    KIND[_id] = "pdf"
+KIND["rotate-image"] = "img"
+KIND["flip-image"] = "img"
+KIND["utm-builder"] = "seo"
+KIND["random-number"] = "gen"
 
 FORMATS = {
     "merge-pdf": "PDF", "split-pdf": "PDF", "rotate-pdf": "PDF", "extract-pdf-pages": "PDF",
@@ -165,6 +179,10 @@ FORMATS = {
     "xlsx-csv": "XLSX ↔ CSV", "markdown-html": "Markdown → HTML", "png-to-ico": "PNG → ICO",
     "universal-converter": "images PDF CSV XLSX MD HTML DOCX", "heic-to-jpg": "HEIC → JPG",
     "pdf-to-image": "PDF → JPG PNG", "docx-to-pdf": "DOCX → text PDF",
+    "text-to-pdf": "text → PDF", "markdown-to-pdf": "Markdown → PDF",
+    "extract-pdf-text": "PDF → text", "delete-pdf-pages": "PDF",
+    "rotate-image": "JPG PNG WebP", "flip-image": "JPG PNG WebP",
+    "utm-builder": "URL + UTM", "random-number": "integers",
 }
 
 CONVERT = {
@@ -184,6 +202,11 @@ CONVERT = {
     "markdown-html": ("Markdown", "HTML"),
     "png-to-ico": ("PNG", "ICO"),
     "universal-converter": ("detected file", "listed formats only"),
+    "text-to-pdf": ("text", "PDF"),
+    "markdown-to-pdf": ("Markdown", "PDF"),
+    "extract-pdf-text": ("PDF", "text"),
+    "rotate-image": ("JPG / PNG / WebP", "rotated image"),
+    "flip-image": ("JPG / PNG / WebP", "flipped image"),
 }
 
 JOB = {

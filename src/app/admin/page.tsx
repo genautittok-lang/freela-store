@@ -7,6 +7,9 @@ import {
   retentionOverview,
   translationHealth,
 } from "@/lib/analytics";
+import { systemHealth } from "@/lib/db";
+import { popularityRows } from "@/lib/popularity";
+import { sitemapEntries } from "@/lib/seo";
 import { toolRegistry } from "@/data/tools";
 import { INITIAL_LOCALES, localeRegistry, PREPARED_LOCALES } from "@/data/locales";
 import { logoutAction } from "./actions";
@@ -36,6 +39,9 @@ export default async function AdminHome({
   const translations = translationHealth();
   const retention = retentionOverview();
   const audit = recentAudit();
+  const health = systemHealth();
+  const ranked = popularityRows(range).slice(0, 20);
+  const sitemapCount = sitemapEntries().length;
   const published = toolRegistry.filter((t) => t.status === "published");
   const broken = toolRegistry.filter((t) => t.status === "disabled" || t.status === "deprecated");
   const seoIssues = toolRegistry.flatMap((tool) => {
@@ -91,6 +97,7 @@ export default async function AdminHome({
         <Card label="Errors" value={stats.errors} />
         <Card label="Downloads" value={stats.downloads} />
         <Card label="Searches" value={stats.searches} />
+        <Card label="Zero-result" value={stats.zeroResults} />
       </dl>
       <section className="mt-10 grid gap-8 lg:grid-cols-2">
         <div>
@@ -127,6 +134,45 @@ export default async function AdminHome({
             ))}
           </ul>
         </div>
+      </section>
+      <section className="mt-10 rounded-xl border p-4">
+        <h2 className="font-semibold">System health</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          SQLite: {health.sqlite ? "available" : "unavailable"} · {health.storage} · {health.databaseHint} · serverless{" "}
+          {health.serverless ? "yes" : "no"} · sitemap {sitemapCount} URLs · {published.length} published tools
+        </p>
+        <p className="mt-1 text-xs text-muted-foreground">Checked {health.time}. Usage counters on Vercel stay ephemeral in /tmp unless a durable store is added.</p>
+      </section>
+      <section className="mt-10">
+        <h2 className="font-semibold">Popularity ranking</h2>
+        <p className="text-sm text-muted-foreground">
+          Mix of completions, downloads, completion rate, starts, errors, search and growth. Seed is used only until analytics exist — not shown as fake public counts.
+        </p>
+        <AdminTable
+          rows={ranked.map((row) => [
+            row.id,
+            row.score.toFixed(1),
+            String(row.opens),
+            String(row.completions),
+            String(row.downloads),
+            String(row.errors),
+            row.source,
+          ])}
+          heads={["Tool", "Score", "Opens", "OK", "DL", "Err", "Source"]}
+        />
+      </section>
+      <section className="mt-10">
+        <h2 className="font-semibold">Search fingerprints</h2>
+        <p className="text-sm text-muted-foreground">Normalized query tokens only. File bytes and raw pasted text are never stored.</p>
+        <ul className="mt-3 text-sm">
+          {stats.searchSources.map((row) => (
+            <li key={row.source} className="flex justify-between border-b py-2">
+              <span>{row.source}</span>
+              <span>{row.n}</span>
+            </li>
+          ))}
+          {stats.searchSources.length === 0 ? <li>No search events in this range.</li> : null}
+        </ul>
       </section>
       <section className="mt-10">
         <h2 className="font-semibold">Usage trends</h2>

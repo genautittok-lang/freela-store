@@ -22,6 +22,7 @@ export type ExtraMessages = {
   openTool: string;
   privacyFirst: string;
   popularTasks: string;
+  rankingNote: string;
   toolsNav: string;
   cookieTitle: string;
   necessaryOnly: string;
@@ -70,6 +71,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Open tool",
     privacyFirst: "Privacy first",
     popularTasks: "Popular tasks",
+    rankingNote: "Popular tools follow real usage when analytics exist; otherwise a published seed. We do not invent counts.",
     toolsNav: "Tools",
     cookieTitle: "Privacy first",
     necessaryOnly: "Necessary only",
@@ -115,6 +117,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Werkzeug öffnen",
     privacyFirst: "Datenschutz zuerst",
     popularTasks: "Häufige Aufgaben",
+    rankingNote: "Beliebte Tools folgen echter Nutzung, sobald Analytics vorliegen; sonst ein veröffentlichter Seed — keine erfundenen Zahlen.",
     toolsNav: "Werkzeuge",
     cookieTitle: "Datenschutz zuerst",
     necessaryOnly: "Nur notwendige",
@@ -160,6 +163,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Відкрити інструмент",
     privacyFirst: "Приватність насамперед",
     popularTasks: "Популярні задачі",
+    rankingNote: "Популярне ранжується за реальною статистикою, якщо вона є; інакше — опублікований seed. Лічильники не вигадуємо.",
     toolsNav: "Інструменти",
     cookieTitle: "Приватність насамперед",
     necessaryOnly: "Лише необхідні",
@@ -205,6 +209,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Otwórz narzędzie",
     privacyFirst: "Prywatność przede wszystkim",
     popularTasks: "Popularne zadania",
+    rankingNote: "Popularność wynika z realnego użycia, gdy jest analityka; w przeciwnym razie z opublikowanego seeda. Bez wymyślonych liczb.",
     toolsNav: "Narzędzia",
     cookieTitle: "Prywatność przede wszystkim",
     necessaryOnly: "Tylko niezbędne",
@@ -250,6 +255,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Ouvrir l’outil",
     privacyFirst: "Confidentialité d’abord",
     popularTasks: "Tâches fréquentes",
+    rankingNote: "Les outils populaires suivent l’usage réel dès qu’il y a des mesures ; sinon un seed publié. Aucun compteur inventé.",
     toolsNav: "Outils",
     cookieTitle: "Confidentialité d’abord",
     necessaryOnly: "Nécessaires uniquement",
@@ -295,6 +301,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Abrir herramienta",
     privacyFirst: "Privacidad primero",
     popularTasks: "Tareas populares",
+    rankingNote: "Lo popular sigue el uso real cuando hay analítica; si no, una semilla publicada. No inventamos cifras.",
     toolsNav: "Herramientas",
     cookieTitle: "Privacidad primero",
     necessaryOnly: "Solo necesarias",
@@ -340,6 +347,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Apri strumento",
     privacyFirst: "Privacy prima di tutto",
     popularTasks: "Attività frequenti",
+    rankingNote: "I popolari seguono l’uso reale quando c’è analytics; altrimenti un seed pubblicato. Nessun conteggio inventato.",
     toolsNav: "Strumenti",
     cookieTitle: "Privacy prima di tutto",
     necessaryOnly: "Solo necessari",
@@ -385,6 +393,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Abrir ferramenta",
     privacyFirst: "Privacidade primeiro",
     popularTasks: "Tarefas populares",
+    rankingNote: "Os populares seguem o uso real quando há analytics; senão uma semente publicada. Sem contagens inventadas.",
     toolsNav: "Ferramentas",
     cookieTitle: "Privacidade primeiro",
     necessaryOnly: "Apenas necessárias",
@@ -430,6 +439,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Tool openen",
     privacyFirst: "Privacy eerst",
     popularTasks: "Populaire taken",
+    rankingNote: "Populaire tools volgen echt gebruik als er analytics zijn; anders een gepubliceerde seed. Geen verzonnen aantallen.",
     toolsNav: "Tools",
     cookieTitle: "Privacy eerst",
     necessaryOnly: "Alleen noodzakelijk",
@@ -475,6 +485,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "Aracı aç",
     privacyFirst: "Önce gizlilik",
     popularTasks: "Popüler görevler",
+    rankingNote: "Popüler araçlar analitik varken gerçek kullanıma göre sıralanır; yoksa yayınlanmış bir seed. Uydurma sayılar yok.",
     toolsNav: "Araçlar",
     cookieTitle: "Önce gizlilik",
     necessaryOnly: "Yalnızca gerekli",
@@ -520,6 +531,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "افتح الأداة",
     privacyFirst: "الخصوصية أولًا",
     popularTasks: "مهام شائعة",
+    rankingNote: "الأدوات الشائعة تُرتَّب حسب الاستخدام الفعلي عند وجود التحليلات؛ وإلا من بذرة منشورة. لا أرقام مختلقة.",
     toolsNav: "الأدوات",
     cookieTitle: "الخصوصية أولًا",
     necessaryOnly: "الضروري فقط",
@@ -565,6 +577,7 @@ export const extras: Record<Locale, ExtraMessages> = {
     openTool: "פתחו כלי",
     privacyFirst: "פרטיות קודם",
     popularTasks: "משימות נפוצות",
+    rankingNote: "כלים פופולריים מדורגים לפי שימוש אמיתי כשיש אנליטיקה; אחרת לפי seed שפורסם. בלי מספרים בדויים.",
     toolsNav: "כלים",
     cookieTitle: "פרטיות קודם",
     necessaryOnly: "הכרחי בלבד",

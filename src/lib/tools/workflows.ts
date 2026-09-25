@@ -120,6 +120,13 @@ async function runPdf(id: string): Promise<string> {
     const saved = await loaded.save({ useObjectStreams: true });
     return `bytes:${saved.byteLength}`;
   }
+  if (id === "delete-pdf-pages") {
+    const loaded = await PDFDocument.load(bytes);
+    const out = await PDFDocument.create();
+    const [page] = await out.copyPages(loaded, [0]);
+    out.addPage(page);
+    return `pages:${out.getPageCount()}`;
+  }
   if (id === "images-to-pdf") {
     const out = await PDFDocument.create();
     out.addPage([200, 200]);
@@ -206,6 +213,15 @@ export async function executeWorkflow(toolId: string): Promise<WorkflowResult> {
         case "sql-formatter":
           output = "SELECT 1";
           break;
+        case "text-to-pdf":
+        case "markdown-to-pdf": {
+          const { linesToPdfBytes, markdownToPlain } = await import("@/lib/tools/improve");
+          const bytes = await linesToPdfBytes(
+            toolId === "markdown-to-pdf" ? markdownToPlain("# Hello\n\nWorld") : "Hello from Freela.",
+          );
+          output = `bytes:${bytes.byteLength}`;
+          break;
+        }
         default:
           throw new Error(`No workflow mapping for ${toolId} (${kind}/${action})`);
       }
@@ -362,6 +378,16 @@ export async function executeWorkflow(toolId: string): Promise<WorkflowResult> {
       case "random-string":
         output = "ok";
         break;
+      case "random-number": {
+        const { randomIntegers } = await import("@/lib/tools/improve");
+        output = randomIntegers(1, 10, 3).join(",");
+        break;
+      }
+      case "utm-builder": {
+        const { buildUtm } = await import("@/lib/tools/improve");
+        output = buildUtm("https://freela.store/en/", "newsletter", "email", "spring");
+        break;
+      }
       case "unix-timestamp": {
         const d = new Date(1735689600 * 1000);
         if (Number.isNaN(d.getTime())) throw new Error("bad ts");

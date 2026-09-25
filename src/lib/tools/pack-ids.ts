@@ -27,6 +27,9 @@ export const PACK_TOOL_IDS = [
   "universal-converter",
   "video-file-info",
   "convert-video",
+  "text-to-pdf",
+  "markdown-to-pdf",
+  "extract-pdf-text",
 ] as const;
 
 export type PackToolId = (typeof PACK_TOOL_IDS)[number];
@@ -45,4 +48,5 @@ export const PACK_BROWSER_WORKFLOWS = new Set<string>([
   "png-to-ico",
   "universal-converter",
   "video-file-info",
+  "extract-pdf-text",
 ]);

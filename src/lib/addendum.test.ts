@@ -19,6 +19,18 @@ describe("analytics sanitization", () => {
     });
     expect(event?.name).toBe("tool_success");
   });
+  it("accepts zero-result search fingerprints without query text", () => {
+    const event = sanitizeAnalyticsPayload({
+      name: "zero_result_search",
+      sessionId: "11111111-2222-4333-8444-555555555555",
+      locale: "en",
+      result: "error",
+      path: "/en/search",
+      source: "q.merge-pdf",
+    });
+    expect(event?.name).toBe("zero_result_search");
+    expect(event?.source).toBe("q.merge-pdf");
+  });
   it("rejects file contents", () => {
     expect(sanitizeAnalyticsPayload({ name: "tool_success", sessionId: "abcdefgh", content: "secret" })).toBeNull();
     expect(looksLikeFileContent("%PDF-1.4 huge stream")).toBe(true);
