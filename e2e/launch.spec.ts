@@ -23,20 +23,21 @@ test("text tool completes", async ({ page }) => {
   await page.goto(`${base}/en/tools/word-counter`);
   await page.locator("textarea").first().fill("one two three four");
   await expect(page.getByText("Local only", { exact: true }).first()).toBeVisible();
-  await page.getByRole("button", { name: "Count words" }).click();
+  await page.locator("#tool").getByRole("button", { name: "Count words" }).last().click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible();
 });
 
 test("developer json tool", async ({ page }) => {
   await page.goto(`${base}/en/tools/json-formatter`);
+  await page.locator("textarea").first().fill("");
   await page.locator("textarea").first().fill('{"a":1}');
-  await page.getByRole("button", { name: "Format JSON" }).click();
+  await page.locator("#tool").getByRole("button", { name: "Format JSON" }).last().click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible();
 });
 
 test("calculator returns a value", async ({ page }) => {
   await page.goto(`${base}/en/tools/percentage`);
-  await page.getByRole("button", { name: "Calculate" }).click();
+  await page.locator("#tool").getByRole("button", { name: "Calculate" }).last().click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible();
 });
 
@@ -46,12 +47,12 @@ test("image compress completes", async ({ page }) => {
     "base64",
   );
   await page.goto(`${base}/en/tools/compress-image`);
-  await page.locator('input[type="file"]').setInputFiles({
+  await page.locator("#tool input[type=file]").last().setInputFiles({
     name: "dot.png",
     mimeType: "image/png",
     buffer: png,
   });
-  await page.getByRole("button", { name: "Compress image" }).click();
+  await page.locator("#tool").getByRole("button", { name: "Compress image" }).last().click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible({ timeout: 20_000 });
 });
 
@@ -61,12 +62,12 @@ test("pdf merge completes", async ({ page }) => {
   pdf.addPage();
   const bytes = await pdf.save();
   await page.goto(`${base}/en/tools/merge-pdf`);
-  const picker = page.locator("#files-merge-pdf");
+  const picker = page.locator("#tool input[type=file]").last();
   await picker.setInputFiles([
     { name: "a.pdf", mimeType: "application/pdf", buffer: Buffer.from(bytes) },
     { name: "b.pdf", mimeType: "application/pdf", buffer: Buffer.from(bytes) },
   ]);
-  await page.getByRole("button", { name: "Merge PDFs" }).click();
+  await page.locator("#tool").getByRole("button", { name: "Merge PDFs" }).last().click();
   await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible({ timeout: 20_000 });
 });
 
@@ -126,7 +127,7 @@ test("accessibility smoke homepage", async ({ page }) => {
 test("validation error is actionable", async ({ page }) => {
   await page.goto(`${base}/en/tools/json-formatter`);
   await page.locator("textarea").first().fill("{not-json");
-  await page.getByRole("button", { name: "Format JSON" }).click();
+  await page.locator("#tool").getByRole("button", { name: "Format JSON" }).last().click();
   await expect(page.locator("#tool").getByRole("alert")).toBeVisible();
 });
 

@@ -84,20 +84,20 @@ for (const row of families) {
     const bytes = Buffer.from(await pdf.save());
     await page.goto(`${base}/en/tools/${tool.copy.en.slug}`);
     if (row.fill === "pdf") {
-      await page.locator(`#files-${tool.id}`).setInputFiles({
+      await page.locator("#tool input[type=file]").last().setInputFiles({
         name: "sample.pdf",
         mimeType: "application/pdf",
         buffer: bytes,
       });
     }
     if (row.fill === "image") {
-      await page.locator(`#files-${tool.id}`).setInputFiles({
+      await page.locator("#tool input[type=file]").last().setInputFiles({
         name: "dot.png",
         mimeType: "image/png",
         buffer: png,
       });
     }
-    await page.getByRole("button", { name: ACTION_LABEL_EN[tool.id] }).click();
+    await page.locator("#tool").getByRole("button", { name: ACTION_LABEL_EN[tool.id] }).last().click();
     await expect(page.getByRole("status").filter({ hasText: "Done." })).toBeVisible({ timeout: 20_000 });
   });
 }

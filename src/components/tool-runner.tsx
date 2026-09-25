@@ -613,6 +613,7 @@ function PdfTool({
 }) {
   const ui = t(locale);
   const [files, setFiles] = useState<File[]>([]);
+  const fileRef = useRef<HTMLInputElement>(null);
   const [angle, setAngle] = useState(90);
   const [pages, setPages] = useState("1-1");
   const [meta, setMeta] = useState("");
@@ -644,6 +645,7 @@ function PdfTool({
         {ui.dropFiles}
         <input
           id={`files-${tool.id}`}
+          ref={fileRef}
           type="file"
           className="mx-auto"
           multiple={action === "merge" || action === "images-to-pdf"}
@@ -678,7 +680,7 @@ function PdfTool({
         onClick={() =>
           wrap(async () => {
             const { PDFDocument, degrees } = await import("pdf-lib");
-            const native = document.getElementById(`files-${tool.id}`) as HTMLInputElement | null;
+            const native = fileRef.current ?? ([...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined);
             const selected = files.length ? files : [...(native?.files ?? [])];
             if (!selected.length) throw new Error("Choose a file first.");
             if (cancelled.current) return;
@@ -687,12 +689,12 @@ function PdfTool({
               setMeta(
                 JSON.stringify(
                   {
-                    title: pdf.getTitle(),
-                    author: pdf.getAuthor(),
-                    subject: pdf.getSubject(),
-                    keywords: pdf.getKeywords(),
-                    creator: pdf.getCreator(),
-                    producer: pdf.getProducer(),
+                    title: pdf.getTitle() ?? "",
+                    author: pdf.getAuthor() ?? "",
+                    subject: pdf.getSubject() ?? "",
+                    keywords: String(pdf.getKeywords() ?? ""),
+                    creator: pdf.getCreator() ?? "",
+                    producer: pdf.getProducer() ?? "",
                     pages: pdf.getPageCount(),
                   },
                   null,
@@ -802,6 +804,7 @@ function ImageTool({
 }) {
   const ui = t(locale);
   const [file, setFile] = useState<File | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const [quality, setQuality] = useState(0.8);
   const [width, setWidth] = useState(800);
   const [crop, setCrop] = useState({ x: 0, y: 0, w: 200, h: 200 });
@@ -840,6 +843,7 @@ function ImageTool({
           {ui.dropFiles}
           <input
             id={`files-${tool.id}`}
+            ref={fileRef}
             type="file"
             accept="image/*"
             className="mx-auto"
@@ -890,13 +894,16 @@ function ImageTool({
               const raw = text.trim();
               const url = raw.startsWith("data:") ? raw : `data:image/png;base64,${raw}`;
               setPreview(url);
-              const res = await fetch(url);
-              const blob = await res.blob();
-              downloadBlob(blob, "decoded.png");
+              const comma = url.indexOf(",");
+              if (comma < 0) throw new Error("Paste a data URL or raw base64.");
+              const b64 = url.slice(comma + 1);
+              const bin = atob(b64);
+              const bytes = Uint8Array.from(bin, (ch) => ch.charCodeAt(0));
+              downloadBlob(new Blob([bytes], { type: "image/png" }), "decoded.png");
               track("file_download", { toolId: tool.id, locale });
               return;
             }
-            const native = document.getElementById(`files-${tool.id}`) as HTMLInputElement | null;
+            const native = fileRef.current ?? ([...document.querySelectorAll("#tool input[type=file]")].at(-1) as HTMLInputElement | undefined);
             const chosen = file || native?.files?.[0] || null;
             if (!chosen) throw new Error("Choose an image first.");
             if (chosen.size > tool.maxFileSize) throw new Error("File is too large.");
@@ -916,9 +923,13 @@ function ImageTool({
               canvas.height = Math.round(width * ratio);
               ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             } else if (action === "crop") {
-              canvas.width = crop.w;
-              canvas.height = crop.h;
-              ctx.drawImage(img, crop.x, crop.y, crop.w, crop.h, 0, 0, crop.w, crop.h);
+              const x = Math.max(0, Math.min(crop.x, img.width - 1));
+              const y = Math.max(0, Math.min(crop.y, img.height - 1));
+              const w = Math.max(1, Math.min(crop.w || img.width, img.width - x));
+              const h = Math.max(1, Math.min(crop.h || img.height, img.height - y));
+              canvas.width = w;
+              canvas.height = h;
+              ctx.drawImage(img, x, y, w, h, 0, 0, w, h);
             } else if (action === "favicon") {
               const sizes = [16, 32, 180, 512];
               for (const size of sizes) {
@@ -964,15 +975,20 @@ function ImageTool({
             const type =
               action === "convert" && quality < 1 ? "image/jpeg" : chosen.type === "image/png" ? "image/png" : "image/jpeg";
             await new Promise<void>((resolve, reject) => {
+              const mime = action === "convert" ? "image/webp" : type;
+              const finish = (blob: Blob | null, used: string) => {
+                if (!blob) return reject(new Error("Could not encode image."));
+                setPreview(URL.createObjectURL(blob));
+                downloadBlob(blob, `result.${used.split("/")[1]}`);
+                track("file_download", { toolId: tool.id, locale });
+                resolve();
+              };
               canvas.toBlob(
                 (blob) => {
-                  if (!blob) return reject(new Error("Could not encode image."));
-                  setPreview(URL.createObjectURL(blob));
-                  downloadBlob(blob, `result.${type.split("/")[1]}`);
-                  track("file_download", { toolId: tool.id, locale });
-                  resolve();
+                  if (blob || mime !== "image/webp") return finish(blob, mime);
+                  canvas.toBlob((fallback) => finish(fallback, "image/png"), "image/png");
                 },
-                action === "convert" ? "image/webp" : type,
+                mime,
                 quality,
               );
             });
