@@ -243,6 +243,13 @@ export async function executeWorkflow(toolId: string): Promise<WorkflowResult> {
       if (hex.length !== 64) throw new Error("Unexpected digest length.");
       return { toolId, status: "PASS", output: hex };
     }
+    if (kind === "wave") {
+      const { runWaveAsync, WAVE_SAMPLES } = await import("@/lib/tools/wave");
+      const output = await runWaveAsync(toolId, WAVE_SAMPLES[toolId] ?? { text: "hello" });
+      if (!String(output)) throw new Error("Empty wave output.");
+      void uxFor(tool);
+      return { toolId, status: "PASS", output: String(output).slice(0, 200) };
+    }
     let output = "";
     switch (toolId) {
       case "word-counter":

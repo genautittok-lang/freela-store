@@ -62,6 +62,7 @@ const FAMILY: Record<ToolDefinition["runtime"]["kind"], UxFamily> = {
   generator: "generator",
   qr: "qr",
   pack: "converter",
+  wave: "text",
 };
 
 const OPTIONS: Record<string, string[]> = {
@@ -106,6 +107,18 @@ const OPTIONS: Record<string, string[]> = {
   "flip-image": ["horizontal | vertical"],
   "utm-builder": ["url, source, medium, campaign"],
   "random-number": ["min, max, count"],
+  "prefix-suffix": ["prefix,suffix"],
+  "wrap-text": ["width characters"],
+  "caesar-shift": ["shift integer"],
+  "find-replace": ["find / replace lines"],
+  "repeat-text": ["repeat count"],
+  "truncate-text": ["max length"],
+  levenshtein: ["second string"],
+  "keyword-density": ["phrase"],
+  "robots-path-test": ["path to test"],
+  "add-days": ["days to add"],
+  "business-days": ["end date"],
+  "mix-hex": ["second hex"],
 };
 
 function inputKind(tool: ToolDefinition): InputKind {

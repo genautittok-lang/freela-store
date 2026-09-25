@@ -5,6 +5,7 @@ import { calcRestTools } from "./english-calc";
 import { addendumTools } from "./english-addendum";
 import { packTools } from "./english-pack";
 import { improveTools } from "./english-improve";
+import { waveTools } from "./english-wave";
 import { privacyFiles, privacyText } from "./define";
 import type { Locale } from "../locales";
 import { INITIAL_LOCALES, SOURCE_LOCALE } from "../locales";
@@ -23,6 +24,7 @@ const englishCatalog = [
   ...addendumTools,
   ...packTools,
   ...improveTools,
+  ...waveTools,
 ];
 
 export type EnglishTool = (typeof englishCatalog)[number];

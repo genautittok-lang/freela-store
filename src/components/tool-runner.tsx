@@ -66,6 +66,7 @@ import Link from "next/link";
 import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dropzone";
 import { isPackTool } from "@/lib/tools/pack-ids";
 import { buildUtm, parsePageList, randomIntegers } from "@/lib/tools/improve";
+import { runWaveAsync, WAVE_EXTRA_HINT, WAVE_SAMPLES, waveNeedsExtra } from "@/lib/tools/wave";
 
 const PackToolPanel = dynamic(() => import("@/components/pack-runner").then((m) => m.PackToolPanel), {
   loading: () => <p className="text-sm text-muted-foreground">Loading tool…</p>,
@@ -191,6 +192,7 @@ export function ToolRunner({
       {kind === "generator" ? <GeneratorTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
       {kind === "qr" ? <QrTool locale={locale} wrap={wrap} cta={cta} /> : null}
       {kind === "datetime" ? <DateTimeTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
+      {kind === "wave" ? <WaveTool tool={tool} locale={locale} wrap={wrap} cta={cta} /> : null}
       {ok && nextId ? (
         <p className="mt-4 text-sm">
           <Link className="font-medium text-primary" href={`/${locale}/tools/${nextId}`}>
@@ -1603,6 +1605,98 @@ function DateTimeTool({
         {cta}
       </Button>
       {out ? <pre className="overflow-auto rounded-lg bg-muted p-3 text-sm">{out}</pre> : null}
+    </div>
+  );
+}
+
+function WaveTool({
+  tool,
+  locale,
+  wrap,
+  cta,
+}: {
+  tool: ToolDefinition;
+  locale: string;
+  wrap: (fn: () => Promise<void> | void) => Promise<void>;
+  cta: string;
+}) {
+  const ui = t(locale);
+  const sample = WAVE_SAMPLES[tool.id] ?? { text: "" };
+  const [input, setInput] = useState(sample.text);
+  const [extra, setExtra] = useState(sample.extra ?? "");
+  const [output, setOutput] = useState("");
+  const needsExtra = waveNeedsExtra(tool.id);
+  const extraHint = WAVE_EXTRA_HINT[tool.id];
+
+  function run() {
+    wrap(async () => {
+      const result = await runWaveAsync(tool.id, { text: input, extra });
+      setOutput(result);
+    });
+  }
+
+  return (
+    <div className="grid gap-3">
+      <p className="text-xs text-muted-foreground">
+        Runs in this tab. Input never leaves the device. Not professional, legal, tax or medical advice.
+      </p>
+      {tool.copy.en.formats ? (
+        <p className="text-xs text-muted-foreground sm:text-sm">{copyForTool(tool, locale).formats}</p>
+      ) : null}
+      <Textarea
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        rows={needsExtra ? 7 : 10}
+        placeholder={copyForTool(tool, locale).examples[0]}
+        className="min-h-32"
+      />
+      {needsExtra ? (
+        extraHint?.includes("line") ? (
+          <Textarea
+            value={extra}
+            onChange={(e) => setExtra(e.target.value)}
+            rows={3}
+            placeholder={extraHint}
+          />
+        ) : (
+          <Input value={extra} onChange={(e) => setExtra(e.target.value)} placeholder={extraHint} />
+        )
+      ) : null}
+      <div className="flex flex-wrap gap-2">
+        <Button type="button" onClick={run}>
+          {cta}
+        </Button>
+        {output ? (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              navigator.clipboard.writeText(output);
+              track("copy_result", { toolId: tool.id, locale });
+            }}
+          >
+            {ui.copy}
+          </Button>
+        ) : null}
+        {output || input ? (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => {
+              setInput("");
+              setExtra("");
+              setOutput("");
+            }}
+          >
+            {ui.newInput}
+          </Button>
+        ) : null}
+      </div>
+      {output ? (
+        <pre className="max-h-[50vh] overflow-auto rounded-lg bg-muted p-3 text-sm whitespace-pre-wrap break-all">
+          {output}
+        </pre>
+      ) : null}
     </div>
   );
 }

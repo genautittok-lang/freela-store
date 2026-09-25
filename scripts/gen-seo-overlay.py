@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate per-locale SEO title/description/h1/intro/FAQ overlays."""
 from pathlib import Path
+import json
 
 LOCALES = ["en", "de", "uk", "pl", "fr", "es", "it", "pt", "nl", "tr", "ar", "he"]
 
@@ -121,6 +122,9 @@ NAMES: dict[str, list[str]] = {
     "random-number": ["Random number generator", "Zufallszahl", "Випадкове число", "Losowa liczba", "Nombre aléatoire", "Número aleatorio", "Numero casuale", "Número aleatório", "Willekeurig getal", "Rastgele sayı", "مولّد رقم عشوائي", "מחולל מספר אקראי"],
 }
 
+WAVE_EXTRA = json.loads(Path("/workspace/scripts/wave-seo-names.json").read_text(encoding="utf-8"))
+NAMES.update(WAVE_EXTRA["names"])
+
 KIND = {}
 for _id in ("merge-pdf", "split-pdf", "rotate-pdf", "extract-pdf-pages", "pdf-metadata", "reorder-pdf", "compress-pdf"):
     KIND[_id] = "pdf"
@@ -168,6 +172,8 @@ KIND["rotate-image"] = "img"
 KIND["flip-image"] = "img"
 KIND["utm-builder"] = "seo"
 KIND["random-number"] = "gen"
+for tid, kind in WAVE_EXTRA["kinds"].items():
+    KIND[tid] = kind
 
 FORMATS = {
     "merge-pdf": "PDF", "split-pdf": "PDF", "rotate-pdf": "PDF", "extract-pdf-pages": "PDF",

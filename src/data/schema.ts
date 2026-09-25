@@ -53,6 +53,7 @@ export const toolRuntimeSchema = z.object({
     "seo",
     "datetime",
     "pack",
+    "wave",
   ]),
   action: z.string(),
 });
