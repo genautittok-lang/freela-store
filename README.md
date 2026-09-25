@@ -50,7 +50,8 @@ Or `npm run release` (typecheck, unit, validate, qa, lint, audit, e2e). Producti
 
 ## What is in this ship
 
-- 77 published tools; all `LOCAL_ONLY` (no file bytes leave the device)
+- 105 published tools; all `LOCAL_ONLY`
+- Sitemap: 1416 URLs across 12 locales (home + 12 legal pages + 105 tools)
 - **12 indexable locales:** `en`, `de`, `uk`, `pl`, `fr`, `es`, `it`, `pt`, `nl`, `tr`, `ar`, `he` (sitemap + hreflang + x-default). Remaining prepared locales stay unrouted.
 - Search (registry-backed; search URLs `noindex`)
 - Sitemap, robots.txt, canonical, hreflang + x-default, WebApplication + FAQ + HowTo + Breadcrumb JSON-LD, OG/Twitter image `/brand/og.png`

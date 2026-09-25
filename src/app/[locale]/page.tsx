@@ -22,6 +22,9 @@ import { formatNumber } from "@/lib/format";
 import { iconForTool } from "@/lib/tool-icons";
 
 const TASK_CHIPS = [
+  "universal-converter",
+  "pdf-to-image",
+  "tip-calculator",
   "merge-pdf",
   "compress-pdf",
   "resize-image",

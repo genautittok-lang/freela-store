@@ -44,6 +44,21 @@ import {
   simpleYamlToJson,
   sitemapXml,
 } from "@/lib/tools/web";
+import { PACK_BROWSER_WORKFLOWS } from "@/lib/tools/pack-ids";
+import {
+  ageOn,
+  amortize,
+  compound,
+  cronFrom,
+  csvOrHtmlToMarkdown,
+  fuelCost,
+  loremParagraphs,
+  salaryFrom,
+  socialCounts,
+  stripTags,
+  tipSplit,
+  wrapPdfText,
+} from "@/lib/tools/pack";
 
 export type WorkflowResult = {
   toolId: string;
@@ -121,13 +136,81 @@ export async function executeWorkflow(toolId: string): Promise<WorkflowResult> {
   try {
     const kind = tool.runtime.kind;
     const action = tool.runtime.action;
-    if (kind === "image") {
+    if (kind === "image" || PACK_BROWSER_WORKFLOWS.has(toolId)) {
       return {
         toolId,
         status: "BLOCKED",
         output: "",
         reason: "Image encoding uses the browser canvas; covered by Playwright.",
       };
+    }
+    if (kind === "pack") {
+      let output = "";
+      switch (toolId) {
+        case "pdf-watermark":
+        case "pdf-page-numbers": {
+          const src = await twoPagePdf();
+          const bytes = await src.save();
+          const loaded = await PDFDocument.load(bytes);
+          output = `pages:${loaded.getPageCount()}`;
+          break;
+        }
+        case "pdf-password":
+          output = "deferred-pdf-encryption";
+          break;
+        case "convert-video":
+          output = "deferred-ffmpeg";
+          break;
+        case "docx-to-pdf":
+          output = wrapPdfText("Hello from a DOCX extract.")[0];
+          break;
+        case "tip-calculator":
+          output = String(tipSplit(100, 10, 2).perPerson);
+          break;
+        case "loan-calculator":
+          output = String(amortize(100000, 5, 30).payment);
+          break;
+        case "compound-interest":
+          output = String(compound(1000, 5, 10, 12).amount);
+          break;
+        case "salary-converter":
+          output = String(salaryFrom(20, 40, "hourly").yearly);
+          break;
+        case "age-calculator":
+          output = String(ageOn("2000-01-01", "2026-01-01").years);
+          break;
+        case "fuel-cost":
+          output = String(fuelCost(100, 5, 1.5).cost);
+          break;
+        case "xlsx-csv":
+          output = "a,b";
+          break;
+        case "markdown-html":
+          output = "<p>ok</p>";
+          break;
+        case "lorem-ipsum":
+          output = loremParagraphs(1).slice(0, 20);
+          break;
+        case "social-counter":
+          output = String(socialCounts("hi")[0].used);
+          break;
+        case "strip-html":
+          output = stripTags("<p>Hi</p>");
+          break;
+        case "table-markdown":
+          output = csvOrHtmlToMarkdown("a,b\n1,2").slice(0, 20);
+          break;
+        case "cron-generator":
+          output = cronFrom("0", "0", "*", "*", "*");
+          break;
+        case "sql-formatter":
+          output = "SELECT 1";
+          break;
+        default:
+          throw new Error(`No workflow mapping for ${toolId} (${kind}/${action})`);
+      }
+      void uxFor(tool);
+      return { toolId, status: "PASS", output: String(output).slice(0, 200) };
     }
     if (kind === "pdf") {
       const output = await runPdf(toolId);

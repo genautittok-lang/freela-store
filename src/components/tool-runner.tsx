@@ -63,6 +63,8 @@ import { actionLabel } from "@/lib/tool-ux";
 import { rl } from "@/i18n/runner";
 import Link from "next/link";
 import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dropzone";
+import { PackToolPanel } from "@/components/pack-runner";
+import { isPackTool } from "@/lib/tools/pack-ids";
 
 function pdfBlob(bytes: Uint8Array) {
   return new Blob([bytes as unknown as BlobPart], { type: "application/pdf" });
@@ -169,7 +171,8 @@ export function ToolRunner({
           {error}
         </p>
       ) : null}
-      {kind === "text-stats" || kind === "text-transform" || kind === "json-format" || kind === "codec" || kind === "seo" ? (
+      {isPackTool(tool.id) ? <PackToolPanel tool={tool} locale={locale} wrap={wrap} cta={cta} /> : null}
+      {!isPackTool(tool.id) && (kind === "text-stats" || kind === "text-transform" || kind === "json-format" || kind === "codec" || kind === "seo") ? (
         <TextTool tool={tool} locale={locale} wrap={wrap} cta={cta} />
       ) : null}
       {kind === "regex" ? <RegexTool locale={locale} wrap={wrap} tool={tool} cta={cta} /> : null}
@@ -810,7 +813,7 @@ function ImageTool({
   const [crop, setCrop] = useState({ x: 0, y: 0, w: 200, h: 200 });
   const [text, setText] = useState("");
   const [preview, setPreview] = useState("");
-  const [outMime, setOutMime] = useState<"image/jpeg" | "image/png" | "image/webp">("image/webp");
+  const [outMime, setOutMime] = useState<"image/jpeg" | "image/png" | "image/webp" | "image/avif">("image/webp");
   const file = files[0] ?? null;
 
   function saveImage(blob: Blob, name: string) {
@@ -860,7 +863,7 @@ function ImageTool({
           <legend className="px-1 text-sm font-medium">{ui.chooseOutput}</legend>
           <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
             <span>{ui.fromLabel}</span>
-            <FormatPath from={["JPG", "PNG", "WebP"]} to={[outMime === "image/jpeg" ? "JPG" : outMime === "image/png" ? "PNG" : "WebP"]} />
+            <FormatPath from={["JPG", "PNG", "WebP", "AVIF"]} to={[outMime === "image/jpeg" ? "JPG" : outMime === "image/png" ? "PNG" : outMime === "image/webp" ? "WebP" : "AVIF"]} />
           </div>
           <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={ui.chooseOutput}>
             {(
@@ -868,6 +871,7 @@ function ImageTool({
                 ["image/jpeg", "JPG"],
                 ["image/png", "PNG"],
                 ["image/webp", "WebP"],
+                ["image/avif", "AVIF"],
               ] as const
             ).map(([mime, label]) => (
               <button
@@ -1013,7 +1017,7 @@ function ImageTool({
               };
               canvas.toBlob(
                 (blob) => {
-                  if (blob || mime !== "image/webp") return finish(blob, mime);
+                  if (blob || (mime !== "image/webp" && mime !== "image/avif")) return finish(blob, mime);
                   canvas.toBlob((fallback) => finish(fallback, "image/png"), "image/png");
                 },
                 mime,
@@ -1024,7 +1028,7 @@ function ImageTool({
         }
       >
         {action === "convert" && outMime !== "image/webp"
-          ? `${ui.convert} → ${outMime === "image/jpeg" ? "JPG" : "PNG"}`
+          ? `${ui.convert} → ${outMime === "image/jpeg" ? "JPG" : outMime === "image/png" ? "PNG" : outMime === "image/avif" ? "AVIF" : "WebP"}`
           : cta}
       </Button>
       <DownloadBar locale={locale} blob={result?.blob ?? null} name={result?.name ?? ""} />

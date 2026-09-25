@@ -61,6 +61,7 @@ const FAMILY: Record<ToolDefinition["runtime"]["kind"], UxFamily> = {
   seo: "seo",
   generator: "generator",
   qr: "qr",
+  pack: "converter",
 };
 
 const OPTIONS: Record<string, string[]> = {
@@ -70,7 +71,6 @@ const OPTIONS: Record<string, string[]> = {
   "compress-image": ["quality: 0.8 default"],
   "resize-image": ["width: 800 default"],
   "crop-image": ["x,y,w,h: 0,0,256,256 default"],
-  "convert-image": ["output: WebP"],
   "case-converter": ["upper, lower, title, sentence, invert"],
   "remove-duplicate-lines": ["sensitive | insensitive"],
   "sort-lines": ["asc | desc | numeric"],
@@ -90,6 +90,14 @@ const OPTIONS: Record<string, string[]> = {
   "uuid-generator": ["count"],
   "random-string": ["count, length"],
   "qr-generator": ["content text"],
+  "pdf-to-image": ["output: JPG or PNG"],
+  "heic-to-jpg": ["output: JPG or PNG"],
+  "pdf-watermark": ["text stamp"],
+  "convert-image": ["output: JPG, PNG, WebP, AVIF when the browser encodes it"],
+  "universal-converter": ["targets depend on detected type"],
+  "image-blur": ["radius px"],
+  "cron-generator": ["five UNIX fields"],
+  "barcode-generator": ["EAN-13 or Code 128"],
 };
 
 function inputKind(tool: ToolDefinition): InputKind {

@@ -3,6 +3,7 @@ import { moreEnglishTools } from "./english-images";
 import { textDevSeoTools } from "./english-text-dev";
 import { calcRestTools } from "./english-calc";
 import { addendumTools } from "./english-addendum";
+import { packTools } from "./english-pack";
 import { privacyFiles, privacyText } from "./define";
 import type { Locale } from "../locales";
 import { INITIAL_LOCALES, SOURCE_LOCALE } from "../locales";
@@ -19,6 +20,7 @@ const englishCatalog = [
   ...textDevSeoTools,
   ...calcRestTools,
   ...addendumTools,
+  ...packTools,
 ];
 
 export type EnglishTool = (typeof englishCatalog)[number];

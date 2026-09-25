@@ -186,17 +186,17 @@ export const moreEnglishTools: EnTool[] = [
     inputTypes: ["file"],
     outputTypes: ["file"],
     maxFileSize: img,
-    supportedFormats: ["jpg", "jpeg", "png", "webp"],
-    relatedTools: ["compress-image", "image-to-base64", "images-to-pdf"],
+    supportedFormats: ["jpg", "jpeg", "png", "webp", "avif"],
+    relatedTools: ["compress-image", "image-to-base64", "images-to-pdf", "universal-converter"],
     runtime: { kind: "image", action: "convert" },
     copyEn: {
       name: "Convert image",
-      title: "Convert image to JPG, PNG or WebP",
+      title: "Convert image to JPG, PNG, WebP or AVIF",
       description:
-        "Convert JPG, PNG and WebP images in your browser. Pick the output format — files stay on your device.",
-      h1: "Convert image to JPG, PNG or WebP",
+        "Convert JPG, PNG, WebP and AVIF in your browser when the encoder exists. Files stay on your device.",
+      h1: "Convert image to JPG, PNG, WebP or AVIF",
       intro:
-        "Pick a target type and optional quality. PNG keeps sharpness for UI. JPEG is better for photographs. WebP is a smaller web default.",
+        "Pick a target type and optional quality. PNG keeps sharpness for UI. JPEG is better for photographs. WebP is a smaller web default. AVIF is offered when this browser can encode it — otherwise you get PNG.",
       howTo: [
         "Select the source image.",
         "Choose JPEG, PNG or WebP.",
@@ -206,7 +206,7 @@ export const moreEnglishTools: EnTool[] = [
         {
           question: "Is AVIF available?",
           answer:
-            "Not in this first set. Encoding AVIF needs extra codecs we do not ship until they stay small enough for the tool bundle.",
+            "If this browser’s canvas can encode image/avif, Freela uses it. If toBlob returns empty, we fall back to PNG instead of faking AVIF.",
         },
         {
           question: "What happens to transparency?",
@@ -215,7 +215,7 @@ export const moreEnglishTools: EnTool[] = [
         },
       ],
       privacy: privacyFiles.en,
-      formats: "Input and output: JPEG, PNG, WebP.",
+      formats: "Input and output: JPEG, PNG, WebP, AVIF when the browser encodes it.",
       examples: [
         "Turn a PNG icon into WebP for a landing page.",
         "Export a WebP photo as JPEG for a printer that rejects WebP.",
@@ -380,7 +380,7 @@ export const moreEnglishTools: EnTool[] = [
         {
           question: "Do you build ICO files?",
           answer:
-            "Not yet. Modern browsers accept PNG favicons. You can still compile an ICO elsewhere if a legacy target requires it.",
+            "Yes. The PNG-to-ICO tool writes a real multi-size ICO. This favicon helper still also downloads PNG sizes for apple-touch and PWA icons.",
         },
         {
           question: "What if my logo is not square?",

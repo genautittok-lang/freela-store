@@ -52,6 +52,7 @@ export const toolRuntimeSchema = z.object({
     "qr",
     "seo",
     "datetime",
+    "pack",
   ]),
   action: z.string(),
 });
@@ -91,7 +92,7 @@ export function validateCatalog(tools: unknown[]) {
     const result = toolDefinitionSchema.safeParse(tool);
     if (!result.success) {
       throw new Error(
-        `Invalid tool at index ${index}: ${result.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`,
+        `Invalid tool at index ${index} (${(tools[index] as { id?: string })?.id}): ${result.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`,
       );
     }
     return result.data;

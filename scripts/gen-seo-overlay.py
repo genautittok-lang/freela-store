@@ -83,6 +83,34 @@ NAMES: dict[str, list[str]] = {
     "unix-timestamp": ["Unix timestamp converter", "Unix-Zeitstempel", "Конвертер Unix-часу", "Konwerter Unix", "Horodatage Unix", "Marca Unix", "Timestamp Unix", "Carimbo Unix", "Unix-tijdstempel", "Unix zaman damgası", "محول طابع Unix", "ממיר חותמת Unix"],
     "timezone-convert": ["Timezone converter", "Zeitzone umrechnen", "Конвертер часових поясів", "Konwerter stref", "Convertisseur de fuseau", "Conversor de zona horaria", "Convertitore fuso", "Conversor de fuso", "Tijdzoneconverter", "Saat dilimi dönüştürücü", "محول المنطقة الزمنية", "ממיר אזור זמן"],
     "ics-event": ["ICS calendar event", "ICS-Termin", "Подія ICS", "Wydarzenie ICS", "Événement ICS", "Evento ICS", "Evento ICS", "Evento ICS", "ICS-afspraak", "ICS etkinliği", "حدث تقويم ICS", "אירוע ICS"],
+    "pdf-to-image": ["PDF to JPG PNG", "PDF nach JPG PNG", "PDF у JPG PNG", "PDF do JPG PNG", "PDF vers JPG PNG", "PDF a JPG PNG", "PDF in JPG PNG", "PDF para JPG PNG", "PDF naar JPG PNG", "PDF’den JPG PNG", "PDF إلى JPG PNG", "PDF ל-JPG PNG"],
+    "heic-to-jpg": ["HEIC to JPG", "HEIC nach JPG", "HEIC у JPG", "HEIC na JPG", "HEIC vers JPG", "HEIC a JPG", "HEIC in JPG", "HEIC para JPG", "HEIC naar JPG", "HEIC’den JPG", "HEIC إلى JPG", "HEIC ל-JPG"],
+    "docx-to-pdf": ["DOCX to PDF text", "DOCX nach PDF-Text", "DOCX у текстовий PDF", "DOCX na PDF tekst", "DOCX vers PDF texte", "DOCX a PDF texto", "DOCX in PDF testo", "DOCX para PDF texto", "DOCX naar PDF-tekst", "DOCX’ten metin PDF", "DOCX إلى PDF نصي", "DOCX ל-PDF טקסט"],
+    "pdf-watermark": ["PDF watermark", "PDF-Wasserzeichen", "Водяний знак PDF", "Znak wodny PDF", "Filigrane PDF", "Marca de agua PDF", "Filigrana PDF", "Marca de água PDF", "PDF-watermerk", "PDF filigranı", "علامة مائية PDF", "סימן מים ל-PDF"],
+    "pdf-page-numbers": ["PDF page numbers", "PDF-Seitenzahlen", "Номери сторінок PDF", "Numery stron PDF", "Numéros de page PDF", "Números de página PDF", "Numeri di pagina PDF", "Números de página PDF", "PDF-paginanummers", "PDF sayfa numarası", "أرقام صفحات PDF", "מספרי עמוד PDF"],
+    "pdf-password": ["PDF password protect", "PDF-Passwortschutz", "Пароль PDF", "Hasło PDF", "Mot de passe PDF", "Contraseña PDF", "Password PDF", "Palavra-passe PDF", "PDF-wachtwoord", "PDF parola", "حماية PDF بكلمة", "סיסמה ל-PDF"],
+    "qr-reader": ["QR code reader", "QR-Code lesen", "Читач QR-коду", "Czytnik kodów QR", "Lecteur de QR code", "Lector de código QR", "Lettore QR", "Leitor de código QR", "QR-code lezer", "QR kod okuyucu", "قارئ رمز QR", "קורא קוד QR"],
+    "barcode-generator": ["Barcode generator", "Barcode erstellen", "Генератор штрихкоду", "Generator kodów kreskowych", "Générateur de code-barres", "Generador de código de barras", "Generatore barcode", "Gerador de código de barras", "Barcode-generator", "Barkod üretici", "مولّد باركود", "מחולל ברקוד"],
+    "tip-calculator": ["Tip calculator", "Trinkgeldrechner", "Калькулятор чайових", "Kalkulator napiwków", "Calculateur de pourboire", "Calculadora de propina", "Calcolatrice mancia", "Calculadora de gorjeta", "Fooicalculator", "Bahşiş hesaplayıcı", "حاسبة الإكرامية", "מחשבון טיפ"],
+    "loan-calculator": ["Loan calculator", "Kreditrechner", "Калькулятор кредиту", "Kalkulator kredytu", "Calculateur de prêt", "Calculadora de préstamo", "Calcolatrice prestito", "Calculadora de empréstimo", "Leningcalculator", "Kredi hesaplayıcı", "حاسبة القرض", "מחשבון הלוואה"],
+    "compound-interest": ["Compound interest", "Zinseszinsrechner", "Складні відсотки", "Procent składany", "Intérêts composés", "Interés compuesto", "Interesse composto", "Juros compostos", "Samengestelde rente", "Bileşik faiz", "فائدة مركبة", "ריבית דריבית"],
+    "salary-converter": ["Salary converter", "Gehaltsumrechner", "Конвертер зарплати", "Przelicznik pensji", "Convertisseur de salaire", "Conversor de salario", "Convertitore stipendio", "Conversor de salário", "Salarisconverter", "Maaş dönüştürücü", "محول الراتب", "ממיר שכר"],
+    "age-calculator": ["Age calculator", "Altersrechner", "Калькулятор віку", "Kalkulator wieku", "Calculateur d’âge", "Calculadora de edad", "Calcolatrice età", "Calculadora de idade", "Leeftijdcalculator", "Yaş hesaplayıcı", "حاسبة العمر", "מחשבון גיל"],
+    "fuel-cost": ["Fuel cost calculator", "Kraftstoffkosten", "Вартість пального", "Koszt paliwa", "Coût du carburant", "Coste de combustible", "Costo carburante", "Custo de combustível", "Brandstofkosten", "Yakıt maliyeti", "تكلفة الوقود", "עלות דלק"],
+    "xlsx-csv": ["Excel XLSX to CSV", "Excel XLSX nach CSV", "Excel XLSX у CSV", "Excel XLSX na CSV", "Excel XLSX vers CSV", "Excel XLSX a CSV", "Excel XLSX in CSV", "Excel XLSX para CSV", "Excel XLSX naar CSV", "Excel XLSX’ten CSV", "Excel XLSX إلى CSV", "Excel XLSX ל-CSV"],
+    "markdown-html": ["Markdown to HTML", "Markdown nach HTML", "Markdown у HTML", "Markdown na HTML", "Markdown vers HTML", "Markdown a HTML", "Markdown in HTML", "Markdown para HTML", "Markdown naar HTML", "Markdown’dan HTML", "Markdown إلى HTML", "Markdown ל-HTML"],
+    "lorem-ipsum": ["Lorem Ipsum generator", "Lorem-Ipsum-Generator", "Генератор Lorem Ipsum", "Generator Lorem Ipsum", "Générateur Lorem Ipsum", "Generador Lorem Ipsum", "Generatore Lorem Ipsum", "Gerador Lorem Ipsum", "Lorem Ipsum-generator", "Lorem Ipsum üretici", "مولّد Lorem Ipsum", "מחולל Lorem Ipsum"],
+    "social-counter": ["Social character counter", "Social-Zeichenzähler", "Лічильник соцмереж", "Licznik znaków social", "Compteur social", "Contador social", "Conta caratteri social", "Contador social", "Sociale tekens", "Sosyal karakter sayacı", "عدّاد منشورات", "מונה תווים לרשתות"],
+    "strip-html": ["Strip HTML extract text", "HTML-Text extrahieren", "Текст із HTML", "Tekst z HTML", "Extraire le texte HTML", "Extraer texto HTML", "Estrai testo HTML", "Extrair texto HTML", "HTML-tekst halen", "HTML’den metin", "استخراج نص HTML", "חילוץ טקסט מ-HTML"],
+    "table-markdown": ["Table to Markdown", "Tabelle nach Markdown", "Таблиця в Markdown", "Tabela do Markdown", "Tableau vers Markdown", "Tabla a Markdown", "Tabella in Markdown", "Tabela para Markdown", "Tabel naar Markdown", "Tabloyu Markdown", "جدول إلى Markdown", "טבלה ל-Markdown"],
+    "cron-generator": ["Cron expression generator", "Cron-Ausdruck", "Генератор cron", "Generator cron", "Générateur cron", "Generador cron", "Generatore cron", "Gerador cron", "Cron-generator", "Cron üretici", "مولّد cron", "מחולל cron"],
+    "sql-formatter": ["SQL formatter", "SQL formatieren", "Форматер SQL", "Formatter SQL", "Formateur SQL", "Formateador SQL", "Formatter SQL", "Formatador SQL", "SQL formatteren", "SQL biçimlendir", "منسّق SQL", "מעצב SQL"],
+    "image-text-overlay": ["Image text overlay", "Text auf Bild", "Текст на зображенні", "Tekst na obrazie", "Texte sur image", "Texto sobre imagen", "Testo su immagine", "Texto na imagem", "Tekst op afbeelding", "Görsele yazı", "نص على صورة", "טקסט על תמונה"],
+    "image-blur": ["Blur image online", "Bild unscharf machen", "Розмити зображення", "Rozmyj obraz", "Flouter une image", "Desenfocar imagen", "Sfoca immagine", "Desfocar imagem", "Afbeelding vervagen", "Görsel bulanıklaştır", "تمويه الصورة", "טשטוש תמונה"],
+    "png-to-ico": ["PNG to ICO favicon", "PNG nach ICO", "PNG у ICO", "PNG na ICO", "PNG vers ICO", "PNG a ICO", "PNG in ICO", "PNG para ICO", "PNG naar ICO", "PNG’den ICO", "PNG إلى ICO", "PNG ל-ICO"],
+    "universal-converter": ["Convert any file", "Beliebige Datei umwandeln", "Конвертувати будь-який файл", "Konwertuj dowolny plik", "Convertir n’importe quel fichier", "Convertir cualquier archivo", "Converti qualsiasi file", "Converter qualquer ficheiro", "Elk bestand converteren", "Her dosyayı dönüştür", "تحويل أي ملف", "המרת כל קובץ"],
+    "video-file-info": ["Video file info", "Video-Dateiinfo", "Інфо відеофайлу", "Info pliku wideo", "Infos fichier vidéo", "Info de vídeo", "Info file video", "Info de ficheiro vídeo", "Videobestand-info", "Video dosya bilgisi", "معلومات ملف فيديو", "מידע על קובץ וידאו"],
+    "convert-video": ["Convert video status", "Video konvertieren Status", "Статус конвертації відео", "Status konwersji wideo", "Statut conversion vidéo", "Estado convertir vídeo", "Stato conversione video", "Estado converter vídeo", "Videoconversie-status", "Video dönüştürme durumu", "حالة تحويل الفيديو", "סטטוס המרת וידאו"],
 }
 
 KIND = {}
@@ -105,8 +133,27 @@ for _id in ("hex-rgb-hsl", "contrast-checker", "palette-generator", "gradient-ge
     KIND[_id] = "color"
 for _id in ("password-generator", "qr-generator", "random-string"):
     KIND[_id] = "gen"
-for _id in ("unix-timestamp", "timezone-convert", "ics-event"):
+for _id in ("unix-timestamp", "timezone-convert", "ics-event", "age-calculator"):
     KIND[_id] = "dt"
+for _id in ("pdf-to-image", "docx-to-pdf", "pdf-watermark", "pdf-page-numbers", "pdf-password"):
+    KIND[_id] = "pdf"
+KIND["heic-to-jpg"] = "img"
+KIND["qr-reader"] = "gen"
+KIND["barcode-generator"] = "gen"
+for _id in ("tip-calculator", "loan-calculator", "compound-interest", "salary-converter", "fuel-cost"):
+    KIND[_id] = "calc"
+KIND["xlsx-csv"] = "dev"
+KIND["markdown-html"] = "text"
+KIND["lorem-ipsum"] = "gen"
+for _id in ("social-counter", "strip-html", "table-markdown"):
+    KIND[_id] = "text"
+KIND["cron-generator"] = "dev"
+KIND["sql-formatter"] = "dev"
+for _id in ("image-text-overlay", "image-blur", "png-to-ico"):
+    KIND[_id] = "img"
+KIND["universal-converter"] = "fileconv"
+KIND["video-file-info"] = "video"
+KIND["convert-video"] = "video"
 
 FORMATS = {
     "merge-pdf": "PDF", "split-pdf": "PDF", "rotate-pdf": "PDF", "extract-pdf-pages": "PDF",
@@ -115,12 +162,14 @@ FORMATS = {
     "convert-image": "JPG PNG WebP", "image-to-base64": "image → Base64", "base64-to-image": "Base64 → image",
     "exif-strip": "JPG PNG", "favicon-generator": "PNG → ICO", "color-extract": "JPG PNG",
     "csv-json": "CSV ↔ JSON", "yaml-json": "YAML ↔ JSON", "hex-rgb-hsl": "HEX RGB HSL",
-    "temperature": "°C °F K", "length": "m ft km", "weight": "kg lb", "data-size": "MB GB",
+    "xlsx-csv": "XLSX ↔ CSV", "markdown-html": "Markdown → HTML", "png-to-ico": "PNG → ICO",
+    "universal-converter": "images PDF CSV XLSX MD HTML DOCX", "heic-to-jpg": "HEIC → JPG",
+    "pdf-to-image": "PDF → JPG PNG", "docx-to-pdf": "DOCX → text PDF",
 }
 
 CONVERT = {
     "images-to-pdf": ("JPG / PNG / WebP", "PDF"),
-    "convert-image": ("JPG / PNG / WebP", "JPG / PNG / WebP"),
+    "convert-image": ("JPG / PNG / WebP / AVIF", "JPG / PNG / WebP / AVIF"),
     "image-to-base64": ("image", "Base64"),
     "base64-to-image": ("Base64", "image"),
     "csv-json": ("CSV", "JSON"),
@@ -128,7 +177,13 @@ CONVERT = {
     "hex-rgb-hsl": ("HEX / RGB / HSL", "HEX / RGB / HSL"),
     "temperature": ("°C / °F / K", "°C / °F / K"),
     "unix-timestamp": ("Unix", "date"),
-    "timezone-convert": ("timezone", "timezone"),
+    "heic-to-jpg": ("HEIC", "JPG / PNG"),
+    "pdf-to-image": ("PDF", "JPG / PNG"),
+    "docx-to-pdf": ("DOCX", "PDF text"),
+    "xlsx-csv": ("XLSX", "CSV"),
+    "markdown-html": ("Markdown", "HTML"),
+    "png-to-ico": ("PNG", "ICO"),
+    "universal-converter": ("detected file", "listed formats only"),
 }
 
 JOB = {
@@ -145,6 +200,38 @@ JOB = {
     "ar": {"pdf": "ادمج أو قسّم أو أدر أو افحص PDF في هذا التبويب — ليست تحويل PDF إلى Word.", "img2pdf": "حوّل JPG أو PNG أو WebP إلى PDF في هذه الصفحة.", "img": "اضغط الصور أو غيّر حجمها أو قصّها أو حوّلها دون رفع.", "text": "اعُدّ النص الملصق هنا أو نظّفه أو حوّله.", "dev": "نسّق مقتطفات المطوّر أو كوّدها أو افحصها محليًا.", "seo": "اصنع مسودات meta وrobots وhreflang وschema للنسخ.", "calc": "قدّر الأرقام في المتصفح. ليست استشارة ضريبية أو طبية أو قانونية.", "unit": "حوّل الوحدات بحقول من→إلى في هذه الصفحة.", "color": "حوّل الألوان أو افحص التباين أو ابنِ لوحة محليًا.", "gen": "ولّد كلمات مرور أو رموز QR أو سلاسل عشوائية على الجهاز.", "dt": "حوّل الطوابع الزمنية والمناطق دون إرسال القيم."},
     "he": {"pdf": "מזגו, פצלו, סובבו או בדקו PDF בלשונית — זה לא PDF ל-Word.", "img2pdf": "המירו JPG, PNG או WebP ל-PDF בעמוד הזה.", "img": "דחיסה, שינוי גודל, חיתוך או המרת תמונות בלי העלאה.", "text": "ספירה, ניקוי או המרה של טקסט שהודבק בעמוד.", "dev": "עיצוב, קידוד או בדיקה של קטעי קוד במכשיר.", "seo": "טיוטות meta, robots, hreflang או schema להעתקה.", "calc": "הערכת מספרים בדפדפן. זה לא ייעוץ מס, רפואי או משפטי.", "unit": "המרת יחידות עם שדות מ→אל בעמוד זה.", "color": "המרת צבעים, בדיקת ניגודיות או בניית פלטה במכשיר.", "gen": "יצירת סיסמאות, קודי QR או מחרוזות אקראיות במכשיר.", "dt": "המרת חותמות זמן ואזורי זמן בלי לשלוח ערכים."},
 }
+
+FILECONV = {
+    "en": "Offer only conversions this browser can run. Never any-to-any, never PDF→Word.",
+    "de": "Nur Konvertierungen, die dieser Browser wirklich ausführt. Kein Any-to-any, kein PDF→Word.",
+    "uk": "Лише ті конвертації, які браузер справді вміє. Не any-to-any і не PDF→Word.",
+    "pl": "Tylko konwersje, które ta przeglądarka naprawdę wykona. Bez any-to-any i PDF→Word.",
+    "fr": "Uniquement les conversions que ce navigateur peut vraiment faire. Pas d’any-to-any ni PDF→Word.",
+    "es": "Solo conversiones que este navegador puede ejecutar. Nada de any-to-any ni PDF→Word.",
+    "it": "Solo conversioni che questo browser può eseguire. Niente any-to-any né PDF→Word.",
+    "pt": "Só conversões que este navegador consegue fazer. Sem any-to-any nem PDF→Word.",
+    "nl": "Alleen conversies die deze browser echt kan. Geen any-to-any, geen PDF→Word.",
+    "tr": "Yalnızca bu tarayıcının gerçekten çalıştırdığı dönüşümler. Any-to-any ve PDF→Word yok.",
+    "ar": "عروض التحويل التي يعملها هذا المتصفح فقط. ليست any-to-any وليست PDF→Word.",
+    "he": "רק המרות שהדפדפן באמת מריץ. בלי any-to-any ובלי PDF→Word.",
+}
+VIDEO = {
+    "en": "Inspect clip metadata locally. ffmpeg.wasm transcode is not shipped; there is no fake convert button.",
+    "de": "Clip-Metadaten lokal lesen. ffmpeg.wasm ist nicht enthalten — kein Fake-Konvertieren.",
+    "uk": "Метадані кліпу локально. ffmpeg.wasm не постачається — без фейкової кнопки convert.",
+    "pl": "Metadane klipu lokalnie. Brak ffmpeg.wasm — bez fałszywego przycisku konwersji.",
+    "fr": "Métadonnées du clip en local. Pas de ffmpeg.wasm — aucun bouton Convert factice.",
+    "es": "Metadatos del clip en local. Sin ffmpeg.wasm: no hay botón Convert falso.",
+    "it": "Metadati del clip in locale. ffmpeg.wasm non è incluso: niente Convert finto.",
+    "pt": "Metadados do clipe no dispositivo. Sem ffmpeg.wasm — sem botão Convert falso.",
+    "nl": "Clipmetadata lokaal. Geen ffmpeg.wasm — geen nep-convertknop.",
+    "tr": "Klip meta verisi yerelde. ffmpeg.wasm yok — sahte Convert düğmesi yok.",
+    "ar": "بيانات المقطع محليًا. ffmpeg.wasm غير مُشحن — بلا زر تحويل مزيف.",
+    "he": "מטא-דאטה של הקליפ במכשיר. בלי ffmpeg.wasm ובלי כפתור המרה מזויף.",
+}
+for _loc in LOCALES:
+    JOB[_loc]["fileconv"] = FILECONV[_loc]
+    JOB[_loc]["video"] = VIDEO[_loc]
 
 PHRASE = {
     "en": dict(free="Free.", stay="Files and text stay on your device — Freela does not upload them.", q1="Does this tool upload my files?", a1="No. Published Freela tools in this release are LOCAL_ONLY and run in the browser.", q2="Is it free to use?", a2="Yes. There is no paywall on this page and we do not invent reviews or star ratings.", q3="What input does this page accept?", q4="Can I convert PDF to Word here?", a4="No. Freela does not offer PDF→Word. Use merge, split, rotate, extract, or images→PDF.", conv="Convert {src} to {dst} on this landing page."),
