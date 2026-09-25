@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { getLocale } from "@/data/locales";
+import { getSiteUrl } from "@/lib/site";
+
+const siteUrl = getSiteUrl();
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://freela.store"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Freela — Free Online Tools",
     template: "%s · Freela",
@@ -23,11 +26,14 @@ export const metadata: Metadata = {
   description: "Browser-first PDF, image, text, developer and calculator tools. Files stay on your device.",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico" },
-      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: `${siteUrl}/favicon.ico`, sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: `${siteUrl}/icon.png`, type: "image/png", sizes: "32x32" },
+      { url: `${siteUrl}/favicon-32.png`, type: "image/png", sizes: "32x32" },
+      { url: `${siteUrl}/favicon-16.png`, type: "image/png", sizes: "16x16" },
+      { url: `${siteUrl}/favicon-48.png`, type: "image/png", sizes: "48x48" },
     ],
-    apple: "/apple-touch-icon.png",
+    shortcut: `${siteUrl}/favicon.ico`,
+    apple: [{ url: `${siteUrl}/apple-touch-icon.png`, sizes: "180x180", type: "image/png" }],
   },
   manifest: "/site.webmanifest",
   openGraph: {

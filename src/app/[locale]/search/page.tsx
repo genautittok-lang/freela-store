@@ -44,9 +44,9 @@ export default async function SearchPage({
   const ui = t(locale);
   const hits = q ? searchRegistry(locale, q) : [];
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:py-12">
       <PageTracker locale={locale} />
-      <h1 className="text-2xl font-semibold">{ui.searchTitle}</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">{ui.searchTitle}</h1>
       <div className="mt-4">
         <SearchBox locale={locale} initial={q} />
       </div>
@@ -78,7 +78,7 @@ export default async function SearchPage({
           const cat = hit.category;
           return (
             <li key={cat.id}>
-              <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="block rounded-xl border p-4">
+              <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="freela-card block p-4">
                 {copyForCategory(cat, locale).name}
               </Link>
             </li>

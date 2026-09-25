@@ -96,7 +96,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
     { name: copy.name, url: absoluteUrl(`/${locale}/tools/${copy.slug}`) },
   ];
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8">
+    <article className="relative mx-auto max-w-3xl px-4 py-10 sm:py-12">
       <PageTracker locale={locale} toolId={tool.id} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd(crumbs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd(tool, locale)) }} />
@@ -122,13 +122,15 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
           <li>{copy.name}</li>
         </ol>
       </nav>
-      <div className="mt-4 flex items-start gap-3">
-        {createElement(iconForTool(tool.id, tool.category), {
-          className: "mt-1 h-8 w-8 shrink-0 text-primary",
-          "aria-hidden": true,
-        })}
+      <div className="mt-5 flex items-start gap-3">
+        <span className="freela-well mt-1 h-12 w-12">
+          {createElement(iconForTool(tool.id, tool.category), {
+            className: "h-6 w-6",
+            "aria-hidden": true,
+          })}
+        </span>
         <div>
-          <h1 id="tool-heading" className="text-3xl font-semibold tracking-tight">
+          <h1 id="tool-heading" className="text-3xl font-semibold tracking-tight sm:text-4xl">
             {copy.h1}
           </h1>
           <p className="mt-2 text-muted-foreground">{copy.intro}</p>
@@ -138,7 +140,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <p className="mt-3 inline-flex rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
         {privacyLabel(tool.processingMode, locale)}
       </p>
-      <div className="mt-5">
+      <div className="mt-6">
         <ToolRunner tool={tool} locale={locale} />
       </div>
       <ToolBriefing tool={tool} locale={locale} />
@@ -149,30 +151,30 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <div className="mt-2">
         <FormatBadges formats={tool.supportedFormats} />
       </div>
-      <section className="mt-8">
-        <h2 className="font-semibold">{ui.howTo}</h2>
-        <ol className="mt-2 list-decimal space-y-1 ps-5 text-sm">
+      <section className="freela-card mt-8 p-5">
+        <h2 className="text-lg font-semibold">{ui.howTo}</h2>
+        <ol className="mt-3 list-decimal space-y-2 ps-5 text-sm leading-6">
           {copy.howTo.map((step) => (
             <li key={step}>{step}</li>
           ))}
         </ol>
       </section>
-      <section className="mt-6">
-        <h2 className="font-semibold">{ui.examples}</h2>
-        <ul className="mt-2 list-disc space-y-1 ps-5 text-sm">
+      <section className="freela-card mt-4 p-5">
+        <h2 className="text-lg font-semibold">{ui.examples}</h2>
+        <ul className="mt-3 list-disc space-y-2 ps-5 text-sm leading-6">
           {copy.examples.map((ex) => (
             <li key={ex}>{ex}</li>
           ))}
         </ul>
       </section>
       {copy.faq.length ? (
-        <section className="mt-6">
-          <h2 className="font-semibold">{ui.faq}</h2>
+        <section className="freela-card mt-4 p-5">
+          <h2 className="text-lg font-semibold">{ui.faq}</h2>
           <dl className="mt-3 grid gap-4">
             {copy.faq.map((item) => (
               <div key={item.question}>
                 <dt className="font-medium">{item.question}</dt>
-                <dd className="mt-1 text-sm text-muted-foreground">{item.answer}</dd>
+                <dd className="mt-1 text-sm leading-6 text-muted-foreground">{item.answer}</dd>
               </div>
             ))}
           </dl>
@@ -186,7 +188,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {related.map((item) => (
             <li key={item.id}>
-              <Link className="freela-card block p-3 hover:border-primary" href={`/${locale}/tools/${copyForTool(item, locale).slug}`}>
+              <Link className="freela-card block p-4 hover:border-primary" href={`/${locale}/tools/${copyForTool(item, locale).slug}`}>
                 {copyForTool(item, locale).name}
               </Link>
             </li>
@@ -221,7 +223,7 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
     })),
   };
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
       <PageTracker locale={locale} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd(crumbs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
@@ -230,22 +232,26 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
         {" / "}
         <span>{copy.name}</span>
       </nav>
-      <div className="mt-3 flex items-center gap-3">
-        <CategoryIcon id={cat.id} className="h-8 w-8 text-primary" />
-        <h1 className="text-3xl font-semibold">{copy.h1}</h1>
+      <div className="mt-4 flex items-center gap-3">
+        <span className="freela-well h-12 w-12">
+          <CategoryIcon id={cat.id} className="h-6 w-6 text-primary" />
+        </span>
+        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{copy.h1}</h1>
       </div>
-      <p className="mt-3 max-w-2xl text-muted-foreground">{copy.description}</p>
-      <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <p className="mt-4 max-w-2xl text-muted-foreground">{copy.description}</p>
+      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <li key={tool.id}>
-            <Link href={`/${locale}/tools/${copyForTool(tool, locale).slug}`} className="freela-card block h-full p-4 hover:border-primary">
-              {createElement(iconForTool(tool.id, tool.category), {
-                className: "h-5 w-5 text-primary",
-                "aria-hidden": true,
-              })}
-              <p className="mt-2 font-medium">{copyForTool(tool, locale).name}</p>
+            <Link href={`/${locale}/tools/${copyForTool(tool, locale).slug}`} className="freela-card block h-full p-5">
+              <span className="freela-well">
+                {createElement(iconForTool(tool.id, tool.category), {
+                  className: "h-5 w-5",
+                  "aria-hidden": true,
+                })}
+              </span>
+              <p className="mt-3 font-semibold">{copyForTool(tool, locale).name}</p>
               <p className="mt-1 text-sm text-muted-foreground">{copyForTool(tool, locale).description}</p>
-              <span className="mt-3 inline-flex text-sm font-medium text-primary">{ui.openTool}</span>
+              <span className="mt-4 inline-flex text-sm font-semibold text-primary">{ui.openTool}</span>
             </Link>
           </li>
         ))}

@@ -23,17 +23,17 @@ export function SiteHeader({ locale, pathname }: { locale: string; pathname: str
   const cl = contentLocale(locale);
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
+    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 shadow-[0_8px_24px_rgb(21_122_69_/_0.06)] backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4">
         <Logo locale={locale} compact />
         <nav className="hidden items-center gap-5 text-sm lg:flex" aria-label={ui.toolsNav}>
-          <Link className="font-medium text-foreground" href={`/${locale}`}>
+          <Link className="font-medium text-foreground hover:text-primary" href={`/${locale}`}>
             {ui.home}
           </Link>
           {categories.slice(0, 5).map((cat) => (
             <Link
               key={cat.id}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-primary"
               href={`/${locale}/tools/${cat.copy[cl].slug}`}
             >
               {cat.copy[cl].name}
@@ -117,7 +117,7 @@ export function SiteFooter({ locale }: { locale: string }) {
     { id: "hex-rgb-hsl", label: "HEX → RGB" },
   ];
   return (
-    <footer className="mt-auto border-t border-border bg-card">
+    <footer className="mt-auto border-t border-border bg-secondary/50">
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div className="sm:col-span-2 lg:col-span-1">

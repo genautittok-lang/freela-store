@@ -10,7 +10,7 @@ import { track } from "@/components/analytics-provider";
 
 type Hit = { kind: string; id: string; label: string; href: string; description?: string; category?: string };
 
-export function SearchBox({ locale, initial = "" }: { locale: string; initial?: string }) {
+export function SearchBox({ locale, initial = "", large = false }: { locale: string; initial?: string; large?: boolean }) {
   const ui = t(locale);
   const router = useRouter();
   const [q, setQ] = useState(initial);
@@ -46,8 +46,9 @@ export function SearchBox({ locale, initial = "" }: { locale: string; initial?: 
           placeholder={ui.searchPlaceholder}
           aria-label={ui.searchTitle}
           autoComplete="off"
+          className={large ? "h-12 text-base" : undefined}
         />
-        <Button type="submit">{ui.searchButton}</Button>
+        <Button type="submit" size={large ? "lg" : "default"}>{ui.searchButton}</Button>
       </div>
       {hits.length ? (
         <ul className="absolute z-20 mt-1 w-full rounded-lg border bg-background p-1 shadow">

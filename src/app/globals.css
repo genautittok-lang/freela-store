@@ -94,6 +94,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(900px 280px at 0% -8%, rgb(216 243 227 / 0.9), transparent 55%),
+      radial-gradient(700px 240px at 100% 0%, rgb(231 246 236 / 0.8), transparent 50%);
+    background-attachment: fixed;
   }
   html {
     @apply font-sans;
@@ -111,14 +115,14 @@
 .freela-card {
   border: 1px solid var(--border);
   background: var(--card);
-  border-radius: 1rem;
-  box-shadow: 0 8px 20px rgb(31 154 87 / 0.06);
+  border-radius: 1.15rem;
+  box-shadow: 0 10px 28px rgb(21 122 69 / 0.07);
   transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
 }
 .freela-card:hover {
   border-color: var(--primary);
-  box-shadow: 0 10px 24px rgb(31 154 87 / 0.1);
-  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgb(21 122 69 / 0.12);
+  transform: translateY(-2px);
 }
 
 .freela-chip {
@@ -127,13 +131,44 @@
   border-radius: 999px;
   border: 1px solid var(--border);
   background: #fff;
-  padding: 0.35rem 0.75rem;
+  padding: 0.45rem 0.9rem;
   font-size: 0.8125rem;
-  transition: background 160ms ease, border-color 160ms ease;
+  font-weight: 600;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 .freela-chip:hover {
-  background: var(--accent);
+  background: var(--primary);
   border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.freela-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(145deg, #f4fff8 0%, #ffffff 42%, #d8f3e3 100%);
+}
+.freela-hero::before {
+  content: "";
+  position: absolute;
+  inset: auto -20% -40% 40%;
+  height: 18rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(31 154 87 / 0.18), transparent 70%);
+  z-index: -1;
+}
+
+.freela-well {
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.85rem;
+  background: var(--secondary);
+  color: var(--primary);
+  flex-shrink: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

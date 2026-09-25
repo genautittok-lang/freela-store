@@ -58,7 +58,8 @@ Or `npm run release` (typecheck, unit, validate, qa, lint, audit, e2e). Producti
 - First-party analytics (no file contents; origin + rate limit)
 - Compact cookie consent for analytics
 - Legal: privacy, terms, contact, about, affiliate, acceptable use, abuse, deletion, vendors, file processing, copyright, data inventory
-- Original Freela brand assets in `public/brand/` (hero, OG, social, teaser video), favicon/manifest
+- Original Freela brand assets in `public/brand/` (hero, OG, social, teaser video)
+- Tab icons: `/favicon.ico` (16/32/48 PNG-in-ICO), `/icon.png`, `/apple-touch-icon.png` (wired in root layout metadata)
 
 ## Free continuous hosting (Vercel) + custom domain
 
