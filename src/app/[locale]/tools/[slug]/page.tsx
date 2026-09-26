@@ -135,7 +135,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       </nav>
       <div className="mt-5 flex items-start gap-4">
         {createElement(iconForTool(tool.id, tool.category), {
-          className: "freela-sticker mt-1 h-14 w-14",
+          className: "freela-sticker mt-1 h-16 w-16",
           "aria-hidden": true,
         })}
         <div>
@@ -220,7 +220,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
             <li key={item.id}>
               <Link className="freela-card flex items-center gap-3 p-4 hover:border-primary" href={`/${locale}/tools/${copyForTool(item, locale).slug}`}>
                 {createElement(iconForTool(item.id, item.category), {
-                  className: "freela-sticker h-10 w-10",
+                  className: "freela-sticker h-12 w-12",
                   "aria-hidden": true,
                 })}
                 <span className="font-medium">{copyForTool(item, locale).name}</span>
@@ -278,7 +278,7 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
           <li key={tool.id}>
             <Link href={`/${locale}/tools/${copyForTool(tool, locale).slug}`} className="freela-card block h-full p-5">
               {createElement(iconForTool(tool.id, tool.category), {
-                className: "freela-sticker h-12 w-12",
+                className: "freela-sticker h-16 w-16",
                 "aria-hidden": true,
               })}
               <p className="mt-3 font-semibold">{copyForTool(tool, locale).name}</p>

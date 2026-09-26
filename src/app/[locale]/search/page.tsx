@@ -61,7 +61,7 @@ export default async function SearchPage({
               <li key={hit.tool.id}>
                 <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card flex items-center gap-3 p-4">
                   {createElement(iconForTool(hit.tool.id, hit.tool.category), {
-                    className: "freela-sticker h-11 w-11 shrink-0",
+                    className: "freela-sticker h-14 w-14 shrink-0",
                     "aria-hidden": true,
                   })}
                   <span>

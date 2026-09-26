@@ -1,277 +1,294 @@
 import { stickerSpec, type Motif } from "@/lib/sticker-spec";
 
 const INK = [
-  { bg: "#d8f3e3", fg: "#0f5c34", line: "#157a45" },
-  { bg: "#157a45", fg: "#f4fff8", line: "#d8f3e3" },
-  { bg: "#1f9a57", fg: "#f7fbf8", line: "#e7f6ec" },
-  { bg: "#0e3d28", fg: "#d8f3e3", line: "#7dffb2" },
-  { bg: "#e7f6ec", fg: "#157a45", line: "#0f5c34" },
-  { bg: "#123524", fg: "#f4fff8", line: "#8ee4b0" },
+  { bg: "#e7f6ec", fg: "#0f5c34", chip: "#157a45" },
+  { bg: "#157a45", fg: "#f4fff8", chip: "#d8f3e3" },
+  { bg: "#0e3d28", fg: "#e7f6ec", chip: "#7dffb2" },
+  { bg: "#d8f3e3", fg: "#0f5c34", chip: "#1f9a57" },
 ] as const;
 
-function MotifMark({ motif, fg }: { motif: Motif; fg: string }) {
+function Icon({ motif, fg }: { motif: Motif; fg: string }) {
+  const common = { fill: "none" as const, stroke: fg, strokeWidth: 2.4, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   switch (motif) {
-    case "pages":
+    case "merge":
       return (
         <g fill={fg}>
-          <rect x="10" y="16" width="16" height="22" rx="2" opacity="0.45" />
-          <rect x="16" y="12" width="16" height="22" rx="2" />
+          <rect x="4" y="8" width="12" height="16" rx="2" opacity="0.45" />
+          <rect x="4" y="14" width="12" height="16" rx="2" />
+          <path d="M20 18h8M24 14l4 4-4 4" fill="none" stroke={fg} strokeWidth="2.2" strokeLinecap="round" />
+          <rect x="32" y="10" width="14" height="18" rx="2" />
         </g>
       );
     case "split":
       return (
         <g fill={fg}>
-          <path d="M14 12h14a2 2 0 0 1 2 2v22a2 2 0 0 1-2 2H14V12z" />
-          <path d="M22 12v26" stroke="#f7fbf8" strokeWidth="1.6" />
+          <rect x="16" y="8" width="16" height="20" rx="2" />
+          <path d="M24 8v20" stroke="#f7fbf8" strokeWidth="2" />
+          <path d="M8 18l6-4v8zM40 18l-6-4v8z" />
         </g>
       );
     case "rotate":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2.2" strokeLinecap="round">
-          <path d="M22 16a10 10 0 1 1-6 2" />
-          <path d="M16 12v6h6" />
+        <g {...common}>
+          <path d="M30 10a12 12 0 1 1-8 3" />
+          <path d="M18 8v8h8" />
         </g>
       );
     case "squeeze":
       return (
         <g fill={fg}>
-          <path d="M12 24h8l-3-4v8l3-4z" />
-          <path d="M40 24h-8l3-4v8l-3-4z" />
-          <rect x="22" y="18" width="8" height="12" rx="2" />
+          <path d="M4 18h10l-4-5v10z" />
+          <path d="M44 18H34l4-5v10z" />
+          <rect x="18" y="10" width="12" height="16" rx="2" />
         </g>
       );
     case "crop":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2.2" strokeLinecap="round">
-          <path d="M14 20V14h6M38 20V14h-6M14 32v6h6M38 32v6h-6" />
+        <g {...common}>
+          <path d="M10 16V10h6M38 16V10h-6M10 24v6h6M38 24v6h-6" />
         </g>
       );
     case "frame":
       return (
-        <g fill={fg}>
-          <rect x="14" y="14" width="24" height="20" rx="2" fill="none" stroke={fg} strokeWidth="2" />
-          <circle cx="14" cy="14" r="2" />
-          <circle cx="38" cy="34" r="2" />
+        <g {...common}>
+          <rect x="10" y="8" width="28" height="22" rx="3" />
+          <path d="M10 8l6 6M38 8l-6 6M10 30l6-6M38 30l-6-6" />
         </g>
       );
     case "image":
       return (
         <g fill={fg}>
-          <rect x="12" y="14" width="28" height="22" rx="3" fill="none" stroke={fg} strokeWidth="2" />
-          <circle cx="20" cy="21" r="2.2" />
-          <path d="M14 32l8-8 6 5 4-3 8 6H14z" />
+          <rect x="8" y="8" width="32" height="22" rx="3" fill="none" stroke={fg} strokeWidth="2.2" />
+          <circle cx="16" cy="15" r="2.4" />
+          <path d="M10 27l8-8 6 5 4-3 10 6H10z" />
         </g>
       );
     case "grid":
       return (
         <g fill={fg}>
-          <rect x="14" y="14" width="8" height="8" rx="1.5" />
-          <rect x="26" y="14" width="8" height="8" rx="1.5" opacity="0.7" />
-          <rect x="14" y="26" width="8" height="8" rx="1.5" opacity="0.7" />
-          <rect x="26" y="26" width="8" height="8" rx="1.5" />
+          <rect x="8" y="8" width="10" height="10" rx="2" />
+          <rect x="22" y="8" width="10" height="10" rx="2" opacity="0.7" />
+          <rect x="8" y="22" width="10" height="10" rx="2" opacity="0.7" />
+          <rect x="22" y="22" width="10" height="10" rx="2" />
         </g>
       );
     case "lock":
       return (
         <g fill={fg}>
-          <rect x="16" y="24" width="20" height="14" rx="3" />
-          <path d="M22 24v-4a6 6 0 0 1 12 0v4" fill="none" stroke={fg} strokeWidth="2.2" />
+          <rect x="14" y="16" width="20" height="14" rx="3" />
+          <path d="M18 16v-4a6 6 0 0 1 12 0v4" fill="none" stroke={fg} strokeWidth="2.2" />
         </g>
       );
     case "qr":
       return (
         <g fill={fg}>
-          <rect x="12" y="12" width="8" height="8" />
-          <rect x="32" y="12" width="8" height="8" />
-          <rect x="12" y="32" width="8" height="8" />
-          <rect x="28" y="28" width="4" height="4" />
-          <rect x="34" y="34" width="4" height="4" />
-          <rect x="28" y="36" width="3" height="3" />
+          <rect x="8" y="6" width="10" height="10" />
+          <rect x="30" y="6" width="10" height="10" />
+          <rect x="8" y="24" width="10" height="10" />
+          <rect x="26" y="22" width="5" height="5" />
+          <rect x="34" y="30" width="5" height="5" />
+        </g>
+      );
+    case "barcode":
+      return (
+        <g fill={fg}>
+          <rect x="8" y="8" width="3" height="22" />
+          <rect x="14" y="8" width="1.5" height="22" />
+          <rect x="18" y="8" width="4" height="22" />
+          <rect x="25" y="8" width="2" height="22" />
+          <rect x="30" y="8" width="5" height="22" />
+          <rect x="38" y="8" width="2" height="22" />
         </g>
       );
     case "swatch":
       return (
         <g fill={fg}>
-          <circle cx="22" cy="26" r="8" opacity="0.55" />
-          <circle cx="32" cy="22" r="8" />
+          <circle cx="18" cy="20" r="9" opacity="0.45" />
+          <circle cx="30" cy="16" r="9" />
         </g>
       );
     case "braces":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2.2" strokeLinecap="round">
-          <path d="M22 14c-4 0-5 3-5 6s2 4-2 6 2 6 2 6 1 6 5 6" />
-          <path d="M30 14c4 0 5 3 5 6s-2 4 2 6-2 6-2 6-1 6-5 6" />
+        <g {...common}>
+          <path d="M20 8c-5 0-6 4-6 7s3 4-2 6 2 6 2 6 1 7 6 7" />
+          <path d="M28 8c5 0 6 4 6 7s-3 4 2 6-2 6-2 6-1 7-6 7" />
         </g>
       );
     case "code":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 16l-8 10 8 10" />
-          <path d="M30 16l8 10-8 10" />
+        <g {...common}>
+          <path d="M18 10l-8 10 8 10M30 10l8 10-8 10" />
         </g>
       );
     case "hash":
       return (
-        <g stroke={fg} strokeWidth="2.4" strokeLinecap="round">
-          <path d="M20 14v24M32 14v24M14 22h24M14 30h24" />
+        <g stroke={fg} strokeWidth="2.6" strokeLinecap="round">
+          <path d="M18 8v24M30 8v24M10 16h28M10 26h28" />
         </g>
       );
     case "link":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2.2" strokeLinecap="round">
-          <path d="M18 30l-2 2a6 6 0 0 1 0-8l6-6a6 6 0 0 1 8 8" />
-          <path d="M34 22l2-2a6 6 0 0 1 0 8l-6 6a6 6 0 0 1-8-8" />
+        <g {...common}>
+          <path d="M16 24l-2 2a6 6 0 0 1 0-8l6-6a6 6 0 0 1 8 8" />
+          <path d="M32 16l2-2a6 6 0 0 1 0 8l-6 6a6 6 0 0 1-8-8" />
         </g>
       );
     case "clock":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2.2" strokeLinecap="round">
-          <circle cx="26" cy="26" r="11" />
-          <path d="M26 18v8l5 3" />
+        <g {...common}>
+          <circle cx="24" cy="18" r="12" />
+          <path d="M24 10v8l5 3" />
         </g>
       );
     case "calc":
       return (
         <g fill={fg}>
-          <rect x="14" y="12" width="24" height="28" rx="3" fill="none" stroke={fg} strokeWidth="2" />
-          {[0, 1, 2].map((r) =>
-            [0, 1, 2].map((c) => <circle key={`${r}${c}`} cx={20 + c * 6} cy={24 + r * 5} r="1.3" />),
-          )}
+          <rect x="12" y="6" width="24" height="28" rx="3" fill="none" stroke={fg} strokeWidth="2" />
+          <rect x="16" y="10" width="16" height="5" rx="1" />
+          <circle cx="18" cy="22" r="1.4" />
+          <circle cx="24" cy="22" r="1.4" />
+          <circle cx="30" cy="22" r="1.4" />
+          <circle cx="18" cy="28" r="1.4" />
+          <circle cx="24" cy="28" r="1.4" />
+          <circle cx="30" cy="28" r="1.4" />
         </g>
       );
     case "text":
       return (
         <g fill={fg}>
-          <rect x="14" y="16" width="22" height="2.4" rx="1" />
-          <rect x="14" y="22" width="16" height="2.4" rx="1" opacity="0.75" />
-          <rect x="14" y="28" width="20" height="2.4" rx="1" opacity="0.55" />
+          <rect x="10" y="10" width="26" height="3" rx="1" />
+          <rect x="10" y="17" width="18" height="3" rx="1" opacity="0.75" />
+          <rect x="10" y="24" width="22" height="3" rx="1" opacity="0.55" />
         </g>
+      );
+    case "count":
+      return (
+        <text x="24" y="28" textAnchor="middle" fill={fg} fontSize="18" fontWeight="800" fontFamily="ui-sans-serif, system-ui, sans-serif">
+          123
+        </text>
       );
     case "check":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="26" cy="26" r="11" />
-          <path d="M20 26l4 4 8-9" />
+        <g {...common}>
+          <circle cx="24" cy="18" r="12" />
+          <path d="M17 18l4 4 9-10" />
         </g>
       );
     case "spark":
-      return <path fill={fg} d="M26 12l2.2 8.2L36 22l-7.8 1.8L26 32l-2.2-8.2L16 22l7.8-1.8z" />;
+      return <path fill={fg} d="M24 6l2.4 8.2L34 16l-7.6 1.8L24 26l-2.4-8.2L14 16l7.6-1.8z" />;
     case "table":
       return (
-        <g fill={fg}>
-          <rect x="12" y="14" width="28" height="22" rx="2" fill="none" stroke={fg} strokeWidth="2" />
-          <path d="M12 22h28M12 28h28M22 14v22" stroke={fg} strokeWidth="1.6" />
+        <g {...common}>
+          <rect x="8" y="8" width="32" height="22" rx="2" />
+          <path d="M8 16h32M8 23h32M20 8v22" />
         </g>
       );
     case "mail":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2" strokeLinejoin="round">
-          <rect x="12" y="16" width="28" height="18" rx="2" />
-          <path d="M12 18l14 10L40 18" />
+        <g {...common}>
+          <rect x="8" y="10" width="32" height="18" rx="2" />
+          <path d="M8 12l16 10L40 12" />
         </g>
       );
     case "globe":
       return (
-        <g fill="none" stroke={fg} strokeWidth="1.8">
-          <circle cx="26" cy="26" r="11" />
-          <ellipse cx="26" cy="26" rx="5" ry="11" />
-          <path d="M15 26h22M17 20h18M17 32h18" />
+        <g {...common}>
+          <circle cx="24" cy="18" r="12" />
+          <ellipse cx="24" cy="18" rx="5" ry="12" />
+          <path d="M12 18h24" />
         </g>
       );
     case "list":
       return (
         <g fill={fg}>
-          <circle cx="15" cy="18" r="1.6" />
-          <circle cx="15" cy="26" r="1.6" />
-          <circle cx="15" cy="34" r="1.6" />
-          <rect x="20" y="16.5" width="16" height="2.4" rx="1" />
-          <rect x="20" y="24.5" width="12" height="2.4" rx="1" />
-          <rect x="20" y="32.5" width="14" height="2.4" rx="1" />
+          <circle cx="10" cy="12" r="2" />
+          <circle cx="10" cy="20" r="2" />
+          <circle cx="10" cy="28" r="2" />
+          <rect x="16" y="10" width="20" height="3" rx="1" />
+          <rect x="16" y="18" width="14" height="3" rx="1" />
+          <rect x="16" y="26" width="18" height="3" rx="1" />
         </g>
       );
     case "percent":
       return (
         <g fill={fg}>
-          <circle cx="18" cy="18" r="3" />
-          <circle cx="34" cy="34" r="3" />
-          <path d="M34 16L18 36" stroke={fg} strokeWidth="2.2" strokeLinecap="round" />
+          <circle cx="14" cy="12" r="4" />
+          <circle cx="34" cy="28" r="4" />
+          <path d="M34 8L14 32" stroke={fg} strokeWidth="2.4" strokeLinecap="round" />
         </g>
       );
     case "key":
       return (
-        <g fill={fg}>
-          <circle cx="20" cy="24" r="6" fill="none" stroke={fg} strokeWidth="2.2" />
-          <path d="M25 24h12l-3 3M34 24l-3-3" stroke={fg} strokeWidth="2.2" strokeLinecap="round" />
+        <g {...common}>
+          <circle cx="16" cy="18" r="7" />
+          <path d="M22 18h16l-4 4M34 18l-4-4" />
         </g>
       );
     case "eye":
       return (
-        <g fill="none" stroke={fg} strokeWidth="2">
-          <path d="M10 26s6-8 16-8 16 8 16 8-6 8-16 8-16-8-16-8z" />
-          <circle cx="26" cy="26" r="3.2" fill={fg} stroke="none" />
+        <g {...common}>
+          <path d="M6 18s7-9 18-9 18 9 18 9-7 9-18 9S6 18 6 18z" />
+          <circle cx="24" cy="18" r="4" fill={fg} stroke="none" />
         </g>
       );
-    case "wave":
+    case "pages":
       return (
-        <path
-          d="M10 28c4-8 8-8 12 0s8 8 12 0 8-8 12 0"
-          fill="none"
-          stroke={fg}
-          strokeWidth="2.4"
-          strokeLinecap="round"
-        />
+        <g fill={fg}>
+          <rect x="14" y="6" width="22" height="28" rx="3" />
+          <path d="M28 6v8h8" fill="#f4fff8" opacity="0.9" />
+        </g>
+      );
+    case "swap":
+      return (
+        <g {...common}>
+          <path d="M8 12h22" />
+          <path d="M24 8l6 4-6 4" />
+          <path d="M40 26H18" />
+          <path d="M22 22l-6 4 6 4" />
+        </g>
       );
     default:
-      return null;
-  }
-}
-
-function Badge({ kind, fg }: { kind: number; fg: string }) {
-  const common = { fill: fg };
-  switch (kind) {
-    case 0:
-      return <circle cx="46" cy="16" r="3" {...common} />;
-    case 1:
-      return <rect x="43" y="13" width="6" height="6" rx="1" {...common} />;
-    case 2:
-      return <path d="M46 12l3 6-3 6-3-6z" {...common} />;
-    case 3:
-      return <path d="M43 16h6M46 13v6" stroke={fg} strokeWidth="1.8" strokeLinecap="round" />;
-    case 4:
-      return <circle cx="46" cy="16" r="3" fill="none" stroke={fg} strokeWidth="1.6" />;
-    case 5:
-      return <path d="M43 18l3-6 3 6z" {...common} />;
-    case 6:
-      return <rect x="43.5" y="13.5" width="5" height="5" transform="rotate(45 46 16)" {...common} />;
-    default:
-      return <path d="M46 12.5l1 2.4h2.6l-2 1.6.8 2.5L46 18.4l-2.4 1.6.8-2.5-2-1.6H45z" {...common} />;
+      return (
+        <g {...common}>
+          <circle cx="24" cy="18" r="10" />
+        </g>
+      );
   }
 }
 
 export function ToolSticker({ id, className }: { id: string; className?: string }) {
   const spec = stickerSpec(id);
   const tone = INK[spec.ink];
-  const grad = `sticker-${id.replace(/[^a-z0-9]+/gi, "-")}`;
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden>
-      <defs>
-        <linearGradient id={grad} x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#ffffff" stopOpacity="0.28" />
-          <stop offset="0.45" stopColor={tone.bg} />
-          <stop offset="1" stopColor={tone.bg} />
-        </linearGradient>
-      </defs>
-      <rect x="3" y="3" width="58" height="58" rx="16" fill={`url(#${grad})`} />
-      <rect x="3" y="3" width="58" height="58" rx="16" fill={tone.bg} fillOpacity="0.92" />
-      <path d="M44 5.5h14.5V20C52 20 44 12 44 5.5z" fill="#ffffff" fillOpacity="0.55" />
-      <rect x="5.5" y="5.5" width="53" height="53" rx="14" fill="none" stroke="#ffffff" strokeOpacity="0.65" strokeWidth="1.4" />
-      <MotifMark motif={spec.motif} fg={tone.fg} />
-      <Badge kind={spec.badge} fg={tone.line} />
-      {spec.pips.map((cell) => {
-        const col = cell % 4;
-        const row = Math.floor(cell / 4);
-        return <circle key={cell} cx={46 + col * 3.3} cy={44 + row * 3.3} r="1.15" fill={tone.line} />;
-      })}
+      <rect x="2" y="2" width="60" height="60" rx="16" fill={tone.bg} />
+      <path d="M44 4h16v14C52 18 44 12 44 4z" fill="#ffffff" fillOpacity="0.45" />
+      <rect x="4" y="4" width="56" height="56" rx="14" fill="none" stroke="#ffffff" strokeOpacity="0.7" strokeWidth="1.5" />
+      <g transform="translate(32,15) scale(0.62) translate(-24,-18)">
+        <Icon motif={spec.motif} fg={tone.fg} />
+      </g>
+      <text
+        x="32"
+        y="46"
+        textAnchor="middle"
+        fill={tone.fg}
+        fontSize={spec.action.length > 6 ? 8 : spec.action.length > 4 ? 10 : 12}
+        fontWeight="800"
+        fontFamily="ui-sans-serif, system-ui, sans-serif"
+      >
+        {spec.action}
+      </text>
+      <text
+        x="32"
+        y="58"
+        textAnchor="middle"
+        fill={tone.chip}
+        fontSize={spec.object.length > 6 ? 7 : 9}
+        fontWeight="700"
+        fontFamily="ui-sans-serif, system-ui, sans-serif"
+      >
+        {spec.object}
+      </text>
     </svg>
   );
 }

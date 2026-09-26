@@ -177,6 +177,51 @@
   }
 }
 
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  text-decoration: none;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 2px;
+  border-radius: 999px;
+  background: #157a45;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: #157a45;
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+.nav-link[data-active="true"],
+.nav-item[data-active="true"] .nav-link {
+  color: #0f5c34;
+  font-weight: 600;
+}
+.nav-item:hover .nav-link,
+.nav-item:focus-visible .nav-link {
+  color: #157a45;
+}
+.nav-item:hover .nav-link::after,
+.nav-item:focus-visible .nav-link::after,
+.nav-item[data-active="true"] .nav-link::after {
+  transform: scaleX(1);
+}
+
 .freela-sticker {
   display: block;
   flex-shrink: 0;
@@ -199,8 +244,15 @@
 @media (prefers-reduced-motion: reduce) {
   .freela-card,
   .freela-chip,
-  .freela-card:hover {
+  .freela-card:hover,
+  .nav-link::after {
     transition: none;
-    transform: none;
+    transform: scaleX(0);
+  }
+  .nav-link[data-active="true"]::after,
+  .nav-link:hover::after,
+  .nav-item[data-active="true"] .nav-link::after,
+  .nav-item:hover .nav-link::after {
+    transform: scaleX(1);
   }
 }

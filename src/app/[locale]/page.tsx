@@ -212,7 +212,7 @@ function ToolGrid({
           return (
             <li key={tool.id}>
               <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card block h-full p-5">
-                <Icon className="freela-sticker h-12 w-12" aria-hidden />
+                <Icon className="freela-sticker h-16 w-16" aria-hidden />
                 <p className="mt-3 font-semibold">{copy.name}</p>
                 <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{copy.description}</p>
                 <span className="mt-4 inline-flex text-sm font-semibold text-primary">{cta}</span>

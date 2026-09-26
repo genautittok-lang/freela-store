@@ -3,7 +3,8 @@ import { ROUTED_LOCALES, contentLocale, getLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
 import { Logo } from "@/components/logo";
-import { CONTACT_EMAIL, CONTACT_MAILTO } from "@/lib/site";
+import { CONTACT_EMAIL, CREATOR_EMAIL, INFO_EMAIL, PARTNER_EMAIL } from "@/lib/site";
+import { mailRoles } from "@/i18n/mailboxes";
 import { copyForTool, toolById } from "@/lib/registry";
 
 const CONVERT_IDS = ["merge-pdf", "images-to-pdf", "convert-image", "csv-json", "yaml-json", "temperature", "hex-rgb-hsl"];
@@ -44,12 +45,24 @@ export function SiteFooter({ locale }: { locale: string }) {
             <Logo locale={locale} homeLabel={ui.home} />
             <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">{ui.tagline}</p>
             <p className="mt-3 text-xs font-medium text-emerald-800">{ui.processedLocally}</p>
-            <p className="mt-4 text-sm">
-              <a className="font-semibold text-primary hover:underline" href={CONTACT_MAILTO}>
-                {CONTACT_EMAIL}
-              </a>
-              <span className="mt-1 block text-xs text-muted-foreground">{ui.contactHint}</span>
-            </p>
+            <ul className="mt-4 grid gap-2 text-sm">
+              {(
+                [
+                  [CONTACT_EMAIL, mailRoles(locale).tools],
+                  [PARTNER_EMAIL, mailRoles(locale).partner],
+                  [INFO_EMAIL, mailRoles(locale).info],
+                  [CREATOR_EMAIL, mailRoles(locale).creator],
+                ] as const
+              ).map(([email, role]) => (
+                <li key={email}>
+                  <a className="font-semibold text-primary hover:underline" href={`mailto:${email}`}>
+                    {email}
+                  </a>
+                  <span className="mt-0.5 block text-xs text-muted-foreground">{role}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-xs text-muted-foreground">{ui.contactHint}</p>
           </div>
           <nav aria-label={ui.tools}>
             <p className="text-sm font-semibold">{ui.tools}</p>

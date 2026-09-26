@@ -10,7 +10,24 @@ describe("tool stickers", () => {
     expect(ids.length).toBeGreaterThanOrEqual(300);
     const merge = stickerSpec("merge-pdf");
     const split = stickerSpec("split-pdf");
-    expect(merge.motif).not.toBe(split.motif);
+    const shrink = stickerSpec("compress-pdf");
+    expect(merge.motif).toBe("merge");
+    expect(merge.action).toBe("MERGE");
+    expect(merge.object).toBe("PDF");
+    expect(split.motif).toBe("split");
+    expect(split.action).toBe("SPLIT");
+    expect(shrink.motif).toBe("squeeze");
+    expect(shrink.action).toBe("SHRINK");
+    expect(shrink.object).toBe("PDF");
+    expect(stickerSpec("compress-image").object).toBe("IMG");
+    expect(stickerSpec("word-counter")).toMatchObject({ action: "WORDS", object: "COUNT" });
+    const coded = new Set(["B64", "IPV4", "IPV6", "ROT13", "ROT47"]);
+    for (const spec of ids.map(stickerSpec)) {
+      expect(spec.action.length).toBeGreaterThan(1);
+      expect(spec.object.length).toBeGreaterThan(1);
+      if (!coded.has(spec.action)) expect(spec.action).not.toMatch(/^[A-Z]{1,4}[1-9]$/);
+      if (!coded.has(spec.object)) expect(spec.object).not.toMatch(/^[A-Z]{1,4}[1-9]$/);
+    }
     expect(stickerSpec("merge-pdf")).toEqual(merge);
   });
 });

@@ -8,6 +8,18 @@ import { SiteFooter } from "@/components/site-footer";
 import { DocumentLang } from "@/components/document-lang";
 import { getLocale } from "@/data/locales";
 import { t } from "@/i18n/messages";
+import { categoryBySlug, toolBySlug } from "@/lib/registry";
+
+function activeNav(locale: string, pathname: string) {
+  const rest = pathname.replace(/^\/[a-z]{2}(?:-[A-Za-z]{2})?/, "") || "/";
+  if (rest === "/" || rest === "") return "home";
+  const match = rest.match(/^\/tools\/([^/?#]+)/);
+  if (!match) return "";
+  const slug = decodeURIComponent(match[1]);
+  const cat = categoryBySlug(locale, slug);
+  if (cat) return cat.id;
+  return toolBySlug(locale, slug)?.category ?? "";
+}
 
 export function generateStaticParams() {
   return ROUTED_LOCALES.map((locale) => ({ locale }));
@@ -32,7 +44,7 @@ export default async function LocaleLayout({
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:m-2 focus:rounded focus:bg-foreground focus:px-3 focus:py-2 focus:text-background">
         {ui.skipToContent}
       </a>
-      <SiteHeader locale={locale} pathname={pathname} />
+      <SiteHeader locale={locale} pathname={pathname} active={activeNav(locale, pathname)} />
       <div id="main" className="flex-1">
         {children}
       </div>
