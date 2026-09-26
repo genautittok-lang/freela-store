@@ -164,6 +164,19 @@
   z-index: -1;
 }
 
+.freela-panel {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 1.25rem;
+  padding: 1rem;
+  box-shadow: 0 12px 30px rgb(21 122 69 / 0.06);
+}
+@media (min-width: 640px) {
+  .freela-panel {
+    padding: 1.25rem;
+  }
+}
+
 .freela-sticker {
   display: block;
   flex-shrink: 0;

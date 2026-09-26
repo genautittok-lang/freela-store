@@ -75,7 +75,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         <div className="overflow-hidden rounded-[1.5rem] border border-border bg-white shadow-sm">
           <Image
             src="/brand/hero.png"
-            alt="Freela browser tools"
+            alt={ui.homeTitle}
             width={1280}
             height={720}
             priority

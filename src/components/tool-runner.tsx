@@ -628,7 +628,6 @@ function PdfTool({
   cancelled: React.MutableRefObject<boolean>;
   cta: string;
 }) {
-  const ui = t(locale);
   const [files, setFiles] = useState<File[]>([]);
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
   const [angle, setAngle] = useState(90);
@@ -655,17 +654,6 @@ function PdfTool({
 
   return (
     <div className="grid gap-3">
-      <FormatPath
-        from={action === "images-to-pdf" ? ["JPG", "PNG", "WebP"] : ["PDF"]}
-        to={["PDF"]}
-      />
-      <p className="text-sm text-muted-foreground">
-        {action === "merge"
-          ? `${ui.fromLabel}: PDF → ${ui.toLabel}: PDF`
-          : action === "images-to-pdf"
-            ? `${ui.fromLabel}: JPG / PNG / WebP → ${ui.toLabel}: PDF`
-            : `${ui.fromLabel}: PDF → ${ui.toLabel}: PDF`}
-      </p>
       <FileDropzone
         locale={locale}
         toolId={tool.id}
@@ -684,7 +672,7 @@ function PdfTool({
         <p className="text-sm text-muted-foreground">{rl(locale, "reverseNote")}</p>
       ) : null}
       {action === "rotate" ? (
-        <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))}>
+        <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))} aria-label={rl(locale, "angle")}>
           <option value={90}>90°</option>
           <option value={180}>180°</option>
           <option value={270}>270°</option>
@@ -698,7 +686,7 @@ function PdfTool({
       <Button
         type="button"
         size="lg"
-        className="w-full sm:w-auto"
+        className="w-full"
         onClick={() =>
           wrap(async () => {
             const { PDFDocument, degrees } = await import("pdf-lib");
@@ -770,7 +758,7 @@ function PdfTool({
             if (action === "delete") {
               const drop = parsePageList(pages, src.getPageCount());
               const keep = src.getPageIndices().filter((i) => !drop.has(i + 1));
-              if (!keep.length) throw new Error("Keep at least one page.");
+              if (!keep.length) throw new Error(rl(locale, "keepPage"));
               const copied = await out.copyPages(src, keep);
               copied.forEach((p) => out.addPage(p));
               savePdf(pdfBlob(await out.save()), "pages-removed.pdf");
@@ -943,22 +931,22 @@ function ImageTool({
         </div>
       ) : null}
       {action === "rotate" ? (
-        <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))} aria-label="Rotation angle">
+        <select className="h-9 rounded-lg border px-2" value={angle} onChange={(e) => setAngle(Number(e.target.value))} aria-label={rl(locale, "angle")}>
           <option value={90}>90°</option>
           <option value={180}>180°</option>
           <option value={270}>270°</option>
         </select>
       ) : null}
       {action === "flip" ? (
-        <select className="h-9 rounded-lg border px-2" value={flip} onChange={(e) => setFlip(e.target.value as "horizontal" | "vertical")} aria-label="Flip direction">
-          <option value="horizontal">Horizontal</option>
-          <option value="vertical">Vertical</option>
+        <select className="h-9 rounded-lg border px-2" value={flip} onChange={(e) => setFlip(e.target.value as "horizontal" | "vertical")} aria-label={rl(locale, "flip")}>
+          <option value="horizontal">{rl(locale, "horizontal")}</option>
+          <option value="vertical">{rl(locale, "vertical")}</option>
         </select>
       ) : null}
       <Button
         type="button"
         size="lg"
-        className="w-full sm:w-auto"
+        className="w-full"
         onClick={() =>
           wrap(async () => {
             if (action === "from-base64") {

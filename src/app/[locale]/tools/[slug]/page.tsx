@@ -117,7 +117,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(howToJsonLd(copy.h1, copy.howTo, absoluteUrl(`/${locale}/tools/${copy.slug}`))),
+          __html: JSON.stringify(howToJsonLd(copy.h1, copy.howTo, absoluteUrl(`/${locale}/tools/${copy.slug}#how-to`), locale)),
         }}
       />
       <nav className="text-sm text-muted-foreground" aria-label={ui.breadcrumb}>
@@ -149,8 +149,24 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <p className="mt-3 inline-flex rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
         {privacyLabel(tool.processingMode, locale)}
       </p>
+      <nav className="mt-4 flex flex-wrap gap-2" aria-label={ui.howTo}>
+        <a className="freela-chip" href="#run">
+          {ui.run}
+        </a>
+        <a className="freela-chip" href="#how-to">
+          {ui.howTo}
+        </a>
+        {copy.faq.length ? (
+          <a className="freela-chip" href="#questions">
+            {ui.faq}
+          </a>
+        ) : null}
+        <a className="freela-chip" href="#related-tools">
+          {ui.related}
+        </a>
+      </nav>
       <ToolBriefing tool={tool} locale={locale} />
-      <div className="mt-4">
+      <div id="run" className="freela-panel mt-4 scroll-mt-24">
         <ToolRunner tool={tool} locale={locale} />
       </div>
       <p className="mt-3 text-xs text-muted-foreground">
@@ -160,7 +176,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <div className="mt-2">
         <FormatBadges formats={tool.supportedFormats} />
       </div>
-      <section className="freela-card mt-8 p-5">
+      <section id="how-to" className="freela-card mt-8 scroll-mt-24 p-5">
         <h2 className="text-lg font-semibold">{ui.howTo}</h2>
         <ol className="mt-3 list-decimal space-y-2 ps-5 text-sm leading-6">
           {copy.howTo.map((step) => (
@@ -177,7 +193,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
         </ul>
       </section>
       {copy.faq.length ? (
-        <section className="freela-card mt-4 p-5">
+        <section id="questions" className="freela-card mt-4 scroll-mt-24 p-5">
           <h2 className="text-lg font-semibold">{ui.faq}</h2>
           <dl className="mt-3 grid gap-4">
             {copy.faq.map((item) => (
@@ -192,8 +208,13 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
       <div className="mt-8">
         <AdSlot position="after-howto" locale={locale} />
       </div>
-      <section className="mt-8">
-        <h2 className="font-semibold">{ui.related}</h2>
+      <section id="related-tools" className="mt-8 scroll-mt-24">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="font-semibold">{ui.related}</h2>
+          <Link className="text-sm font-semibold text-primary" href={`/${locale}/tools/${catCopy.slug}`}>
+            {ui.browseCategory} · {catCopy.name}
+          </Link>
+        </div>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {related.map((item) => (
             <li key={item.id}>

@@ -26,6 +26,19 @@ export function languageAlternates(pathWithoutLocale: string, locales: string[])
   return languages;
 }
 
+function ogImage(alt: string) {
+  return [{ url: absoluteUrl("/brand/og.png"), width: 1200, height: 630, alt }];
+}
+
+function ogLocaleFields(locale: string) {
+  const current = getLocale(locale);
+  const alternateLocale = indexableLocales()
+    .filter((code) => code !== locale)
+    .map((code) => getLocale(code)?.ogLocale)
+    .filter((value): value is string => Boolean(value));
+  return { locale: current?.ogLocale, alternateLocale };
+}
+
 export function pageMetadata(opts: {
   locale: string;
   title: string;
@@ -51,15 +64,15 @@ export function pageMetadata(opts: {
       description: opts.description,
       url: canonical,
       siteName: "Freela",
-      locale: loc.ogLocale,
+      ...ogLocaleFields(opts.locale),
       type: opts.ogType ?? "website",
-      images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: "Freela" }],
+      images: ogImage(opts.title),
     },
     twitter: {
       card: "summary_large_image",
       title: opts.title,
       description: opts.description,
-      images: ["/brand/og.png"],
+      images: [absoluteUrl("/brand/og.png")],
     },
   };
 }
@@ -83,15 +96,15 @@ export function toolMetadata(tool: ToolDefinition, locale: string): Metadata {
       description: copy.description,
       url: absoluteUrl(`/${locale}${path}`),
       siteName: "Freela",
-      locale: loc.ogLocale,
+      ...ogLocaleFields(locale),
       type: "website",
-      images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: copy.name }],
+      images: ogImage(copy.name),
     },
     twitter: {
       card: "summary_large_image",
       title: copy.title,
       description: copy.description,
-      images: ["/brand/og.png"],
+      images: [absoluteUrl("/brand/og.png")],
     },
   };
 }
@@ -111,11 +124,13 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
 
 export function softwareJsonLd(tool: ToolDefinition, locale: string) {
   const copy = tool.copy[contentLocale(locale)] ?? tool.copy.en;
+  const cat = categories.find((item) => item.id === tool.category);
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: copy.name,
     applicationCategory: "BrowserApplication",
+    applicationSubCategory: cat?.copy[contentLocale(locale)].name,
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     url: absoluteUrl(`/${locale}/tools/${copy.slug}`),
@@ -123,15 +138,17 @@ export function softwareJsonLd(tool: ToolDefinition, locale: string) {
     inLanguage: locale,
     featureList: copy.howTo,
     isAccessibleForFree: true,
+    publisher: { "@type": "Organization", name: "Freela", url: absoluteUrl(`/${SOURCE_LOCALE}`) },
   };
 }
 
-export function howToJsonLd(name: string, steps: string[], url: string) {
+export function howToJsonLd(name: string, steps: string[], url: string, locale: string) {
   return {
     "@context": "https://schema.org",
     "@type": "HowTo",
     name,
     url,
+    inLanguage: locale,
     step: steps.map((text, i) => ({
       "@type": "HowToStep",
       position: i + 1,

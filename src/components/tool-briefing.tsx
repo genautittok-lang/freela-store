@@ -35,10 +35,15 @@ export function ToolBriefing({ tool, locale }: { tool: ToolDefinition; locale: s
           </p>
         ) : null}
       </div>
-      <ol className="mt-3 grid gap-1 text-sm font-medium sm:grid-cols-3">
-        {fileTool ? <li>{ui.stepFiles}</li> : null}
-        <li>{ui.stepRun}</li>
-        <li>{ui.stepSave}</li>
+      <ol className="mt-3 grid gap-2 text-sm font-medium sm:grid-cols-3">
+        {(fileTool ? [ui.stepFiles, ui.stepRun, ui.stepSave] : [ui.stepRun, ui.stepSave]).map((step, i) => (
+          <li key={step} className="flex items-start gap-2">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+              {i + 1}
+            </span>
+            <span className="pt-0.5 leading-5">{step.replace(/^\d+\.\s*/, "")}</span>
+          </li>
+        ))}
       </ol>
       {tool.category === "pdf-documents" ? (
         <p className="mt-3 text-xs text-muted-foreground">{ui.noWordExport}</p>
