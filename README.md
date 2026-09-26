@@ -54,7 +54,7 @@ Or `npm run release` (typecheck, unit, validate, qa, lint, audit, e2e). Producti
 ## What is in this ship
 
 - 332 published tools; all `LOCAL_ONLY`
-- Sitemap: 4140 URLs across 12 locales (home + 12 legal pages + 332 tools)
+- Sitemap: 4260 URLs across 12 locales (home + 12 legal pages + 10 categories + 332 tools)
 - Expansion CLI: `npx tsx scripts/catalog-expansion.ts` (scores missing vs registry)
 - **12 indexable locales:** `en`, `de`, `uk`, `pl`, `fr`, `es`, `it`, `pt`, `nl`, `tr`, `ar`, `he` (sitemap + hreflang + x-default). Remaining prepared locales stay unrouted.
 - Search (registry-backed; search URLs `noindex`)

@@ -1698,7 +1698,7 @@ function WaveTool({
         )
       ) : null}
       <div className="flex flex-wrap gap-2">
-        <Button type="button" onClick={run}>
+        <Button type="button" size="lg" onClick={run}>
           {cta}
         </Button>
         {output ? (
@@ -1728,9 +1728,12 @@ function WaveTool({
         ) : null}
       </div>
       {output ? (
-        <pre className="max-h-[50vh] overflow-auto rounded-lg bg-muted p-3 text-sm whitespace-pre-wrap break-all">
-          {output}
-        </pre>
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+          <p className="text-sm font-semibold text-emerald-900">{ui.done}</p>
+          <pre className="mt-2 max-h-[50vh] overflow-auto text-sm whitespace-pre-wrap break-all text-emerald-950">
+            {output}
+          </pre>
+        </div>
       ) : null}
     </div>
   );

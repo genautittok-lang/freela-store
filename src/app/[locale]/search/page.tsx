@@ -59,9 +59,9 @@ export default async function SearchPage({
             const cat = categories.find((c) => c.id === hit.tool.category);
             return (
               <li key={hit.tool.id}>
-                <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card flex gap-3 p-4">
+                <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card flex items-center gap-3 p-4">
                   {createElement(iconForTool(hit.tool.id, hit.tool.category), {
-                    className: "mt-0.5 h-5 w-5 shrink-0 text-primary",
+                    className: "freela-sticker h-11 w-11 shrink-0",
                     "aria-hidden": true,
                   })}
                   <span>

@@ -20,6 +20,7 @@ export type UxChrome = {
   pdfFamily: string;
   imageFamily: string;
   homeTitle: string;
+  breadcrumb: string;
 };
 
 export const uxChrome: Record<Locale, UxChrome> = {
@@ -42,6 +43,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "PDF tools",
     imageFamily: "Image tools",
     homeTitle: "Free PDF, image and JSON tools in your browser",
+    breadcrumb: "Breadcrumb",
   },
   de: {
     company: "Unternehmen",
@@ -62,6 +64,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "PDF-Werkzeuge",
     imageFamily: "Bild-Werkzeuge",
     homeTitle: "Kostenlose PDF-, Bild- und JSON-Tools im Browser",
+    breadcrumb: "Navigationspfad",
   },
   uk: {
     company: "Компанія",
@@ -82,6 +85,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "Інструменти PDF",
     imageFamily: "Інструменти зображень",
     homeTitle: "Безкоштовні PDF, зображення та JSON у браузері",
+    breadcrumb: "Навігаційний шлях",
   },
   pl: {
     company: "Firma",
@@ -102,6 +106,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "Narzędzia PDF",
     imageFamily: "Narzędzia obrazów",
     homeTitle: "Darmowe narzędzia PDF, obrazów i JSON w przeglądarce",
+    breadcrumb: "Ścieżka",
   },
   fr: {
     company: "Société",
@@ -122,11 +127,12 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "Outils PDF",
     imageFamily: "Outils images",
     homeTitle: "Outils PDF, image et JSON gratuits dans le navigateur",
+    breadcrumb: "Fil d’Ariane",
   },
   es: {
     company: "Empresa",
     convert: "Convertir",
-    legal: "Legal",
+    legal: "Aviso legal",
     product: "Producto",
     fromLabel: "De",
     toLabel: "A",
@@ -142,6 +148,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "Herramientas PDF",
     imageFamily: "Herramientas de imagen",
     homeTitle: "Herramientas PDF, imagen y JSON gratis en el navegador",
+    breadcrumb: "Miga de pan",
   },
   it: {
     company: "Azienda",
@@ -162,11 +169,12 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "Strumenti PDF",
     imageFamily: "Strumenti immagini",
     homeTitle: "Strumenti PDF, immagini e JSON gratis nel browser",
+    breadcrumb: "Percorso",
   },
   pt: {
     company: "Empresa",
     convert: "Converter",
-    legal: "Legal",
+    legal: "Jurídico",
     product: "Produto",
     fromLabel: "De",
     toLabel: "Para",
@@ -182,6 +190,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "Ferramentas PDF",
     imageFamily: "Ferramentas de imagem",
     homeTitle: "Ferramentas PDF, imagem e JSON grátis no navegador",
+    breadcrumb: "Trilha",
   },
   nl: {
     company: "Bedrijf",
@@ -202,6 +211,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "PDF-tools",
     imageFamily: "Afbeeldingstools",
     homeTitle: "Gratis PDF-, afbeeldings- en JSON-tools in de browser",
+    breadcrumb: "Kruimelpad",
   },
   tr: {
     company: "Şirket",
@@ -222,6 +232,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "PDF araçları",
     imageFamily: "Görsel araçları",
     homeTitle: "Tarayıcıda ücretsiz PDF, görsel ve JSON araçları",
+    breadcrumb: "Gezinti yolu",
   },
   ar: {
     company: "الشركة",
@@ -242,6 +253,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "أدوات PDF",
     imageFamily: "أدوات الصور",
     homeTitle: "أدوات PDF والصور وJSON المجانية في المتصفح",
+    breadcrumb: "مسار التنقل",
   },
   he: {
     company: "חברה",
@@ -262,6 +274,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     pdfFamily: "כלי PDF",
     imageFamily: "כלי תמונה",
     homeTitle: "כלי PDF, תמונה ו-JSON חינמיים בדפדפן",
+    breadcrumb: "נתיב ניווט",
   },
 };
 

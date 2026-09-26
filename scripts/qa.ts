@@ -8,6 +8,7 @@ import { sitemapEntries, languageAlternates, indexableLocales } from "../src/lib
 import { LEGAL_SLUGS } from "../src/data/legal-slugs";
 import { legalBody } from "../src/i18n/legal";
 import { categories } from "../src/data/categories";
+import { absoluteUrl } from "../src/lib/site";
 import { preparedUi, assertPreparedUi } from "../src/i18n/prepared-ui";
 import { assertToolUx, ACTION_LABEL_EN } from "../src/lib/tool-ux";
 import { ACTION_LABELS } from "../src/lib/action-labels";
@@ -139,6 +140,43 @@ for (const slug of LEGAL_SLUGS) {
 
 const expectedMin = INITIAL_LOCALES.length * (1 + LEGAL_SLUGS.length + published.length);
 if (urls.length < expectedMin) fail(`Sitemap too small: ${urls.length} < ${expectedMin}`);
+
+for (const tool of published) {
+  for (const locale of INITIAL_LOCALES) {
+    if (locale === "en") continue;
+    const how = tool.copy[locale].howTo.join(" ");
+    if (how.includes("Add your input") || how.includes("Run the primary action")) {
+      fail(`${tool.id} ${locale} how-to still English`);
+    }
+    const examples = tool.copy[locale].examples.join(" ");
+    if (examples.includes("Try the main task") || examples.includes("Try empty or invalid")) {
+      fail(`${tool.id} ${locale} examples still English`);
+    }
+  }
+}
+
+const images = categories.find((c) => c.id === "images");
+if (!images) fail("images category missing");
+else {
+  const deUrl = absoluteUrl(`/de/tools/${images.copy.de.slug}`);
+  const entry = urls.find((u) => u.url === deUrl);
+  if (!entry) fail("German images category missing from sitemap");
+  else if (!entry.alternates.languages.pl?.endsWith("/pl/tools/obrazy")) {
+    fail(`Category hreflang slug mismatch: ${entry.alternates.languages.pl}`);
+  }
+  if (!entry?.alternates.languages["x-default"]?.endsWith("/en/tools/images")) {
+    fail("Category x-default should use the English images slug");
+  }
+}
+
+const toolUrls = urls.filter((u) => u.url.includes("/tools/"));
+for (const entry of toolUrls) {
+  const codes = Object.keys(entry.alternates.languages);
+  if (!codes.includes("x-default")) fail(`Tool sitemap missing x-default ${entry.url}`);
+  for (const locale of INITIAL_LOCALES) {
+    if (!codes.includes(locale)) fail(`Tool hreflang missing ${locale} on ${entry.url}`);
+  }
+}
 
 if (errors.length) {
   console.error(errors.join("\n"));

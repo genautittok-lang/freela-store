@@ -1,9 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ROUTED_LOCALES, getLocale } from "@/data/locales";
+import { ROUTED_LOCALES, getLocale, isLocale, type Locale } from "@/data/locales";
+import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
 import { track } from "@/components/analytics-provider";
+
+function restForLocale(pathname: string, from: string, to: string) {
+  const rest = pathname.replace(/^\/[a-z]{2}(?:-[A-Za-z]{2})?/, "") || "/";
+  const match = rest.match(/^\/tools\/([^/]+)$/);
+  if (!match || !isLocale(from) || !isLocale(to)) return rest;
+  const slug = decodeURIComponent(match[1]);
+  const cat = categories.find((item) =>
+    (Object.keys(item.copy) as Locale[]).some((code) => item.copy[code].slug === slug),
+  );
+  if (!cat) return rest;
+  return `/tools/${cat.copy[to].slug}`;
+}
 
 export function LanguageSwitcher({
   locale,
@@ -14,7 +27,6 @@ export function LanguageSwitcher({
 }) {
   const router = useRouter();
   const ui = t(locale);
-  const rest = pathname.replace(/^\/[a-z]{2}(?:-[A-Za-z]{2})?/, "") || "/";
   const current = getLocale(locale);
   return (
     <label className="flex min-w-0 items-center gap-2 text-sm">
@@ -27,6 +39,7 @@ export function LanguageSwitcher({
           document.cookie = `freela_locale=${next};path=/;max-age=31536000;SameSite=Lax`;
           localStorage.setItem("freela_locale", next);
           track("language_change", { locale: next });
+          const rest = restForLocale(pathname, locale, next);
           router.push(`/${next}${rest === "/" ? "" : rest}`);
         }}
         aria-label={ui.language}

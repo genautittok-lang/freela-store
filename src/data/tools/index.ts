@@ -16,6 +16,7 @@ import { packs } from "./locale-packs";
 import { packsMore } from "./locale-packs-more";
 import { packsRtl } from "./locale-packs-rtl";
 import { seoOverlay } from "./seo-overlay";
+import { fallbackExamples, fallbackFaq, fallbackFormats, fallbackHowTo } from "@/i18n/tool-fallbacks";
 
 const englishCatalog = [
   ...englishTools,
@@ -79,14 +80,13 @@ function copyFor(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][stri
   ]
     .filter((item, i, arr) => arr.findIndex((x) => x.question === item.question) === i)
     .slice(0, 8);
-  const howTo = (pack?.howTo?.length ? pack.howTo : ["Add your input.", "Run the primary action.", "Copy or download the result."]).map(
-    (step) => ensureMin(step, 8),
-  );
-  const examples = (pack?.examples?.length ? pack.examples : ["Try the main task for this tool.", "Try empty or invalid input."]).map((ex) =>
+  const name = seo?.name ?? ensureMin(pack?.name ?? tool.copyEn.name, 2);
+  const howTo = (pack?.howTo?.length ? pack.howTo : fallbackHowTo(locale, name)).map((step) => ensureMin(step, 8));
+  const examples = (pack?.examples?.length ? pack.examples : fallbackExamples(locale, name)).map((ex) =>
     ensureMin(ex, 8),
   );
   return {
-    name: seo?.name ?? ensureMin(pack?.name ?? tool.copyEn.name, 2),
+    name,
     slug: tool.id,
     title: clamp(seo?.title ?? pack?.title ?? tool.copyEn.title, 10, 70),
     description: clamp(seo?.description ?? pack?.description ?? tool.copyEn.description, 40, 170),
@@ -96,12 +96,9 @@ function copyFor(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][stri
       40,
     ),
     howTo,
-    faq: faq.length >= 2 ? faq : [
-      { question: ensureMin("Does this upload files?", 8), answer: ensureMin("No. LOCAL_ONLY in the browser.", 8) },
-      { question: ensureMin("Is this professional advice?", 8), answer: ensureMin("No. Check important results yourself.", 8) },
-    ],
+    faq: faq.length >= 2 ? faq : fallbackFaq(locale),
     privacy: pack?.privacy ?? privacyFor(tool, locale),
-    formats: ensureMin(pack?.formats ?? "Input and output stay in this browser tab.", 8),
+    formats: ensureMin(pack?.formats ?? fallbackFormats(locale), 8),
     examples,
   };
 }

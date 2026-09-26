@@ -21,11 +21,12 @@ export function convertPathFor(tool: ToolDefinition): { from: string[]; to: stri
 
 export function ToolBriefing({ tool, locale }: { tool: ToolDefinition; locale: string }) {
   const ui = t(locale);
+  const fileTool = tool.inputTypes.includes("file");
   const path = convertPathFor(tool);
   const family = tool.category === "pdf-documents" ? PDF_JOBS : tool.category === "images" ? IMAGE_JOBS : [];
   return (
     <div className="mt-4 rounded-2xl border border-border bg-secondary/40 p-4">
-      <p className="text-sm text-muted-foreground">{ui.howItWorksLead}</p>
+      <p className="text-sm text-muted-foreground">{fileTool ? ui.howItWorksLead : ui.processedLocally}</p>
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <FormatPath from={path.from} to={path.to} />
         {tool.maxFileSize > 0 ? (
@@ -35,7 +36,7 @@ export function ToolBriefing({ tool, locale }: { tool: ToolDefinition; locale: s
         ) : null}
       </div>
       <ol className="mt-3 grid gap-1 text-sm font-medium sm:grid-cols-3">
-        <li>{ui.stepFiles}</li>
+        {fileTool ? <li>{ui.stepFiles}</li> : null}
         <li>{ui.stepRun}</li>
         <li>{ui.stepSave}</li>
       </ol>

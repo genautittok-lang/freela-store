@@ -46,7 +46,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           <p className="inline-flex items-center rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
             {ui.processedLocally}
           </p>
-          <h1 className="mt-4 max-w-xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">{ui.homeTitle}</h1>
+          <h1 className="mt-4 max-w-xl text-4xl font-semibold tracking-tight sm:text-5xl">{ui.homeTitle}</h1>
           <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">{ui.heroLead}</p>
           <div className="mt-7 max-w-xl">
             <SearchBox locale={locale} large />
@@ -212,9 +212,7 @@ function ToolGrid({
           return (
             <li key={tool.id}>
               <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card block h-full p-5">
-                <span className="freela-well h-12 w-12">
-                  <Icon className="h-8 w-8" aria-hidden />
-                </span>
+                <Icon className="freela-sticker h-12 w-12" aria-hidden />
                 <p className="mt-3 font-semibold">{copy.name}</p>
                 <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{copy.description}</p>
                 <span className="mt-4 inline-flex text-sm font-semibold text-primary">{cta}</span>

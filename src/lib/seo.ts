@@ -5,6 +5,7 @@ import { LEGAL_SLUGS } from "@/data/legal-slugs";
 import { absoluteUrl } from "@/lib/site";
 import { indexableTools, publicLocalesForTool } from "@/lib/registry";
 import type { ToolDefinition } from "@/data/schema";
+import { categories } from "@/data/categories";
 
 export function robotsFor(locale: string, extraIndex = true): Metadata["robots"] {
   const loc = getLocale(locale);
@@ -179,6 +180,20 @@ export function sitemapEntries() {
         url: absoluteUrl(`/${locale}${path || ""}`),
         lastModified: "2026-09-24",
         alternates: { languages: languageAlternates(path || "", locales) },
+      });
+    }
+  }
+  for (const cat of categories) {
+    const languages: Record<string, string> = {};
+    for (const code of locales) {
+      languages[code] = absoluteUrl(`/${code}/tools/${cat.copy[code].slug}`);
+    }
+    languages["x-default"] = absoluteUrl(`/${SOURCE_LOCALE}/tools/${cat.copy.en.slug}`);
+    for (const locale of locales) {
+      urls.push({
+        url: absoluteUrl(`/${locale}/tools/${cat.copy[locale].slug}`),
+        lastModified: "2026-09-26",
+        alternates: { languages },
       });
     }
   }

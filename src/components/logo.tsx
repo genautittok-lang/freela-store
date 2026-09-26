@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export function Logo({ locale, compact = false }: { locale: string; compact?: boolean }) {
+export function Logo({ locale, compact = false, homeLabel = "home" }: { locale: string; compact?: boolean; homeLabel?: string }) {
   const word = locale === "uk" ? "Фрелла" : "Freela";
   return (
-    <Link href={`/${locale}`} className="group inline-flex items-center gap-2" aria-label={`${word} home`}>
+    <Link href={`/${locale}`} className="group inline-flex items-center gap-2" aria-label={`${word} ${homeLabel}`}>
       <Image
         src="/brand/mark-64.png"
         alt=""
