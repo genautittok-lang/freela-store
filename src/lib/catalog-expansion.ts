@@ -1,4 +1,5 @@
 import { WAVE_TOOL_IDS } from "@/data/tools/english-wave";
+import { WAVE2_TOOL_IDS } from "@/data/tools/english-wave2";
 import { toolRegistry } from "@/data/tools";
 
 export type ExpansionStatus = "implemented" | "candidate" | "deferred";
@@ -19,14 +20,24 @@ export type ExpansionCandidate = {
  * 3. implementability 1 = honest LOCAL_ONLY in this tab today; 0 = server/native/fake.
  * 4. CLI: `npx tsx scripts/catalog-expansion.ts`
  */
-const WAVE_CANDIDATES: ExpansionCandidate[] = WAVE_TOOL_IDS.map((id) => ({
-  id,
-  category: "wave-local",
-  value: 7,
-  implementability: 1,
-  status: "candidate",
-  reason: "Wave 1 LOCAL_ONLY in-tab utility",
-}));
+const WAVE_CANDIDATES: ExpansionCandidate[] = [
+  ...WAVE_TOOL_IDS.map((id) => ({
+    id,
+    category: "wave-local",
+    value: 7,
+    implementability: 1,
+    status: "candidate" as const,
+    reason: "Wave 1 LOCAL_ONLY in-tab utility",
+  })),
+  ...WAVE2_TOOL_IDS.map((id) => ({
+    id,
+    category: "wave2-local",
+    value: 7,
+    implementability: 1,
+    status: "candidate" as const,
+    reason: "Wave 2 LOCAL_ONLY in-tab utility",
+  })),
+];
 
 /** High = unique user value. Implementability 1 = in-tab today, 0 = needs server/native. */
 export const EXPANSION_POOL: ExpansionCandidate[] = [

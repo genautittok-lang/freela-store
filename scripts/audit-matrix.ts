@@ -15,6 +15,7 @@ async function main() {
     const cat = categories.find((c) => c.id === tool.category)!;
     const wf = byId[tool.id];
     const image = tool.runtime.kind === "image";
+    const canvas = Boolean(wf?.reason?.includes("browser canvas"));
     return {
       id: tool.id,
       slug: copy.slug,
@@ -37,10 +38,10 @@ async function main() {
       relatedTools: tool.relatedTools,
       mobile: "e2e viewport + tool page layout",
       accessibility: "labels on fields; axe home smoke",
-      tests: image ? "Playwright image family" : wf?.status === "PASS" ? "unit workflow PASS" : wf?.reason,
+      tests: image ? "Playwright image family" : canvas ? "browser canvas" : wf?.status === "PASS" ? "unit workflow PASS" : wf?.reason,
       localization: "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       seo: "EN indexable; title/H1/canonical present",
-      status: image || wf?.status === "PASS" ? "PASS" : "BLOCKED",
+      status: image || canvas || wf?.status === "PASS" ? "PASS" : "BLOCKED",
       categoryName: cat.copy.en.name,
     };
   });

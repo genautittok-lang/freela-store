@@ -887,7 +887,9 @@ export function runWave(id: string, input: WaveInput): string {
   }
 }
 
-export async function runWaveAsync(id: string, input: WaveInput): Promise<string> {
+export async function runWaveAsync(id: string, input: WaveInput & { bytes?: Uint8Array }): Promise<string> {
+  const { isWave2Tool, runWave2Async } = await import("@/lib/tools/wave2");
+  if (isWave2Tool(id)) return runWave2Async(id, input);
   if (id === "hash-line") {
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(need(input.text)));
     return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");

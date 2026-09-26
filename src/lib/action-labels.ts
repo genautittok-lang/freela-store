@@ -2,6 +2,7 @@ import type { Locale } from "@/data/locales";
 import { PACK_LABELS } from "@/lib/action-labels-pack";
 import { IMPROVE_LABELS } from "@/lib/action-labels-improve";
 import { WAVE_LABELS } from "@/lib/action-labels-wave";
+import { WAVE2_LABELS } from "@/lib/action-labels-wave2";
 
 const EN: Record<string, string> = {
   "merge-pdf": "Merge PDFs",
@@ -964,18 +965,18 @@ const HE: Record<string, string> = {
 };
 
 export const ACTION_LABELS: Record<Locale, Record<string, string>> = {
-  en: { ...EN, ...PACK_LABELS.en, ...IMPROVE_LABELS.en, ...WAVE_LABELS.en },
-  de: { ...DE, ...PACK_LABELS.de, ...IMPROVE_LABELS.de, ...WAVE_LABELS.de },
-  uk: { ...UK, ...PACK_LABELS.uk, ...IMPROVE_LABELS.uk, ...WAVE_LABELS.uk },
-  pl: { ...PL, ...PACK_LABELS.pl, ...IMPROVE_LABELS.pl, ...WAVE_LABELS.pl },
-  fr: { ...FR, ...PACK_LABELS.fr, ...IMPROVE_LABELS.fr, ...WAVE_LABELS.fr },
-  es: { ...ES, ...PACK_LABELS.es, ...IMPROVE_LABELS.es, ...WAVE_LABELS.es },
-  it: { ...IT, ...PACK_LABELS.it, ...IMPROVE_LABELS.it, ...WAVE_LABELS.it },
-  pt: { ...PT, ...PACK_LABELS.pt, ...IMPROVE_LABELS.pt, ...WAVE_LABELS.pt },
-  nl: { ...NL, ...PACK_LABELS.nl, ...IMPROVE_LABELS.nl, ...WAVE_LABELS.nl },
-  tr: { ...TR, ...PACK_LABELS.tr, ...IMPROVE_LABELS.tr, ...WAVE_LABELS.tr },
-  ar: { ...AR, ...PACK_LABELS.ar, ...IMPROVE_LABELS.ar, ...WAVE_LABELS.ar },
-  he: { ...HE, ...PACK_LABELS.he, ...IMPROVE_LABELS.he, ...WAVE_LABELS.he },
+  en: { ...EN, ...PACK_LABELS.en, ...IMPROVE_LABELS.en, ...WAVE_LABELS.en, ...WAVE2_LABELS.en },
+  de: { ...DE, ...PACK_LABELS.de, ...IMPROVE_LABELS.de, ...WAVE_LABELS.de, ...WAVE2_LABELS.de },
+  uk: { ...UK, ...PACK_LABELS.uk, ...IMPROVE_LABELS.uk, ...WAVE_LABELS.uk, ...WAVE2_LABELS.uk },
+  pl: { ...PL, ...PACK_LABELS.pl, ...IMPROVE_LABELS.pl, ...WAVE_LABELS.pl, ...WAVE2_LABELS.pl },
+  fr: { ...FR, ...PACK_LABELS.fr, ...IMPROVE_LABELS.fr, ...WAVE_LABELS.fr, ...WAVE2_LABELS.fr },
+  es: { ...ES, ...PACK_LABELS.es, ...IMPROVE_LABELS.es, ...WAVE_LABELS.es, ...WAVE2_LABELS.es },
+  it: { ...IT, ...PACK_LABELS.it, ...IMPROVE_LABELS.it, ...WAVE_LABELS.it, ...WAVE2_LABELS.it },
+  pt: { ...PT, ...PACK_LABELS.pt, ...IMPROVE_LABELS.pt, ...WAVE_LABELS.pt, ...WAVE2_LABELS.pt },
+  nl: { ...NL, ...PACK_LABELS.nl, ...IMPROVE_LABELS.nl, ...WAVE_LABELS.nl, ...WAVE2_LABELS.nl },
+  tr: { ...TR, ...PACK_LABELS.tr, ...IMPROVE_LABELS.tr, ...WAVE_LABELS.tr, ...WAVE2_LABELS.tr },
+  ar: { ...AR, ...PACK_LABELS.ar, ...IMPROVE_LABELS.ar, ...WAVE_LABELS.ar, ...WAVE2_LABELS.ar },
+  he: { ...HE, ...PACK_LABELS.he, ...IMPROVE_LABELS.he, ...WAVE_LABELS.he, ...WAVE2_LABELS.he },
 };
 
 export const ACTION_LABEL_EN = ACTION_LABELS.en;

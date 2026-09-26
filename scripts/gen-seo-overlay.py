@@ -174,6 +174,12 @@ KIND["utm-builder"] = "seo"
 KIND["random-number"] = "gen"
 for tid, kind in WAVE_EXTRA["kinds"].items():
     KIND[tid] = kind
+WAVE2_PATH = Path("/workspace/scripts/wave2-seo-names.json")
+if WAVE2_PATH.exists():
+    WAVE2_EXTRA = json.loads(WAVE2_PATH.read_text(encoding="utf-8"))
+    NAMES.update(WAVE2_EXTRA["names"])
+    for tid, kind in WAVE2_EXTRA["kinds"].items():
+        KIND[tid] = kind
 
 FORMATS = {
     "merge-pdf": "PDF", "split-pdf": "PDF", "rotate-pdf": "PDF", "extract-pdf-pages": "PDF",

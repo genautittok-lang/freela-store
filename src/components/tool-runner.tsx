@@ -67,6 +67,7 @@ import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dr
 import { isPackTool } from "@/lib/tools/pack-ids";
 import { buildUtm, parsePageList, randomIntegers } from "@/lib/tools/improve";
 import { runWaveAsync, WAVE_EXTRA_HINT, WAVE_SAMPLES, waveNeedsExtra } from "@/lib/tools/wave";
+import { runWave2Image, runWave2Pdf, WAVE2_EXTRA_HINT, WAVE2_MODES, WAVE2_SAMPLES } from "@/lib/tools/wave2";
 
 const PackToolPanel = dynamic(() => import("@/components/pack-runner").then((m) => m.PackToolPanel), {
   loading: () => <p className="text-sm text-muted-foreground">Loading tool…</p>,
@@ -1621,15 +1622,36 @@ function WaveTool({
   cta: string;
 }) {
   const ui = t(locale);
-  const sample = WAVE_SAMPLES[tool.id] ?? { text: "" };
+  const sample = WAVE_SAMPLES[tool.id] ?? WAVE2_SAMPLES[tool.id] ?? { text: "" };
   const [input, setInput] = useState(sample.text);
   const [extra, setExtra] = useState(sample.extra ?? "");
   const [output, setOutput] = useState("");
-  const needsExtra = waveNeedsExtra(tool.id);
-  const extraHint = WAVE_EXTRA_HINT[tool.id];
+  const [file, setFile] = useState<File[]>([]);
+  const mode = WAVE2_MODES[tool.id] ?? "text";
+  const needsExtra = waveNeedsExtra(tool.id) || Boolean(WAVE2_EXTRA_HINT[tool.id]);
+  const extraHint = WAVE_EXTRA_HINT[tool.id] ?? WAVE2_EXTRA_HINT[tool.id];
 
   function run() {
     wrap(async () => {
+      if (mode === "pdf") {
+        const selected = file[0];
+        if (!selected) throw new Error("Choose a PDF.");
+        const bytes = new Uint8Array(await selected.arrayBuffer());
+        const result = await runWave2Pdf(tool.id, bytes, extra);
+        setOutput(result.text);
+        if (tool.id === "pdf-set-info") {
+          triggerDownload(new Blob([result.bytes as unknown as BlobPart], { type: "application/pdf" }), "freela-info.pdf");
+        }
+        return;
+      }
+      if (mode === "image") {
+        const selected = file[0];
+        if (!selected) throw new Error("Choose an image.");
+        const result = await runWave2Image(tool.id, selected);
+        setOutput(result.text);
+        if (result.blob && result.filename) triggerDownload(result.blob, result.filename);
+        return;
+      }
       const result = await runWaveAsync(tool.id, { text: input, extra });
       setOutput(result);
     });
@@ -1643,13 +1665,26 @@ function WaveTool({
       {tool.copy.en.formats ? (
         <p className="text-xs text-muted-foreground sm:text-sm">{copyForTool(tool, locale).formats}</p>
       ) : null}
-      <Textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        rows={needsExtra ? 7 : 10}
-        placeholder={copyForTool(tool, locale).examples[0]}
-        className="min-h-32"
-      />
+      {mode === "text" ? (
+        <Textarea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          rows={needsExtra ? 7 : 10}
+          placeholder={copyForTool(tool, locale).examples[0]}
+          className="min-h-32"
+        />
+      ) : (
+        <FileDropzone
+          locale={locale}
+          toolId={tool.id}
+          accept={mode === "pdf" ? "application/pdf,.pdf" : "image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"}
+          multiple={false}
+          files={file}
+          onFiles={setFile}
+          formats={mode === "pdf" ? ["PDF"] : ["PNG", "JPG", "WebP"]}
+          maxBytes={26_214_400}
+        />
+      )}
       {needsExtra ? (
         extraHint?.includes("line") ? (
           <Textarea
