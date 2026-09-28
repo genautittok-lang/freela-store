@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Скачати каталог Freela STORE</title>
+    <style>
+      :root {
+        --bg: #0f1410;
+        --panel: #1a221c;
+        --text: #f4f7f2;
+        --muted: #a8b5a8;
+        --accent: #c8e86c;
+        --accent-ink: #14200a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        background:
+          radial-gradient(ellipse at 20% 0%, #243328 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 100%, #1a2a22 0%, transparent 45%),
+          var(--bg);
+        color: var(--text);
+      }
+      main {
+        width: min(100%, 420px);
+        text-align: center;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(1.5rem, 4vw, 1.85rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+      p {
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.5;
+      }
+      a.download {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 240px;
+        min-height: 56px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-size: 1.15rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.15s ease, filter 0.15s ease;
+      }
+      a.download:hover {
+        filter: brightness(1.06);
+        transform: translateY(-1px);
+      }
+      a.download:active {
+        transform: translateY(0);
+      }
+      a.download:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Каталог інструментів Freela STORE</h1>
+      <p>Тимчасове посилання. Натисніть кнопку, щоб зберегти файл на пристрій.</p>
+      <a
+        class="download"
+        href="/tmp/freela-catalog-report-once.txt"
+        download="freela-tools-catalog-report.txt"
+      >
+        Скачати файл
+      </a>
+    </main>
+  </body>
+</html>
