@@ -1,0 +1,560 @@
+# Freela STORE — чесний каталог інструментів
+
+**Для:** Tittok Genau  ·  **Дата:** 2026-09-28  ·  **Джерело:** genesis / freela.store registry (`src/data/tools/`)
+
+## Підсумки / Totals
+
+| | Кількість |
+| --- | ---: |
+| Опубліковані інструменти (published) | **403** |
+| Категорії | **10** |
+| Мови / локалі (routed + indexable) | **20** |
+| Режим обробки | LOCAL_ONLY (браузер) |
+| Sitemap (live) | ~8520 URL |
+| Live | https://freela.store |
+
+> Описи взяті з реєстру `copyEn` і звірені з реальними раннерами (`pdf-lib`, canvas, `mammoth`, `heic2any`, `pdfjs`, `xlsx`, тощо). Маркетинговий SEO-overlay **не** використано. Не вигадано жодного інструмента: кількість = `publishedTools` у реєстрі.
+
+## Мови / Languages
+
+Публічні локалі (маршрутизовані й індексовані):
+
+| Code | English name | Native name | Dir |
+| --- | --- | --- | --- |
+| `en` | English | English | ltr |
+| `de` | German | Deutsch | ltr |
+| `uk` | Ukrainian | Українська | ltr |
+| `pl` | Polish | Polski | ltr |
+| `fr` | French | Français | ltr |
+| `es` | Spanish | Español | ltr |
+| `it` | Italian | Italiano | ltr |
+| `pt` | Portuguese | Português | ltr |
+| `nl` | Dutch | Nederlands | ltr |
+| `tr` | Turkish | Türkçe | ltr |
+| `ar` | Arabic | العربية | rtl |
+| `he` | Hebrew | עברית | rtl |
+| `ja` | Japanese | 日本語 | ltr |
+| `ko` | Korean | 한국어 | ltr |
+| `zh-CN` | Chinese (Simplified) | 简体中文 | ltr |
+| `zh-TW` | Chinese (Traditional) | 繁體中文 | ltr |
+| `hi` | Hindi | हिन्दी | ltr |
+| `id` | Indonesian | Bahasa Indonesia | ltr |
+| `vi` | Vietnamese | Tiếng Việt | ltr |
+| `th` | Thai | ไทย | ltr |
+
+Підготовлені, але **ще не публічні** (16): `ro` (Română), `cs` (Čeština), `sk` (Slovenčina), `hu` (Magyar), `el` (Ελληνικά), `bg` (Български), `hr` (Hrvatski), `sr` (Српски), `sl` (Slovenščina), `sv` (Svenska), `da` (Dansk), `no` (Norsk), `fi` (Suomi), `et` (Eesti), `lv` (Latviešu), `lt` (Lietuvių).
+
+## Категорії / Categories
+
+| ID | EN | UA | Інструментів |
+| --- | --- | --- | ---: |
+| `pdf-documents` | PDF & Documents | PDF і документи | 19 |
+| `images` | Images | Зображення | 20 |
+| `text` | Text | Текст | 99 |
+| `developer` | Developer | Розробнику | 96 |
+| `seo` | SEO | SEO | 43 |
+| `calculators` | Calculators | Калькулятори | 52 |
+| `converters` | Converters | Конвертери | 17 |
+| `color` | Color | Колір | 15 |
+| `generators` | Generators | Генератори | 17 |
+| `date-time` | Date & Time | Дата і час | 25 |
+
+**Сума по категоріях:** 403 (має = 403).
+
+## Повний список інструментів за категоріями
+
+Формат рядка: `slug` · **English name** · що реально робить · (формати)
+
+### PDF і документи / PDF & Documents (19)
+
+_Безкоштовні PDF онлайн: об’єднати, розділити, повернути й перевірити. Без вивантаження._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `compress-pdf` | Compress PDF | Rewrite a PDF with object streams to often shrink size. No upload. Heavily encoded scans may not get smaller. (pdf-lib object streams; не recompress JPEG сканів) | Input and output: PDF. |
+| `delete-pdf-pages` | Delete PDF pages | Remove listed pages and download a new PDF in the browser. Encrypted files that cannot open will error. | Input/output: PDF. |
+| `docx-to-pdf` | DOCX to PDF (text) | Extract DOCX text locally and paginate it into a PDF. This is not a layout replica of Word. (mammoth extractRawText → Helvetica A4; без верстки Word) | Input: DOCX. Output: text-only PDF. |
+| `extract-pdf-pages` | Extract PDF pages | Keep only the pages you list. The rest of the document is ignored and never uploaded. | Input: PDF. Output: PDF with selected pages. |
+| `extract-pdf-text` | Extract PDF text | Read selectable text from a PDF with pdf.js on your device. Scanned pages without a text layer stay empty. Обмеження: pdf.js text layer only — не OCR. | Input: PDF. Output: plain text. |
+| `images-to-pdf` | Images to PDF | Turn JPG, PNG or WebP photos into a paginated PDF in your browser. Images never leave this tab. Обмеження: JPG/PNG/WebP embedded via pdf-lib. | Input: JPEG, PNG, WebP. Output: PDF. |
+| `markdown-to-pdf` | Markdown to PDF | Strip Markdown markers and save an A4 PDF locally. This is not a CSS print engine or DOCX export. (спрощений Markdown → PDF, не друкарська верстка) | Input: Markdown text. Output: PDF. |
+| `merge-pdf` | Merge PDF | Combine multiple PDF files into one document on your device. Free merge PDF tool. Обмеження: pdf-lib copy pages; outlines можуть губитись. | Input: application/pdf. Output: a single PDF. |
+| `pdf-metadata` | PDF metadata viewer | Inspect document information dictionaries locally. Useful before you share a file that still contains author names. | Input: PDF. Output: on-screen metadata. |
+| `pdf-page-numbers` | PDF page numbers | Print n / total at the bottom of each page locally. Existing headers are not redesigned. (нумерація сторінок pdf-lib Helvetica) | Input/output: PDF. |
+| `pdf-page-sizes` | PDF page sizes | List each PDF page size in points. This does not rewrite the file. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `pdf-password` | PDF password protect | Standard PDF encryption is not shipped in this browser pack. This page explains the limit instead of faking a lock. (відкладено: Standard Security Handler не реалізовано) | No conversion in this release. Honest deferred status. |
+| `pdf-to-image` | PDF to JPG / PNG | Rasterize each PDF page to JPG or PNG in this tab with PDF.js. Not OCR and not PDF→Word. (pdf.js rasterize сторінок у canvas) | Input: PDF. Output: JPG or PNG per page. |
+| `pdf-watermark` | PDF watermark | Draw a diagonal text stamp on every page in your browser. Not a DRM or invisible forensic mark. (видимий діагональний текст (pdf-lib), не DRM) | Input/output: PDF. |
+| `reorder-pdf` | Reorder PDF | Shuffle page order in the browser. Reverse a scan or move a cover to the front without extra software. | Input and output: PDF. |
+| `rotate-pdf` | Rotate PDF | Turn sideways scans upright without re-printing. Rotation is applied locally with pdf-lib. | Input and output: PDF. |
+| `pdf-set-info` | Set PDF title | Set the PDF title and optional author, then download the file. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `split-pdf` | Split PDF | Split a PDF into separate page files or a page range. Runs locally; files stay on your device. | Input: PDF. Output: one or more PDF files. |
+| `text-to-pdf` | Text to PDF | Paste notes or a letter and download a simple Helvetica PDF. from this page. Обмеження: plain text → Helvetica PDF. | Input: pasted text. Output: PDF. |
+
+### Зображення / Images (20)
+
+_Стискайте, змінюйте розмір, конвертуйте та кодуйте зображення локально._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `base64-to-image` | Base64 to image | Paste a data URL or raw Base64 and preview the picture. Decoding never calls a server. | Input: Base64 text. Output: image file. |
+| `image-blur` | Blur image | Apply a canvas blur or pixelate block and export PNG. This is not certified redaction for IDs or faces. (canvas blur — не надійне приховування секретів) | Input: image. Output: PNG. |
+| `color-extract` | Color extraction | Average pixels on a downscaled canvas to suggest a few HEX colors. Not a professional color profiler. (грубе sRGB усереднення з canvas, не ML palette) | Input: image. Output: HEX list. |
+| `compress-image` | Compress image | Shrink image files with a quality slider. Encoding happens on a canvas in your browser. Обмеження: canvas re-encode quality — не specialized codec. | Input: JPEG, PNG, WebP. Output: same family via canvas export. |
+| `convert-image` | Convert image | Convert JPG, PNG, WebP and AVIF in your browser when the encoder exists. Files stay on your device. | Input and output: JPEG, PNG, WebP, AVIF when the browser encodes it. |
+| `crop-image` | Crop image | Cut unused margins from screenshots and photos. The crop runs locally on a canvas. | Input: JPEG, PNG, WebP. Output: PNG. |
+| `exif-strip` | EXIF remover | Download a copy of a JPEG or PNG without metadata. Stripping is done by redrawing the image on a canvas. Обмеження: re-encode через canvas (метадані зникають з пікселів). | Input: JPEG, PNG, WebP. Output: JPEG or PNG without metadata. |
+| `favicon-generator` | Favicon generator | Create PNG favicon sizes from a square logo. Scaling runs in the browser canvas. | Input: PNG, JPEG, WebP. Output: PNG sizes. |
+| `flip-image` | Flip image | Mirror a photo horizontally or vertically on a canvas. Files stay on your device. | Input: JPG, PNG, WebP. Output: recoded image. |
+| `image-grayscale` | Grayscale image | Recode an image to grayscale PNG in this tab. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `heic-to-jpg` | HEIC to JPG | Decode HEIC/HEIF in the browser when the codec works, then save JPG or PNG. Files never upload. Обмеження: heic2any; деякі HEIC/10-bit можуть не декодуватись. | Input: HEIC/HEIF. Output: JPG or PNG. |
+| `image-dimensions` | Image dimensions | Read pixel width and height. The image stays in this tab. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `image-text-overlay` | Image text overlay | Draw a short caption on a canvas and export PNG. Not a full design suite or font foundry. | Input: image. Output: PNG. |
+| `image-to-base64` | Image to Base64 | Create a data URL for CSS or HTML prototypes. Encoding uses the FileReader API in your browser. | Input: common image types. Output: text data URL. |
+| `image-invert` | Invert image | Invert the colors of a PNG or JPG in this tab. Runs in this tab. Freela does not upload the input. | PNG, JPG, or WebP stays in this tab. The download is a PNG. |
+| `image-pixelate` | Pixelate image | Pixelate an image and download a PNG. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `png-to-ico` | PNG to ICO | Pack 16, 32 and 48 PNG frames into a real ICO container. Not an Adobe or Windows trademark tool. (реальний multi-size ICO з PNG) | Input: PNG/JPG. Output: ICO. |
+| `resize-image` | Resize image | Scale photos to exact dimensions while locking aspect ratio. Useful for thumbnails and social crops. Обмеження: canvas scale — не AI upscale. | Input: JPEG, PNG, WebP. Output: PNG or JPEG depending on your choice. |
+| `rotate-image` | Rotate image | Turn a photo 90, 180 or 270 degrees on a canvas. The original file is not sent to Freela. | Input: JPG, PNG, WebP. Output: recoded image. |
+| `image-sepia` | Sepia image | Tint a PNG or JPG toward sepia in this tab. Runs in this tab. Freela does not upload the input. | PNG, JPG, or WebP stays in this tab. The download is a PNG. |
+
+### Текст / Text (99)
+
+_Рахуйте слова, очищайте списки, створюйте slug і аналізуйте текст._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `atbash-cipher` | Atbash cipher | Swap A with Z, B with Y, and so on. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `caesar-shift` | Caesar cipher | Shift Latin letters by N places (Caesar). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `camel-snake` | Camel to snake | Convert camelCase or PascalCase to snake_case. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `case-converter` | Case converter | Switch casing without a word processor. Title case uses simple English rules, not a full editorial style guide. | Input and output: plain text. |
+| `center-lines` | Center lines | Pad each line so it sits in a character width. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `char-codes` | Character codes | Show a Unicode code point for each character. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `character-counter` | Character counter | Measure characters, spaces and lines for bios, ads and SMS. Useful next to a 160-character or 70-character title limit. | Input: plain text. Output: counts. |
+| `collapse-spaces` | Collapse spaces | Turn runs of spaces into a single space. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `count-lines` | Count lines | Count total, non-empty and unique lines. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `cover-letter-template` | Cover letter template | Assemble a three-paragraph letter from role, company and your notes. Not legal or immigration advice. | Input: fields as lines. Output: letter draft. |
+| `dedent-text` | Dedent text | Remove the shared left indent from a pasted block. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `entropy-estimate` | Entropy estimate | Shannon entropy of the pasted characters. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `extract-emails` | Extract emails | List email addresses found in text. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `extract-emoji` | Extract emoji | List the emoji characters in the text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `extract-hashtags` | Extract hashtags | List hashtags found in pasted text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `extract-hex-colors` | Extract hex colors | List #RGB and #RRGGBB colors found in text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `extract-ipv4` | Extract IPv4 | List IPv4 addresses found in text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `extract-iso-dates` | Extract ISO dates | List real YYYY-MM-DD dates found in text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `extract-mentions` | Extract mentions | List @mentions found in pasted text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `extract-numbers` | Extract numbers | Pull integers and decimals out of text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `extract-phones` | Extract phones | List digit runs that look like phone numbers. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `extract-urls` | Extract URLs | List http(s) URLs found in text. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `filter-lines` | Filter lines | Keep only lines that contain a substring. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `find-replace` | Find and replace | Replace every occurrence of a string. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `flesch-ease` | Flesch reading ease | Estimate Flesch reading ease. Not a diagnosis. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `indent-lines` | Indent lines | Add the same number of spaces before each line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `join-lines` | Join lines | Join lines with a delimiter you choose. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `kebab-camel` | Kebab to camel | Convert kebab-case to camelCase. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `keep-letters` | Keep letters | Drop digits and symbols and keep letters. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `letter-frequency` | Letter frequency | Count A–Z letter frequency. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `line-lengths` | Line lengths | Count characters on each line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `line-range` | Line range | Copy a 1-based inclusive line range. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `lines-to-csv` | Lines to CSV | Turn one item per line into a single CSV column. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `longest-line` | Longest line | Show the longest line in the text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `markdown-html` | Markdown to HTML | Run marked in the browser to turn Markdown into HTML. Not a CMS and not a sanitizer for untrusted mail. | Input: Markdown. Output: HTML. |
+| `markdown-toc` | Markdown TOC | Build a list of Markdown headings. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `mask-center` | Mask middle | Keep first and last 2 characters, mask the rest. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `morse-decode` | Morse decode | Decode Morse letters separated by spaces. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `morse-encode` | Morse encode | Encode A–Z and digits as Morse. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `name-initials` | Name initials | Build initials from a personal name. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `nfc-form` | NFC normalize | Normalize text to Unicode NFC. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `normalize-newlines` | Normalize newlines | Convert CR and CRLF to LF. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `number-lines` | Number lines | Add 1-based line numbers. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `number-to-words` | Number to words | English words for an integer from 0 to 999999. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `palindrome-check` | Palindrome check | Tell whether letters and digits read the same backward. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `pascal-case` | Pascal case | Turn words or snake_case into PascalCase. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `path-basename` | Path basename | Last segment of a file path. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `path-dirname` | Path directory | Directory portion of a file path. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `prefix-suffix` | Prefix suffix lines | Add a prefix and suffix to every line. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `reading-time` | Reading time | Estimate minutes at 200 words per minute. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `redact-emails` | Redact emails | Replace emails with [email]. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `redact-ipv4` | Redact IPv4 | Replace IPv4 addresses with [ip]. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `redact-phones` | Redact phones | Replace long digit runs with [phone]. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `remove-diacritics` | Remove diacritics | Strip accents using Unicode decomposition. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `remove-duplicate-lines` | Remove duplicate lines | Keep the first occurrence of each line. Optional case-insensitive mode helps clean mixed exports. | Input and output: newline-separated text. |
+| `remove-empty-lines` | Remove empty lines | Drop blank lines from pasted text. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `remove-punctuation` | Remove punctuation | Strip punctuation, keep letters and spaces. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `repeat-text` | Repeat text | Repeat a snippet a chosen number of times. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `duplicate-words` | Repeated words | List words that appear more than once. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `resume-bullets` | Resume bullet helper | Prefix trimmed lines with a bullet and collapse spaces. This is a writing aid, not career advice. | Input/output: plain text. |
+| `reverse-each-line` | Reverse each line | Reverse the characters on every line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `reverse-lines` | Reverse lines | Reverse the order of lines. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `reverse-text` | Reverse text | Reverse characters in pasted text. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `reverse-words` | Reverse word order | Reverse the order of words. Letters inside each word stay as typed. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `rot13` | ROT13 cipher | Apply ROT13 to Latin letters only. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `rot47-cipher` | ROT47 cipher | Rotate printable ASCII by 47 places. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `secret-scan` | Secret pattern scan | Flag common token shapes in pasted text. Nothing is sent away. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `sentence-case` | Sentence case | Capitalize the first letter of each sentence. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `sentence-per-line` | Sentence per line | Put each sentence on its own line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `shuffle-lines` | Shuffle lines | Reorder lines with a stable mix of the same text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `slug-each-line` | Slug each line | Make a URL slug from each line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `slug-generator` | Slug generator | Turn a heading into a lowercase hyphenated slug. Accents are folded; punctuation is stripped. | Input: title text. Output: kebab-case slug. |
+| `snake-camel` | Snake to camel | Convert snake_case to camelCase. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `social-counter` | Social character counter | Compare Unicode length to X, Threads, Instagram, LinkedIn, YouTube and TikTok limits. Platforms can change rules. | Input: text. Output: per-platform counts. |
+| `sort-lines` | Sort lines | Order lists with locale collation. Choose A–Z, Z–A or numeric sort for version-looking strings. | Input and output: newline-separated text. |
+| `sort-numeric` | Sort numbers | Sort lines as numbers, not as text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `sort-words` | Sort words | Sort words in a line alphabetically. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `speaking-pace` | Speaking time | Estimate spoken minutes at 130 words per minute. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `split-delimiter` | Split on delimiter | Split one line into many on a delimiter. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `strip-bom` | Strip BOM | Remove a leading byte-order mark. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `strip-emoji` | Strip emoji | Remove emoji and leave the surrounding text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `strip-html` | Strip HTML | Remove tags, scripts and styles from HTML in the browser. Not a full DOM sanitizer for executing pages. | Input: HTML. Output: text. |
+| `strip-zero-width` | Strip zero-width | Remove zero-width and BOM characters. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `swap-case` | Swap case | Swap uppercase and lowercase letters. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `table-markdown` | Table to Markdown | Turn CSV rows or an HTML <table> into a GitHub-style Markdown grid. Nested tables are not supported. | Input: CSV or HTML table. Output: Markdown. |
+| `tabs-to-spaces` | Tabs to spaces | Replace tab characters with four spaces. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `text-diff` | Text diff | Highlight lines that were added, removed or changed. The diff runs locally with a simple LCS algorithm. | Input: two plain texts. Output: annotated diff. |
+| `text-statistics` | Text statistics | See words, unique words, average word length and estimated reading time for a passage. | Input: plain text. Output: statistics. |
+| `title-case` | Title case | Capitalize the first letter of each word. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `trim-each-line` | Trim lines | Trim spaces at both ends of every line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `truncate-text` | Truncate text | Cut text to a maximum length with an ellipsis. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `unicode-escape` | Unicode escape | Show characters as \\u escapes. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `unicode-unescape` | Unicode unescape | Turn \\u escapes back into characters. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `unique-words` | Unique words | List each word once, in first-seen order. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `unwrap-lines` | Unwrap lines | Join wrapped lines into paragraphs. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `whitespace-cleaner` | Whitespace cleaner | Remove extra spaces, tabs and blank lines from pasted text. Handy after copying from PDFs or slides. | Input and output: plain text. |
+| `word-counter` | Word counter | Text stays in your browser. | Input: plain text. Output: counts on screen. |
+| `word-frequency` | Word frequency | Count how often each word appears. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `wrap-text` | Wrap text | Wrap lines at a character width. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+
+### Розробнику / Developer (96)
+
+_Форматуйте JSON, кодуйте URL, хешуйте рядки та декодуйте зразки JWT._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `array-to-ndjson` | Array to NDJSON | Write a JSON array as one object per line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `base32-decode` | Base32 decode | Decode RFC 4648 base32 back to text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `base32-encode` | Base32 encode | Encode text as RFC 4648 base32. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `base64` | Base64 encode & decode | Encode UTF-8 text to Base64 or decode it back. Invalid payloads show an error instead of mojibake. | Input and output: text. |
+| `base64url` | Base64url encode | Base64url encode UTF-8 without padding. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `basic-auth-header` | Basic auth header | Build a Basic Authorization header from user:password. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `binary-encode` | Binary encode | Show UTF-8 bytes as 8-bit binary groups. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `binary-to-decimal` | Binary to decimal | Convert a bit string to a decimal integer. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `ua-browser` | Browser from UA | Read a common browser name from a user-agent string. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `semver-bump` | Bump semver | Bump patch, minor, or major and drop prerelease. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `cidr-contains` | CIDR contains IP | Test whether an IPv4 address sits in a CIDR block. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `semver-compare` | Compare semver | Compare two major.minor.patch versions. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `text-equal` | Compare strings | Check whether two strings are exactly equal. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `cookie-parse` | Cookie parser | Parse a Cookie header into names and values. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `crc32-hash` | CRC32 checksum | CRC-32 checksum of UTF-8 text. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `cron-generator` | Cron generator | Assemble minute hour day month weekday fields. Not a crontab installer and not Quartz six-field syntax. | Output: cron expression. |
+| `css-clamp` | CSS clamp | Write a CSS clamp() from min, preferred, and max. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `css-minify` | CSS minify | Strip CSS comments and extra spaces. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `csv-row-count` | CSV row count | Count CSV rows, including the header. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `csv-json` | CSV to JSON | Turn CSV tables into arrays of objects, or flatten JSON arrays to CSV. Parsing understands quoted commas. | Input/output: CSV or JSON text. |
+| `csv-to-tsv` | CSV to TSV | Replace CSV commas with tabs. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `csv-width-check` | CSV width check | Check that every CSV row has the same column count. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `decimal-binary` | Decimal to binary | Convert a non-negative integer to binary. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `json-duplicate-keys` | Duplicate JSON keys | Find duplicate keys inside JSON objects. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `email-syntax` | Email syntax | Check that one address looks like an email. Not a mailbox lookup. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `env-json` | Env to JSON | Parse KEY=value lines into a JSON object. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `regex-escape` | Escape regex | Escape a string so it matches literally in a regex. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `xlsx-csv` | Excel ↔ CSV | Read the first sheet of an XLSX/XLS file to CSV, or build XLSX from CSV. Formulas become cached values when present. Обмеження: SheetJS (xlsx) двосторонньо CSV↔XLSX. | Input/output: XLSX or CSV. |
+| `cron-explain` | Explain cron | Explain five UNIX cron fields in plain language. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `ext-to-mime` | Extension to MIME | Map a file extension to a common MIME type. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `file-extension` | File extension | Return the lowercase extension of a path. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `json-flatten` | Flatten JSON | Flatten nested JSON to dotted paths. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `mac-format` | Format MAC address | Normalize a MAC address to AA:BB:CC:DD:EE:FF. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `hash-line` | Hash a line | SHA-256 hex of a single line (Web Crypto). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `hash-generator` | Hash generator | Hash text with Web Crypto. Use it for checksums, not for storing passwords — that needs a slow salted KDF. | Input: text. Output: hex digest. |
+| `hex-decode` | Hex decode | Decode hex bytes to UTF-8 text. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `hex-encode` | Hex encode | Encode UTF-8 text as hex bytes. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `hex-to-decimal` | Hex to decimal | Convert hex digits to a decimal integer. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `html-entities` | HTML entities | Escape <, > and & for safe HTML text nodes, or decode entities back to characters. | Input and output: text. |
+| `html-minify` | HTML minify | Collapse HTML whitespace (not a full minifier). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `html-tag-balance` | HTML tag balance | Check that simple HTML tags open and close. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `html-to-markdown` | HTML to Markdown | Turn simple headings, links and lists into Markdown. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `html-unescape` | HTML unescape | Turn common HTML entities back into characters. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `iban-check` | IBAN checksum | Run the IBAN mod-97 checksum. Not a bank lookup. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `int-to-ipv4` | Integer to IPv4 | Convert a 32-bit integer to an IPv4 address. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `ipv4-to-int` | IPv4 to integer | Convert an IPv4 address to a 32-bit integer. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `isbn-check` | ISBN checksum | Check ISBN-10 or ISBN-13 checksums. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `json-array-length` | JSON array length | Count items in a JSON array. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `json-escape` | JSON escape | Escape a string for JSON quotes. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `json-formatter` | JSON formatter | Format and minify JSON in your browser. Invalid JSON shows a parser message. | Input and output: JSON text. |
+| `json-keys` | JSON keys | List top-level keys of a JSON object. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `json-to-csv` | JSON to CSV | Turn a JSON array of objects into CSV. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `json-env` | JSON to env | Flatten a JSON object to KEY=value lines. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `json-to-yaml` | JSON to YAML | Convert a JSON object to simple YAML keys. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `json-types` | JSON types | List the JSON type of each top-level field. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `json-validator` | JSON validator | Check whether a string is valid JSON. Errors mention the parser’s message without sending the payload away. | Input: text. Output: valid/invalid plus message. |
+| `jwt-decoder` | JWT decoder | Inspect non-secret sample JWTs. Signatures are displayed, not verified, and tokens are never sent to Freela. (декодує payload; без серверної перевірки підпису) | Input: JWT string. Output: JSON header and payload. |
+| `levenshtein` | Levenshtein distance | Levenshtein edit distance of two strings. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `luhn-check` | Luhn check | Luhn checksum for digit strings (not card storage). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `mime-guess` | MIME from extension | Guess MIME type from a filename extension. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `mime-to-ext` | MIME to extension | Map a common MIME type to a file extension. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `ndjson-to-array` | NDJSON to array | Wrap NDJSON objects in one JSON array. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `octal-decode` | Octal decode | Decode space-separated octal bytes. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `octal-encode` | Octal encode | Show each byte as octal. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `csv-pick-column` | Pick CSV column | Pull one 1-based column from a simple CSV. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `port-check` | Port class | Say whether a port is system, registered, or ephemeral. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `query-build` | Query builder | Build a query string from key=value lines. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `query-parser` | Query string parser | Turn a query string or full URL into a key/value map using URLSearchParams. Duplicate keys keep the last value. | Input: query or URL. Output: JSON. |
+| `quoted-printable` | Quoted-printable | Encode UTF-8 bytes as quoted-printable. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `regex-tester` | Regex tester | Run a pattern against sample text and see matches. Invalid patterns fail with the engine’s error message. | Input: pattern plus text. Output: match list. |
+| `semver-major` | Semver major | Read the major number from a version. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `json-sort-keys` | Sort JSON keys | Sort JSON object keys recursively. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `sql-formatter` | SQL formatter | Indent SQL with sql-formatter locally. Not an executor, linter or migration runner. (sql-formatter у вкладці) | Input/output: SQL text. |
+| `sql-quote` | SQL quote | Wrap text as a single-quoted SQL string. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `strip-comments` | Strip comments | Remove // and /* */ comments from a snippet. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `subnet-info` | Subnet info | Show IPv4 network, mask, broadcast and host count. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `text-data-uri` | Text data URI | Build a text/plain data URI. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `csv-transpose` | Transpose CSV | Swap rows and columns of a simple CSV. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `tsv-to-csv` | TSV to CSV | Turn tab-separated rows into CSV. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `ulid-validate` | ULID validate | Check the 26-character Crockford ULID shape. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `unique-json-array` | Unique JSON array | Drop duplicate values from a JSON array. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `url-codec` | URL encode & decode | Apply encodeURIComponent or decodeURIComponent to a string. Handy when a parameter contains spaces or Unicode. | Input and output: text. |
+| `url-parser` | URL parser | Parse an absolute URL with the browser URL API. The tool does not request the address. | Input: URL. Output: JSON parts. |
+| `utf8-bytes` | UTF-8 bytes | Count the UTF-8 bytes in the text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `uuid-generator` | UUID generator | Create RFC 4122 version 4 UUIDs with crypto.getRandomValues. Nothing is logged. | Output: hyphenated UUID strings. |
+| `uuid-validate` | UUID validate | Check UUID hyphenated form and version nibble. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `cron-validate` | Validate cron | Check five simple UNIX cron fields. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `ipv4-validate` | Validate IPv4 | Check dotted IPv4 syntax. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `ipv6-validate` | Validate IPv6 | Check a common full or compressed IPv6 shape. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `semver-validate` | Validate semver | Check major.minor.patch with an optional prerelease. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `xml-escape` | XML escape | Escape & < > and quotes for XML text. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `xml-formatter` | XML formatter | Indent XML-like markup in the browser. This is a structural pretty-printer, not a schema validator. | Input/output: XML text. |
+| `xml-unescape` | XML unescape | Decode XML entities such as &lt; and &amp;. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `string-xor` | XOR hex | XOR the text with a key and print hex. This is not encryption. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `yaml-json` | YAML to JSON | Turn flat key: value YAML into JSON. Nested documents, anchors and multiline blocks are not supported. | Input: flat YAML. Output: JSON. |
+| `yaml-top-keys` | YAML top keys | List top-level key names from simple YAML lines. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+
+### SEO / SEO (43)
+
+_Створюйте метатеги, robots.txt, набори hreflang і прев’ю SERP._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `breadcrumb-ld` | Breadcrumb JSON-LD | JSON-LD BreadcrumbList from name\|url lines. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `canonical-helper` | Canonical helper | Emit a single rel=canonical tag for an absolute URL. It does not rewrite your site. | Output: HTML link tag. |
+| `noindex-detect` | Detect noindex | See whether a robots meta tag says noindex. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `domain-syntax` | Domain syntax | Check hostname syntax. This does not query DNS. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `query-drop-key` | Drop query key | Remove one query parameter from a URL. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `empty-link-check` | Empty link names | Count anchors with no visible name and no aria-label. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `extract-domain` | Extract domain | Hostname of a URL or bare host. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `href-extract` | Extract hrefs | List href values from HTML anchors. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `faq-jsonld` | FAQ JSON-LD | FAQPage JSON-LD from question\|\|answer pairs. No reviews. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `force-https` | Force HTTPS | Force https:// on a URL. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `heading-order` | Heading order | Flag heading levels that skip a step. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `heading-outline` | Heading outline | List h1–h6 headings found in an HTML snippet. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `hreflang-generator` | hreflang generator | Build link rel=alternate hreflang tags plus x-default from a list of locale URLs you provide. | Output: HTML link tags. |
+| `keyword-count` | Keyword count | Count exact copies of one keyword. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `keyword-density` | Keyword density | Share of a phrase in the word count (not a rank promise). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `keyword-in-title` | Keyword in title | Say whether a keyword appears in a title. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `mailto-builder` | Mailto link | Build a mailto link with an optional subject. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `meta-length` | Meta description length | Count a meta description and compare it with 120–160 characters. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `meta-robots` | Meta robots tag | Build a meta robots content string. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `meta-tag-generator` | Meta tag generator | Build title, description and basic Open Graph tags from fields you type. It does not fetch or rewrite live pages. | Output: HTML meta tags. |
+| `missing-alt` | Missing alt text | Count images whose alt text is missing or empty. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `canonical-host` | Normalize canonical URL | Normalize scheme and host; drop default ports. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `og-title-tags` | OG title tags | Draft og:title and og:url meta tags to copy. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `og-preview` | Open Graph preview | Sketch how an og:title and description might appear. We do not fetch the live image from your server. | Output: preview plus meta tags. |
+| `redirect-pairs` | Redirect map CSV | Turn from→to lines into a CSV map. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `resolve-relative-url` | Resolve relative URL | Resolve a relative URL against a base URL. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `robots-line` | Robots line | Write one Allow or Disallow line. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `robots-path-test` | Robots path test | Test a path against simple Disallow lines. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `robots-txt-generator` | robots.txt generator | Emit a robots.txt with allow/disallow paths you list. It does not crawl your site or prove what Google will fetch. | Output: robots.txt text. |
+| `schema-generator` | Schema generator | Build a WebPage/WebApplication JSON-LD object from fields you type. Review and rating types are blocked. | Output: JSON-LD. |
+| `serp-preview` | SERP snippet preview | See how a title, URL and description might wrap in a generic results layout. This is not a live SERP from Google. | Input: title fields. Output: on-screen preview. |
+| `sitemap-helper` | Sitemap helper | Turn a list of absolute URLs into a urlset. It does not crawl your site or prove indexing. | Output: XML sitemap. |
+| `slug-ok` | Slug check | Check that a slug is lowercase words and hyphens. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `slug-from-url` | Slug from URL | Take the last path segment as a slug. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `sort-query` | Sort query params | Sort query parameters by name. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `strip-utm` | Strip tracking params | Remove utm_* and fbclid/gclid parameters. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `title-length` | Title length check | Count title characters vs common SERP budgets. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `toggle-trailing-slash` | Toggle trailing slash | Add or remove a trailing slash on the path. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `twitter-card` | Twitter card tags | Draft twitter:card meta tags. Not a live preview. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `url-origin` | URL origin | Show only the origin of a URL. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `url-pathname` | URL path | Show only the path of a URL. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `port-from-url` | URL port | Show the explicit port, or 80/443 when it is the default. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `utm-builder` | UTM builder | Add utm_source, utm_medium and utm_campaign to a URL in the browser. Values are not sent to Freela. | Input: URL + campaign fields. Output: tagged URL. |
+
+### Калькулятори / Calculators (52)
+
+_Відсотки, ПДВ, знижки, маржа, ІМТ і різниця дат._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `aspect-ratio` | Aspect ratio | Simplify width:height to a ratio. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `average-mean` | Average mean | Arithmetic mean of a number list. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `bmi-calculator` | BMI calculator | Compute BMI from height and weight as a generic index. It is not a diagnosis and ignores muscle mass. | Input: height and weight. Output: BMI. |
+| `break-even` | Break-even units | Units to cover fixed cost at a unit margin. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `cagr` | CAGR calculator | Compound annual growth rate. Not investment advice. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `circle-math` | Circle area | Circle area and circumference from radius. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `compound-interest` | Compound interest | Apply A = P(1+r/n)^(nt) in the browser. Not investment advice or a forecast of markets. | Input: principal and rate. Output: future value. |
+| `date-difference` | Date difference | Count whole days and an approximate years/months breakdown between two calendar dates in your local timezone. | Input: dates. Output: duration. |
+| `discount` | Discount calculator | Apply a percent off a list price and see the savings. Stacked coupons are not modeled. | Input: price and percent. Output: sale price. |
+| `factorial` | Factorial | n! for n up to 170 as a decimal string. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `fibonacci` | Fibonacci sequence | First n Fibonacci numbers (n ≤ 80). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `fraction-to-decimal` | Fraction to decimal | Convert a/b into a decimal. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `fuel-cost` | Fuel cost calculator | Multiply distance by L/100 km and price. Not a navigation product or live fuel API. | Input: distance, L/100, price. Output: liters and cost. |
+| `gcd-lcm` | GCD and LCM | Greatest common divisor and least common multiple. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `hourly-rate` | Hourly rate | Derive an hourly rate from a yearly amount. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `invoice-math` | Invoice line calculator | Multiply quantity by unit price and apply a tax rate. Not an invoicing product or tax filing tool. | Input: numbers. Output: totals. |
+| `loan-calculator` | Loan calculator | Compute a standard amortizing monthly payment. Not a lender quote, APR disclosure or advice. | Input: principal, rate, years. Output: payment. |
+| `loan-payment` | Loan payment | Monthly payment from principal, annual rate, and years. Not lending advice. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `log10` | Log10 | Base-10 logarithm. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `margin-markup` | Margin to markup | Convert a margin percent into a markup percent. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `median-list` | Median | Median of a number list. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `meeting-cost` | Meeting cost | People times hourly rate times hours. Not a budget. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `modulo` | Modulo | Remainder after division. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `overtime-pay` | Overtime pay | Hours times rate times multiplier. Not payroll advice. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `percent-change` | Percent change | Percent change from a start value to a new value. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `percent-of` | Percent of | Take a percent of a number. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `percentage` | Percentage calculator | Find a percent of a number, or the percent change between two values. Arithmetic is done in JavaScript decimals. | Input: numbers. Output: formatted numbers. |
+| `nth-power` | Power | Raise a number to an exponent. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `prime-check` | Prime checker | Test whether an integer is prime. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `prime-factors` | Prime factors | List prime factors of an integer up to one million. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `profit-margin` | Profit margin calculator | Derive margin and markup from cost and selling price. Labels follow standard retail definitions. | Input: cost and price. Output: profit and percents. |
+| `pythagoras` | Pythagoras | Hypotenuse from two legs. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `quadratic-roots` | Quadratic roots | Real roots of ax²+bx+c from a b c. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `range-stats` | Range stats | Min, max, sum and mean of a number list. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `roi-calculator` | ROI change | Percent change from a start value to an end value. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `roman-numeral` | Roman numerals | Integer 1–3999 to Roman numerals. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `round-number` | Round number | Round a number to a chosen number of decimals. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `rule-of-three` | Rule of three | Solve a/b = c/x for x. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `run-pace` | Run pace | Minutes per kilometer from time and distance. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `salary-converter` | Salary converter | Map hourly ↔ monthly ↔ yearly from hours per week. Not a contract, tax or overtime engine. | Input: pay and hours. Output: hourly, monthly, yearly. |
+| `savings-goal` | Savings goal | Months to reach a goal at a fixed monthly amount. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `simple-inflation` | Simple inflation | Apply one percent change to an amount. Not a forecast. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `simple-interest` | Simple interest | Simple interest I = P × r × t. Not advice. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `ratio-simplify` | Simplify ratio | Simplify a:b using GCD. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `split-bill` | Split a bill | Divide a total by a number of people. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `square-root` | Square root | Square root of a non-negative number. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `stdev-list` | Standard deviation | Sample standard deviation of a number list. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `tip-calculator` | Tip calculator | Add a tip percent and split the total among people. Not a payment app and not tax advice. | Input: amounts. Output: tip and shares. |
+| `triangle-area` | Triangle area | Triangle area from base and height. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `unit-price` | Unit price | Price divided by quantity. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `vat-calculator` | VAT calculator | Convert between net and gross using a VAT rate you enter. Country rules are not applied automatically. | Input: rate and amount. Output: net, tax, gross. |
+| `work-hours` | Work hours | Hours between two clock times on the same day. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+
+### Конвертери / Converters (17)
+
+_Конвертуйте довжину, вагу, температуру та розмір даних._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `area` | Area converter | Convert land and floor areas through square metres. Survey-specific acres are not modeled. | Input: number plus unit. |
+| `universal-converter` | Convert any file | Auto-detect a file and offer only conversions Freela can run in the browser. Not an any-to-any cloud engine. (лише формати, які браузер реально вміє) | Inputs vary. Outputs are only listed when the conversion runs here. |
+| `convert-video` | Convert video | ffmpeg.wasm is not shipped: COOP/COEP, size and codec reliability are not good enough for a honest convert button. (відкладено: ffmpeg.wasm не постачається) | No transcode in this release. Honest deferred status. |
+| `data-size` | Data size converter | Convert file sizes using SI (1000) or IEC (1024) units. Labels stay explicit so KiB is not called KB. | Input: number plus unit. Output: number. |
+| `deg-to-rad` | Degrees to radians | Convert degrees ↔ radians. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `energy` | Energy converter | Convert energy units through joules. Food calories here are thermochemical kilocalories. | Input: number plus unit. |
+| `length` | Length converter | Convert common length units through metres. Results use locale number formatting. | Input: number plus unit. Output: number. |
+| `pressure` | Pressure converter | Convert pressure units through pascals. Not a medical or industrial certification tool. | Input: number plus unit. |
+| `px-to-pt` | Px to pt | Convert CSS px to pt at 96 DPI. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `px-to-rem` | Px to rem | Convert px to rem at a root font size. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `rem-to-px` | Rem to px | Convert rem to pixels using a root size. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `speed` | Speed converter | Convert everyday speed units through metres per second. Not a vehicle computer. | Input: number plus unit. |
+| `temperature` | Temperature converter | Convert temperatures with standard formulas. Kelvin cannot go below zero in the output. | Input: number plus unit. Output: number. |
+| `duration` | Time duration converter | Convert durations through seconds. This is elapsed time, not calendar dates or DST. | Input: number plus unit. |
+| `video-file-info` | Video file info | Inspect name, size, MIME type, duration and pixel size in the browser. Not a transcode and not ffmpeg. (лише метадані кліпа; без транскоду) | Input: video (or any file). Output: text summary. |
+| `volume` | Volume converter | Convert common volumes using the US liquid gallon. UK gallons are not included in this set. | Input: number plus unit. |
+| `weight` | Weight converter | Convert mass units via kilograms. This is mass, not planetary weight, despite the everyday label. | Input: number plus unit. Output: number. |
+
+### Колір / Color (15)
+
+_Конвертуйте HEX/RGB/HSL, перевіряйте контраст і створюйте палітри._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `complementary-hex` | Complementary color | Hue-opposite complementary hex color. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `contrast-checker` | Contrast checker | Compute the contrast ratio of a foreground and background pair against WCAG 2 AA and AAA thresholds. | Input: two HEX colors. Output: ratio and pass/fail. |
+| `gradient-generator` | Gradient generator | Emit a linear-gradient CSS snippet from two HEX colors and an angle. Colors stay in sRGB. | Output: CSS. |
+| `hex-rgb-hsl` | HEX RGB HSL converter | Translate color notations used in CSS. Invalid hex strings are rejected instead of silently clamped. | Input: HEX or RGB. Output: HEX, RGB, HSL. |
+| `invert-hex` | Invert hex color | Invert an #RRGGBB color. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `is-dark-hex` | Is hex dark | Say whether a hex color is dark by luminance. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `mix-hex` | Mix hex colors | Mix two hex colors at 50%. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `nearest-named-color` | Nearest color name | Nearest name from a small CSS color list. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `palette-generator` | Palette generator | Generate lighter and darker HEX steps from a base color by mixing with white and black in sRGB. | Input: HEX. Output: HEX list. |
+| `random-hex` | Random hex color | Random #RRGGBB using Web Crypto. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `readable-ink` | Readable ink color | Pick black or white text for a hex background. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `relative-luminance` | Relative luminance | WCAG relative luminance of a hex color. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `rgb-cmyk` | RGB to CMYK | Approximate CMYK from #RRGGBB (screen, not ICC). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `shade-hex` | Shade hex color | Mix a hex color toward black by a percent. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `tint-hex` | Tint hex color | Mix a hex color toward white by a percent. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+
+### Генератори / Generators (17)
+
+_Створюйте паролі, QR-коди та випадкові рядки на пристрої._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `barcode-generator` | Barcode generator | Draw EAN-13 or Code 128 barcodes on a canvas. You must supply valid digits; we do not invent GTINs. (JsBarcode SVG/canvas) | Output: PNG barcode. |
+| `csp-builder` | CSP builder | Join directive lines into one Content-Security-Policy. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `dice-roller` | Dice roller | Roll NdS dice with crypto randomness. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `dummy-csv` | Dummy CSV | Generate n CSV sample rows. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `dummy-json` | Dummy JSON | Generate n tiny JSON sample objects. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `lorem-ipsum` | Lorem Ipsum generator | Repeat a classic Lorem paragraph locally. Not a Latin translator and not unique copy for publishing. | Output: placeholder text. |
+| `password-generator` | Password generator | Create passwords with crypto.getRandomValues. Length and character classes are under your control. | Output: generated text. |
+| `password-score` | Password score | Heuristic strength score. Not a breach check. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `pick-from-list` | Pick from list | Pick one line at random from a list. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `pin-generator` | PIN generator | Numeric PIN of a chosen length (not a bank PIN). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `qr-generator` | QR code generator | Encode text into a QR PNG entirely in the browser. We do not shorten URLs or track scans. (qrcode library у браузері) | Input: text. Output: PNG. |
+| `qr-reader` | QR code reader | Decode a QR code from a photo or screenshot with jsQR in the browser. Camera is optional. Обмеження: jsQR з зображення. | Input: image. Output: decoded text. |
+| `random-id` | Random id | Build a stable id from a length and a seed. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `random-number` | Random number | Draw integers between a minimum and maximum using the Web Crypto API. No server raffle, no fake odds. | Input: min, max, count. Output: integers. |
+| `random-string` | Random string generator | Produce random tokens for test data. Not a password manager and not a lottery. | Output: text tokens. |
+| `ulid-generator` | ULID generator | Generate a ULID with the current time and crypto randomness. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `web-manifest` | Web manifest draft | Draft a tiny web app manifest from three lines. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+
+### Дата і час / Date & Time (25)
+
+_Unix-мітки та часові пояси без надсилання даних._
+
+| Slug | Name | Що робить (чесно) | Формати |
+| --- | --- | --- | --- |
+| `add-clock` | Add clock minutes | Add minutes to a 24-hour HH:MM time. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `add-days` | Add days to date | Add (or subtract) whole days to an ISO date. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `add-months` | Add months | Add or subtract whole months, clamping the day. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `add-weeks` | Add weeks | Add or subtract whole weeks from a date. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `age-calculator` | Age calculator | Count years, months and days from a birth date to today or another date. Not legal age verification. | Input: dates. Output: age parts. |
+| `business-days` | Business days | Count Mon–Fri days between two dates (no holidays). Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `ics-event` | Calendar event (ICS) | Build a VEVENT from a title and start/end. Timezone folding is the browser’s. Not a calendar product. | Output: ICS text. |
+| `clock-difference` | Clock difference | Whole minutes from one HH:MM to another. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `days-in-month` | Days in month | How many days are in YYYY-MM. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `days-until` | Days until date | Whole days from today (UTC) to a target date. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `end-of-month` | End of month | Last calendar day of the month containing a date. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `format-date` | Format date | Format an ISO date as YYYY-MM-DD and long en-GB. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `hms-seconds` | H:M:S to seconds | Turn H:MM:SS into a second count. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `hours-between` | Hours between | Hours between two date-times. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `iso-week` | ISO week number | ISO week number of a date. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `leap-year` | Leap year | Say whether a year is a leap year. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `pomodoro-blocks` | Pomodoro blocks | How many focus blocks fit in a minute budget. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `seconds-hms` | Seconds to H:M:S | Turn a second count into hours, minutes, and seconds. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `timezone-convert` | Timezone converter | Show the same instant in several IANA timezones using Intl.DateTimeFormat. DST rules come from the browser. | Input: date-time plus zone. Output: converted date-time. |
+| `unix-day` | Unix day | Days since 1970-01-01 for a calendar date. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `unix-timestamp` | Unix timestamp converter | Switch between Unix seconds, milliseconds and ISO-8601 strings using your locale’s date formatting. | Input: number or date. Output: formatted date and Unix values. |
+| `iso-date-validate` | Validate ISO date | Check that YYYY-MM-DD is a real calendar date. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text or a file you download here. |
+| `week-of-month` | Week of month | Which week of the month a date falls in. Runs in this tab. Freela does not upload the input. | Input stays in this tab. Output is text you copy here. |
+| `weekday-of` | Weekday of date | Weekday name for an ISO date. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+| `year-quarter` | Year quarter | Calendar quarter Q1–Q4 of a date. Runs in this tab. Freela does not upload the input. | Input: text or numbers in this page. Output: text in this tab. |
+
+## Примітки чесності (обмеження каталогу)
+
+- Усі **403** опубліковані інструменти мають `processingMode: LOCAL_ONLY` і `clientOnly: true`.
+- **Немає** серверного OCR, PDF→Word/Excel/PowerPoint, хмарного зберігання чи email-доставки.
+- **DOCX→PDF** — лише текст через mammoth; без зображень/колонок/шрифтів Word.
+- **Extract PDF text** — шар тексту pdf.js; скани без text layer лишаються порожніми (не OCR).
+- **Resize / compress image** — canvas API браузера; не AI upscale і не професійний кодек.
+- **HEIC** — heic2any; окремі файли можуть не декодуватись у цьому білді.
+- **PDF password** і **Convert video** — опубліковані як чесні *deferred* сторінки (шифрування / ffmpeg.wasm не підключені).
+- **Compress PDF** — структурне стиснення object streams (pdf-lib), не recompress вкладених JPEG.
+
+## Privacy / Footer
+
+Файли й текст обробляються **лише в браузері** (LOCAL_ONLY). Freela не завантажує введені дані на сервери для обробки інструментами каталогу.
+
+Live: [https://freela.store](https://freela.store) · Sitemap: [https://freela.store/sitemap.xml](https://freela.store/sitemap.xml) (~8520 URL) · Health: `publishedTools=403`, `locales=20`.
+
+---
+
+*Згенеровано з `src/data/tools/*` + `locales.ts` + `categories.ts`. Підрахунок: 403 tools · 10 categories · 20 locales.*
