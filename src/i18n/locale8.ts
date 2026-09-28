@@ -80,6 +80,7 @@ export function translatePhrase(label: string, locale: string): string {
 }
 
 export function translateCta(label: string, locale: string): string {
+  if (isNewLocale(locale) && EXACT[label]) return EXACT[label][locale];
   const phrase = translatePhrase(label, locale);
   if (!isNewLocale(locale) || phrase !== label) return phrase;
   const verb = eight("実行", "실행", "运行", "執行", "चलाएँ", "jalankan", "chạy", "เรียกใช้");
@@ -199,13 +200,87 @@ function clamp(text: string, min: number, max: number, pad = "") {
   return trimmed;
 }
 
+const EXACT: Record<string, Eight<string>> = {
+  "Title case": eight("タイトルケース", "제목 대소문자", "标题大小写", "標題大小寫", "शीर्षक केस", "Huruf judul", "Chữ hoa tiêu đề", "ตัวพิมพ์ชื่อเรื่อง"),
+  "Sentence case": eight("文の先頭を大文字", "문장 대소문자", "句首大写", "句首大寫", "वाक्य केस", "Huruf kalimat", "Chữ hoa câu", "ตัวพิมพ์ประโยค"),
+  "Swap case": eight("大文字と小文字を入れ替え", "대소문자 바꾸기", "大小写对调", "大小寫對調", "अक्षर उलटें", "Tukar huruf", "Đổi hoa thường", "สลับตัวพิมพ์"),
+  "Shuffle lines": eight("行を混ぜる", "줄 섞기", "打乱行", "打亂行", "पंक्तियाँ मिलाएँ", "Acak baris", "Xáo dòng", "สลับบรรทัด"),
+  "Unique words": eight("重複しない単語", "고유 단어", "不重复的词", "不重複的詞", "अद्वितीय शब्द", "Kata unik", "Từ duy nhất", "คำไม่ซ้ำ"),
+  "Extract numbers": eight("数値を抽出", "숫자 추출", "提取数字", "擷取數字", "संख्या निकालें", "Ekstrak angka", "Trích số", "ดึงตัวเลข"),
+  "Reading time": eight("読了時間", "읽기 시간", "阅读时间", "閱讀時間", "पढ़ने का समय", "Waktu baca", "Thời gian đọc", "เวลาอ่าน"),
+  "Longest line": eight("最も長い行", "가장 긴 줄", "最长的一行", "最長的一行", "सबसे लंबी पंक्ति", "Baris terpanjang", "Dòng dài nhất", "บรรทัดยาวสุด"),
+  "Strip emoji": eight("絵文字を除く", "이모지 제거", "去掉表情符号", "去掉表情符號", "इमोजी हटाएँ", "Hapus emoji", "Bỏ emoji", "ลบอีโมจิ"),
+  "Extract emoji": eight("絵文字を抽出", "이모지 추출", "提取表情符号", "擷取表情符號", "इमोजी निकालें", "Ekstrak emoji", "Trích emoji", "ดึงอีโมจิ"),
+  "Strip BOM": eight("BOMを除く", "BOM 제거", "去掉 BOM", "去掉 BOM", "BOM हटाएँ", "Hapus BOM", "Bỏ BOM", "ลบ BOM"),
+  "Center lines": eight("行を中央寄せ", "줄 가운데 정렬", "行居中", "行置中", "पंक्ति बीच में", "Tengah baris", "Căn giữa dòng", "จัดกึ่งกลางบรรทัด"),
+  "Indent lines": eight("行をインデント", "줄 들여쓰기", "缩进行", "縮排行", "पंक्ति इंडेंट", "Inden baris", "Thụt dòng", "เยื้องบรรทัด"),
+  "Sort numbers": eight("数値で並べ替え", "숫자 정렬", "按数字排序", "依數字排序", "संख्या क्रम", "Urutkan angka", "Sắp xếp số", "เรียงตัวเลข"),
+  "Reverse each line": eight("各行を反転", "각 줄 뒤집기", "逐行反转", "逐行反轉", "हर पंक्ति उलटी", "Balik tiap baris", "Đảo từng dòng", "กลับแต่ละบรรทัด"),
+  "Character codes": eight("文字コード", "문자 코드", "字符编码", "字元編碼", "अक्षर कोड", "Kode karakter", "Mã ký tự", "รหัสอักขระ"),
+  "NFC normalize": eight("NFC正規化", "NFC 정규화", "NFC 规范化", "NFC 正規化", "NFC सामान्यीकरण", "Normalisasi NFC", "Chuẩn hóa NFC", "ปรับ NFC"),
+  "Speaking time": eight("話す時間", "말하기 시간", "朗读时间", "朗讀時間", "बोलने का समय", "Waktu bicara", "Thời gian nói", "เวลาพูด"),
+  "Unwrap lines": eight("折り返しを戻す", "줄바꿈 풀기", "合并换行", "合併換行", "पंक्ति जोड़ें", "Gabung baris", "Gộp dòng", "รวมบรรทัด"),
+  "Keep letters": eight("文字だけ残す", "문자만 남기기", "只留字母", "只留字母", "केवल अक्षर", "Sisakan huruf", "Giữ chữ cái", "เก็บตัวอักษร"),
+  "Line lengths": eight("行の長さ", "줄 길이", "行长度", "行長度", "पंक्ति की लंबाई", "Panjang baris", "Độ dài dòng", "ความยาวบรรทัด"),
+  "Repeated words": eight("繰り返す単語", "반복 단어", "重复的词", "重複的詞", "दोहराए शब्द", "Kata berulang", "Từ lặp", "คำซ้ำ"),
+  "Trim lines": eight("行の空白を除く", "줄 공백 제거", "修剪每行", "修剪每行", "पंक्ति काटें", "Pangkas baris", "Cắt khoảng trắng dòng", "ตัดช่องว่างบรรทัด"),
+  "Collapse spaces": eight("連続空白を詰める", "연속 공백 줄이기", "合并空格", "合併空白", "रिक्त स्थान समेटें", "Rapatkan spasi", "Gộp khoảng trắng", "ยุบช่องว่าง"),
+  "Base32 encode": eight("Base32符号化", "Base32 인코드", "Base32 编码", "Base32 編碼", "Base32 एन्कोड", "Enkode Base32", "Mã hóa Base32", "เข้ารหัส Base32"),
+  "Base32 decode": eight("Base32復号", "Base32 디코드", "Base32 解码", "Base32 解碼", "Base32 डीकोड", "Dekode Base32", "Giải mã Base32", "ถอดรหัส Base32"),
+  "JSON to CSV": eight("JSONからCSV", "JSON을 CSV로", "JSON 转 CSV", "JSON 轉 CSV", "JSON से CSV", "JSON ke CSV", "JSON sang CSV", "JSON เป็น CSV"),
+  "CSV to TSV": eight("CSVからTSV", "CSV를 TSV로", "CSV 转 TSV", "CSV 轉 TSV", "CSV से TSV", "CSV ke TSV", "CSV sang TSV", "CSV เป็น TSV"),
+  "HTML unescape": eight("HTMLを戻す", "HTML 디코드", "HTML 反转义", "HTML 反轉義", "HTML अनएस्केप", "HTML unescape", "Giải thoát HTML", "ถอดรหัส HTML"),
+  "XML unescape": eight("XMLを戻す", "XML 디코드", "XML 反转义", "XML 反轉義", "XML अनएस्केप", "XML unescape", "Giải thoát XML", "ถอดรหัส XML"),
+  "SQL quote": eight("SQL引用符", "SQL 따옴표", "SQL 引号", "SQL 引號", "SQL उद्धरण", "Kutip SQL", "Trích dẫn SQL", "ใส่เครื่องหมาย SQL"),
+  "UTF-8 bytes": eight("UTF-8バイト数", "UTF-8 바이트", "UTF-8 字节", "UTF-8 位元組", "UTF-8 बाइट", "Byte UTF-8", "Byte UTF-8", "ไบต์ UTF-8"),
+  "Text data URI": eight("テキストの data URI", "텍스트 data URI", "文本 data URI", "文字 data URI", "पाठ data URI", "Data URI teks", "Data URI văn bản", "data URI ข้อความ"),
+  "Octal encode": eight("8進符号化", "8진 인코드", "八进制编码", "八進位編碼", "अष्टाधारी एन्कोड", "Enkode oktal", "Mã hóa bát phân", "เข้ารหัสฐานแปด"),
+  "Octal decode": eight("8進復号", "8진 디코드", "八进制解码", "八進位解碼", "अष्टाधारी डीकोड", "Dekode oktal", "Giải mã bát phân", "ถอดรหัสฐานแปด"),
+  "XOR hex": eight("XORの16進", "XOR 16진수", "XOR 十六进制", "XOR 十六進位", "XOR हेक्स", "Hex XOR", "Hex XOR", "XOR ฐานสิบหก"),
+  "Semver major": eight("SemVerのメジャー", "SemVer 메이저", "SemVer 主版本", "SemVer 主版本", "SemVer प्रमुख", "SemVer mayor", "SemVer chính", "SemVer หลัก"),
+  "Port class": eight("ポートの区分", "포트 구분", "端口类别", "連接埠類別", "पोर्ट वर्ग", "Kelas port", "Loại cổng", "ประเภทพอร์ต"),
+  "Browser from UA": eight("UAからブラウザ", "UA에서 브라우저", "从 UA 识别浏览器", "從 UA 識別瀏覽器", "UA से ब्राउज़र", "Browser dari UA", "Trình duyệt từ UA", "เบราว์เซอร์จาก UA"),
+  "MIME to extension": eight("MIMEから拡張子", "MIME에서 확장자", "MIME 到扩展名", "MIME 到副檔名", "MIME से एक्सटेंशन", "MIME ke ekstensi", "MIME sang đuôi", "MIME เป็นนามสกุล"),
+  "Extension to MIME": eight("拡張子からMIME", "확장자에서 MIME", "扩展名到 MIME", "副檔名到 MIME", "एक्सटेंशन से MIME", "Ekstensi ke MIME", "Đuôi sang MIME", "นามสกุลเป็น MIME"),
+  "Compare strings": eight("文字列を比較", "문자열 비교", "比较字符串", "比較字串", "स्ट्रिंग तुलना", "Bandingkan string", "So sánh chuỗi", "เปรียบเทียบสตริง"),
+  "Random id": eight("ランダムID", "임의 ID", "随机 ID", "隨機 ID", "यादृच्छिक ID", "ID acak", "ID ngẫu nhiên", "ไอดีสุ่ม"),
+  "CSS clamp": eight("CSS clamp", "CSS clamp", "CSS clamp", "CSS clamp", "CSS clamp", "CSS clamp", "CSS clamp", "CSS clamp"),
+  "Rem to px": eight("remからpx", "rem을 px로", "rem 转 px", "rem 轉 px", "rem से px", "rem ke px", "rem sang px", "rem เป็น px"),
+  "JSON types": eight("JSONの型", "JSON 타입", "JSON 类型", "JSON 類型", "JSON प्रकार", "Tipe JSON", "Kiểu JSON", "ชนิด JSON"),
+  "Unique JSON array": eight("重複しないJSON配列", "고유 JSON 배열", "去重 JSON 数组", "去重 JSON 陣列", "अद्वितीय JSON सरणी", "Array JSON unik", "Mảng JSON duy nhất", "อาร์เรย์ JSON ไม่ซ้ำ"),
+  "Percent change": eight("変化率", "변화율", "变化百分比", "變化百分比", "प्रतिशत परिवर्तन", "Perubahan persen", "Phần trăm thay đổi", "เปอร์เซ็นต์การเปลี่ยนแปลง"),
+  "Percent of": eight("割合を取る", "백분율 계산", "求百分比", "求百分比", "प्रतिशत निकालें", "Persen dari", "Phần trăm của", "เปอร์เซ็นต์ของ"),
+  "Split a bill": eight("割り勘", "더치페이", "分摊账单", "分攤帳單", "बिल बाँटें", "Bagi tagihan", "Chia hóa đơn", "หารบิล"),
+  "Margin to markup": eight("マージンからマークアップ", "마진을 마크업으로", "毛利转加价", "毛利轉加價", "मार्जिन से मार्कअप", "Margin ke markup", "Biên lợi nhuận sang markup", "มาร์จินเป็นมาร์กอัป"),
+  "Modulo": eight("剰余", "나머지", "取余", "取餘", "शेष", "Sisa bagi", "Phần dư", "เศษจากการหาร"),
+  "Power": eight("累乗", "거듭제곱", "乘方", "乘方", "घात", "Pangkat", "Lũy thừa", "เลขยกกำลัง"),
+  "Square root": eight("平方根", "제곱근", "平方根", "平方根", "वर्गमूल", "Akar kuadrat", "Căn bậc hai", "รากที่สอง"),
+  "Log10": eight("常用対数", "상용로그", "常用对数", "常用對數", "लघुगणक 10", "Log10", "Log10", "ลอการิทึมฐานสิบ"),
+  "Run pace": eight("走行ペース", "달리기 페이스", "配速", "配速", "दौड़ की गति", "Pace lari", "Nhịp chạy", "เพซวิ่ง"),
+  "Work hours": eight("勤務時間", "근무 시간", "工时", "工時", "काम के घंटे", "Jam kerja", "Giờ làm", "ชั่วโมงทำงาน"),
+  "Simple inflation": eight("単純な物価上昇", "단순 물가", "简单通胀", "簡單通膨", "सरल मुद्रास्फीति", "Inflasi sederhana", "Lạm phát đơn giản", "เงินเฟ้ออย่างง่าย"),
+  "Loan payment": eight("ローン月額", "대출 월 상환", "贷款月供", "貸款月付", "ऋण की मासिक किस्त", "Cicilan pinjaman", "Trả góp khoản vay", "ค่างวดเงินกู้"),
+  "Add weeks": eight("週を加算", "주 더하기", "加周", "加週", "सप्ताह जोड़ें", "Tambah minggu", "Cộng tuần", "บวกสัปดาห์"),
+  "Seconds to H:M:S": eight("秒を時分秒に", "초를 시:분:초로", "秒转时分秒", "秒轉時分秒", "सेकंड से घड़ी", "Detik ke jam", "Giây sang giờ", "วินาทีเป็นชม."),
+  "H:M:S to seconds": eight("時分秒を秒に", "시:분:초를 초로", "时分秒转秒", "時分秒轉秒", "घड़ी से सेकंड", "Jam ke detik", "Giờ sang giây", "ชม.เป็นวินาที"),
+  "Week of month": eight("月の第何週", "월의 몇째 주", "当月第几周", "當月第幾週", "महीने का सप्ताह", "Minggu dalam bulan", "Tuần trong tháng", "สัปดาห์ของเดือน"),
+  "Unix day": eight("Unix日数", "Unix 일수", "Unix 日数", "Unix 日數", "Unix दिन", "Hari Unix", "Ngày Unix", "วัน Unix"),
+  "Hours between": eight("時間の差", "시간 차이", "小时间隔", "小時間隔", "घंटों का अंतर", "Selisih jam", "Số giờ giữa hai mốc", "ชั่วโมงระหว่าง"),
+  "OG title tags": eight("OGタイトルタグ", "OG 제목 태그", "OG 标题标签", "OG 標題標籤", "OG शीर्षक टैग", "Tag judul OG", "Thẻ tiêu đề OG", "แท็กชื่อ OG"),
+  "Keyword count": eight("キーワード回数", "키워드 횟수", "关键词次数", "關鍵詞次數", "कीवर्ड गिनती", "Jumlah kata kunci", "Số lần từ khóa", "จำนวนคีย์เวิร์ด"),
+  "Slug check": eight("スラッグ検査", "슬러그 검사", "检查 slug", "檢查 slug", "स्लग जाँच", "Periksa slug", "Kiểm tra slug", "ตรวจ slug"),
+  "Robots line": eight("robotsの1行", "robots 한 줄", "robots 一行", "robots 一行", "robots पंक्ति", "Baris robots", "Dòng robots", "บรรทัด robots"),
+  "Sepia image": eight("セピア画像", "세피아 이미지", "怀旧图像", "懷舊影像", "सेपिया छवि", "Gambar sepia", "Ảnh sepia", "รูปซีเปีย"),
+  "Invert image": eight("画像の色を反転", "이미지 색 반전", "反相图像", "反相影像", "छवि उलटें", "Balik warna gambar", "Đảo màu ảnh", "กลับสีรูป"),
+};
+
 export function synthesizeToolCopy(
   tool: { id: string; inputTypes: string[]; copyEn: { name: string; description: string } },
   locale: NewLocale,
 ) {
-  const name = translatePhrase(tool.copyEn.name, locale);
-  const shown = name === tool.copyEn.name ? `${name}` : name;
-  const localName = shown === tool.copyEn.name ? translateCta(tool.copyEn.name, locale) : shown;
+  const exact = EXACT[tool.copyEn.name]?.[locale];
+  const name = exact ?? translatePhrase(tool.copyEn.name, locale);
+  const localName = name === tool.copyEn.name ? translateCta(tool.copyEn.name, locale) : name;
   const title = clamp(`${localName} · Freela`, 10, 70);
   const description = clamp(`${localName}. ${LOCAL_NOTE[locale]}`, 40, 170, LOCAL_NOTE[locale]);
   return {
