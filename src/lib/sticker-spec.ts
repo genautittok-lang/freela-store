@@ -520,6 +520,11 @@ const SHORT: Record<string, string> = {
 };
 
 const OVERRIDES: Record<string, [string, string]> = {
+  "line-lengths": ["LINE", "LEN"],
+  "mime-to-ext": ["FILE", "MIME"],
+  "utf8-bytes": ["UTF", "BYTE"],
+  "seconds-hms": ["SEC", "HMS"],
+  "hms-seconds": ["HMS", "SEC"],
   "merge-pdf": ["MERGE", "PDF"],
   "split-pdf": ["SPLIT", "PDF"],
   "rotate-pdf": ["TURN", "PDF"],

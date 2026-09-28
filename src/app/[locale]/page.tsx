@@ -43,8 +43,10 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale, ui.heroLead)) }} />
       <section className="freela-hero grid items-center gap-8 rounded-[2rem] border border-border px-5 py-8 shadow-[0_20px_50px_rgb(21_122_69_/_0.08)] sm:px-10 sm:py-12 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <p className="inline-flex items-center rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
-            {ui.processedLocally}
+          <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+            <span>{formatNumber(locale, count)}</span>
+            <span aria-hidden="true">·</span>
+            <span>{ui.processedLocally}</span>
           </p>
           <h1 className="mt-4 max-w-xl text-4xl font-semibold tracking-tight sm:text-5xl">{ui.homeTitle}</h1>
           <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">{ui.heroLead}</p>

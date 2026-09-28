@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const headerList = await headers();
   const locale = headerList.get("x-locale") || "en";
   const rec = getLocale(locale);

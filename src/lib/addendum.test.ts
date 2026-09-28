@@ -5,6 +5,7 @@ import { invoiceMath, parseUrl, parseQuery, schemaJsonLd, sitemapXml } from "./t
 import { sitemapEntries, languageAlternates, breadcrumbJsonLd, faqJsonLd } from "./seo";
 import { privacyNotice } from "./privacy";
 import robots from "../app/robots";
+import { INITIAL_LOCALES } from "@/data/locales";
 
 describe("analytics sanitization", () => {
   it("accepts a lean event", () => {
@@ -67,13 +68,11 @@ describe("seo gates", () => {
   });
   it("sitemap includes every indexable locale", () => {
     const urls = sitemapEntries().map((u) => u.url);
-    for (const locale of ["en", "de", "uk", "pl", "fr", "es", "it", "pt", "nl", "tr", "ar", "he"]) {
+    for (const locale of INITIAL_LOCALES) {
       expect(urls.some((u) => u.includes(`/${locale}`))).toBe(true);
     }
     const langs = sitemapEntries()[0]?.alternates.languages ?? {};
-    expect(Object.keys(langs).filter((k) => k !== "x-default").sort()).toEqual(
-      ["ar", "de", "en", "es", "fr", "he", "it", "nl", "pl", "pt", "tr", "uk"].sort(),
-    );
+    expect(Object.keys(langs).filter((k) => k !== "x-default").sort()).toEqual([...INITIAL_LOCALES].sort());
   });
   it("robots disallows admin and search", () => {
     const r = robots();

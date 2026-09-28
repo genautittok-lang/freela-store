@@ -1,4 +1,5 @@
 import type { Locale } from "./locales";
+import { category8 } from "@/i18n/locale8";
 import { SOURCE_LOCALE, isLocale } from "./locales";
 
 export const CATEGORY_IDS = [
@@ -32,12 +33,12 @@ export type CategoryDefinition = {
 const C = (
   id: CategoryId,
   featured: boolean,
-  rows: Record<Locale, [string, string, string, string]>,
+  rows: Record<string, [string, string, string, string]>,
 ): CategoryDefinition => ({
   id,
   featured,
   copy: Object.fromEntries(
-    Object.entries(rows).map(([locale, [name, slug, description, h1]]) => [
+    Object.entries({ ...rows, ...(category8[id] ?? {}) }).map(([locale, [name, slug, description, h1]]) => [
       locale,
       { name, slug, description, h1 },
     ]),

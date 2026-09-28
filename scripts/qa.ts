@@ -118,8 +118,8 @@ for (const entry of urls) {
 }
 
 assertPreparedUi();
-if (preparedUi.ja && "ar" in preparedUi) fail("ar/he must not remain in preparedUi");
-if (ROUTED_LOCALES.length !== 12) fail(`Expected 12 routed locales, got ${ROUTED_LOCALES.length}`);
+if ("ja" in preparedUi || "ar" in preparedUi) fail("ja/ar must not remain in preparedUi");
+if (ROUTED_LOCALES.length !== INITIAL_LOCALES.length) fail(`Routed locale count ${ROUTED_LOCALES.length}`);
 if (!getLocale("ar")?.indexable || !getLocale("he")?.indexable) fail("RTL locales should be indexable after translation packs");
 if (!getLocale("ar")?.routed || !getLocale("he")?.routed) fail("RTL locales must be routed");
 if (PREPARED_LOCALES.includes("ar" as never)) fail("ar should not be prepared");

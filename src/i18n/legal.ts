@@ -3,7 +3,9 @@ import { isLocale } from "@/data/locales";
 import type { LegalSlug } from "@/data/legal-slugs";
 import { CONTACT_EMAIL } from "@/lib/site";
 
-const BODIES: Record<LegalSlug, Record<Locale, string[]>> = {
+import { legal8 } from "@/i18n/locale8";
+
+const BODIES: Record<LegalSlug, Partial<Record<Locale, string[]>>> = {
   "about": {
     en: [
       "Freela is a catalogue of free browser tools at freela.store. Files are processed on your device whenever the format allows it.",
@@ -895,8 +897,10 @@ const BODIES: Record<LegalSlug, Record<Locale, string[]>> = {
 };
 
 export function legalBody(slug: LegalSlug, locale: string): string[] {
+  const packed = legal8(slug, locale);
+  if (packed) return packed;
   const code: Locale = isLocale(locale) ? locale : "en";
-  return BODIES[slug][code];
+  return BODIES[slug][code] ?? BODIES[slug].en ?? [];
 }
 
 export function legalMentionsContact(slug: LegalSlug, locale: string): boolean {

@@ -1,5 +1,6 @@
 import type { Locale } from "../locales";
 import { INITIAL_LOCALES } from "../locales";
+import { extraPrivacy, isNewLocale } from "@/i18n/locale8";
 import type { CategoryId } from "../categories";
 import type { ToolDefinition } from "../schema";
 
@@ -8,13 +9,16 @@ export function l(strings: TemplateStringsArray): Record<Locale, string> {
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
-  if (parts.length !== INITIAL_LOCALES.length) {
-    throw new Error(`Expected ${INITIAL_LOCALES.length} lines, got ${parts.length}: ${parts[0]}`);
+  const core = INITIAL_LOCALES.filter((locale) => !isNewLocale(locale));
+  if (parts.length !== core.length && parts.length !== INITIAL_LOCALES.length) {
+    throw new Error(`Expected ${core.length} or ${INITIAL_LOCALES.length} lines, got ${parts.length}: ${parts[0]}`);
   }
-  return Object.fromEntries(INITIAL_LOCALES.map((locale, i) => [locale, parts[i]])) as Record<
-    Locale,
-    string
-  >;
+  return Object.fromEntries(
+    INITIAL_LOCALES.map((locale, i) => [
+      locale,
+      parts[i] ?? (isNewLocale(locale) ? extraPrivacy(parts[0], locale) : parts[0]),
+    ]),
+  ) as Record<Locale, string>;
 }
 
 export function ls(rows: TemplateStringsArray): Record<Locale, string[]> {

@@ -133,7 +133,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
           <li>{copy.name}</li>
         </ol>
       </nav>
-      <div className="mt-5 flex items-start gap-4">
+      <div className="mt-5 flex flex-col items-start gap-4 sm:flex-row">
         {createElement(iconForTool(tool.id, tool.category), {
           className: "freela-sticker mt-1 h-16 w-16",
           "aria-hidden": true,

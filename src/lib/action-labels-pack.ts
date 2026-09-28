@@ -1,5 +1,3 @@
-import type { Locale } from "@/data/locales";
-
 const PACK_EN: Record<string, string> = {
   "pdf-to-image": "Rasterize pages",
   "heic-to-jpg": "Convert to JPG",
@@ -372,7 +370,7 @@ const PACK_HE: Record<string, string> = {
   "convert-video": "ראה אפשרויות",
 };
 
-export const PACK_LABELS: Record<Locale, Record<string, string>> = {
+export const PACK_LABELS: Record<string, Record<string, string>> = {
   en: PACK_EN,
   de: PACK_DE,
   uk: PACK_UK,

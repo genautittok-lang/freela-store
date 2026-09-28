@@ -39,7 +39,7 @@ async function main() {
       mobile: "e2e viewport + tool page layout",
       accessibility: "labels on fields; axe home smoke",
       tests: image ? "Playwright image family" : canvas ? "browser canvas" : wf?.status === "PASS" ? "unit workflow PASS" : wf?.reason,
-      localization: "12 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      localization: "20 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       seo: "EN indexable; title/H1/canonical present",
       status: image || canvas || wf?.status === "PASS" ? "PASS" : "BLOCKED",
       categoryName: cat.copy.en.name,

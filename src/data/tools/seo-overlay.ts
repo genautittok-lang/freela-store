@@ -1,4 +1,5 @@
 import type { Locale } from "../locales";
+import { wave3Seo } from "./seo-overlay-wave3";
 
 export type SeoOverlay = {
   name: string;
@@ -9,7 +10,7 @@ export type SeoOverlay = {
   faq: { question: string; answer: string }[];
 };
 
-export const seoOverlay: Record<string, Partial<Record<Locale, SeoOverlay>>> = {
+const seoOverlayBase: Record<string, Partial<Record<Locale, SeoOverlay>>> = {
   "merge-pdf": {
     en: {
       name: "Merge PDF files",
@@ -48698,4 +48699,9 @@ export const seoOverlay: Record<string, Partial<Record<Locale, SeoOverlay>>> = {
       ],
     },
   },
+};
+
+export const seoOverlay: Record<string, Partial<Record<Locale, SeoOverlay>>> = {
+  ...seoOverlayBase,
+  ...wave3Seo,
 };

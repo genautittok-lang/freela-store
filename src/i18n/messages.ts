@@ -1,4 +1,5 @@
 import type { Locale } from "@/data/locales";
+import { messages8 } from "@/i18n/locale8";
 import { extras, type ExtraMessages } from "@/i18n/extras";
 import { uxChrome, type UxChrome } from "@/i18n/ux";
 import { isLocale } from "@/data/locales";
@@ -626,6 +627,7 @@ export const messages: Record<Locale, Messages> = {
     skipToContent: "דלגו לכלי",
     openMenu: "פתיחת תפריט",
   },
+  ...messages8,
 };
 
 export type UiMessages = Messages & ExtraMessages & UxChrome;

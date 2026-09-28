@@ -53,8 +53,8 @@ Or `npm run release` (typecheck, unit, validate, qa, lint, audit, e2e). Producti
 
 ## What is in this ship
 
-- 332 published tools; all `LOCAL_ONLY`
-- Sitemap: 4260 URLs across 12 locales (home + 12 legal pages + 10 categories + 332 tools)
+- 403 published tools; all `LOCAL_ONLY`
+- Sitemap: 8520 URLs across 20 locales (home + 12 legal pages + 10 categories + 403 tools)
 - Expansion CLI: `npx tsx scripts/catalog-expansion.ts` (scores missing vs registry)
 - **12 indexable locales:** `en`, `de`, `uk`, `pl`, `fr`, `es`, `it`, `pt`, `nl`, `tr`, `ar`, `he` (sitemap + hreflang + x-default). Remaining prepared locales stay unrouted.
 - Search (registry-backed; search URLs `noindex`)
@@ -80,7 +80,7 @@ This repo is a Next.js app. `vercel.json` sets `framework: nextjs` and `npm run 
    - `NEXT_PUBLIC_SITE_URL=https://freela.store` (or `https://your-project.vercel.app` until DNS is live)
    - `ADMIN_EMAIL` / `ADMIN_PASSWORD` — production secrets, not the development defaults
    - `DATABASE_PATH` — SQLite via `better-sqlite3`. Vercel serverless filesystems are **ephemeral**, so admin/analytics DB will not persist on the free hobby plan. The public tool pages are `LOCAL_ONLY` and do not need the database. For durable admin stats, attach a persistent host later or accept empty analytics on serverless.
-4. Deploy production. Confirm `https://<project>.vercel.app/en` returns 200 and `/sitemap.xml` lists the 12 locales.
+4. Deploy production. Confirm `https://<project>.vercel.app/en` returns 200 and `/sitemap.xml` lists the 20 indexable locales.
 
 ### Custom domain (freela.store)
 

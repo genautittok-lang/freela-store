@@ -1,6 +1,4 @@
-import type { Locale } from "@/data/locales";
-
-export const WAVE_LABELS: Record<Locale, Record<string, string>> = {
+export const WAVE_LABELS: Record<string, Record<string, string>> = {
   en: {
     "reverse-text": "Reverse text",
     "reverse-lines": "Reverse lines",

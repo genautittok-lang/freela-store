@@ -1,6 +1,4 @@
-import type { Locale } from "@/data/locales";
-
-export const WAVE2_LABELS: Record<Locale, Record<string, string>> = {
+export const WAVE2_LABELS: Record<string, Record<string, string>> = {
   en: {
     "reverse-words": "Reverse word order",
     "word-frequency": "Word frequency",

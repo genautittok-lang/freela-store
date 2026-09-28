@@ -1,5 +1,6 @@
 import type { Locale } from "@/data/locales";
 import { isLocale } from "@/data/locales";
+import { ux8 } from "@/i18n/locale8";
 
 export type UxChrome = {
   company: string;
@@ -276,6 +277,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     homeTitle: "כלי PDF, תמונה ו-JSON חינמיים בדפדפן",
     breadcrumb: "נתיב ניווט",
   },
+  ...ux8,
 };
 
 export function ux(locale: string): UxChrome {

@@ -246,7 +246,8 @@ export async function executeWorkflow(toolId: string): Promise<WorkflowResult> {
     if (kind === "wave") {
       const { runWaveAsync, WAVE_SAMPLES } = await import("@/lib/tools/wave");
       const { WAVE2_SAMPLES } = await import("@/lib/tools/wave2");
-      const sample = WAVE_SAMPLES[toolId] ?? WAVE2_SAMPLES[toolId] ?? { text: "hello" };
+      const { WAVE3_SAMPLES } = await import("@/lib/tools/wave3");
+      const sample = WAVE_SAMPLES[toolId] ?? WAVE2_SAMPLES[toolId] ?? WAVE3_SAMPLES[toolId] ?? { text: "hello" };
       const output = await runWaveAsync(toolId, sample);
       if (!String(output)) throw new Error("Empty wave output.");
       void uxFor(tool);

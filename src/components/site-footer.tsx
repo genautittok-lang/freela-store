@@ -4,6 +4,7 @@ import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
 import { Logo } from "@/components/logo";
 import { CONTACT_EMAIL, CREATOR_EMAIL, INFO_EMAIL, PARTNER_EMAIL } from "@/lib/site";
+import { DarkshareBadge } from "@/components/darkshare-badge";
 import { mailRoles } from "@/i18n/mailboxes";
 import { copyForTool, toolById } from "@/lib/registry";
 
@@ -129,9 +130,12 @@ export function SiteFooter({ locale }: { locale: string }) {
         </div>
       </div>
       <div className="border-t border-border bg-muted/40">
-        <p className="mx-auto max-w-6xl px-4 py-4 text-xs leading-5 text-muted-foreground">
-          © {new Date().getFullYear()} Freela · {ui.adDisclosure}
-        </p>
+        <div className="mx-auto flex max-w-6xl flex-col items-start gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-5 text-muted-foreground">
+            © {new Date().getFullYear()} Freela · {ui.adDisclosure}
+          </p>
+          <DarkshareBadge />
+        </div>
       </div>
     </footer>
   );

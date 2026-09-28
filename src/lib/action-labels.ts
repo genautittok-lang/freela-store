@@ -1,4 +1,7 @@
 import type { Locale } from "@/data/locales";
+import { INITIAL_LOCALES } from "@/data/locales";
+import { WAVE3_EN_LABELS } from "@/data/tools/english-wave3";
+import { translateCta } from "@/i18n/locale8";
 import { PACK_LABELS } from "@/lib/action-labels-pack";
 import { IMPROVE_LABELS } from "@/lib/action-labels-improve";
 import { WAVE_LABELS } from "@/lib/action-labels-wave";
@@ -964,8 +967,8 @@ const HE: Record<string, string> = {
   "ics-event": "צור ICS",
 };
 
-export const ACTION_LABELS: Record<Locale, Record<string, string>> = {
-  en: { ...EN, ...PACK_LABELS.en, ...IMPROVE_LABELS.en, ...WAVE_LABELS.en, ...WAVE2_LABELS.en },
+const CORE_LABELS = {
+  en: { ...EN, ...PACK_LABELS.en, ...IMPROVE_LABELS.en, ...WAVE_LABELS.en, ...WAVE2_LABELS.en, ...WAVE3_EN_LABELS },
   de: { ...DE, ...PACK_LABELS.de, ...IMPROVE_LABELS.de, ...WAVE_LABELS.de, ...WAVE2_LABELS.de },
   uk: { ...UK, ...PACK_LABELS.uk, ...IMPROVE_LABELS.uk, ...WAVE_LABELS.uk, ...WAVE2_LABELS.uk },
   pl: { ...PL, ...PACK_LABELS.pl, ...IMPROVE_LABELS.pl, ...WAVE_LABELS.pl, ...WAVE2_LABELS.pl },
@@ -978,5 +981,17 @@ export const ACTION_LABELS: Record<Locale, Record<string, string>> = {
   ar: { ...AR, ...PACK_LABELS.ar, ...IMPROVE_LABELS.ar, ...WAVE_LABELS.ar, ...WAVE2_LABELS.ar },
   he: { ...HE, ...PACK_LABELS.he, ...IMPROVE_LABELS.he, ...WAVE_LABELS.he, ...WAVE2_LABELS.he },
 };
+
+const englishLabels = CORE_LABELS.en;
+
+export const ACTION_LABELS: Record<Locale, Record<string, string>> = Object.fromEntries(
+  INITIAL_LOCALES.map((locale) => {
+    const base: Record<string, string> = { ...(CORE_LABELS[locale as keyof typeof CORE_LABELS] ?? {}) };
+    for (const [id, label] of Object.entries(englishLabels)) {
+      if (!base[id]) base[id] = locale === "en" ? label : translateCta(label, locale);
+    }
+    return [locale, base];
+  }),
+) as Record<Locale, Record<string, string>>;
 
 export const ACTION_LABEL_EN = ACTION_LABELS.en;

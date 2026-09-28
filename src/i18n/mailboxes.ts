@@ -1,5 +1,6 @@
 import type { Locale } from "@/data/locales";
 import { isLocale } from "@/data/locales";
+import { mail8 } from "@/i18n/locale8";
 
 export type MailRoles = {
   tools: string;
@@ -21,6 +22,7 @@ const roles: Record<Locale, MailRoles> = {
   tr: { tools: "Araçlar ve sorular", partner: "Reklam ve ortaklıklar", info: "Genel bilgi", creator: "İçerik üreticileri ve ortaklar" },
   ar: { tools: "الأدوات والأسئلة", partner: "الإعلان والشراكات", info: "معلومات عامة", creator: "صنّاع المحتوى وشركاؤه" },
   he: { tools: "כלים ושאלות", partner: "פרסום ושותפויות", info: "מידע כללי", creator: "יוצרים ושותפי תוכן" },
+  ...mail8,
 };
 
 export function mailRoles(locale: string): MailRoles {

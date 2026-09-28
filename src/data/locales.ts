@@ -14,12 +14,6 @@ export const INITIAL_LOCALES = [
   "tr",
   "ar",
   "he",
-] as const;
-
-export type Locale = (typeof INITIAL_LOCALES)[number];
-
-/** Prepared for future publication; no public URLs until translations pass QA. */
-export const PREPARED_LOCALES = [
   "ja",
   "ko",
   "zh-CN",
@@ -28,6 +22,15 @@ export const PREPARED_LOCALES = [
   "id",
   "vi",
   "th",
+] as const;
+
+export const NEW_LOCALES = ["ja", "ko", "zh-CN", "zh-TW", "hi", "id", "vi", "th"] as const;
+export type NewLocale = (typeof NEW_LOCALES)[number];
+
+export type Locale = (typeof INITIAL_LOCALES)[number];
+
+/** Prepared for future publication; no public URLs until translations pass QA. */
+export const PREPARED_LOCALES = [
   "ro",
   "cs",
   "sk",
@@ -148,17 +151,49 @@ export const localeRegistry: Record<Locale, LocaleRecord> = {
     indexable: true,
     translationReviewed: true,
   }),
+  ja: base("ja", "Japanese", "日本語", "ja", "ja_JP", "ja-JP", "🇯🇵", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  ko: base("ko", "Korean", "한국어", "ko", "ko_KR", "ko-KR", "🇰🇷", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  "zh-CN": base("zh-CN", "Chinese (Simplified)", "简体中文", "zh-CN", "zh_CN", "zh-CN", "🇨🇳", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  "zh-TW": base("zh-TW", "Chinese (Traditional)", "繁體中文", "zh-TW", "zh_TW", "zh-TW", "🇹🇼", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  hi: base("hi", "Hindi", "हिन्दी", "hi", "hi_IN", "hi-IN", "🇮🇳", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  id: base("id", "Indonesian", "Bahasa Indonesia", "id", "id_ID", "id-ID", "🇮🇩", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  vi: base("vi", "Vietnamese", "Tiếng Việt", "vi", "vi_VN", "vi-VN", "🇻🇳", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
+  th: base("th", "Thai", "ไทย", "th", "th_TH", "th-TH", "🇹🇭", {
+    routed: true,
+    indexable: true,
+    translationReviewed: true,
+  }),
 };
 
 export const preparedLocaleRegistry: Record<PreparedLocale, LocaleRecord> = {
-  ja: base("ja", "Japanese", "日本語", "ja", "ja_JP", "ja-JP", "🇯🇵"),
-  ko: base("ko", "Korean", "한국어", "ko", "ko_KR", "ko-KR", "🇰🇷"),
-  "zh-CN": base("zh-CN", "Chinese (Simplified)", "简体中文", "zh-CN", "zh_CN", "zh-CN", "🇨🇳"),
-  "zh-TW": base("zh-TW", "Chinese (Traditional)", "繁體中文", "zh-TW", "zh_TW", "zh-TW", "🇹🇼"),
-  hi: base("hi", "Hindi", "हिन्दी", "hi", "hi_IN", "hi-IN", "🇮🇳"),
-  id: base("id", "Indonesian", "Bahasa Indonesia", "id", "id_ID", "id-ID", "🇮🇩"),
-  vi: base("vi", "Vietnamese", "Tiếng Việt", "vi", "vi_VN", "vi-VN", "🇻🇳"),
-  th: base("th", "Thai", "ไทย", "th", "th_TH", "th-TH", "🇹🇭"),
   ro: base("ro", "Romanian", "Română", "ro", "ro_RO", "ro-RO", "🇷🇴"),
   cs: base("cs", "Czech", "Čeština", "cs", "cs_CZ", "cs-CZ", "🇨🇿"),
   sk: base("sk", "Slovak", "Slovenčina", "sk", "sk_SK", "sk-SK", "🇸🇰"),

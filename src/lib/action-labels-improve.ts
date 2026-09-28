@@ -1,5 +1,3 @@
-import type { Locale } from "@/data/locales";
-
 const IMPROVE_EN: Record<string, string> = {
   "text-to-pdf": "Create PDF",
   "markdown-to-pdf": "Create PDF",
@@ -132,7 +130,7 @@ const IMPROVE_HE: Record<string, string> = {
   "random-number": "צור מספרים",
 };
 
-export const IMPROVE_LABELS: Record<Locale, Record<string, string>> = {
+export const IMPROVE_LABELS: Record<string, Record<string, string>> = {
   en: IMPROVE_EN,
   de: IMPROVE_DE,
   uk: IMPROVE_UK,

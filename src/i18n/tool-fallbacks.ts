@@ -1,4 +1,5 @@
 import type { Locale } from "@/data/locales";
+import { fallback8 } from "@/i18n/locale8";
 
 type Steps = {
   howTo: [string, string, string];
@@ -7,7 +8,7 @@ type Steps = {
   faq: [{ question: string; answer: string }, { question: string; answer: string }];
 };
 
-const STEPS: Record<Locale, Steps> = {
+const STEPS = {
   en: {
     howTo: ["Add input for {name}.", "Run the action in this tab.", "Copy or download the result."],
     examples: ["Try {name} with a typical value.", "Try empty or invalid input."],
@@ -116,7 +117,8 @@ const STEPS: Record<Locale, Steps> = {
       { question: "האם זו עצה מקצועית?", answer: "לא. בדקו בעצמכם תוצאות חשובות." },
     ],
   },
-};
+  ...fallback8,
+} as Record<Locale, Steps>;
 
 function fill(template: string, name: string) {
   return template.replaceAll("{name}", name);
