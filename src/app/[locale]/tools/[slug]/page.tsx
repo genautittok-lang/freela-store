@@ -108,7 +108,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
     { name: copy.name, url: absoluteUrl(`/${locale}/tools/${copy.slug}`) },
   ];
   return (
-    <article className="relative mx-auto max-w-3xl px-4 py-10 sm:py-12">
+    <article className="relative mx-auto min-w-0 max-w-3xl overflow-x-clip px-4 py-8 sm:py-12">
       <PageTracker locale={locale} toolId={tool.id} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd(crumbs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd(tool, locale)) }} />
@@ -258,7 +258,7 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
     })),
   };
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
+    <div className="mx-auto min-w-0 max-w-6xl overflow-x-clip px-4 py-8 sm:py-12">
       <PageTracker locale={locale} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd(crumbs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
@@ -268,7 +268,7 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
         <span>{copy.name}</span>
       </nav>
       <div className="mt-5 flex items-start gap-3 sm:items-center">
-        <span className="freela-well h-12 w-12">
+        <span className="freela-well h-12 w-12 shrink-0">
           <CategoryIcon id={cat.id} className="h-6 w-6 text-primary" />
         </span>
         <div className="min-w-0">
@@ -276,20 +276,23 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
           <p className="page-prose mt-3 max-w-2xl">{copy.description}</p>
         </div>
       </div>
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {tools.map((tool) => (
-          <li key={tool.id}>
-            <Link href={`/${locale}/tools/${copyForTool(tool, locale).slug}`} className="freela-card block h-full p-5">
+      <ul className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        {tools.map((tool) => {
+          const toolCopy = copyForTool(tool, locale);
+          return (
+          <li key={tool.id} className="min-w-0">
+            <Link href={`/${locale}/tools/${toolCopy.slug}`} className="freela-card flex h-full min-w-0 flex-col p-4 sm:p-5">
               {createElement(iconForTool(tool.id, tool.category), {
-                className: "freela-sticker h-16 w-16",
+                className: "freela-sticker h-14 w-14 sm:h-16 sm:w-16",
                 "aria-hidden": true,
               })}
-              <p className="mt-3 font-semibold">{copyForTool(tool, locale).name}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{copyForTool(tool, locale).description}</p>
+              <p className="mt-3 line-clamp-2 font-semibold leading-snug">{toolCopy.name}</p>
+              <p className="mt-1 line-clamp-3 flex-1 text-sm text-muted-foreground">{toolCopy.description}</p>
               <span className="mt-4 inline-flex text-sm font-semibold text-primary">{ui.openTool}</span>
             </Link>
           </li>
-        ))}
+          );
+        })}
       </ul>
     </div>
   );

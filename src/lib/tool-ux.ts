@@ -90,7 +90,7 @@ const OPTIONS: Record<string, string[]> = {
   "password-generator": ["count, length"],
   "uuid-generator": ["count"],
   "random-string": ["count, length"],
-  "qr-generator": ["content text"],
+  "qr-generator": ["content text", "templates: classic, forest, ink, sunset, ocean, mono, contrast, mint"],
   "pdf-to-image": ["output: JPG or PNG"],
   "heic-to-jpg": ["output: JPG or PNG"],
   "pdf-watermark": ["text stamp"],

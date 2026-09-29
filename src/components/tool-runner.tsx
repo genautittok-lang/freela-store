@@ -64,6 +64,9 @@ import { actionLabel } from "@/lib/tool-ux";
 import { rl } from "@/i18n/runner";
 import Link from "next/link";
 import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dropzone";
+import { ProcessingStatus } from "@/components/tool-progress";
+import { ToolRunProvider } from "@/components/tool-run-context";
+import { applyQrFrame, QR_TEMPLATES, qrTemplateById, type QrTemplateId } from "@/lib/tools/qr-templates";
 import { isPackTool } from "@/lib/tools/pack-ids";
 import { buildUtm, parsePageList, randomIntegers } from "@/lib/tools/improve";
 import { runWaveAsync, WAVE_EXTRA_HINT, WAVE_SAMPLES, waveNeedsExtra } from "@/lib/tools/wave";
@@ -157,34 +160,54 @@ export function ToolRunner({
   const cta = actionLabel(tool, locale);
   const nextId = tool.relatedTools[0];
 
+  const phaseLabel = busy
+    ? ui.statusProcessing
+    : error
+      ? ui.statusError
+      : ok
+        ? ui.statusDone
+        : ui.filesReady;
+
   return (
     <section
       id="tool"
-      className="rounded-3xl border border-border bg-card p-4 shadow-md sm:p-7"
+      className="freela-panel min-w-0 overflow-hidden rounded-3xl border border-border bg-card p-4 shadow-md sm:p-7"
       aria-labelledby="tool-heading"
     >
-      <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-primary">
-        {busy ? ui.statusProcessing : error ? ui.statusError : ok ? ui.statusDone : ui.filesReady}
-      </p>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+        <p
+          className={`inline-flex max-w-full items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
+            busy
+              ? "bg-primary/15 text-primary"
+              : error
+                ? "bg-destructive/10 text-destructive"
+                : ok
+                  ? "bg-primary/10 text-primary"
+                  : "bg-secondary text-secondary-foreground"
+          }`}
+        >
+          {phaseLabel}
+        </p>
+        {busy ? (
+          <Button type="button" variant="outline" size="sm" className="min-h-10" onClick={() => (cancelled.current = true)}>
+            {ui.cancel}
+          </Button>
+        ) : null}
+      </div>
+      <div className="mb-4 flex flex-wrap items-center gap-2">
         <p
           className={`rounded-full px-3 py-1 text-xs font-medium ${
             tool.processingMode === "LOCAL_ONLY"
-              ? "bg-emerald-50 text-emerald-800"
+              ? "bg-primary/10 text-primary"
               : "bg-amber-50 text-amber-900"
           }`}
         >
           {privacyLabel(tool.processingMode, locale)} · {privacyNotice(tool.processingMode, locale)}
         </p>
-        {busy ? (
-          <Button type="button" variant="outline" size="sm" onClick={() => (cancelled.current = true)}>
-            {ui.cancel}
-          </Button>
-        ) : null}
       </div>
-        {busy ? <p className="mb-3 text-sm text-muted-foreground" role="status">{ui.processing}</p> : null}
+      {busy ? <ProcessingStatus label={ui.processing} className="mb-4" /> : null}
       {ok && !error ? (
-        <p className="mb-3 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800" role="status">
+        <p className="mb-3 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2 text-sm text-primary" role="status">
           {ui.done}
         </p>
       ) : null}
@@ -193,6 +216,7 @@ export function ToolRunner({
           {error}
         </p>
       ) : null}
+      <ToolRunProvider busy={busy}>
       {isPackTool(tool.id) ? <PackToolPanel tool={tool} locale={locale} wrap={wrap} cta={cta} /> : null}
       {!isPackTool(tool.id) && (kind === "text-stats" || kind === "text-transform" || kind === "json-format" || kind === "codec" || kind === "seo") ? (
         <TextTool tool={tool} locale={locale} wrap={wrap} cta={cta} />
@@ -209,6 +233,7 @@ export function ToolRunner({
       {kind === "qr" ? <QrTool locale={locale} wrap={wrap} cta={cta} /> : null}
       {kind === "datetime" ? <DateTimeTool action={action} locale={locale} wrap={wrap} cta={cta} /> : null}
       {kind === "wave" ? <WaveTool tool={tool} locale={locale} wrap={wrap} cta={cta} /> : null}
+      </ToolRunProvider>
       {ok && nextId ? (
         <p className="mt-4 text-sm">
           <Link className="font-medium text-primary" href={`/${locale}/tools/${nextId}`}>
@@ -1496,36 +1521,92 @@ function QrTool({ locale, wrap, cta }: { locale: string; wrap: (fn: () => Promis
   const ui = t(locale);
   const [text, setText] = useState("https://freela.store/en/");
   const [src, setSrc] = useState("");
+  const [templateId, setTemplateId] = useState<QrTemplateId>("forest");
+  const template = qrTemplateById(templateId);
+
   return (
-    <div className="grid gap-3">
-      <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={4} />
+    <div className="grid min-w-0 gap-3">
+      <Textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={4}
+        className="min-h-24 w-full"
+        aria-label={cta}
+      />
+      <fieldset className="min-w-0 rounded-xl border border-border p-3">
+        <legend className="px-1 text-sm font-medium">{ui.qrTemplates}</legend>
+        <div
+          className="-mx-1 flex snap-x gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
+          role="radiogroup"
+          aria-label={ui.qrTemplates}
+        >
+          {QR_TEMPLATES.map((tpl) => {
+            const on = templateId === tpl.id;
+            return (
+              <button
+                key={tpl.id}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                className={`snap-start flex min-h-12 shrink-0 items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium transition-colors ${
+                  on ? "border-primary bg-accent text-accent-foreground" : "border-border bg-background hover:border-primary/50"
+                }`}
+                onClick={() => setTemplateId(tpl.id)}
+              >
+                <span
+                  className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-black/10 shadow-sm"
+                  style={{ background: tpl.light }}
+                  aria-hidden
+                >
+                  <span className="h-3.5 w-3.5 rounded-[2px]" style={{ background: tpl.dark }} />
+                </span>
+                {ui[tpl.labelKey]}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
       <Button
         type="button"
+        size="lg"
+        className="min-h-12 w-full sm:w-auto"
         onClick={() =>
           wrap(async () => {
-            const url = await (await import("qrcode")).default.toDataURL(text, { margin: 1, width: 320 });
-            setSrc(url);
+            const QRCode = (await import("qrcode")).default;
+            const raw = await QRCode.toDataURL(text || " ", {
+              margin: template.margin,
+              width: template.width,
+              errorCorrectionLevel: template.errorCorrectionLevel,
+              color: { dark: template.dark, light: template.light },
+            });
+            setSrc(await applyQrFrame(raw, template));
           })
         }
       >
         {cta}
       </Button>
       {src ? (
-        <>
+        <div className="grid min-w-0 gap-3 sm:grid-cols-[auto_1fr] sm:items-end">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} alt="Generated QR code" className="h-40 w-40" />
+          <img
+            src={src}
+            alt="Generated QR code"
+            className="mx-auto h-44 w-44 max-w-full rounded-2xl border border-border bg-white p-2 shadow-sm sm:mx-0 sm:h-48 sm:w-48"
+          />
           <Button
             type="button"
             variant="outline"
+            size="lg"
+            className="min-h-12 w-full sm:w-auto"
             onClick={async () => {
               const blob = await (await fetch(src)).blob();
-              triggerDownload(blob, "qr.png");
+              triggerDownload(blob, `qr-${template.id}.png`);
               track("file_download", { toolId: "qr-generator", locale });
             }}
           >
             {ui.download}
           </Button>
-        </>
+        </div>
       ) : null}
     </div>
   );

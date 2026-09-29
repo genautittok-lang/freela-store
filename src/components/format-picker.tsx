@@ -59,7 +59,7 @@ export function FormatPicker<T extends string>({
               type="button"
               role="radio"
               aria-checked={on}
-              className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
+              className={`inline-flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors ${
                 on ? "border-primary bg-accent text-accent-foreground" : "border-border bg-background hover:border-primary/50"
               }`}
               onClick={() => onChange(opt.value)}

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dropzone";
+import { ProgressBar } from "@/components/tool-progress";
 import { FormatMark, FormatPath } from "@/components/format-badges";
 import { t } from "@/i18n/messages";
 import { rl } from "@/i18n/runner";
@@ -294,6 +295,7 @@ function BackgroundRemoverTool({
   wrap: (fn: () => Promise<void>) => Promise<void>;
   cta: string;
 }) {
+  const ui = t(locale);
   const [files, setFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState(0);
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
@@ -317,9 +319,13 @@ function BackgroundRemoverTool({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        progress={progress > 0 && progress < 1 ? progress : null}
+        progressLabel={ui.imageWorking}
       />
       {progress > 0 && progress < 1 ? (
-        <p className="text-sm text-muted-foreground">Working… {Math.round(progress * 100)}%</p>
+        <div className="rounded-2xl border border-primary/20 bg-accent/50 px-4 py-3">
+          <ProgressBar value={progress} label={ui.imageWorking} />
+        </div>
       ) : null}
       <Button
         type="button"
@@ -1004,6 +1010,8 @@ function UniversalConverter({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        progress={progress > 0 && progress < 1 ? progress : null}
+        progressLabel={ui.processing}
       />
       {file ? (
         <div className="flex flex-wrap items-center gap-2">
@@ -1039,8 +1047,8 @@ function UniversalConverter({
         </div>
       ) : null}
       {progress > 0 && progress < 1 ? (
-        <div className="h-2 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={Math.round(progress * 100)}>
-          <div className="h-full bg-primary" style={{ width: `${Math.round(progress * 100)}%` }} />
+        <div className="rounded-2xl border border-primary/20 bg-accent/50 px-4 py-3">
+          <ProgressBar value={progress} label={ui.processing} />
         </div>
       ) : null}
       <Button

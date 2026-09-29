@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DownloadBar, FileDropzone, triggerDownload } from "@/components/file-dropzone";
+import { ProgressBar } from "@/components/tool-progress";
 import { track } from "@/components/analytics-provider";
 import { toast } from "sonner";
 import { stripTags } from "@/lib/tools/pack";
+import { t } from "@/i18n/messages";
 import {
   convertAudio,
   convertVideoToGif,
@@ -36,41 +38,35 @@ function Notice({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Progress({ value, label }: { value: number; label: string }) {
-  const pct = Math.round(Math.min(1, Math.max(0, value)) * 100);
-  return (
-    <div className="grid gap-1">
-      <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
-        <span>{label}</span>
-        <span>{pct}%</span>
-      </div>
-      <div className="h-2 overflow-hidden rounded-full bg-muted">
-        <div className="h-full bg-primary transition-all" style={{ width: `${pct}%` }} />
-      </div>
-    </div>
-  );
-}
-
 function MediaProgressBars({
+  locale,
   loadProgress,
   encodeProgress,
   loading,
 }: {
+  locale: string;
   loadProgress: number;
   encodeProgress: number;
   loading: boolean;
 }) {
+  const ui = t(locale);
   if (!loading && loadProgress <= 0 && encodeProgress <= 0) return null;
   const showLoad = loading && !isFfmpegEngineReady() && loadProgress < 1;
   const showEncode = encodeProgress > 0 && encodeProgress < 1;
-  if (!showLoad && !showEncode && !(loading && loadProgress >= 1 && encodeProgress === 0)) return null;
+  const waitingEncode = loading && isFfmpegEngineReady() && encodeProgress === 0;
+  if (!showLoad && !showEncode && !(loading && loadProgress >= 1 && encodeProgress === 0) && !waitingEncode) {
+    return null;
+  }
   return (
-    <div className="grid gap-3 rounded-2xl border border-border/80 bg-muted/40 px-4 py-3">
+    <div className="grid min-w-0 gap-3 rounded-2xl border border-primary/20 bg-accent/50 px-4 py-3" role="status" aria-live="polite">
       {(showLoad || (loading && loadProgress > 0 && loadProgress < 1)) && (
-        <Progress value={Math.max(loadProgress, 0.02)} label="Downloading media engine (ffmpeg.wasm from jsDelivr)…" />
+        <ProgressBar value={Math.max(loadProgress, 0.02)} label={ui.engineLoading} />
       )}
-      {(showEncode || (loading && isFfmpegEngineReady())) && (
-        <Progress value={Math.max(encodeProgress, loading && encodeProgress === 0 ? 0.02 : encodeProgress)} label="Encoding…" />
+      {(showEncode || waitingEncode || (loading && isFfmpegEngineReady())) && (
+        <ProgressBar
+          value={Math.max(encodeProgress, loading && encodeProgress === 0 ? 0.02 : encodeProgress)}
+          label={ui.encoding}
+        />
       )}
     </div>
   );
@@ -224,9 +220,12 @@ function SimpleVideoConvert({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        busy={prog.loading}
+        progress={prog.encodeProgress > 0 ? prog.encodeProgress : prog.loadProgress > 0 ? prog.loadProgress : null}
+        progressLabel={prog.loading ? (prog.encodeProgress > 0 || isFfmpegEngineReady() ? t(locale).encoding : t(locale).engineLoading) : undefined}
       />
       <FormatOutputConfirm locale={locale} format={outputFormat} fromFormats={["Video"]} />
-      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
+      <MediaProgressBars locale={locale} loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
@@ -294,6 +293,9 @@ function VideoToGif({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        busy={prog.loading}
+        progress={prog.encodeProgress > 0 ? prog.encodeProgress : prog.loadProgress > 0 ? prog.loadProgress : null}
+        progressLabel={prog.loading ? (prog.encodeProgress > 0 || isFfmpegEngineReady() ? t(locale).encoding : t(locale).engineLoading) : undefined}
       />
       <FormatOutputConfirm locale={locale} format="GIF" fromFormats={["Video"]} />
       <div className="grid gap-3 sm:grid-cols-2">
@@ -310,7 +312,7 @@ function VideoToGif({
           <Input value={duration} onChange={(e) => setDuration(e.target.value)} inputMode="decimal" />
         </Field>
       </div>
-      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
+      <MediaProgressBars locale={locale} loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
@@ -384,6 +386,9 @@ function ExtractAudio({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        busy={prog.loading}
+        progress={prog.encodeProgress > 0 ? prog.encodeProgress : prog.loadProgress > 0 ? prog.loadProgress : null}
+        progressLabel={prog.loading ? (prog.encodeProgress > 0 || isFfmpegEngineReady() ? t(locale).encoding : t(locale).engineLoading) : undefined}
       />
       <FormatPicker
         locale={locale}
@@ -398,7 +403,7 @@ function ExtractAudio({
           ] as const
         }
       />
-      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
+      <MediaProgressBars locale={locale} loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
@@ -461,6 +466,9 @@ function AudioConvert({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        busy={prog.loading}
+        progress={prog.encodeProgress > 0 ? prog.encodeProgress : prog.loadProgress > 0 ? prog.loadProgress : null}
+        progressLabel={prog.loading ? (prog.encodeProgress > 0 || isFfmpegEngineReady() ? t(locale).encoding : t(locale).engineLoading) : undefined}
       />
       <FormatPicker
         locale={locale}
@@ -476,7 +484,7 @@ function AudioConvert({
           ] as const
         }
       />
-      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
+      <MediaProgressBars locale={locale} loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
@@ -540,6 +548,9 @@ function CompressVideo({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        busy={prog.loading}
+        progress={prog.encodeProgress > 0 ? prog.encodeProgress : prog.loadProgress > 0 ? prog.loadProgress : null}
+        progressLabel={prog.loading ? (prog.encodeProgress > 0 || isFfmpegEngineReady() ? t(locale).encoding : t(locale).engineLoading) : undefined}
       />
       <Field label={`Compression CRF (${crf}) — 18 soft · 28 default · 36 small`}>
         <input
@@ -551,7 +562,7 @@ function CompressVideo({
           className="w-full"
         />
       </Field>
-      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
+      <MediaProgressBars locale={locale} loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
@@ -615,6 +626,9 @@ function TrimVideo({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        busy={prog.loading}
+        progress={prog.encodeProgress > 0 ? prog.encodeProgress : prog.loadProgress > 0 ? prog.loadProgress : null}
+        progressLabel={prog.loading ? (prog.encodeProgress > 0 || isFfmpegEngineReady() ? t(locale).encoding : t(locale).engineLoading) : undefined}
       />
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label="Start (seconds)">
@@ -624,7 +638,7 @@ function TrimVideo({
           <Input value={end} onChange={(e) => setEnd(e.target.value)} inputMode="decimal" />
         </Field>
       </div>
-      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
+      <MediaProgressBars locale={locale} loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
@@ -687,6 +701,9 @@ function ResizeVideo({
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+        busy={prog.loading}
+        progress={prog.encodeProgress > 0 ? prog.encodeProgress : prog.loadProgress > 0 ? prog.loadProgress : null}
+        progressLabel={prog.loading ? (prog.encodeProgress > 0 || isFfmpegEngineReady() ? t(locale).encoding : t(locale).engineLoading) : undefined}
       />
       <Field label="Target height">
         <div className="flex flex-wrap gap-2">
@@ -697,7 +714,7 @@ function ResizeVideo({
           ))}
         </div>
       </Field>
-      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
+      <MediaProgressBars locale={locale} loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"

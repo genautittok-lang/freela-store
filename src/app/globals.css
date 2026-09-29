@@ -98,6 +98,7 @@
       radial-gradient(900px 280px at 0% -8%, rgb(216 243 227 / 0.9), transparent 55%),
       radial-gradient(700px 240px at 100% 0%, rgb(231 246 236 / 0.8), transparent 50%);
     background-attachment: fixed;
+    overflow-x: clip;
   }
   @media (max-width: 640px) {
     body {
@@ -133,6 +134,7 @@
 .freela-chip {
   display: inline-flex;
   align-items: center;
+  min-height: 2.5rem;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: #fff;
@@ -322,10 +324,10 @@
 }
 
 .page-section {
-  margin-top: 3rem;
+  margin-top: 2.5rem;
 }
 .page-section-title {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   line-height: 1.25;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -347,6 +349,27 @@
   }
   .page-section-title {
     font-size: 1.625rem;
+  }
+}
+
+/* Safe wrapping for tool chrome on narrow viewports */
+.tool-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 100%;
+}
+.tool-chip-row > * {
+  max-width: 100%;
+}
+
+@media (max-width: 374px) {
+  .freela-panel {
+    border-radius: 1rem;
+    padding: 0.85rem;
+  }
+  .freela-card {
+    border-radius: 1rem;
   }
 }
 

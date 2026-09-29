@@ -49,7 +49,7 @@ export default async function LocaleLayout({
         {ui.skipToContent}
       </a>
       <SiteHeader locale={locale} pathname={pathname} active={activeNav(locale, pathname)} />
-      <div id="main" className="flex-1 pb-20 lg:pb-0">
+      <div id="main" className="min-w-0 flex-1 overflow-x-clip pb-24 lg:pb-0">
         {children}
       </div>
       <SiteFooter locale={locale} />
