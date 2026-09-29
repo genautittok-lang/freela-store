@@ -7,5 +7,5 @@ export function copyForTool(tool: ToolDefinition, locale: string) {
 }
 
 export function copyForCategory(cat: CategoryDefinition, locale: string) {
-  return cat.copy[contentLocale(locale)];
+  return cat.copy[contentLocale(locale)] ?? cat.copy.en;
 }

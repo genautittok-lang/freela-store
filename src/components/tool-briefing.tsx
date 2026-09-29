@@ -77,7 +77,7 @@ export function ToolBriefing({ tool, locale }: { tool: ToolDefinition; locale: s
         </div>
       ) : (
         <div className="mt-3">
-          <FormatBadges formats={tool.supportedFormats} />
+          <FormatBadges formats={tool.supportedFormats} locale={locale} />
         </div>
       )}
     </div>

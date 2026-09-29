@@ -6,6 +6,7 @@ import { Star } from "lucide-react";
 import { detectFileKind, suggestToolsForFile } from "@/lib/tools/suggest-tools";
 import { copyForTool, toolById } from "@/lib/registry";
 import type { ToolDefinition } from "@/data/schema";
+import { t } from "@/i18n/messages";
 
 const FAV_KEY = "freela.favorites.v1";
 
@@ -26,11 +27,14 @@ export function saveFavorites(ids: string[]) {
 
 export function FavoriteStar({
   toolId,
+  locale = "en",
   className = "",
 }: {
   toolId: string;
+  locale?: string;
   className?: string;
 }) {
+  const ui = t(locale);
   const [on, setOn] = useState(false);
   useEffect(() => {
     setOn(loadFavorites().includes(toolId));
@@ -38,7 +42,7 @@ export function FavoriteStar({
   return (
     <button
       type="button"
-      aria-label={on ? "Remove from favorites" : "Add to favorites"}
+      aria-label={on ? ui.removeFavorite : ui.addFavorite}
       aria-pressed={on}
       className={`inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-white/90 text-muted-foreground transition hover:text-amber-500 ${className}`}
       onClick={(e) => {
@@ -58,6 +62,7 @@ export function FavoriteStar({
 }
 
 export function FavoritesRail({ locale }: { locale: string }) {
+  const ui = t(locale);
   const [ids, setIds] = useState<string[]>([]);
   useEffect(() => {
     setIds(loadFavorites());
@@ -74,15 +79,15 @@ export function FavoritesRail({ locale }: { locale: string }) {
   if (!tools.length) return null;
   return (
     <section className="mt-12">
-      <h2 className="text-2xl font-semibold tracking-tight">Favorites</h2>
-      <p className="mt-2 text-sm text-muted-foreground">Pinned on this device with the star — stored in localStorage only.</p>
+      <h2 className="text-2xl font-semibold tracking-tight">{ui.favorites}</h2>
+      <p className="mt-2 text-sm text-muted-foreground">{ui.favoritesLead}</p>
       <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {tools.map((tool) => {
           const copy = copyForTool(tool, locale);
           return (
             <li key={tool.id}>
               <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card relative block h-full p-5">
-                <FavoriteStar toolId={tool.id} className="absolute right-3 top-3" />
+                <FavoriteStar toolId={tool.id} locale={locale} className="absolute right-3 top-3" />
                 <p className="pr-10 font-semibold">{copy.name}</p>
                 <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{copy.description}</p>
               </Link>
@@ -95,6 +100,7 @@ export function FavoritesRail({ locale }: { locale: string }) {
 }
 
 export function OmnivoreDropzone({ locale }: { locale: string }) {
+  const ui = t(locale);
   const [dragging, setDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [suggestions, setSuggestions] = useState<ToolDefinition[]>([]);
@@ -110,10 +116,8 @@ export function OmnivoreDropzone({ locale }: { locale: string }) {
 
   return (
     <section className="mt-10">
-      <h2 className="text-2xl font-semibold tracking-tight">Drop any file</h2>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Omnivore zone — we detect the type in this tab and suggest matching Freela tools. Nothing is uploaded.
-      </p>
+      <h2 className="text-2xl font-semibold tracking-tight">{ui.dropAnyFile}</h2>
+      <p className="mt-2 text-sm text-muted-foreground">{ui.omnivoreLead}</p>
       <div
         role="button"
         tabIndex={0}
@@ -149,10 +153,10 @@ export function OmnivoreDropzone({ locale }: { locale: string }) {
           onChange={(e) => handleFiles(e.target.files)}
         />
         <p className="text-base font-semibold text-foreground">
-          {file ? file.name : "Drop a PDF, video, image, spreadsheet or archive"}
+          {file ? file.name : ui.dropOmnivoreHint}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          {file ? `Detected: ${kind}` : "Or click to browse — suggestions stay on this page"}
+          {file ? `${ui.detectedKind}: ${kind}` : ui.clickBrowseHint}
         </p>
       </div>
       {suggestions.length ? (
@@ -166,7 +170,7 @@ export function OmnivoreDropzone({ locale }: { locale: string }) {
                   className="flex items-center justify-between rounded-2xl border border-border bg-card px-4 py-3 text-sm font-medium hover:border-primary/40"
                 >
                   <span>{copy.name}</span>
-                  <FavoriteStar toolId={tool.id} />
+                  <FavoriteStar toolId={tool.id} locale={locale} />
                 </Link>
               </li>
             );

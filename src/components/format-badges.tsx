@@ -1,4 +1,5 @@
 import { FormatGlyph } from "@/components/brand-icons";
+import { t } from "@/i18n/messages";
 
 const MARK: Record<string, { label: string; bg: string; fg: string }> = {
   pdf: { label: "PDF", bg: "#157a45", fg: "#f4fff8" },
@@ -44,13 +45,13 @@ export function FormatMark({ format, size = "md" }: { format: string; size?: "sm
   );
 }
 
-export function FormatBadges({ formats }: { formats: string[] }) {
+export function FormatBadges({ formats, locale = "en" }: { formats: string[]; locale?: string }) {
   const unique = [...new Set(formats.map((f) => formatLabel(f)))];
   return (
-    <ul className="flex flex-wrap items-center gap-2" aria-label="Supported formats">
-      {unique.map((label) => (
-        <li key={label}>
-          <FormatMark format={label} />
+    <ul className="flex flex-wrap items-center gap-2" aria-label={t(locale).formats}>
+      {unique.map((fmt) => (
+        <li key={fmt}>
+          <FormatMark format={fmt} />
         </li>
       ))}
     </ul>

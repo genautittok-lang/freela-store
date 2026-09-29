@@ -7,6 +7,7 @@ describe("accept-language negotiation", () => {
     expect(negotiateLocale("pt-BR,pt;q=0.9,en;q=0.8")).toBe("pt");
     expect(negotiateLocale("zh-TW,zh;q=0.8")).toBe("zh-TW");
     expect(negotiateLocale("zh-CN,zh;q=0.8")).toBe("zh-CN");
+    expect(negotiateLocale("zh-CN,zh;q=0.9,en;q=0.8")).toBe("zh-CN");
     expect(negotiateLocale("nb-NO,no;q=0.9")).toBe("no");
     expect(negotiateLocale("xx-YY")).toBe("en");
   });

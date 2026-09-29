@@ -89,7 +89,7 @@ export function FileDropzone({
           onChange={(e) => take([...(e.target.files ?? [])])}
         />
         <div className="mt-4 flex justify-center">
-          <FormatBadges formats={formats} />
+          <FormatBadges formats={formats} locale={locale} />
         </div>
         <p className="mt-2 text-xs text-muted-foreground">
           {ui.sizeLimit} {formatBytes(locale, maxBytes)}

@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { isRoutedLocale, contentLocale, getLocale } from "@/data/locales";
 import { categoryBySlug, toolBySlug, copyForTool, copyForCategory } from "@/lib/registry";
 import { categories } from "@/data/categories";
+import { t } from "@/i18n/messages";
 
 export const runtime = "edge";
 export const alt = "Freela tool";
@@ -29,6 +30,7 @@ export default async function Image({
   const { locale, slug } = await params;
   const safeLocale = isRoutedLocale(locale) ? locale : "en";
   const loc = getLocale(safeLocale);
+  const ui = t(safeLocale);
   const tool = toolBySlug(safeLocale, slug);
   if (tool) {
     const copy = copyForTool(tool, safeLocale);
@@ -43,6 +45,7 @@ export default async function Image({
       tint,
       localeLabel: loc ? `${loc.flag} ${loc.nativeName}` : safeLocale,
       dir: loc?.dir ?? "ltr",
+      noUpload: ui.noUpload,
     });
   }
   const cat = categoryBySlug(safeLocale, slug);
@@ -53,20 +56,22 @@ export default async function Image({
       brand: "Freela",
       title: copy.name,
       subtitle: copy.h1,
-      badge: "Tools",
+      badge: ui.tools,
       tint,
       localeLabel: loc ? `${loc.flag} ${loc.nativeName}` : safeLocale,
       dir: loc?.dir ?? "ltr",
+      noUpload: ui.noUpload,
     });
   }
   return renderCard({
     brand: "Freela",
-    title: "Free online tools",
-    subtitle: "Files stay on your device",
+    title: ui.freeOnlineTools,
+    subtitle: ui.filesStayDevice,
     badge: contentLocale(safeLocale),
     tint: "#157A45",
     localeLabel: loc ? `${loc.flag} ${loc.nativeName}` : safeLocale,
     dir: loc?.dir ?? "ltr",
+    noUpload: ui.noUpload,
   });
 }
 
@@ -78,6 +83,7 @@ function renderCard(opts: {
   tint: string;
   localeLabel: string;
   dir: "ltr" | "rtl";
+  noUpload: string;
 }) {
   const title =
     opts.title.length > 64 ? `${opts.title.slice(0, 61).trimEnd()}…` : opts.title;
@@ -188,7 +194,7 @@ function renderCard(opts: {
               fontWeight: 700,
             }}
           >
-            No upload
+            {opts.noUpload}
           </div>
         </div>
       </div>

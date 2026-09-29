@@ -6,6 +6,14 @@ import { cn } from "cn"
 
 import { Button } from "@/components/ui/button"
 import { XIcon } from "lucide-react"
+import { t } from "@/i18n/messages"
+import { isLocale } from "@/data/locales"
+
+function closeLabel() {
+  if (typeof document === "undefined") return t("en").close
+  const lang = document.documentElement.lang || "en"
+  return t(isLocale(lang) ? lang : lang.split("-")[0] || "en").close
+}
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
@@ -72,7 +80,7 @@ function SheetContent({
           >
             <XIcon
             />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{closeLabel()}</span>
           </SheetPrimitive.Close>
         )}
       </SheetPrimitive.Popup>

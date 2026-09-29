@@ -175,7 +175,7 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
         {tool.maxFileSize > 0 ? ` · ${ui.sizeLimit} ${formatBytes(locale, tool.maxFileSize)}` : null}
       </p>
       <div className="mt-2">
-        <FormatBadges formats={tool.supportedFormats} />
+        <FormatBadges formats={tool.supportedFormats} locale={locale} />
       </div>
       <section id="how-to" className="freela-card mt-8 scroll-mt-24 p-5">
         <h2 className="text-lg font-semibold">{ui.howTo}</h2>

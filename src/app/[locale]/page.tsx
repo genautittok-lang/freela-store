@@ -218,7 +218,7 @@ function ToolGrid({
           return (
             <li key={tool.id}>
               <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card relative block h-full p-5">
-                <FavoriteStar toolId={tool.id} className="absolute right-3 top-3" />
+                <FavoriteStar toolId={tool.id} locale={locale} className="absolute right-3 top-3" />
                 <Icon className="freela-sticker h-16 w-16" aria-hidden />
                 <p className="mt-3 pr-8 font-semibold">{copy.name}</p>
                 <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{copy.description}</p>

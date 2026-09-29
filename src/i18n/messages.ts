@@ -3,6 +3,7 @@ import { messages8 } from "@/i18n/locale8";
 import { messagesEu } from "@/i18n/locale-eu";
 import { extras, type ExtraMessages } from "@/i18n/extras";
 import { uxChrome, type UxChrome } from "@/i18n/ux";
+import { uiAdditions, type UiAdditions } from "@/i18n/ui-additions";
 import { isLocale } from "@/data/locales";
 
 export type Messages = {
@@ -632,9 +633,16 @@ export const messages: Record<Locale, Messages> = {
   ...messagesEu,
 };
 
-export type UiMessages = Messages & ExtraMessages & UxChrome;
+export type UiMessages = Messages & ExtraMessages & UxChrome & UiAdditions;
 
 export function t(locale: string): UiMessages {
-  if (isLocale(locale)) return { ...messages[locale], ...extras[locale], ...uxChrome[locale] };
-  return { ...messages.en, ...extras.en, ...uxChrome.en };
+  if (isLocale(locale)) {
+    return {
+      ...messages[locale],
+      ...extras[locale],
+      ...uxChrome[locale],
+      ...uiAdditions[locale],
+    };
+  }
+  return { ...messages.en, ...extras.en, ...uxChrome.en, ...uiAdditions.en };
 }
