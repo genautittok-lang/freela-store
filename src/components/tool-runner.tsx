@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { track } from "@/components/analytics-provider";
 import dynamic from "next/dynamic";
-import { FormatBadges, FormatMark, FormatPath } from "@/components/format-badges";
+import { FormatPicker } from "@/components/format-picker";
 import { copyForTool } from "@/lib/copy";
 import { toolById } from "@/lib/registry";
 import {
@@ -897,37 +897,20 @@ function ImageTool({
         <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} />
       )}
       {action === "convert" ? (
-        <fieldset className="rounded-xl border border-border p-3">
-          <legend className="px-1 text-sm font-medium">{ui.chooseOutput}</legend>
-          <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
-            <span>{ui.fromLabel}</span>
-            <FormatPath from={["JPG", "PNG", "WebP", "AVIF"]} to={[outMime === "image/jpeg" ? "JPG" : outMime === "image/png" ? "PNG" : outMime === "image/webp" ? "WebP" : "AVIF"]} />
-          </div>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={ui.chooseOutput}>
-            {(
-              [
-                ["image/jpeg", "JPG"],
-                ["image/png", "PNG"],
-                ["image/webp", "WebP"],
-                ["image/avif", "AVIF"],
-              ] as const
-            ).map(([mime, label]) => (
-              <button
-                key={mime}
-                type="button"
-                role="radio"
-                aria-checked={outMime === mime}
-                className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium ${
-                  outMime === mime ? "border-primary bg-accent" : "border-border"
-                }`}
-                onClick={() => setOutMime(mime)}
-              >
-                <FormatMark format={label} size="sm" />
-                {label}
-              </button>
-            ))}
-          </div>
-        </fieldset>
+        <FormatPicker
+          locale={locale}
+          value={outMime}
+          fromFormats={["JPG", "PNG", "WebP", "AVIF"]}
+          onChange={setOutMime}
+          options={
+            [
+              { value: "image/jpeg", label: "JPG" },
+              { value: "image/png", label: "PNG" },
+              { value: "image/webp", label: "WebP" },
+              { value: "image/avif", label: "AVIF" },
+            ] as const
+          }
+        />
       ) : null}
       {action === "compress" || action === "convert" ? (
         <Field label={rl(locale, "quality")}>

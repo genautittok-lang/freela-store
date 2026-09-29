@@ -1,6 +1,7 @@
 export const SITE_NAME = "Freela";
 export const SITE_TAGLINE = "Free Online Tools";
 export const SITE_HOST = "freela.store";
+export const APP_VERSION = "1.2.1";
 /** Product help, privacy, abuse, copyright and security. Main support address. */
 export const CONTACT_EMAIL = "tools@freela.store";
 export const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`;

@@ -3,7 +3,7 @@ import { ROUTED_LOCALES, contentLocale, getLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
 import { Logo } from "@/components/logo";
-import { CONTACT_EMAIL, CREATOR_EMAIL, INFO_EMAIL, PARTNER_EMAIL } from "@/lib/site";
+import { CONTACT_EMAIL, CREATOR_EMAIL, INFO_EMAIL, PARTNER_EMAIL, APP_VERSION } from "@/lib/site";
 import { DarkshareBadge } from "@/components/darkshare-badge";
 import { mailRoles } from "@/i18n/mailboxes";
 import { copyForTool, toolById } from "@/lib/registry";
@@ -28,6 +28,24 @@ function legalLinks(locale: string) {
   ];
 }
 
+function FooterHeart() {
+  return (
+    <span className="footer-heart" aria-hidden="true">
+      <svg viewBox="0 0 32 28" className="footer-heart-svg" role="img">
+        <path
+          className="footer-heart-shape"
+          d="M16 26S2 16.5 2 9.2C2 5.1 5.2 2 9 2c2.4 0 4.5 1.2 5.8 3.1C16.5 3.2 18.6 2 21 2c3.8 0 7 3.1 7 7.2C28 16.5 16 26 16 26z"
+        />
+        <polyline
+          className="footer-heart-ecg"
+          points="3,14 8,14 10,8 12.5,20 15,10 17.5,16 19.5,14 29,14"
+          fill="none"
+        />
+      </svg>
+    </span>
+  );
+}
+
 export function SiteFooter({ locale }: { locale: string }) {
   const ui = t(locale);
   const cl = contentLocale(locale);
@@ -40,10 +58,13 @@ export function SiteFooter({ locale }: { locale: string }) {
   });
   return (
     <footer className="mt-auto border-t border-border bg-secondary/50">
-      <div className="mx-auto max-w-6xl px-4 py-10">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div className="sm:col-span-2 lg:col-span-1">
-            <Logo locale={locale} homeLabel={ui.home} />
+            <div className="flex flex-wrap items-center gap-2">
+              <Logo locale={locale} homeLabel={ui.home} />
+              <span className="footer-version">v{APP_VERSION}</span>
+            </div>
             <p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">{ui.tagline}</p>
             <p className="mt-3 text-xs font-medium text-emerald-800">{ui.processedLocally}</p>
             <ul className="mt-4 grid gap-2 text-sm">
@@ -66,7 +87,7 @@ export function SiteFooter({ locale }: { locale: string }) {
             <p className="mt-3 text-xs text-muted-foreground">{ui.contactHint}</p>
           </div>
           <nav aria-label={ui.tools}>
-            <p className="text-sm font-semibold">{ui.tools}</p>
+            <p className="text-sm font-semibold tracking-tight">{ui.tools}</p>
             <ul className="mt-3 grid gap-2 text-sm">
               {categories.map((cat) => (
                 <li key={cat.id}>
@@ -78,7 +99,7 @@ export function SiteFooter({ locale }: { locale: string }) {
             </ul>
           </nav>
           <nav aria-label={ui.convert}>
-            <p className="text-sm font-semibold">{ui.convert}</p>
+            <p className="text-sm font-semibold tracking-tight">{ui.convert}</p>
             <ul className="mt-3 grid gap-2 text-sm">
               {converts.map((row) => (
                 <li key={row.id}>
@@ -88,7 +109,7 @@ export function SiteFooter({ locale }: { locale: string }) {
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-sm font-semibold">{ui.company}</p>
+            <p className="mt-4 text-sm font-semibold tracking-tight">{ui.company}</p>
             <ul className="mt-3 grid gap-2 text-sm">
               {product.map((link) => (
                 <li key={link.href}>
@@ -100,7 +121,7 @@ export function SiteFooter({ locale }: { locale: string }) {
             </ul>
           </nav>
           <nav aria-label={ui.legal}>
-            <p className="text-sm font-semibold">{ui.legal}</p>
+            <p className="text-sm font-semibold tracking-tight">{ui.legal}</p>
             <ul className="mt-3 grid gap-2 text-sm">
               {legal.map((link) => (
                 <li key={link.href}>
@@ -113,7 +134,7 @@ export function SiteFooter({ locale }: { locale: string }) {
           </nav>
         </div>
         <div className="mt-10 border-t border-border pt-6">
-          <p className="text-sm font-semibold">{ui.language}</p>
+          <p className="text-sm font-semibold tracking-tight">{ui.language}</p>
           <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {ROUTED_LOCALES.map((code) => {
               const rec = getLocale(code);
@@ -130,13 +151,16 @@ export function SiteFooter({ locale }: { locale: string }) {
         </div>
       </div>
       <div className="border-t border-border bg-muted/40">
-        <div className="mx-auto flex max-w-6xl flex-col items-start gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs leading-5 text-muted-foreground">
-            © {new Date().getFullYear()} Freela · {ui.madeWith}{" "}
-            <span className="footer-heart" aria-hidden="true">
-              ♥
-            </span>{" "}
-            · {ui.adDisclosure}
+        <div className="mx-auto flex max-w-6xl flex-col items-start gap-3 px-4 py-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-6 text-muted-foreground">
+            <span>© {new Date().getFullYear()} Freela</span>
+            <span aria-hidden="true">·</span>
+            <span className="inline-flex items-center gap-2 font-medium text-foreground">
+              {ui.madeWith}
+              <FooterHeart />
+            </span>
+            <span aria-hidden="true">·</span>
+            <span>{ui.adDisclosure}</span>
           </p>
           <DarkshareBadge />
         </div>

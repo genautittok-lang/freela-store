@@ -89,9 +89,9 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       </section>
       <OmnivoreDropzone locale={locale} />
       <FavoritesRail locale={locale} />
-      <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">{ui.convert}</h2>
-        <p className="mt-2 text-sm text-muted-foreground">{ui.howItWorksLead}</p>
+      <section className="page-section">
+        <h2 className="page-section-title">{ui.convert}</h2>
+        <p className="page-section-lead">{ui.howItWorksLead}</p>
         <ul className="mt-5 grid gap-4 sm:grid-cols-3">
           {[
             { id: "images-to-pdf", from: ["JPG", "PNG", "WebP"], to: ["PDF"] },
@@ -120,9 +120,9 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       ) : null}
       <ToolGrid locale={locale} title={ui.popular} tools={featured} cta={ui.openTool} />
       <p className="mt-2 text-xs text-muted-foreground">{ui.rankingNote}</p>
-      <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">{ui.categories}</h2>
-        <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <section className="page-section">
+        <h2 className="page-section-title">{ui.categories}</h2>
+        <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           {categories.map((cat) => (
             <li key={cat.id}>
               <Link href={`/${locale}/tools/${copyForCategory(cat, locale).slug}`} className="freela-card block p-4">
@@ -135,18 +135,18 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           ))}
         </ul>
       </section>
-      <section className="mt-12 flex items-start gap-4 rounded-[1.5rem] border border-primary/15 bg-accent px-6 py-6">
+      <section className="page-section flex items-start gap-4 rounded-[1.5rem] border border-primary/15 bg-accent px-6 py-6">
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight">{ui.trustTitle}</h2>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">{ui.trustBody}</p>
+          <h2 className="page-section-title">{ui.trustTitle}</h2>
+          <p className="page-section-lead max-w-3xl">{ui.trustBody}</p>
         </div>
       </section>
-      <div className="mt-12">
+      <div className="page-section">
         <AdSlot position="home-mid" locale={locale} />
       </div>
-      <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">{ui.walkthroughTitle}</h2>
-        <p className="mt-2 text-sm text-muted-foreground">{ui.walkthroughLead}</p>
+      <section className="page-section">
+        <h2 className="page-section-title">{ui.walkthroughTitle}</h2>
+        <p className="page-section-lead">{ui.walkthroughLead}</p>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
           <figure>
             <video className="w-full rounded-[1.5rem] border border-border shadow-sm" controls muted playsInline preload="metadata" poster="/brand/hero.png">
@@ -163,8 +163,8 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
         </div>
       </section>
       <ToolGrid locale={locale} title={ui.newest} tools={newest} cta={ui.openTool} />
-      <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">{ui.popularByCategory}</h2>
+      <section className="page-section">
+        <h2 className="page-section-title">{ui.popularByCategory}</h2>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
           {categories.slice(0, 6).map((cat) => {
             const tools = rankedInCategory(locale, cat.id, 4);

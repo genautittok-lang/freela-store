@@ -111,6 +111,18 @@ export function ConvertMark({ className = "h-8 w-8", ...rest }: IconProps) {
   );
 }
 
+export function MediaMark({ className = "h-8 w-8", ...rest }: IconProps) {
+  return (
+    <Svg className={className} {...rest}>
+      <rect x="3" y="5" width="26" height="22" rx="6" fill="#e7f6ec" />
+      <rect x="7" y="9" width="14" height="14" rx="3" fill="#157a45" />
+      <path d="M12.2 12.4v7.2L18.5 16z" fill="#f4fff8" />
+      <rect x="23" y="11" width="3" height="10" rx="1.2" fill="#1f9a57" />
+      <rect x="26.5" y="13" width="2.2" height="6" rx="1" fill="#7dffb2" />
+    </Svg>
+  );
+}
+
 export function ColorMark({ className = "h-8 w-8", ...rest }: IconProps) {
   return (
     <Svg className={className} {...rest}>
@@ -147,6 +159,7 @@ export function DateMark({ className = "h-8 w-8", ...rest }: IconProps) {
 export const brandCategoryIcons: Record<CategoryId, (props: IconProps) => ReactNode> = {
   "pdf-documents": (p) => <PdfMark {...p} />,
   images: (p) => <ImageMark {...p} />,
+  media: (p) => <MediaMark {...p} />,
   text: (p) => <TextMark {...p} />,
   developer: (p) => <CodeMark {...p} />,
   seo: (p) => <SeoMark {...p} />,

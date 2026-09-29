@@ -763,7 +763,7 @@ export const packTools: EnTool[] = [
   }),
   t({
     id: "video-file-info",
-    category: "converters",
+    category: "media",
     tags: ["video", "metadata", "mp4"],
     featured: false,
     inputTypes: ["file"],
@@ -790,7 +790,7 @@ export const packTools: EnTool[] = [
   }),
   t({
     id: "convert-video",
-    category: "converters",
+    category: "media",
     tags: ["video", "ffmpeg", "convert"],
     featured: false,
     status: "disabled",

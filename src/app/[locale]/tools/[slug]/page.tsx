@@ -140,10 +140,10 @@ async function ToolPage({ locale, slug }: { locale: string; slug: string }) {
           "aria-hidden": true,
         })}
         <div>
-          <h1 id="tool-heading" className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 id="tool-heading" className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             {copy.h1}
           </h1>
-          <p className="mt-2 text-muted-foreground">{copy.intro}</p>
+          <p className="page-prose mt-3 max-w-2xl">{copy.intro}</p>
         </div>
       </div>
       {!loc.indexable ? <p className="mt-3 text-sm text-amber-800">{ui.noIndexNote}</p> : null}
@@ -267,13 +267,15 @@ async function CategoryPage({ locale, slug }: { locale: string; slug: string }) 
         {" / "}
         <span>{copy.name}</span>
       </nav>
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-5 flex items-start gap-3 sm:items-center">
         <span className="freela-well h-12 w-12">
           <CategoryIcon id={cat.id} className="h-6 w-6 text-primary" />
         </span>
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{copy.h1}</h1>
+        <div className="min-w-0">
+          <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{copy.h1}</h1>
+          <p className="page-prose mt-3 max-w-2xl">{copy.description}</p>
+        </div>
       </div>
-      <p className="mt-4 max-w-2xl text-muted-foreground">{copy.description}</p>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <li key={tool.id}>

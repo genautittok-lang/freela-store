@@ -24,6 +24,7 @@ import {
   trimVideo,
   type FfmpegLoadProgress,
 } from "@/lib/tools/ffmpeg-client";
+import { FormatOutputConfirm, FormatPicker } from "@/components/format-picker";
 
 const VIDEO_ACCEPT =
   "video/*,.mp4,.webm,.mov,.mkv,.avi,.flv,.wmv,.m4v";
@@ -160,6 +161,7 @@ export function MediaPackPanel({
         wrap={wrap}
         cta={cta}
         label="WebM (VP9)"
+        outputFormat="WebM"
         run={convertVideoToWebm}
       />
     );
@@ -171,6 +173,7 @@ export function MediaPackPanel({
       wrap={wrap}
       cta={cta}
       label="MP4 (H.264)"
+      outputFormat="MP4"
       run={convertVideoToMp4}
     />
   );
@@ -182,6 +185,7 @@ function SimpleVideoConvert({
   wrap,
   cta,
   label,
+  outputFormat,
   run,
 }: {
   tool: ToolDefinition;
@@ -189,6 +193,7 @@ function SimpleVideoConvert({
   wrap: (fn: () => Promise<void>) => Promise<void>;
   cta: string;
   label: string;
+  outputFormat: string;
   run: (
     file: File,
     onProgress?: (r: number) => void,
@@ -220,6 +225,7 @@ function SimpleVideoConvert({
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
       />
+      <FormatOutputConfirm locale={locale} format={outputFormat} fromFormats={["Video"]} />
       <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
@@ -289,6 +295,7 @@ function VideoToGif({
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
       />
+      <FormatOutputConfirm locale={locale} format="GIF" fromFormats={["Video"]} />
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label="FPS (4–15)">
           <Input value={fps} onChange={(e) => setFps(e.target.value)} inputMode="numeric" />
@@ -378,17 +385,19 @@ function ExtractAudio({
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
       />
-      <Field label="Output format">
-        <select
-          className="h-10 rounded-lg border border-border bg-background px-3 text-sm"
-          value={format}
-          onChange={(e) => setFormat(e.target.value as "mp3" | "wav" | "aac")}
-        >
-          <option value="mp3">MP3</option>
-          <option value="wav">WAV</option>
-          <option value="aac">AAC</option>
-        </select>
-      </Field>
+      <FormatPicker
+        locale={locale}
+        value={format}
+        fromFormats={["Video", "Audio"]}
+        onChange={setFormat}
+        options={
+          [
+            { value: "mp3", label: "MP3" },
+            { value: "wav", label: "WAV" },
+            { value: "aac", label: "AAC" },
+          ] as const
+        }
+      />
       <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
@@ -453,18 +462,20 @@ function AudioConvert({
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
       />
-      <Field label="Target format">
-        <select
-          className="h-10 rounded-lg border border-border bg-background px-3 text-sm"
-          value={format}
-          onChange={(e) => setFormat(e.target.value as "mp3" | "wav" | "ogg" | "aac")}
-        >
-          <option value="mp3">MP3</option>
-          <option value="wav">WAV</option>
-          <option value="ogg">OGG</option>
-          <option value="aac">AAC</option>
-        </select>
-      </Field>
+      <FormatPicker
+        locale={locale}
+        value={format}
+        fromFormats={["MP3", "WAV", "OGG", "AAC", "FLAC"]}
+        onChange={setFormat}
+        options={
+          [
+            { value: "mp3", label: "MP3" },
+            { value: "wav", label: "WAV" },
+            { value: "ogg", label: "OGG" },
+            { value: "aac", label: "AAC" },
+          ] as const
+        }
+      />
       <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"

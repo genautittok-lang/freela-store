@@ -267,10 +267,87 @@
   50% { transform: scale(1.15); }
   100% { transform: scale(1); }
 }
+@keyframes footer-ecg-draw {
+  0% { stroke-dashoffset: 64; }
+  35% { stroke-dashoffset: 0; }
+  55% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -64; }
+}
+@keyframes footer-heart-beat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.12); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  56% { transform: scale(1); }
+}
 .footer-heart {
-  animation: pulse 1.5s infinite ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55rem;
+  height: 1.35rem;
   color: #ef4444;
-  display: inline-block;
+  animation: footer-heart-beat 1.6s ease-in-out infinite;
+  vertical-align: -0.2em;
+}
+.footer-heart-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.footer-heart-shape {
+  fill: #ef4444;
+}
+.footer-heart-ecg {
+  stroke: #fff;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 64;
+  stroke-dashoffset: 64;
+  animation: footer-ecg-draw 1.6s ease-in-out infinite;
+}
+.footer-version {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.45rem;
+  border: 1px solid rgb(21 122 69 / 0.22);
+  background: rgb(21 122 69 / 0.08);
+  padding: 0.15rem 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0f5c34;
+}
+
+.page-section {
+  margin-top: 3rem;
+}
+.page-section-title {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.page-section-lead {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.page-prose {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+@media (min-width: 640px) {
+  .page-section {
+    margin-top: 3.25rem;
+  }
+  .page-section-title {
+    font-size: 1.625rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -281,8 +358,12 @@
   .darkshare-badge {
     transition: none;
   }
-  .footer-heart {
+  .footer-heart,
+  .footer-heart-ecg {
     animation: none;
+  }
+  .footer-heart-ecg {
+    stroke-dashoffset: 0;
   }
   .nav-link::after {
     transform: scaleX(0);

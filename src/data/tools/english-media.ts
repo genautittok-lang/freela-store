@@ -77,7 +77,7 @@ const audioFormats = ["mp3", "wav", "ogg", "aac", "m4a", "flac"];
 export const mediaTools: EnTool[] = [
   t({
     id: "video-to-mp4",
-    category: "converters",
+    category: "media",
     tags: ["video", "mp4", "ffmpeg"],
     featured: true,
     inputTypes: ["file"],
@@ -104,7 +104,7 @@ export const mediaTools: EnTool[] = [
   }),
   t({
     id: "video-to-webm",
-    category: "converters",
+    category: "media",
     tags: ["video", "webm", "ffmpeg"],
     featured: false,
     inputTypes: ["file"],
@@ -131,7 +131,7 @@ export const mediaTools: EnTool[] = [
   }),
   t({
     id: "video-to-gif",
-    category: "converters",
+    category: "media",
     tags: ["video", "gif", "ffmpeg"],
     featured: true,
     inputTypes: ["file"],
@@ -158,7 +158,7 @@ export const mediaTools: EnTool[] = [
   }),
   t({
     id: "video-to-mp3",
-    category: "converters",
+    category: "media",
     tags: ["video", "audio", "mp3", "ffmpeg"],
     featured: true,
     inputTypes: ["file"],
@@ -185,7 +185,7 @@ export const mediaTools: EnTool[] = [
   }),
   t({
     id: "audio-converter",
-    category: "converters",
+    category: "media",
     tags: ["audio", "mp3", "wav", "ffmpeg"],
     featured: false,
     inputTypes: ["file"],
@@ -212,7 +212,7 @@ export const mediaTools: EnTool[] = [
   }),
   t({
     id: "compress-video",
-    category: "converters",
+    category: "media",
     tags: ["video", "compress", "ffmpeg"],
     featured: true,
     inputTypes: ["file"],
@@ -239,7 +239,7 @@ export const mediaTools: EnTool[] = [
   }),
   t({
     id: "trim-video",
-    category: "converters",
+    category: "media",
     tags: ["video", "trim", "ffmpeg"],
     featured: false,
     inputTypes: ["file"],
@@ -266,7 +266,7 @@ export const mediaTools: EnTool[] = [
   }),
   t({
     id: "resize-video",
-    category: "converters",
+    category: "media",
     tags: ["video", "resize", "ffmpeg"],
     featured: false,
     inputTypes: ["file"],

@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { contentLocale, ROUTED_LOCALES, getLocale, isLocale } from "@/data/locales";
+import { ROUTED_LOCALES, getLocale, isLocale } from "@/data/locales";
 import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
 import { track } from "@/components/analytics-provider";
+import { ToolsCategorySheet } from "@/components/tools-menu";
 import { Home, Wrench, Search, Languages } from "lucide-react";
 import {
   Sheet,
@@ -30,20 +31,13 @@ function restForLocale(pathname: string, from: string, to: string) {
 
 export function MobileBottomNav({ locale, active = "" }: { locale: string; active?: string }) {
   const ui = t(locale);
-  const cl = contentLocale(locale);
   const pathname = usePathname() || `/${locale}`;
   const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const firstCat = categories[0];
-  const toolsHref = firstCat ? `/${locale}/tools/${firstCat.copy[cl].slug}` : `/${locale}`;
+  const [langOpen, setLangOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
+  const toolsOn = active === "tools" || categories.some((c) => c.id === active);
   const items = [
     { href: `/${locale}`, label: ui.home, icon: Home, on: active === "home" },
-    {
-      href: toolsHref,
-      label: ui.tools,
-      icon: Wrench,
-      on: active.startsWith("pdf") || active === "tools" || categories.some((c) => c.id === active),
-    },
     { href: `/${locale}/search`, label: ui.searchButton, icon: Search, on: active === "search" },
   ];
 
@@ -56,7 +50,7 @@ export function MobileBottomNav({ locale, active = "" }: { locale: string; activ
     }
     track("language_change", { locale: next });
     const rest = restForLocale(pathname, locale, next);
-    setOpen(false);
+    setLangOpen(false);
     router.push(`/${next}${rest === "/" ? "" : rest}`);
   }
 
@@ -66,25 +60,53 @@ export function MobileBottomNav({ locale, active = "" }: { locale: string; activ
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border/80 bg-background/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_24px_rgb(21_122_69_/_0.08)] backdrop-blur-md lg:hidden"
     >
       <ul className="mx-auto grid max-w-lg grid-cols-4 gap-1 px-2 py-2">
-        {items.map((item) => {
-          const Icon = item.icon;
-          return (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[11px] font-semibold ${
-                  item.on ? "bg-accent text-primary" : "text-muted-foreground"
-                }`}
-                aria-current={item.on ? "page" : undefined}
-              >
-                <Icon className="h-5 w-5" aria-hidden />
-                <span className="truncate">{item.label}</span>
-              </Link>
-            </li>
-          );
-        })}
         <li>
-          <Sheet open={open} onOpenChange={setOpen}>
+          <Link
+            href={items[0]!.href}
+            className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[11px] font-semibold ${
+              items[0]!.on ? "bg-accent text-primary" : "text-muted-foreground"
+            }`}
+            aria-current={items[0]!.on ? "page" : undefined}
+          >
+            <Home className="h-5 w-5" aria-hidden />
+            <span className="truncate">{items[0]!.label}</span>
+          </Link>
+        </li>
+        <li>
+          <Sheet open={toolsOpen} onOpenChange={setToolsOpen}>
+            <SheetTrigger
+              className={`flex min-h-12 w-full flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[11px] font-semibold ${
+                toolsOn ? "bg-accent text-primary" : "text-muted-foreground"
+              }`}
+              aria-label={ui.tools}
+            >
+              <Wrench className="h-5 w-5" aria-hidden />
+              <span className="truncate">{ui.tools}</span>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="max-h-[80vh] overflow-y-auto rounded-t-2xl">
+              <SheetHeader>
+                <SheetTitle>{ui.tools}</SheetTitle>
+              </SheetHeader>
+              <div className="mt-3 pb-6">
+                <ToolsCategorySheet locale={locale} active={active} onNavigate={() => setToolsOpen(false)} />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </li>
+        <li>
+          <Link
+            href={items[1]!.href}
+            className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[11px] font-semibold ${
+              items[1]!.on ? "bg-accent text-primary" : "text-muted-foreground"
+            }`}
+            aria-current={items[1]!.on ? "page" : undefined}
+          >
+            <Search className="h-5 w-5" aria-hidden />
+            <span className="truncate">{items[1]!.label}</span>
+          </Link>
+        </li>
+        <li>
+          <Sheet open={langOpen} onOpenChange={setLangOpen}>
             <SheetTrigger
               className="flex min-h-12 w-full flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[11px] font-semibold text-muted-foreground"
               aria-label={ui.language}

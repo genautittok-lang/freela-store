@@ -26,6 +26,20 @@ export const TOP20_TOOL_IDS = [
 
 export type Top20Id = (typeof TOP20_TOOL_IDS)[number];
 
+/** High-traffic tools beyond the original top-20 with curated synth-locale SEO names. */
+export const HIGH_TRAFFIC_EXTRA_IDS = [
+  "pdf-to-image",
+  "heic-to-jpg",
+  "audio-converter",
+  "universal-converter",
+  "percentage",
+  "csv-json",
+] as const;
+
+export type HighTrafficExtraId = (typeof HIGH_TRAFFIC_EXTRA_IDS)[number];
+export type CuratedLandingId = Top20Id | HighTrafficExtraId;
+
+
 export type LandingBits = {
   name: string;
   focus: string;
@@ -748,6 +762,190 @@ export const TOP20_LANDING: Record<Top20Id, Record<SynthLocale, LandingBits>> = 
   ),
 };
 
+
+export const HIGH_TRAFFIC_LANDING: Record<HighTrafficExtraId, Record<SynthLocale, LandingBits>> = {
+  "pdf-to-image": bits(
+    [
+      ["PDF→画像", "各ページをJPG/PNGへ。結合ツールではありません。", "画像にする"],
+      ["PDF→이미지", "각 페이지를 JPG/PNG로. 병합 도구가 아닙니다.", "이미지로"],
+      ["PDF 转图片", "每页导出为 JPG/PNG。不是合并工具。", "导出图片"],
+      ["PDF 轉圖片", "每頁匯出為 JPG/PNG。不是合併工具。", "匯出圖片"],
+      ["PDF से चित्र", "हर पृष्ठ JPG/PNG में। मर्ज नहीं।", "चित्र बनाएँ"],
+      ["PDF ke gambar", "Setiap halaman ke JPG/PNG. Bukan alat gabung.", "Jadi gambar"],
+      ["PDF sang ảnh", "Mỗi trang thành JPG/PNG. Không phải gộp.", "Ra ảnh"],
+      ["PDF เป็นรูป", "แต่ละหน้าเป็น JPG/PNG ไม่ใช่เครื่องมือรวม", "เป็นรูป"],
+    ],
+    [
+      ["PDF în imagine", "Fiecare pagină în JPG/PNG. Nu este unire.", "În imagine"],
+      ["PDF do obrázku", "Každou stránku do JPG/PNG. Ne sloučení.", "Do obrázku"],
+      ["PDF do obrázka", "Každú stránku do JPG/PNG. Nie zlúčenie.", "Do obrázka"],
+      ["PDF képbe", "Oldalanként JPG/PNG. Nem egyesítés.", "Képbe"],
+      ["PDF σε εικόνα", "Κάθε σελίδα σε JPG/PNG. Όχι συγχώνευση.", "Σε εικόνα"],
+      ["PDF към изображение", "Всяка страница към JPG/PNG. Не обединяване.", "Към изображение"],
+      ["PDF u sliku", "Svaka stranica u JPG/PNG. Nije spajanje.", "U sliku"],
+      ["PDF у слику", "Свака страница у JPG/PNG. Није спајање.", "У слику"],
+      ["PDF v sliko", "Vsako stran v JPG/PNG. Ni združevanje.", "V sliko"],
+      ["PDF till bild", "Varje sida till JPG/PNG. Inte ihopslagning.", "Till bild"],
+      ["PDF til billede", "Hver side til JPG/PNG. Ikke fletning.", "Til billede"],
+      ["PDF til bilde", "Hver side til JPG/PNG. Ikke sammenslåing.", "Til bilde"],
+      ["PDF kuvaksi", "Jokainen sivu JPG/PNG:ksi. Ei yhdistämistä.", "Kuvaksi"],
+      ["PDF pildiks", "Iga leht JPG/PNG-ks. Pole ühendamine.", "Pildiks"],
+      ["PDF uz attēlu", "Katra lapa uz JPG/PNG. Nav apvienošana.", "Uz attēlu"],
+      ["PDF į paveikslą", "Kiekvienas puslapis į JPG/PNG. Ne sujungimas.", "Į paveikslą"],
+    ],
+  ),
+  "heic-to-jpg": bits(
+    [
+      ["HEIC→JPG", "iPhone写真をJPG/PNGへ。端末内で変換。", "変換"],
+      ["HEIC→JPG", "iPhone 사진을 JPG/PNG로. 기기에서 변환.", "변환"],
+      ["HEIC 转 JPG", "把 iPhone 照片转为 JPG/PNG，在本机完成。", "转换"],
+      ["HEIC 轉 JPG", "把 iPhone 照片轉為 JPG/PNG，在本機完成。", "轉換"],
+      ["HEIC से JPG", "iPhone फ़ोटो को JPG/PNG में इसी डिवाइस पर।", "बदलें"],
+      ["HEIC ke JPG", "Foto iPhone ke JPG/PNG di perangkat.", "Ubah"],
+      ["HEIC sang JPG", "Ảnh iPhone thành JPG/PNG trên thiết bị.", "Chuyển"],
+      ["HEIC เป็น JPG", "รูป iPhone เป็น JPG/PNG บนเครื่อง", "แปลง"],
+    ],
+    [
+      ["HEIC în JPG", "Poze iPhone în JPG/PNG pe dispozitiv.", "Conversie"],
+      ["HEIC do JPG", "Fotky iPhone do JPG/PNG na zařízení.", "Převést"],
+      ["HEIC do JPG", "Fotky iPhone do JPG/PNG na zariadení.", "Previesť"],
+      ["HEIC JPG-be", "iPhone fotók JPG/PNG-be az eszközön.", "Átalakítás"],
+      ["HEIC σε JPG", "Φωτογραφίες iPhone σε JPG/PNG στη συσκευή.", "Μετατροπή"],
+      ["HEIC към JPG", "iPhone снимки към JPG/PNG на устройството.", "Конвертирай"],
+      ["HEIC u JPG", "iPhone fotografije u JPG/PNG na uređaju.", "Pretvori"],
+      ["HEIC у JPG", "iPhone фотографије у JPG/PNG на уређају.", "Претвори"],
+      ["HEIC v JPG", "iPhone fotografije v JPG/PNG na napravi.", "Pretvori"],
+      ["HEIC till JPG", "iPhone-foton till JPG/PNG på enheten.", "Konvertera"],
+      ["HEIC til JPG", "iPhone-fotos til JPG/PNG på enheden.", "Konvertér"],
+      ["HEIC til JPG", "iPhone-bilder til JPG/PNG på enheten.", "Konverter"],
+      ["HEIC JPG:ksi", "iPhone-kuvat JPG/PNG:ksi laitteessa.", "Muunna"],
+      ["HEIC JPG-ks", "iPhone fotod JPG/PNG-ks seadmes.", "Teisenda"],
+      ["HEIC uz JPG", "iPhone foto uz JPG/PNG ierīcē.", "Konvertēt"],
+      ["HEIC į JPG", "iPhone nuotraukos į JPG/PNG įrenginyje.", "Konvertuoti"],
+    ],
+  ),
+  "audio-converter": bits(
+    [
+      ["音声変換", "MP3/WAV/OGG/AACへ。端末内ffmpeg。", "変換"],
+      ["오디오 변환", "MP3/WAV/OGG/AAC로. 기기 내 ffmpeg.", "변환"],
+      ["音频转换", "转为 MP3/WAV/OGG/AAC，本机 ffmpeg。", "转换"],
+      ["音訊轉換", "轉為 MP3/WAV/OGG/AAC，本機 ffmpeg。", "轉換"],
+      ["ऑडियो कनवर्टर", "MP3/WAV/OGG/AAC में। डिवाइस पर ffmpeg.", "बदलें"],
+      ["Konverter audio", "Ke MP3/WAV/OGG/AAC. ffmpeg di perangkat.", "Ubah"],
+      ["Đổi âm thanh", "Sang MP3/WAV/OGG/AAC. ffmpeg trên thiết bị.", "Chuyển"],
+      ["แปลงเสียง", "เป็น MP3/WAV/OGG/AAC ด้วย ffmpeg ในเครื่อง", "แปลง"],
+    ],
+    [
+      ["Convertor audio", "În MP3/WAV/OGG/AAC cu ffmpeg pe dispozitiv.", "Convertește"],
+      ["Převodník audia", "Do MP3/WAV/OGG/AAC přes ffmpeg na zařízení.", "Převést"],
+      ["Prevodník audia", "Do MP3/WAV/OGG/AAC cez ffmpeg na zariadení.", "Previesť"],
+      ["Hangátalakító", "MP3/WAV/OGG/AAC ffmpeg-gel az eszközön.", "Átalakítás"],
+      ["Μετατροπέας ήχου", "Σε MP3/WAV/OGG/AAC με ffmpeg στη συσκευή.", "Μετατροπή"],
+      ["Аудио конвертор", "Към MP3/WAV/OGG/AAC с ffmpeg на устройството.", "Конвертирай"],
+      ["Pretvarač audija", "U MP3/WAV/OGG/AAC s ffmpeg na uređaju.", "Pretvori"],
+      ["Претварач аудиа", "У MP3/WAV/OGG/AAC са ffmpeg на уређају.", "Претвори"],
+      ["Pretvornik zvoka", "V MP3/WAV/OGG/AAC s ffmpeg na napravi.", "Pretvori"],
+      ["Ljudkonverterare", "Till MP3/WAV/OGG/AAC med ffmpeg på enheten.", "Konvertera"],
+      ["Lydkonverter", "Til MP3/WAV/OGG/AAC med ffmpeg på enheden.", "Konvertér"],
+      ["Lydkonverterer", "Til MP3/WAV/OGG/AAC med ffmpeg på enheten.", "Konverter"],
+      ["Äänimuunnin", "MP3/WAV/OGG/AAC:ksi ffmpeg:llä laitteessa.", "Muunna"],
+      ["Heliteisendaja", "MP3/WAV/OGG/AAC-ks ffmpeg-iga seadmes.", "Teisenda"],
+      ["Audio pārveidotājs", "Uz MP3/WAV/OGG/AAC ar ffmpeg ierīcē.", "Konvertēt"],
+      ["Garso keitiklis", "Į MP3/WAV/OGG/AAC su ffmpeg įrenginyje.", "Konvertuoti"],
+    ],
+  ),
+  "universal-converter": bits(
+    [
+      ["万能変換", "ファイル種別を検知し、対応する変換先を提示。", "変換"],
+      ["만능 변환", "파일 종류를 감지하고 가능한 변환을 제안.", "변환"],
+      ["万能转换", "检测文件类型并给出可用目标格式。", "转换"],
+      ["萬能轉換", "偵測檔案類型並給出可用目標格式。", "轉換"],
+      ["यूनिवर्सल कनवर्टर", "फ़ाइल प्रकार पहचानकर संभव लक्ष्य दिखाएँ।", "बदलें"],
+      ["Konverter universal", "Deteksi jenis file dan tampilkan target yang cocok.", "Ubah"],
+      ["Chuyển đa năng", "Nhận loại tệp và gợi ý định dạng đích.", "Chuyển"],
+      ["แปลงสากล", "ตรวจชนิดไฟล์แล้วเสนอรูปแบบปลายทาง", "แปลง"],
+    ],
+    [
+      ["Convertor universal", "Detectează tipul și oferă formate țintă.", "Convertește"],
+      ["Univerzální převodník", "Rozpozná typ a nabídne cílové formáty.", "Převést"],
+      ["Univerzálny prevodník", "Rozpozná typ a ponúkne cieľové formáty.", "Previesť"],
+      ["Univerzális átalakító", "Felismeri a típust és célformátumokat kínál.", "Átalakítás"],
+      ["Καθολικός μετατροπέας", "Ανιχνεύει τύπο και προτείνει μορφές.", "Μετατροπή"],
+      ["Универсален конвертор", "Разпознава типа и предлага целеви формати.", "Конвертирай"],
+      ["Univerzalni pretvarač", "Otkriva vrstu i nudi ciljne formate.", "Pretvori"],
+      ["Универзални претварач", "Открива врсту и нуди циљне формате.", "Претвори"],
+      ["Univerzalni pretvornik", "Zazna tip in predlaga ciljne formate.", "Pretvori"],
+      ["Universell konverterare", "Upptäcker typ och föreslår målformat.", "Konvertera"],
+      ["Universel konverter", "Registrerer type og foreslår målformater.", "Konvertér"],
+      ["Universell konverterer", "Oppdager type og foreslår målformater.", "Konverter"],
+      ["Yleismuunnin", "Tunnistaa tyypin ja ehdottaa kohdemuotoja.", "Muunna"],
+      ["Universaalteisendaja", "Tuvastab tüübi ja soovitab sihtvorminguid.", "Teisenda"],
+      ["Universāls pārveidotājs", "Nosaka tipu un piedāvā mērķa formātus.", "Konvertēt"],
+      ["Universalus keitiklis", "Aptinka tipą ir siūlo tikslinius formatus.", "Konvertuoti"],
+    ],
+  ),
+  "percentage": bits(
+    [
+      ["割合計算", "増減・割合を端末で計算。助言ではありません。", "計算"],
+      ["비율 계산", "증감·비율을 기기에서 계산. 조언 아님.", "계산"],
+      ["百分比计算", "在本机计算增减与百分比。非建议。", "计算"],
+      ["百分比計算", "在本機計算增減與百分比。非建議。", "計算"],
+      ["प्रतिशत कैलकुलेटर", "डिवाइस पर प्रतिशत/वृद्धि। सलाह नहीं।", "गणना"],
+      ["Kalkulator persen", "Hitung persen di perangkat. Bukan nasihat.", "Hitung"],
+      ["Tính phần trăm", "Tính phần trăm trên thiết bị. Không phải tư vấn.", "Tính"],
+      ["คำนวณเปอร์เซ็นต์", "คิดเปอร์เซ็นต์บนเครื่อง ไม่ใช่คำแนะนำ", "คำนวณ"],
+    ],
+    [
+      ["Procente", "Calculați procente pe dispozitiv. Nu este sfat.", "Calculează"],
+      ["Procenta", "Spočítejte procenta na zařízení. Nejde o radu.", "Spočítat"],
+      ["Percentá", "Vypočítajte percentá na zariadení. Nie je rada.", "Vypočítať"],
+      ["Százalékszámoló", "Százalék az eszközön. Nem tanács.", "Számítás"],
+      ["Ποσοστά", "Υπολογίστε ποσοστά στη συσκευή. Όχι συμβουλή.", "Υπολογισμός"],
+      ["Проценти", "Изчислете проценти на устройството. Не е съвет.", "Изчисли"],
+      ["Postotci", "Izračunajte postotke na uređaju. Nije savjet.", "Izračunaj"],
+      ["Проценати", "Израчунајте проценте на уређају. Није савет.", "Израчунај"],
+      ["Odstotki", "Izračunajte odstotke na napravi. Ni nasvet.", "Izračunaj"],
+      ["Procentkalkylator", "Beräkna procent på enheten. Inte råd.", "Beräkna"],
+      ["Procentberegner", "Beregn procent på enheden. Ikke rådgivning.", "Beregn"],
+      ["Prosentkalkulator", "Beregn prosent på enheten. Ikke råd.", "Beregn"],
+      ["Prosenttilaskuri", "Laske prosentit laitteessa. Ei neuvoa.", "Laske"],
+      ["Protsendikalkulaator", "Arvuta protsente seadmes. Pole nõuanne.", "Arvuta"],
+      ["Procentu kalkulators", "Aprēķiniet procentus ierīcē. Nav padoms.", "Aprēķināt"],
+      ["Procentų skaičiuoklė", "Skaičiuokite procentus įrenginyje. Ne patarimas.", "Skaičiuoti"],
+    ],
+  ),
+  "csv-json": bits(
+    [
+      ["CSV↔JSON", "表データをこのタブで相互変換。", "変換"],
+      ["CSV↔JSON", "표 데이터를 이 탭에서 서로 변환.", "변환"],
+      ["CSV↔JSON", "在此标签页互转表格数据。", "转换"],
+      ["CSV↔JSON", "在此分頁互轉表格資料。", "轉換"],
+      ["CSV↔JSON", "इस टैब में तालिका डेटा बदलें।", "बदलें"],
+      ["CSV↔JSON", "Ubah data tabel di tab ini.", "Ubah"],
+      ["CSV↔JSON", "Đổi dữ liệu bảng trong tab này.", "Chuyển"],
+      ["CSV↔JSON", "แปลงข้อมูลตารางในแท็บนี้", "แปลง"],
+    ],
+    [
+      ["CSV↔JSON", "Convertiți date tabulare în acest tab.", "Convertește"],
+      ["CSV↔JSON", "Převádějte tabulková data v tomto panelu.", "Převést"],
+      ["CSV↔JSON", "Prevádzajte tabuľkové dáta v tomto paneli.", "Previesť"],
+      ["CSV↔JSON", "Táblázatos adatok ebben a lapon.", "Átalakítás"],
+      ["CSV↔JSON", "Μετατρέψτε δεδομένα πίνακα σε αυτή την καρτέλα.", "Μετατροπή"],
+      ["CSV↔JSON", "Конвертирайте таблични данни в този раздел.", "Конвертирай"],
+      ["CSV↔JSON", "Pretvorite tablične podatke u ovoj kartici.", "Pretvori"],
+      ["CSV↔JSON", "Претворите табеларне податке у овој картици.", "Претвори"],
+      ["CSV↔JSON", "Pretvorite tabelarične podatke v tem zavihku.", "Pretvori"],
+      ["CSV↔JSON", "Konvertera tabelldata i den här fliken.", "Konvertera"],
+      ["CSV↔JSON", "Konvertér tabeldata i denne fane.", "Konvertér"],
+      ["CSV↔JSON", "Konverter tabelldata i denne fanen.", "Konverter"],
+      ["CSV↔JSON", "Muunna taulukkotiedot tässä välilehdessä.", "Muunna"],
+      ["CSV↔JSON", "Teisenda tabeliandmed selles vahekaardis.", "Teisenda"],
+      ["CSV↔JSON", "Konvertējiet tabulas datus šajā cilnē.", "Konvertēt"],
+      ["CSV↔JSON", "Konvertuokite lentelės duomenis šiame skirtuke.", "Konvertuoti"],
+    ],
+  ),
+};
+
 function clamp(text: string, min: number, max: number, pad = "") {
   let trimmed = text.trim();
   if (pad && trimmed.length < min) trimmed = `${trimmed} ${pad}`.trim();
@@ -759,13 +957,18 @@ export function isTop20Tool(id: string): id is Top20Id {
   return (TOP20_TOOL_IDS as readonly string[]).includes(id);
 }
 
+export function isCuratedLandingTool(id: string): id is CuratedLandingId {
+  return isTop20Tool(id) || (HIGH_TRAFFIC_EXTRA_IDS as readonly string[]).includes(id);
+}
+
 export function isSynthLandingLocale(code: string): code is SynthLocale {
   return (NEW_LOCALES as readonly string[]).includes(code) || (EU_LOCALES as readonly string[]).includes(code);
 }
 
 export function top20LandingFor(toolId: string, locale: string): LandingBits | null {
-  if (!isTop20Tool(toolId) || !isSynthLandingLocale(locale)) return null;
-  return TOP20_LANDING[toolId][locale] ?? null;
+  if (!isCuratedLandingTool(toolId) || !isSynthLandingLocale(locale)) return null;
+  if (isTop20Tool(toolId)) return TOP20_LANDING[toolId][locale] ?? null;
+  return HIGH_TRAFFIC_LANDING[toolId][locale] ?? null;
 }
 
 export function composeTop20Copy(toolId: string, locale: string, inputTypes: string[]) {

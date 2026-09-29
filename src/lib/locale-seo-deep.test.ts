@@ -23,7 +23,7 @@ import {
   copyForTool,
   copyForCategory,
 } from "@/lib/registry";
-import { TOP20_TOOL_IDS } from "@/i18n/top20-landing";
+import { TOP20_TOOL_IDS, HIGH_TRAFFIC_EXTRA_IDS } from "@/i18n/top20-landing";
 import { toolById } from "@/lib/registry";
 
 describe("36-locale UI chrome coverage", () => {
@@ -121,7 +121,7 @@ describe("Accept-Language complex headers", () => {
 
 describe("SEO meta uniqueness and hreflang", () => {
   it("keeps unique title+description vs EN for top-20 tools across all locales", () => {
-    for (const id of TOP20_TOOL_IDS) {
+    for (const id of [...TOP20_TOOL_IDS, ...HIGH_TRAFFIC_EXTRA_IDS]) {
       const tool = toolById(id);
       expect(tool, id).toBeTruthy();
       const en = tool!.copy.en;
@@ -196,7 +196,7 @@ describe("sitemap structure and count formula", () => {
     const expected = L * (1 + LEGAL_SLUGS.length + categories.length + published.length);
     const entries = sitemapEntries();
     expect(entries).toHaveLength(expected);
-    expect(expected).toBe(15_768);
+    expect(expected).toBe(15_804);
 
     const urls = entries.map((e) => e.url);
     expect(new Set(urls).size).toBe(urls.length);

@@ -1396,6 +1396,16 @@ export const category8: Record<string, Eight<CatRow>> = {
     ["Hình ảnh", "images", "Nén, đổi kích thước và chuyển JPG, PNG, WebP trên thiết bị này.", "Công cụ ảnh"],
     ["รูปภาพ", "images", "บีบอัด ปรับขนาด และแปลง JPG PNG WebP บนอุปกรณ์นี้", "เครื่องมือรูปภาพ"],
   ),
+  media: eight(
+    ["メディア", "media", "ブラウザで動画と音声を変換：MP4、WebM、GIF、MP3。アップロードなし。", "動画と音声"],
+    ["미디어", "media", "브라우저에서 동영상·오디오 변환: MP4, WebM, GIF, MP3. 업로드 없음.", "동영상과 오디오"],
+    ["媒体", "media", "在浏览器转换视频与音频：MP4、WebM、GIF、MP3。不上传。", "视频与音频"],
+    ["媒體", "media", "在瀏覽器轉換影片與音訊：MP4、WebM、GIF、MP3。不上傳。", "影片與音訊"],
+    ["मीडिया", "media", "ब्राउज़र में वीडियो और ऑडियो बदलें: MP4, WebM, GIF, MP3। अपलोड नहीं।", "वीडियो और ऑडियो"],
+    ["Media", "media", "Ubah video dan audio di browser: MP4, WebM, GIF, MP3. Tanpa unggahan.", "Video dan audio"],
+    ["Phương tiện", "media", "Chuyển video và âm thanh trong trình duyệt: MP4, WebM, GIF, MP3. Không tải lên.", "Video và âm thanh"],
+    ["สื่อ", "media", "แปลงวิดีโอและเสียงในเบราว์เซอร์: MP4 WebM GIF MP3 ไม่อัปโหลด", "วิดีโอและเสียง"],
+  ),
   text: eight(
     ["テキスト", "text", "単語を数え、リストを整え、スラッグを作り、文字を調べます。", "テキストツール"],
     ["텍스트", "text", "단어를 세고, 목록을 정리하고, 슬러그를 만들고, 글을 살펴봅니다.", "텍스트 도구"],
