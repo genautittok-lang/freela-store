@@ -88,10 +88,10 @@ export const mediaTools: EnTool[] = [
     runtime: { kind: "pack", action: "video-to-mp4" },
     copyEn: textCopy(
       "Video to MP4",
-      "Convert video to MP4 in your browser",
-      "Re-encode MKV, AVI, MOV, FLV, WebM or WMV to MP4 with ffmpeg.wasm. Files never leave this tab.",
-      "Convert video to MP4",
-      "Drop a local clip. Freela loads ffmpeg.wasm in this tab (first run downloads the WASM core to your browser cache). Output is H.264 + AAC MP4. Unsupported codecs fail with an honest error — we do not upload or fake success.",
+      "Re-encode video to H.264 MP4 in your browser",
+      "Turn MKV, AVI, MOV, FLV, WebM or WMV into H.264+AAC MP4. Container normalize — not compress or trim.",
+      "Re-encode local video to MP4",
+      "Drop a local clip when you need a universally playable MP4. Freela loads ffmpeg.wasm in this tab (first run downloads the WASM core). Output is H.264 + AAC. Use Compress video to shrink bytes, Resize video to change height, or Video to WebM for VP9. Unsupported codecs fail honestly — we do not upload or fake success.",
       ["Choose a video file.", "Convert to MP4.", "Download the result."],
       [
         { question: "Do you download from YouTube or TikTok?", answer: "No. Only files already on your device. There is no URL downloader." },
@@ -115,10 +115,10 @@ export const mediaTools: EnTool[] = [
     runtime: { kind: "pack", action: "video-to-webm" },
     copyEn: textCopy(
       "Video to WebM",
-      "Convert video to WebM in your browser",
-      "Re-encode a local video to VP9/Opus WebM with ffmpeg.wasm. No upload.",
-      "Convert video to WebM",
-      "Choose a clip from your device. Conversion runs entirely in the browser with ffmpeg.wasm. Some exotic codecs may fail — we show a clear error instead of a fake file.",
+      "Export video as VP9 WebM for the web",
+      "Re-encode a local clip to VP9/Opus WebM — distinct from H.264 MP4 output.",
+      "Export local video as WebM",
+      "Choose a clip when you specifically need WebM (VP9 + Opus). For general playback prefer Video to MP4. Some exotic codecs may fail — we show a clear error instead of a fake file.",
       ["Choose a video.", "Convert to WebM.", "Download the WebM."],
       [
         { question: "Is this a cloud encoder?", answer: "No. Bytes stay in this tab." },

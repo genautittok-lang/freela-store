@@ -66,6 +66,7 @@ export async function generateMetadata({
         description: copy.description,
         pathWithoutLocale: `/tools/${copy.slug}`,
         ogType: "website",
+        ogImageUrl: absoluteUrl(`/${locale}/tools/${copy.slug}/opengraph-image`),
       }),
       alternates: {
         canonical: absoluteUrl(`/${locale}/tools/${copy.slug}`),

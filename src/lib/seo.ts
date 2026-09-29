@@ -26,8 +26,19 @@ export function languageAlternates(pathWithoutLocale: string, locales: string[])
   return languages;
 }
 
-function ogImage(alt: string) {
+function brandOgImage(alt: string) {
   return [{ url: absoluteUrl("/brand/og.png"), width: 1200, height: 630, alt }];
+}
+
+function toolOgImage(locale: string, slug: string, alt: string) {
+  return [
+    {
+      url: absoluteUrl(`/${locale}/tools/${slug}/opengraph-image`),
+      width: 1200,
+      height: 630,
+      alt,
+    },
+  ];
 }
 
 function ogLocaleFields(locale: string) {
@@ -46,6 +57,8 @@ export function pageMetadata(opts: {
   pathWithoutLocale: string;
   index?: boolean;
   ogType?: "website" | "article";
+  /** Absolute or site-relative OG image URL. Defaults to brand /brand/og.png. */
+  ogImageUrl?: string;
 }): Metadata {
   const loc = getLocale(opts.locale) ?? getLocale("en")!;
   const canonical = absoluteUrl(`/${opts.locale}${opts.pathWithoutLocale}`);
@@ -66,13 +79,15 @@ export function pageMetadata(opts: {
       siteName: "Freela",
       ...ogLocaleFields(opts.locale),
       type: opts.ogType ?? "website",
-      images: ogImage(opts.title),
+      images: opts.ogImageUrl
+        ? [{ url: opts.ogImageUrl, width: 1200, height: 630, alt: opts.title }]
+        : brandOgImage(opts.title),
     },
     twitter: {
       card: "summary_large_image",
       title: opts.title,
       description: opts.description,
-      images: [absoluteUrl("/brand/og.png")],
+      images: [opts.ogImageUrl ?? absoluteUrl("/brand/og.png")],
     },
   };
 }
@@ -83,6 +98,7 @@ export function toolMetadata(tool: ToolDefinition, locale: string): Metadata {
   const index = loc.indexable && tool.status === "published" && loc.translationReviewed;
   const path = `/tools/${copy.slug}`;
   const langs = publicLocalesForTool(tool).filter((code) => getLocale(code)?.indexable);
+  const og = toolOgImage(locale, copy.slug, copy.name);
   return {
     title: copy.title,
     description: copy.description,
@@ -98,13 +114,13 @@ export function toolMetadata(tool: ToolDefinition, locale: string): Metadata {
       siteName: "Freela",
       ...ogLocaleFields(locale),
       type: "website",
-      images: ogImage(copy.name),
+      images: og,
     },
     twitter: {
       card: "summary_large_image",
       title: copy.title,
       description: copy.description,
-      images: [absoluteUrl("/brand/og.png")],
+      images: [og[0]!.url],
     },
   };
 }

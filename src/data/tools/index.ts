@@ -21,6 +21,7 @@ import { seoOverlay } from "./seo-overlay";
 import { fallbackExamples, fallbackFaq, fallbackFormats, fallbackHowTo } from "@/i18n/tool-fallbacks";
 import { isNewLocale, synthesizeToolCopy } from "@/i18n/locale8";
 import { isEuLocale, synthesizeToolCopyEu } from "@/i18n/locale-eu";
+import { composeTop20Copy } from "@/i18n/top20-landing";
 
 const englishCatalog = [
   ...englishTools,
@@ -146,8 +147,19 @@ function shellCopy(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][st
 }
 
 function copyFor(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][string] | null {
-  if (isNewLocale(locale)) return synthesizeToolCopy(tool, locale);
-  if (isEuLocale(locale)) return synthesizeToolCopyEu(tool, locale);
+  if (isNewLocale(locale) || isEuLocale(locale)) {
+    const curated = composeTop20Copy(tool.id, locale, tool.inputTypes);
+    const base = isNewLocale(locale) ? synthesizeToolCopy(tool, locale) : synthesizeToolCopyEu(tool, locale);
+    if (!curated) return base;
+    return {
+      ...base,
+      name: curated.name,
+      title: curated.title,
+      description: curated.description,
+      h1: curated.h1,
+      intro: curated.intro,
+    };
+  }
   const seo = seoOverlay[tool.id]?.[locale];
   if (locale === SOURCE_LOCALE) {
     const faq = [

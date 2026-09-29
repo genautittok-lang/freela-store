@@ -16,9 +16,13 @@ import {
   convertVideoToWebm,
   compressVideo,
   extractAudio,
+  hasSharedArrayBuffer,
   isCrossOriginIsolated,
+  isFfmpegEngineReady,
+  needsCoopRefresh,
   resizeVideo,
   trimVideo,
+  type FfmpegLoadProgress,
 } from "@/lib/tools/ffmpeg-client";
 
 const VIDEO_ACCEPT =
@@ -31,29 +35,75 @@ function Notice({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Progress({ value }: { value: number }) {
+function Progress({ value, label }: { value: number; label: string }) {
   const pct = Math.round(Math.min(1, Math.max(0, value)) * 100);
   return (
     <div className="grid gap-1">
+      <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+        <span>{label}</span>
+        <span>{pct}%</span>
+      </div>
       <div className="h-2 overflow-hidden rounded-full bg-muted">
         <div className="h-full bg-primary transition-all" style={{ width: `${pct}%` }} />
       </div>
-      <p className="text-xs text-muted-foreground">{pct}%</p>
+    </div>
+  );
+}
+
+function MediaProgressBars({
+  loadProgress,
+  encodeProgress,
+  loading,
+}: {
+  loadProgress: number;
+  encodeProgress: number;
+  loading: boolean;
+}) {
+  if (!loading && loadProgress <= 0 && encodeProgress <= 0) return null;
+  const showLoad = loading && !isFfmpegEngineReady() && loadProgress < 1;
+  const showEncode = encodeProgress > 0 && encodeProgress < 1;
+  if (!showLoad && !showEncode && !(loading && loadProgress >= 1 && encodeProgress === 0)) return null;
+  return (
+    <div className="grid gap-3 rounded-2xl border border-border/80 bg-muted/40 px-4 py-3">
+      {(showLoad || (loading && loadProgress > 0 && loadProgress < 1)) && (
+        <Progress value={Math.max(loadProgress, 0.02)} label="Downloading media engine (ffmpeg.wasm from jsDelivr)…" />
+      )}
+      {(showEncode || (loading && isFfmpegEngineReady())) && (
+        <Progress value={Math.max(encodeProgress, loading && encodeProgress === 0 ? 0.02 : encodeProgress)} label="Encoding…" />
+      )}
     </div>
   );
 }
 
 function CoopBanner() {
-  const [isolated, setIsolated] = useState(true);
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    setIsolated(isCrossOriginIsolated());
+    setShow(needsCoopRefresh() || !isCrossOriginIsolated() || !hasSharedArrayBuffer());
   }, []);
-  if (isolated) return null;
+  if (!show) return null;
   return (
     <Notice>
-      This tab is not cross-origin isolated yet (COOP/COEP). Media conversion still runs on the single-thread ffmpeg core, but may be slower. Try a hard refresh after deploy.
+      <p className="font-semibold">Cross-origin isolation unavailable</p>
+      <p className="mt-1">
+        SharedArrayBuffer is not available in this tab (COOP/COEP). Conversion still runs on the single-thread ffmpeg
+        core, but may be slower. After a deploy that sets those headers, do a hard refresh (Ctrl/Cmd+Shift+R) and reopen
+        this page.
+      </p>
     </Notice>
   );
+}
+
+function useMediaRunState() {
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [encodeProgress, setEncodeProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const onLoad: FfmpegLoadProgress = (ratio) => setLoadProgress(ratio);
+  const onEncode = (ratio: number) => setEncodeProgress(ratio);
+  function resetProgress() {
+    setLoadProgress(isFfmpegEngineReady() ? 1 : 0);
+    setEncodeProgress(0);
+  }
+  return { loadProgress, encodeProgress, loading, setLoading, onLoad, onEncode, resetProgress };
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -139,17 +189,21 @@ function SimpleVideoConvert({
   wrap: (fn: () => Promise<void>) => Promise<void>;
   cta: string;
   label: string;
-  run: (file: File, onProgress?: (r: number) => void) => Promise<{ blob: Blob; name: string }>;
+  run: (
+    file: File,
+    onProgress?: (r: number) => void,
+    onLoad?: FfmpegLoadProgress,
+  ) => Promise<{ blob: Blob; name: string }>;
 }) {
   const [files, setFiles] = useState<File[]>([]);
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
-  const [progress, setProgress] = useState(0);
+  const prog = useMediaRunState();
   const file = files[0];
   return (
     <div className="grid gap-3">
       <CoopBanner />
       <Notice>
-        LOCAL_ONLY via ffmpeg.wasm — {label}. Not a YouTube/TikTok downloader. First run loads the WASM core into this browser.
+        LOCAL_ONLY via ffmpeg.wasm — {label}. Not a YouTube/TikTok downloader. First run downloads the WASM core into this browser (progress shown below).
       </Notice>
       <FileDropzone
         locale={locale}
@@ -160,29 +214,32 @@ function SimpleVideoConvert({
         onFiles={(next) => {
           setFiles(next);
           setResult(null);
-          setProgress(0);
+          prog.resetProgress();
         }}
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
         onSelected={() => track("file_selected", { toolId: tool.id, locale })}
       />
-      {progress > 0 && progress < 1 ? <Progress value={progress} /> : null}
+      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
-        disabled={!file}
+        disabled={!file || prog.loading}
         onClick={() =>
           wrap(async () => {
             if (!file) return;
-            setProgress(0.01);
+            prog.setLoading(true);
+            prog.resetProgress();
             try {
-              const out = await run(file, setProgress);
+              const out = await run(file, prog.onEncode, prog.onLoad);
               setResult(out);
               triggerDownload(out.blob, out.name);
               track("file_download", { toolId: tool.id, locale });
               toast.success("Conversion finished — download started.");
             } finally {
-              setProgress(1);
+              prog.setLoading(false);
+              prog.onEncode(1);
+              prog.onLoad(1);
             }
           })
         }
@@ -211,7 +268,7 @@ function VideoToGif({
   const [start, setStart] = useState("0");
   const [duration, setDuration] = useState("3");
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
-  const [progress, setProgress] = useState(0);
+  const prog = useMediaRunState();
   const file = files[0];
   return (
     <div className="grid gap-3">
@@ -226,6 +283,7 @@ function VideoToGif({
         onFiles={(next) => {
           setFiles(next);
           setResult(null);
+          prog.resetProgress();
         }}
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
@@ -245,27 +303,36 @@ function VideoToGif({
           <Input value={duration} onChange={(e) => setDuration(e.target.value)} inputMode="decimal" />
         </Field>
       </div>
-      {progress > 0 && progress < 1 ? <Progress value={progress} /> : null}
+      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
-        disabled={!file}
+        disabled={!file || prog.loading}
         onClick={() =>
           wrap(async () => {
             if (!file) return;
-            const out = await convertVideoToGif(
-              file,
-              {
-                fps: Number(fps) || 10,
-                width: Number(width) || 320,
-                start: Number(start) || 0,
-                duration: Number(duration) || 3,
-              },
-              setProgress,
-            );
-            setResult(out);
-            triggerDownload(out.blob, out.name);
-            track("file_download", { toolId: tool.id, locale });
+            prog.setLoading(true);
+            prog.resetProgress();
+            try {
+              const out = await convertVideoToGif(
+                file,
+                {
+                  fps: Number(fps) || 10,
+                  width: Number(width) || 320,
+                  start: Number(start) || 0,
+                  duration: Number(duration) || 3,
+                },
+                prog.onEncode,
+                prog.onLoad,
+              );
+              setResult(out);
+              triggerDownload(out.blob, out.name);
+              track("file_download", { toolId: tool.id, locale });
+            } finally {
+              prog.setLoading(false);
+              prog.onEncode(1);
+              prog.onLoad(1);
+            }
           })
         }
       >
@@ -290,7 +357,7 @@ function ExtractAudio({
   const [files, setFiles] = useState<File[]>([]);
   const [format, setFormat] = useState<"mp3" | "wav" | "aac">("mp3");
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
-  const [progress, setProgress] = useState(0);
+  const prog = useMediaRunState();
   const file = files[0];
   return (
     <div className="grid gap-3">
@@ -305,6 +372,7 @@ function ExtractAudio({
         onFiles={(next) => {
           setFiles(next);
           setResult(null);
+          prog.resetProgress();
         }}
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
@@ -321,18 +389,26 @@ function ExtractAudio({
           <option value="aac">AAC</option>
         </select>
       </Field>
-      {progress > 0 && progress < 1 ? <Progress value={progress} /> : null}
+      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
-        disabled={!file}
+        disabled={!file || prog.loading}
         onClick={() =>
           wrap(async () => {
             if (!file) return;
-            const out = await extractAudio(file, format, setProgress);
-            setResult(out);
-            triggerDownload(out.blob, out.name);
-            track("file_download", { toolId: tool.id, locale });
+            prog.setLoading(true);
+            prog.resetProgress();
+            try {
+              const out = await extractAudio(file, format, prog.onEncode, prog.onLoad);
+              setResult(out);
+              triggerDownload(out.blob, out.name);
+              track("file_download", { toolId: tool.id, locale });
+            } finally {
+              prog.setLoading(false);
+              prog.onEncode(1);
+              prog.onLoad(1);
+            }
           })
         }
       >
@@ -357,7 +433,7 @@ function AudioConvert({
   const [files, setFiles] = useState<File[]>([]);
   const [format, setFormat] = useState<"mp3" | "wav" | "ogg" | "aac">("mp3");
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
-  const [progress, setProgress] = useState(0);
+  const prog = useMediaRunState();
   const file = files[0];
   return (
     <div className="grid gap-3">
@@ -371,6 +447,7 @@ function AudioConvert({
         onFiles={(next) => {
           setFiles(next);
           setResult(null);
+          prog.resetProgress();
         }}
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
@@ -388,18 +465,26 @@ function AudioConvert({
           <option value="aac">AAC</option>
         </select>
       </Field>
-      {progress > 0 && progress < 1 ? <Progress value={progress} /> : null}
+      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
-        disabled={!file}
+        disabled={!file || prog.loading}
         onClick={() =>
           wrap(async () => {
             if (!file) return;
-            const out = await convertAudio(file, format, setProgress);
-            setResult(out);
-            triggerDownload(out.blob, out.name);
-            track("file_download", { toolId: tool.id, locale });
+            prog.setLoading(true);
+            prog.resetProgress();
+            try {
+              const out = await convertAudio(file, format, prog.onEncode, prog.onLoad);
+              setResult(out);
+              triggerDownload(out.blob, out.name);
+              track("file_download", { toolId: tool.id, locale });
+            } finally {
+              prog.setLoading(false);
+              prog.onEncode(1);
+              prog.onLoad(1);
+            }
           })
         }
       >
@@ -424,7 +509,7 @@ function CompressVideo({
   const [files, setFiles] = useState<File[]>([]);
   const [crf, setCrf] = useState("28");
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
-  const [progress, setProgress] = useState(0);
+  const prog = useMediaRunState();
   const file = files[0];
   return (
     <div className="grid gap-3">
@@ -439,6 +524,7 @@ function CompressVideo({
         onFiles={(next) => {
           setFiles(next);
           setResult(null);
+          prog.resetProgress();
         }}
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
@@ -454,18 +540,26 @@ function CompressVideo({
           className="w-full"
         />
       </Field>
-      {progress > 0 && progress < 1 ? <Progress value={progress} /> : null}
+      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
-        disabled={!file}
+        disabled={!file || prog.loading}
         onClick={() =>
           wrap(async () => {
             if (!file) return;
-            const out = await compressVideo(file, Number(crf) || 28, setProgress);
-            setResult(out);
-            triggerDownload(out.blob, out.name);
-            track("file_download", { toolId: tool.id, locale });
+            prog.setLoading(true);
+            prog.resetProgress();
+            try {
+              const out = await compressVideo(file, Number(crf) || 28, prog.onEncode, prog.onLoad);
+              setResult(out);
+              triggerDownload(out.blob, out.name);
+              track("file_download", { toolId: tool.id, locale });
+            } finally {
+              prog.setLoading(false);
+              prog.onEncode(1);
+              prog.onLoad(1);
+            }
           })
         }
       >
@@ -491,7 +585,7 @@ function TrimVideo({
   const [start, setStart] = useState("0");
   const [end, setEnd] = useState("10");
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
-  const [progress, setProgress] = useState(0);
+  const prog = useMediaRunState();
   const file = files[0];
   return (
     <div className="grid gap-3">
@@ -505,6 +599,7 @@ function TrimVideo({
         onFiles={(next) => {
           setFiles(next);
           setResult(null);
+          prog.resetProgress();
         }}
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
@@ -518,18 +613,26 @@ function TrimVideo({
           <Input value={end} onChange={(e) => setEnd(e.target.value)} inputMode="decimal" />
         </Field>
       </div>
-      {progress > 0 && progress < 1 ? <Progress value={progress} /> : null}
+      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
-        disabled={!file}
+        disabled={!file || prog.loading}
         onClick={() =>
           wrap(async () => {
             if (!file) return;
-            const out = await trimVideo(file, Number(start) || 0, Number(end) || 0, setProgress);
-            setResult(out);
-            triggerDownload(out.blob, out.name);
-            track("file_download", { toolId: tool.id, locale });
+            prog.setLoading(true);
+            prog.resetProgress();
+            try {
+              const out = await trimVideo(file, Number(start) || 0, Number(end) || 0, prog.onEncode, prog.onLoad);
+              setResult(out);
+              triggerDownload(out.blob, out.name);
+              track("file_download", { toolId: tool.id, locale });
+            } finally {
+              prog.setLoading(false);
+              prog.onEncode(1);
+              prog.onLoad(1);
+            }
           })
         }
       >
@@ -554,7 +657,7 @@ function ResizeVideo({
   const [files, setFiles] = useState<File[]>([]);
   const [height, setHeight] = useState<720 | 480 | 360>(720);
   const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
-  const [progress, setProgress] = useState(0);
+  const prog = useMediaRunState();
   const file = files[0];
   return (
     <div className="grid gap-3">
@@ -568,6 +671,7 @@ function ResizeVideo({
         onFiles={(next) => {
           setFiles(next);
           setResult(null);
+          prog.resetProgress();
         }}
         formats={tool.supportedFormats}
         maxBytes={tool.maxFileSize}
@@ -582,18 +686,26 @@ function ResizeVideo({
           ))}
         </div>
       </Field>
-      {progress > 0 && progress < 1 ? <Progress value={progress} /> : null}
+      <MediaProgressBars loadProgress={prog.loadProgress} encodeProgress={prog.encodeProgress} loading={prog.loading} />
       <Button
         type="button"
         size="lg"
-        disabled={!file}
+        disabled={!file || prog.loading}
         onClick={() =>
           wrap(async () => {
             if (!file) return;
-            const out = await resizeVideo(file, height, setProgress);
-            setResult(out);
-            triggerDownload(out.blob, out.name);
-            track("file_download", { toolId: tool.id, locale });
+            prog.setLoading(true);
+            prog.resetProgress();
+            try {
+              const out = await resizeVideo(file, height, prog.onEncode, prog.onLoad);
+              setResult(out);
+              triggerDownload(out.blob, out.name);
+              track("file_download", { toolId: tool.id, locale });
+            } finally {
+              prog.setLoading(false);
+              prog.onEncode(1);
+              prog.onLoad(1);
+            }
           })
         }
       >

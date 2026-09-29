@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { isRoutedLocale } from "@/data/locales";
 import { toolBySlug, categoryBySlug } from "@/lib/registry";
 import { toolRegistry } from "@/data/tools";
+import { resolveRootLocale } from "@/lib/accept-language";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -23,7 +24,8 @@ export function middleware(request: NextRequest) {
   }
 
   if (pathname === "/") {
-    return NextResponse.redirect(new URL("/en", request.url));
+    const locale = resolveRootLocale(request);
+    return NextResponse.redirect(new URL(`/${locale}`, request.url));
   }
 
   if (!isRoutedLocale(first)) {

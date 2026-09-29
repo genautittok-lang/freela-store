@@ -4,6 +4,7 @@ import { WAVE3_EN_LABELS } from "@/data/tools/english-wave3";
 import { MEDIA_ACTION_LABELS } from "@/data/tools/english-media";
 import { translateCta } from "@/i18n/locale8";
 import { translateCtaEu, isEuLocale } from "@/i18n/locale-eu";
+import { top20Cta } from "@/i18n/top20-landing";
 import { PACK_LABELS } from "@/lib/action-labels-pack";
 import { IMPROVE_LABELS } from "@/lib/action-labels-improve";
 import { WAVE_LABELS } from "@/lib/action-labels-wave";
@@ -991,9 +992,14 @@ export const ACTION_LABELS: Record<Locale, Record<string, string>> = Object.from
     const base: Record<string, string> = { ...(CORE_LABELS[locale as keyof typeof CORE_LABELS] ?? {}) };
     for (const [id, label] of Object.entries(englishLabels)) {
       if (!base[id]) {
-        if (locale === "en") base[id] = label;
+        const curated = top20Cta(id, locale);
+        if (curated) base[id] = curated;
+        else if (locale === "en") base[id] = label;
         else if (isEuLocale(locale)) base[id] = translateCtaEu(label, locale);
         else base[id] = translateCta(label, locale);
+      } else {
+        const curated = top20Cta(id, locale);
+        if (curated) base[id] = curated;
       }
     }
     return [locale, base];
