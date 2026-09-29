@@ -8,6 +8,7 @@ import { improveTools } from "./english-improve";
 import { waveTools } from "./english-wave";
 import { wave2Tools } from "./english-wave2";
 import { wave3Tools } from "./english-wave3";
+import { mediaTools } from "./english-media";
 import { privacyFiles, privacyText } from "./define";
 import type { Locale } from "../locales";
 import { INITIAL_LOCALES, SOURCE_LOCALE } from "../locales";
@@ -32,6 +33,7 @@ const englishCatalog = [
   ...waveTools,
   ...wave2Tools,
   ...wave3Tools,
+  ...mediaTools,
 ];
 
 export type EnglishTool = (typeof englishCatalog)[number];

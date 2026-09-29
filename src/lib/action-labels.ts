@@ -1,6 +1,7 @@
 import type { Locale } from "@/data/locales";
 import { INITIAL_LOCALES } from "@/data/locales";
 import { WAVE3_EN_LABELS } from "@/data/tools/english-wave3";
+import { MEDIA_ACTION_LABELS } from "@/data/tools/english-media";
 import { translateCta } from "@/i18n/locale8";
 import { translateCtaEu, isEuLocale } from "@/i18n/locale-eu";
 import { PACK_LABELS } from "@/lib/action-labels-pack";
@@ -969,7 +970,7 @@ const HE: Record<string, string> = {
 };
 
 const CORE_LABELS = {
-  en: { ...EN, ...PACK_LABELS.en, ...IMPROVE_LABELS.en, ...WAVE_LABELS.en, ...WAVE2_LABELS.en, ...WAVE3_EN_LABELS },
+  en: { ...EN, ...PACK_LABELS.en, ...IMPROVE_LABELS.en, ...WAVE_LABELS.en, ...WAVE2_LABELS.en, ...WAVE3_EN_LABELS, ...MEDIA_ACTION_LABELS },
   de: { ...DE, ...PACK_LABELS.de, ...IMPROVE_LABELS.de, ...WAVE_LABELS.de, ...WAVE2_LABELS.de },
   uk: { ...UK, ...PACK_LABELS.uk, ...IMPROVE_LABELS.uk, ...WAVE_LABELS.uk, ...WAVE2_LABELS.uk },
   pl: { ...PL, ...PACK_LABELS.pl, ...IMPROVE_LABELS.pl, ...WAVE_LABELS.pl, ...WAVE2_LABELS.pl },

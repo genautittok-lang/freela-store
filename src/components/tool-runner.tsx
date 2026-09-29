@@ -69,6 +69,7 @@ import { buildUtm, parsePageList, randomIntegers } from "@/lib/tools/improve";
 import { runWaveAsync, WAVE_EXTRA_HINT, WAVE_SAMPLES, waveNeedsExtra } from "@/lib/tools/wave";
 import { runWave2Image, runWave2Pdf, WAVE2_EXTRA_HINT, WAVE2_MODES, WAVE2_SAMPLES } from "@/lib/tools/wave2";
 import { IMAGE_WAVE3, runWave3Image, WAVE3_EXTRA_HINT, WAVE3_SAMPLES } from "@/lib/tools/wave3";
+import { md5Hex } from "@/lib/tools/md5";
 
 const PackToolPanel = dynamic(() => import("@/components/pack-runner").then((m) => m.PackToolPanel), {
   loading: () => <p className="text-sm text-muted-foreground">Loading tool…</p>,
@@ -131,7 +132,12 @@ export function ToolRunner({
         tool.id === "qr-reader" ||
         tool.id === "extract-pdf-text" ||
         tool.id === "background-remover" ||
-        /OCR|blurry|no readable|No QR|No selectable/i.test(message)
+        tool.id.startsWith("video-") ||
+        tool.id.includes("audio") ||
+        tool.id === "compress-video" ||
+        tool.id === "trim-video" ||
+        tool.id === "resize-video" ||
+        /OCR|blurry|no readable|No QR|No selectable|ffmpeg|codec|COOP|audio track/i.test(message)
       ) {
         void import("sonner").then(({ toast }) => toast.error(message));
       }
@@ -602,14 +608,21 @@ function HashTool({ wrap, cta }: { locale: string; wrap: (fn: () => void) => Pro
     <div className="grid gap-3">
       <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} />
       <select className="h-9 rounded-lg border px-2 text-sm" value={algo} onChange={(e) => setAlgo(e.target.value)}>
-        {["SHA-1", "SHA-256", "SHA-384", "SHA-512"].map((a) => (
+        {["MD5", "SHA-1", "SHA-256", "SHA-384", "SHA-512"].map((a) => (
           <option key={a}>{a}</option>
         ))}
       </select>
+      <p className="text-xs text-muted-foreground">
+        MD5 and SHA-1 are for legacy checksums only — never for password storage.
+      </p>
       <Button
         type="button"
         onClick={() =>
           wrap(async () => {
+            if (algo === "MD5") {
+              setOutput(md5Hex(text));
+              return;
+            }
             const buf = await crypto.subtle.digest(algo, new TextEncoder().encode(text));
             setOutput([...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join(""));
           })
@@ -869,7 +882,7 @@ function ImageTool({
         <FileDropzone
           locale={locale}
           toolId={tool.id}
-          accept="image/*"
+          accept={action === "compress" ? "image/*,.svg" : "image/*"}
           multiple={false}
           files={files}
           onFiles={(next) => {
@@ -975,6 +988,17 @@ function ImageTool({
             const chosen = file || native?.files?.[0] || null;
             if (!chosen) throw new Error(rl(locale, "chooseImage"));
             if (chosen.size > tool.maxFileSize) throw new Error(rl(locale, "tooLarge"));
+            if (action === "compress" && (chosen.type === "image/svg+xml" || /\.svg$/i.test(chosen.name))) {
+              const raw = await chosen.text();
+              const minified = raw
+                .replace(/<!--[\s\S]*?-->/g, "")
+                .replace(/>\s+</g, "><")
+                .replace(/\s{2,}/g, " ")
+                .trim();
+              const blob = new Blob([minified], { type: "image/svg+xml" });
+              saveImage(blob, chosen.name.replace(/\.svg$/i, "") + ".min.svg");
+              return;
+            }
             if (action === "to-base64") {
               const data = await chosen.arrayBuffer();
               const b64 = btoa(String.fromCharCode(...new Uint8Array(data)));

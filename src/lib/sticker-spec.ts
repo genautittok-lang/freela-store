@@ -856,6 +856,17 @@ const OVERRIDES: Record<string, [string, string]> = {
   "path-dirname": ["PATH", "DIR"],
   "xml-escape": ["XML", "ESC"],
   "video-file-info": ["VIDEO", "INFO"],
+  "video-to-mp4": ["VIDEO", "H264"],
+  "video-to-webm": ["VIDEO", "WEBM"],
+  "video-to-gif": ["VIDEO", "GIF"],
+  "video-to-mp3": ["AUDIO", "PULL"],
+  "audio-converter": ["AUDIO", "CONV"],
+  "compress-video": ["VIDEO", "SHRINK"],
+  "trim-video": ["VIDEO", "TRIM"],
+  "resize-video": ["VIDEO", "SCALE"],
+  "image-upscaler": ["IMG", "UPSC"],
+  "word-html-cleaner": ["HTML", "CLEAN"],
+  "clipboard-list-helper": ["LIST", "CLIP"],
   "convert-image": ["IMG", "WEBP"],
 };
 

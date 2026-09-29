@@ -63,6 +63,8 @@ function Notice({ children }: { children: React.ReactNode }) {
   );
 }
 
+import { isMediaPackTool, MediaPackPanel } from "@/components/media-runner";
+
 export function PackToolPanel({
   tool,
   locale,
@@ -75,6 +77,7 @@ export function PackToolPanel({
   cta: string;
 }) {
   const id = tool.id;
+  if (isMediaPackTool(id)) return <MediaPackPanel tool={tool} locale={locale} wrap={wrap} cta={cta} />;
   if (id === "universal-converter") return <UniversalConverter tool={tool} locale={locale} wrap={wrap} cta={cta} />;
   if (id === "convert-video") {
     return <DeferredTool tool={tool} locale={locale} wrap={wrap} cta={cta} />;

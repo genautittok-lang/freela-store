@@ -1,8 +1,8 @@
 # Freela STORE
 
-**Version:** v1.2 · **Public contact:** [tools@freela.store](mailto:tools@freela.store)
+**Version:** v1.2.1 · **Public contact:** [tools@freela.store](mailto:tools@freela.store)
 
-Browser-first PDF, image, text, developer and calculator tools. Files stay on your device (LOCAL_ONLY).
+Browser-first PDF, image, video, text, developer and calculator tools. Files stay on your device (LOCAL_ONLY).
 
 ## Requirements
 
@@ -31,11 +31,18 @@ npm run dev
 
 App: [http://127.0.0.1:43173/en](http://127.0.0.1:43173/en)
 
-## v1.2 snapshot
+## v1.2.1 media pack
 
-- **404** published tools · **36** locales · **~15372** sitemap URLs
+- Real **ffmpeg.wasm** converters: video→MP4/WebM/GIF, extract audio, audio converter, compress/trim/resize video
+- **COOP/COEP** (`credentialless`) for SharedArrayBuffer / multi-thread core
+- Image upscaler (honest **2× canvas**, not AI) · SVG minify on compress-image · MD5 on hash generator
+- Home **omnivore DnD**, **favorites** (localStorage), **clipboard list helper**
+- TikTok/YouTube/Shorts downloaders still **refused**
+- 36 locales · unique SEO for new tools · sitemap updated
+
+## v1.2 snapshot (base)
+
 - Real PDF password set/remove · background remover · visual PDF signature stamp
-- TikTok/YouTube/Shorts downloaders **refused** (ToS / copyright)
 - PWA shell service worker · mega search · mobile bottom nav · pulsing footer heart
 
 See store report: `docs/freela-v12-report.md` (agent store).

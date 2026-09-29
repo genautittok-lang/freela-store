@@ -49,26 +49,26 @@ export const moreEnglishTools: EnTool[] = [
   t({
     id: "compress-image",
     category: "images",
-    tags: ["image", "compress"],
+    tags: ["image", "compress", "optimize", "svg"],
     featured: true,
     inputTypes: ["file"],
     outputTypes: ["file"],
     maxFileSize: img,
-    supportedFormats: ["jpg", "jpeg", "png", "webp"],
-    relatedTools: ["resize-image", "convert-image", "favicon-generator"],
+    supportedFormats: ["jpg", "jpeg", "png", "webp", "svg"],
+    relatedTools: ["resize-image", "convert-image", "image-upscaler", "favicon-generator"],
     runtime: { kind: "image", action: "compress" },
     copyEn: {
-      name: "Compress image",
-      title: "Compress JPG, PNG and WebP online",
+      name: "Compress / optimize image",
+      title: "Compress and optimize JPG, PNG, WebP, SVG",
       description:
-        "Shrink image files with a quality slider. Encoding happens on a canvas in your browser.",
-      h1: "Compress JPG, PNG and WebP",
+        "Shrink image files with a quality slider, or minify SVG markup locally. Encoding stays on a canvas in your browser.",
+      h1: "Compress and optimize images",
       intro:
-        "Choose a quality between 0.4 and 0.95, preview the new size, then download. No cloud optimizer is involved.",
+        "Choose a quality between 0.4 and 0.95 for raster images, or drop an SVG to strip comments and excess whitespace. No cloud optimizer is involved.",
       howTo: [
-        "Pick a JPG, PNG or WebP file.",
-        "Adjust quality and compare the estimated size.",
-        "Download the compressed image.",
+        "Pick a JPG, PNG, WebP or SVG file.",
+        "Adjust quality (raster) or run minify (SVG).",
+        "Download the optimized file.",
       ],
       faq: [
         {
@@ -77,16 +77,16 @@ export const moreEnglishTools: EnTool[] = [
             "PNG output uses canvas PNG encoding, which is lossless but may still change size if the source used a different filter.",
         },
         {
-          question: "Why is the result sometimes larger?",
+          question: "What about SVG?",
           answer:
-            "Re-encoding an already tiny JPEG can add overhead. Lower the quality or resize first.",
+            "SVG mode strips comments and collapses whitespace. It is not a full SVGO pipeline and does not alter paths.",
         },
       ],
       privacy: privacyFiles.en,
-      formats: "Input: JPEG, PNG, WebP. Output: same family via canvas export.",
+      formats: "Input: JPEG, PNG, WebP, SVG. Output: same family via canvas export or minified SVG.",
       examples: [
         "Reduce a 5 MB photo before attaching it to email.",
-        "Prepare WebP assets that stay under a CMS limit.",
+        "Minify an icon SVG before embedding it in HTML.",
       ],
     },
   }),
@@ -123,7 +123,7 @@ export const moreEnglishTools: EnTool[] = [
         {
           question: "Can I upscale a tiny icon?",
           answer:
-            "Yes, but upscaling cannot invent detail. Prefer resizing down for photos.",
+            "Yes, but upscaling cannot invent detail. Prefer resizing down for photos — or the honest 2× Image upscaler.",
         },
       ],
       privacy: privacyFiles.en,
@@ -187,7 +187,7 @@ export const moreEnglishTools: EnTool[] = [
     outputTypes: ["file"],
     maxFileSize: img,
     supportedFormats: ["jpg", "jpeg", "png", "webp", "avif"],
-    relatedTools: ["compress-image", "image-to-base64", "images-to-pdf", "universal-converter"],
+    relatedTools: ["compress-image", "image-upscaler", "heic-to-jpg", "images-to-pdf", "universal-converter"],
     runtime: { kind: "image", action: "convert" },
     copyEn: {
       name: "Convert image",

@@ -32,6 +32,17 @@ export const PACK_TOOL_IDS = [
   "text-to-pdf",
   "markdown-to-pdf",
   "extract-pdf-text",
+  "video-to-mp4",
+  "video-to-webm",
+  "video-to-gif",
+  "video-to-mp3",
+  "audio-converter",
+  "compress-video",
+  "trim-video",
+  "resize-video",
+  "image-upscaler",
+  "word-html-cleaner",
+  "clipboard-list-helper",
 ] as const;
 
 export type PackToolId = (typeof PACK_TOOL_IDS)[number];
@@ -51,4 +62,15 @@ export const PACK_BROWSER_WORKFLOWS = new Set<string>([
   "universal-converter",
   "video-file-info",
   "extract-pdf-text",
+  "video-to-mp4",
+  "video-to-webm",
+  "video-to-gif",
+  "video-to-mp3",
+  "audio-converter",
+  "compress-video",
+  "trim-video",
+  "resize-video",
+  "image-upscaler",
+  "word-html-cleaner",
+  "clipboard-list-helper",
 ]);

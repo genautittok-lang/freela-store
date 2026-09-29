@@ -743,12 +743,12 @@ export const textDevSeoTools: EnTool[] = [
     runtime: { kind: "hash", action: "digest" },
     copyEn: {
       name: "Hash generator",
-      title: "SHA-256 and SHA-1 hashes in the browser",
+      title: "SHA-256, SHA-1 and MD5 hashes in the browser",
       description:
-        "Hash text with Web Crypto. Use it for checksums, not for storing passwords — that needs a slow salted KDF.",
+        "Hash text with Web Crypto (SHA family) or a local MD5 helper for legacy checksums. Not for storing passwords — that needs a slow salted KDF.",
       h1: "Hash generator",
       intro:
-        "Paste text to get hexadecimal SHA-256, SHA-384, SHA-512 or SHA-1. SHA-1 is provided only for legacy checksums.",
+        "Paste text to get hexadecimal MD5, SHA-256, SHA-384, SHA-512 or SHA-1. MD5 and SHA-1 are provided only for legacy checksums.",
       howTo: [
         "Enter the text to hash.",
         "Select an algorithm.",
@@ -758,6 +758,11 @@ export const textDevSeoTools: EnTool[] = [
         {
           question: "Do you hash files?",
           answer: "This version hashes UTF-8 text. File checksums can follow without uploading bytes.",
+        },
+        {
+          question: "Is MD5 safe?",
+          answer:
+            "No for security. Freela offers MD5 only so you can match old published checksums. Prefer SHA-256 for new work.",
         },
         {
           question: "Is SHA-1 safe?",

@@ -14,6 +14,7 @@ import { FormatPath } from "@/components/format-badges";
 import { PageTracker } from "@/components/page-tracker";
 import { formatNumber } from "@/lib/format";
 import { iconForTool } from "@/lib/tool-icons";
+import { OmnivoreDropzone, FavoritesRail, FavoriteStar } from "@/components/home-omnivore";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -44,7 +45,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       <section className="freela-hero grid items-center gap-8 rounded-[2rem] border border-border px-5 py-8 shadow-[0_20px_50px_rgb(21_122_69_/_0.08)] sm:px-10 sm:py-12 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
-            <span className="rounded-md bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">v1.2</span>
+            <span className="rounded-md bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">v1.2.1</span>
             <span>{formatNumber(locale, count)}</span>
             <span aria-hidden="true">·</span>
             <span>{ui.processedLocally}</span>
@@ -86,6 +87,8 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
           />
         </div>
       </section>
+      <OmnivoreDropzone locale={locale} />
+      <FavoritesRail locale={locale} />
       <section className="mt-12">
         <h2 className="text-2xl font-semibold tracking-tight">{ui.convert}</h2>
         <p className="mt-2 text-sm text-muted-foreground">{ui.howItWorksLead}</p>
@@ -214,9 +217,10 @@ function ToolGrid({
           const copy = copyForTool(tool, locale);
           return (
             <li key={tool.id}>
-              <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card block h-full p-5">
+              <Link href={`/${locale}/tools/${copy.slug}`} className="freela-card relative block h-full p-5">
+                <FavoriteStar toolId={tool.id} className="absolute right-3 top-3" />
                 <Icon className="freela-sticker h-16 w-16" aria-hidden />
-                <p className="mt-3 font-semibold">{copy.name}</p>
+                <p className="mt-3 pr-8 font-semibold">{copy.name}</p>
                 <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{copy.description}</p>
                 <span className="mt-4 inline-flex text-sm font-semibold text-primary">{cta}</span>
               </Link>

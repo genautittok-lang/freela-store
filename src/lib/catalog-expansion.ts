@@ -46,7 +46,7 @@ export const EXPANSION_POOL: ExpansionCandidate[] = [
   { id: "ocr-pdf", category: "pdf-documents", value: 9, implementability: 0, status: "deferred", reason: "Needs vision model or Tesseract wasm pack + QA" },
   { id: "webpage-to-pdf", category: "pdf-documents", value: 8, implementability: 0, status: "deferred", reason: "Headless browser" },
   { id: "pdf-encrypt", category: "pdf-documents", value: 8, implementability: 0, status: "deferred", reason: "Standard Security Handler not shipped" },
-  { id: "ffmpeg-transcode", category: "converters", value: 8, implementability: 0, status: "deferred", reason: "ffmpeg.wasm not shipped" },
+  { id: "ffmpeg-transcode", category: "converters", value: 8, implementability: 1, status: "implemented", reason: "ffmpeg.wasm tools shipped in v1.2.1 media pack" },
   { id: "live-serp-rank", category: "seo", value: 6, implementability: 0, status: "deferred", reason: "Third-party crawl" },
   { id: "fx-rates", category: "calculators", value: 6, implementability: 0, status: "deferred", reason: "Live market data" },
   { id: "jpg-to-webp", category: "images", value: 4, implementability: 1, status: "deferred", reason: "Duplicate of convert-image" },

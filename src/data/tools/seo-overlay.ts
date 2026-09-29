@@ -48734,5 +48734,160 @@ export const seoOverlay: Record<string, Partial<Record<Locale, SeoOverlay>>> = {
       ],
     },
   },
+  "video-to-mp4": {
+    en: {
+      name: "Video to MP4",
+      title: "Convert video to MP4 online — free, no upload",
+      description: "Convert MKV, AVI, MOV, WebM and more to MP4 with ffmpeg.wasm in your browser. Free. Files stay on your device.",
+      h1: "Convert video to MP4",
+      intro: "Video to MP4. Re-encode local clips with ffmpeg.wasm (H.264 + AAC). Not a YouTube or TikTok downloader. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. Conversion runs LOCAL_ONLY with ffmpeg.wasm in this tab." },
+        { question: "Can I paste a YouTube link?", answer: "No. Freela never downloads remote videos. Only files already on your device." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+        { question: "Why is the first run slow?", answer: "The ffmpeg WASM core loads once into browser cache." },
+      ],
+    },
+  },
+  "video-to-webm": {
+    en: {
+      name: "Video to WebM",
+      title: "Convert video to WebM online — free, no upload",
+      description: "Convert local video to VP9/Opus WebM with ffmpeg.wasm. Free. Files stay on your device — Freela does not upload them.",
+      h1: "Convert video to WebM",
+      intro: "Video to WebM. Local ffmpeg.wasm re-encode. No cloud encoder and no URL downloader. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. Published Freela tools are LOCAL_ONLY." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+        { question: "What input does this page accept?", answer: "Local video files. LOCAL_ONLY via ffmpeg.wasm." },
+      ],
+    },
+  },
+  "video-to-gif": {
+    en: {
+      name: "Video to GIF",
+      title: "Convert video to GIF online — free, no upload",
+      description: "Make an animated GIF from a short local clip with FPS and size controls. Free. Files stay on your device.",
+      h1: "Convert video segment to GIF",
+      intro: "Video to GIF. Short segments with FPS and width controls via ffmpeg.wasm. Keep clips short — HD GIFs get huge. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. LOCAL_ONLY ffmpeg.wasm in this tab." },
+        { question: "Full movie to GIF?", answer: "Not practical. Use a short segment; FPS and width are capped." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
+  "video-to-mp3": {
+    en: {
+      name: "Extract audio from video",
+      title: "Extract audio MP3 WAV AAC online — free, no upload",
+      description: "Extract audio from a local video to MP3, WAV or AAC with ffmpeg.wasm. Free. No YouTube download. Files stay on your device.",
+      h1: "Extract audio from video",
+      intro: "Extract audio. Pull the mixed track from a local video into MP3, WAV or AAC. Not a streaming-site downloader. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "YouTube or TikTok download?", answer: "No. Only local files. Freela does not fetch remote media." },
+        { question: "Does this tool upload my files?", answer: "No. Extraction is LOCAL_ONLY." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
+  "audio-converter": {
+    en: {
+      name: "Audio converter",
+      title: "Convert audio formats online — free, no upload",
+      description: "Convert WAV, MP3, OGG and AAC in your browser with ffmpeg.wasm. Free. Files stay on your device — Freela does not upload them.",
+      h1: "Convert audio formats locally",
+      intro: "Audio converter. Switch between common audio formats locally. No cloud batch and no URL ripper. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. LOCAL_ONLY via ffmpeg.wasm." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+        { question: "What formats?", answer: "MP3, WAV, OGG, AAC. Exotic codecs may fail honestly." },
+      ],
+    },
+  },
+  "compress-video": {
+    en: {
+      name: "Compress video",
+      title: "Compress video online — free, no upload",
+      description: "Shrink a local video with CRF re-encode via ffmpeg.wasm. Free. Files stay on your device — Freela does not upload them.",
+      h1: "Compress a video locally",
+      intro: "Compress video. Higher CRF means smaller files and more artifacts. Output is MP4. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. LOCAL_ONLY ffmpeg.wasm." },
+        { question: "Exact target size?", answer: "No. CRF controls quality, not an exact byte budget." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
+  "trim-video": {
+    en: {
+      name: "Trim video",
+      title: "Trim video online — free, no upload",
+      description: "Cut a local clip by start and end seconds with ffmpeg.wasm. Free. Files stay on your device — Freela does not upload them.",
+      h1: "Trim a video clip",
+      intro: "Trim video. Enter start and end timecodes in seconds. Quick cut, not a full NLE. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. LOCAL_ONLY." },
+        { question: "Frame-perfect edit?", answer: "No. This is a quick cut; keyframes may shift accuracy." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
+  "resize-video": {
+    en: {
+      name: "Resize video",
+      title: "Resize video to 720p 480p online — free, no upload",
+      description: "Scale a local video to 720p, 480p or 360p with ffmpeg.wasm. Free. Files stay on your device — Freela does not upload them.",
+      h1: "Resize video resolution",
+      intro: "Resize video. Choose target height; width follows aspect ratio. Not AI upscale. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. LOCAL_ONLY." },
+        { question: "AI upscale?", answer: "No. Use Image upscaler for honest 2× stills." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
+  "image-upscaler": {
+    en: {
+      name: "Image upscaler (2×)",
+      title: "2× image upscale online — free, no upload",
+      description: "Enlarge photos 2× with honest canvas scaling — not AI super-resolution. Free. Files stay on your device — Freela does not upload them.",
+      h1: "2× canvas image upscale",
+      intro: "Image upscaler. Limited 2× canvas interpolation — not an ONNX ESRGAN model. Expect softer detail, not invented textures. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Is this AI upscaling?", answer: "No. It is honest 2× canvas scaling. We do not claim neural restoration." },
+        { question: "Does this tool upload my files?", answer: "No. LOCAL_ONLY." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
+  "word-html-cleaner": {
+    en: {
+      name: "HTML / Word cleaner",
+      title: "Clean HTML or Word to plain text — free, no upload",
+      description: "Paste HTML or drop a DOCX to strip tags into plain text in your browser. Free. Text stays on your device — Freela does not upload it.",
+      h1: "Clean HTML and Word to plain text",
+      intro: "HTML / Word cleaner. Strip styles and markup locally. Not PDF→Word. Text stays on your device — Freela does not upload it.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. LOCAL_ONLY." },
+        { question: "Keep formatting?", answer: "No. This version outputs plain text only." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
+  "clipboard-list-helper": {
+    en: {
+      name: "Clipboard list helper",
+      title: "Clean sort format lists online — free, no upload",
+      description: "Paste a list, then dedupe, sort, number or join lines in the browser. Free. Text stays on your device — Freela does not upload it.",
+      h1: "Clean and format clipboard lists",
+      intro: "Clipboard list helper. You paste manually — Freela never scrapes OS clipboard history. LOCAL_ONLY transforms only. Text stays on your device.",
+      faq: [
+        { question: "Does Freela read clipboard history?", answer: "No. You paste manually. We never scrape system clipboard history." },
+        { question: "Is text uploaded?", answer: "No. Processing is LOCAL_ONLY." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page." },
+      ],
+    },
+  },
 
 };

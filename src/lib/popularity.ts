@@ -8,7 +8,12 @@ import type { ToolDefinition } from "@/data/schema";
  * Real events override once SQLite has tool_open/start/success/download/search.
  */
 export const POPULARITY_SEED: Record<string, number> = {
-  "universal-converter": 100,
+  "video-to-mp4": 95,
+  "video-to-gif": 88,
+  "video-to-mp3": 87,
+  "compress-video": 85,
+  "image-upscaler": 83,
+  "background-remover": 81,
   "merge-pdf": 96,
   "compress-pdf": 90,
   "pdf-to-image": 88,

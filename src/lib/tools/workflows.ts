@@ -174,6 +174,25 @@ export async function executeWorkflow(toolId: string): Promise<WorkflowResult> {
         case "convert-video":
           output = "deferred-ffmpeg";
           break;
+        case "video-to-mp4":
+        case "video-to-webm":
+        case "video-to-gif":
+        case "video-to-mp3":
+        case "audio-converter":
+        case "compress-video":
+        case "trim-video":
+        case "resize-video":
+          output = "ffmpeg-wasm-browser";
+          break;
+        case "image-upscaler":
+          output = "canvas-2x-upscale";
+          break;
+        case "word-html-cleaner":
+          output = stripTags("<p>Hello <b>Word</b></p>");
+          break;
+        case "clipboard-list-helper":
+          output = "a\nb\nc";
+          break;
         case "docx-to-pdf":
           output = wrapPdfText("Hello from a DOCX extract.")[0];
           break;
