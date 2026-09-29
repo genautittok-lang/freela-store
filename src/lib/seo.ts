@@ -187,6 +187,58 @@ export function websiteJsonLd(locale: string, description?: string) {
   };
 }
 
+/** Real homepage walkthrough clips in `public/brand/` (HTML5 `<video>` on the same URL). */
+export const WALKTHROUGH_VIDEOS = {
+  phone: {
+    id: "walkthrough-phone",
+    contentPath: "/brand/teaser.mp4",
+    thumbnailPath: "/brand/hero.png",
+    /** ISO 8601; source is ~6.52s */
+    duration: "PT7S",
+    uploadDate: "2026-09-25",
+  },
+  desktop: {
+    id: "walkthrough-desktop",
+    contentPath: "/brand/teaser-desktop.mp4",
+    thumbnailPath: "/brand/hero.png",
+    /** ISO 8601; source is ~6.67s */
+    duration: "PT7S",
+    uploadDate: "2026-09-25",
+  },
+} as const;
+
+export type WalkthroughVideoKind = keyof typeof WALKTHROUGH_VIDEOS;
+
+/**
+ * VideoObject for a homepage walkthrough that is actually embedded as a visible
+ * `<video>` on the locale home URL. Do not emit this without a matching player.
+ */
+export function walkthroughVideoJsonLd(
+  locale: string,
+  kind: WalkthroughVideoKind,
+  opts: { name: string; description: string },
+) {
+  const meta = WALKTHROUGH_VIDEOS[kind];
+  const pageUrl = absoluteUrl(`/${locale}`);
+  const contentUrl = absoluteUrl(meta.contentPath);
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${pageUrl}#${meta.id}`,
+    name: opts.name,
+    description: opts.description,
+    thumbnailUrl: [absoluteUrl(meta.thumbnailPath)],
+    uploadDate: meta.uploadDate,
+    duration: meta.duration,
+    contentUrl,
+    embedUrl: pageUrl,
+    url: pageUrl,
+    inLanguage: (getLocale(locale) ?? getLocale("en")!).htmlLang,
+    isFamilyFriendly: true,
+    publisher: { "@type": "Organization", name: "Freela", url: absoluteUrl("/en") },
+  };
+}
+
 export function faqJsonLd(faq: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",

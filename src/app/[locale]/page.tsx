@@ -6,7 +6,7 @@ import { categories } from "@/data/categories";
 import { newestTools, toolById, visibleTools } from "@/lib/registry";
 import { rankedInCategory, rankedTools } from "@/lib/popularity";
 import { copyForCategory, copyForTool } from "@/lib/registry";
-import { pageMetadata, websiteJsonLd } from "@/lib/seo";
+import { pageMetadata, walkthroughVideoJsonLd, websiteJsonLd, WALKTHROUGH_VIDEOS } from "@/lib/seo";
 import { t } from "@/i18n/messages";
 import { SearchBox } from "@/components/search-box";
 import { AdSlot, CategoryIcon } from "@/components/site-chrome";
@@ -15,6 +15,7 @@ import { PageTracker } from "@/components/page-tracker";
 import { formatNumber } from "@/lib/format";
 import { iconForTool } from "@/lib/tool-icons";
 import { OmnivoreDropzone, FavoritesRail, FavoriteStar } from "@/components/home-omnivore";
+import { absoluteUrl } from "@/lib/site";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -42,6 +43,28 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
     <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
       <PageTracker locale={locale} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale, ui.heroLead)) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            walkthroughVideoJsonLd(locale, "phone", {
+              name: `${ui.walkthroughTitle} — ${ui.videoPhone}`,
+              description: ui.walkthroughLead,
+            }),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            walkthroughVideoJsonLd(locale, "desktop", {
+              name: `${ui.walkthroughTitle} — ${ui.videoDesktop}`,
+              description: ui.walkthroughLead,
+            }),
+          ),
+        }}
+      />
       <section className="freela-hero grid items-center gap-8 rounded-[2rem] border border-border px-5 py-8 shadow-[0_20px_50px_rgb(21_122_69_/_0.08)] sm:px-10 sm:py-12 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
@@ -144,19 +167,38 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       <div className="page-section">
         <AdSlot position="home-mid" locale={locale} />
       </div>
-      <section className="page-section">
-        <h2 className="page-section-title">{ui.walkthroughTitle}</h2>
+      <section className="page-section" aria-labelledby="walkthrough-heading">
+        <h2 id="walkthrough-heading" className="page-section-title">
+          {ui.walkthroughTitle}
+        </h2>
         <p className="page-section-lead">{ui.walkthroughLead}</p>
-        <div className="mt-5 grid gap-4 lg:grid-cols-2">
-          <figure>
-            <video className="w-full rounded-[1.5rem] border border-border shadow-sm" controls muted playsInline preload="metadata" poster="/brand/hero.png">
-              <source src="/brand/teaser.mp4" type="video/mp4" />
+        {/* Both players stay visible on every viewport (incl. mobile Googlebot). Schema matches these embeds. */}
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <figure id={WALKTHROUGH_VIDEOS.phone.id}>
+            <video
+              className="w-full rounded-[1.5rem] border border-border shadow-sm"
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              poster={WALKTHROUGH_VIDEOS.phone.thumbnailPath}
+              aria-label={`${ui.walkthroughTitle} — ${ui.videoPhone}`}
+            >
+              <source src={absoluteUrl(WALKTHROUGH_VIDEOS.phone.contentPath)} type="video/mp4" />
             </video>
             <figcaption className="mt-2 text-xs font-medium text-muted-foreground">{ui.videoPhone}</figcaption>
           </figure>
-          <figure className="hidden lg:block">
-            <video className="w-full rounded-[1.5rem] border border-border shadow-sm" controls muted playsInline preload="metadata" poster="/brand/hero.png">
-              <source src="/brand/teaser-desktop.mp4" type="video/mp4" />
+          <figure id={WALKTHROUGH_VIDEOS.desktop.id}>
+            <video
+              className="w-full rounded-[1.5rem] border border-border shadow-sm"
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              poster={WALKTHROUGH_VIDEOS.desktop.thumbnailPath}
+              aria-label={`${ui.walkthroughTitle} — ${ui.videoDesktop}`}
+            >
+              <source src={absoluteUrl(WALKTHROUGH_VIDEOS.desktop.contentPath)} type="video/mp4" />
             </video>
             <figcaption className="mt-2 text-xs font-medium text-muted-foreground">{ui.videoDesktop}</figcaption>
           </figure>
