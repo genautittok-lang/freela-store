@@ -6,6 +6,9 @@ import { CookieBanner } from "@/components/cookie-banner";
 import { SiteHeader } from "@/components/site-chrome";
 import { SiteFooter } from "@/components/site-footer";
 import { DocumentLang } from "@/components/document-lang";
+import { AppToaster } from "@/components/app-toaster";
+import { MobileBottomNav } from "@/components/mobile-bottom-nav";
+import { PwaRegister } from "@/components/pwa-register";
 import { getLocale } from "@/data/locales";
 import { t } from "@/i18n/messages";
 import { categoryBySlug, toolBySlug } from "@/lib/registry";
@@ -13,6 +16,7 @@ import { categoryBySlug, toolBySlug } from "@/lib/registry";
 function activeNav(locale: string, pathname: string) {
   const rest = pathname.replace(/^\/[a-z]{2}(?:-[A-Za-z]{2})?/, "") || "/";
   if (rest === "/" || rest === "") return "home";
+  if (rest.startsWith("/search")) return "search";
   const match = rest.match(/^\/tools\/([^/?#]+)/);
   if (!match) return "";
   const slug = decodeURIComponent(match[1]);
@@ -45,11 +49,14 @@ export default async function LocaleLayout({
         {ui.skipToContent}
       </a>
       <SiteHeader locale={locale} pathname={pathname} active={activeNav(locale, pathname)} />
-      <div id="main" className="flex-1">
+      <div id="main" className="flex-1 pb-20 lg:pb-0">
         {children}
       </div>
       <SiteFooter locale={locale} />
+      <MobileBottomNav locale={locale} active={activeNav(locale, pathname)} />
       <CookieBanner locale={locale} />
+      <AppToaster />
+      <PwaRegister />
     </AnalyticsProvider>
   );
 }

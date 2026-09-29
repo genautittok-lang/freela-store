@@ -5,6 +5,8 @@ export const PACK_TOOL_IDS = [
   "pdf-watermark",
   "pdf-page-numbers",
   "pdf-password",
+  "pdf-signature",
+  "background-remover",
   "qr-reader",
   "barcode-generator",
   "tip-calculator",

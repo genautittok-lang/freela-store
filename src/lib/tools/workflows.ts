@@ -163,7 +163,13 @@ export async function executeWorkflow(toolId: string): Promise<WorkflowResult> {
           break;
         }
         case "pdf-password":
-          output = "deferred-pdf-encryption";
+          output = "pdf-password-ready";
+          break;
+        case "pdf-signature":
+          output = "pdf-signature-ready";
+          break;
+        case "background-remover":
+          output = "background-remover-ready";
           break;
         case "convert-video":
           output = "deferred-ffmpeg";

@@ -66,7 +66,7 @@ export function SearchBox({ locale, initial = "", large = false }: { locale: str
           placeholder={ui.searchPlaceholder}
           aria-label={ui.searchTitle}
           autoComplete="off"
-          className={large ? "h-12 text-base" : undefined}
+          className={large ? "h-14 text-base sm:text-lg" : undefined}
         />
         <Button type="submit" size={large ? "lg" : "default"}>{ui.searchButton}</Button>
       </div>

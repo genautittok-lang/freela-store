@@ -642,6 +642,8 @@ const OVERRIDES: Record<string, [string, string]> = {
   "pdf-watermark": ["STAMP", "PDF"],
   "pdf-page-numbers": ["NUMS", "PDF"],
   "pdf-password": ["LOCK", "PDF"],
+  "pdf-signature": ["SIGN", "PDF"],
+  "background-remover": ["BG", "PNG"],
   "pdf-metadata": ["META", "PDF"],
   "pdf-page-sizes": ["SIZE", "PDF"],
   "pdf-set-info": ["TITLE", "PDF"],

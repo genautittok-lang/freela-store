@@ -67,13 +67,13 @@ export function FileDropzone({
           e.preventDefault();
           take([...e.dataTransfer.files]);
         }}
-        className="rounded-2xl border-2 border-dashed border-primary/50 bg-accent/50 px-4 py-7 text-center shadow-inner outline-none ring-primary focus-visible:ring-2"
+        className="rounded-2xl border-2 border-dashed border-primary/50 bg-accent/50 px-4 py-12 text-center shadow-inner outline-none ring-primary focus-visible:ring-2 sm:py-16"
       >
-        <p className="text-base font-semibold text-foreground">{ui.dropHint}</p>
-        <p className="mt-1 text-sm text-muted-foreground">{ui.dropFiles}</p>
+        <p className="text-lg font-semibold text-foreground sm:text-xl">{ui.dropHint}</p>
+        <p className="mt-2 text-sm text-muted-foreground sm:text-base">{ui.dropFiles}</p>
         <Button
           type="button"
-          className="mt-4"
+          className="mt-5 min-h-12 px-8 text-base"
           size="lg"
           onClick={() => inputRef.current?.click()}
         >

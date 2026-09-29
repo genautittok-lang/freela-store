@@ -4,7 +4,9 @@ const PACK_EN: Record<string, string> = {
   "docx-to-pdf": "Make text PDF",
   "pdf-watermark": "Stamp watermark",
   "pdf-page-numbers": "Add page numbers",
-  "pdf-password": "Read encryption limits",
+  "pdf-password": "Protect or unlock PDF",
+  "pdf-signature": "Stamp signature",
+  "background-remover": "Remove background",
   "qr-reader": "Scan QR from image",
   "barcode-generator": "Generate barcode",
   "tip-calculator": "Split the bill",
@@ -26,7 +28,6 @@ const PACK_EN: Record<string, string> = {
   "png-to-ico": "Build ICO",
   "universal-converter": "Convert file",
   "video-file-info": "Read clip info",
-  "convert-video": "See available options",
 };
 
 const PACK_DE: Record<string, string> = {
@@ -57,7 +58,6 @@ const PACK_DE: Record<string, string> = {
   "png-to-ico": "ICO erzeugen",
   "universal-converter": "Datei umwandeln",
   "video-file-info": "Clip-Info lesen",
-  "convert-video": "Optionen ansehen",
 };
 
 const PACK_UK: Record<string, string> = {
@@ -88,7 +88,6 @@ const PACK_UK: Record<string, string> = {
   "png-to-ico": "Зібрати ICO",
   "universal-converter": "Конвертувати файл",
   "video-file-info": "Прочитати кліп",
-  "convert-video": "Дивитися опції",
 };
 
 const PACK_PL: Record<string, string> = {
@@ -119,7 +118,6 @@ const PACK_PL: Record<string, string> = {
   "png-to-ico": "Zbuduj ICO",
   "universal-converter": "Konwertuj plik",
   "video-file-info": "Czytaj info klipu",
-  "convert-video": "Zobacz dostępne opcje",
 };
 
 const PACK_FR: Record<string, string> = {
@@ -150,7 +148,6 @@ const PACK_FR: Record<string, string> = {
   "png-to-ico": "Créer l’ICO",
   "universal-converter": "Convertir le fichier",
   "video-file-info": "Lire les infos du clip",
-  "convert-video": "Voir les options",
 };
 
 const PACK_ES: Record<string, string> = {
@@ -181,7 +178,6 @@ const PACK_ES: Record<string, string> = {
   "png-to-ico": "Crear ICO",
   "universal-converter": "Convertir archivo",
   "video-file-info": "Leer info del clip",
-  "convert-video": "Ver opciones",
 };
 
 const PACK_IT: Record<string, string> = {
@@ -212,7 +208,6 @@ const PACK_IT: Record<string, string> = {
   "png-to-ico": "Crea ICO",
   "universal-converter": "Converti file",
   "video-file-info": "Leggi info clip",
-  "convert-video": "Vedi le opzioni",
 };
 
 const PACK_PT: Record<string, string> = {
@@ -243,7 +238,6 @@ const PACK_PT: Record<string, string> = {
   "png-to-ico": "Criar ICO",
   "universal-converter": "Converter ficheiro",
   "video-file-info": "Ler info do clipe",
-  "convert-video": "Ver opções",
 };
 
 const PACK_NL: Record<string, string> = {
@@ -274,7 +268,6 @@ const PACK_NL: Record<string, string> = {
   "png-to-ico": "ICO bouwen",
   "universal-converter": "Bestand converteren",
   "video-file-info": "Clipinfo lezen",
-  "convert-video": "Beschikbare opties",
 };
 
 const PACK_TR: Record<string, string> = {
@@ -305,7 +298,6 @@ const PACK_TR: Record<string, string> = {
   "png-to-ico": "ICO oluştur",
   "universal-converter": "Dosyayı dönüştür",
   "video-file-info": "Klip bilgisini oku",
-  "convert-video": "Seçenekleri gör",
 };
 
 const PACK_AR: Record<string, string> = {
@@ -336,7 +328,6 @@ const PACK_AR: Record<string, string> = {
   "png-to-ico": "بناء ICO",
   "universal-converter": "تحويل الملف",
   "video-file-info": "قراءة معلومات المقطع",
-  "convert-video": "عرض الخيارات",
 };
 
 const PACK_HE: Record<string, string> = {
@@ -367,7 +358,6 @@ const PACK_HE: Record<string, string> = {
   "png-to-ico": "בנה ICO",
   "universal-converter": "המר קובץ",
   "video-file-info": "קרא מידע על קליפ",
-  "convert-video": "ראה אפשרויות",
 };
 
 export const PACK_LABELS: Record<string, Record<string, string>> = {

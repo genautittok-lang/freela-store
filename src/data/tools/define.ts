@@ -1,22 +1,33 @@
 import type { Locale } from "../locales";
 import { INITIAL_LOCALES } from "../locales";
 import { extraPrivacy, isNewLocale } from "@/i18n/locale8";
+import { extraPrivacyEu, isEuLocale } from "@/i18n/locale-eu";
 import type { CategoryId } from "../categories";
 import type { ToolDefinition } from "../schema";
+
+function isSynthLocale(locale: string) {
+  return isNewLocale(locale) || isEuLocale(locale);
+}
+
+function privacyFallback(english: string, locale: string) {
+  if (isEuLocale(locale)) return extraPrivacyEu(english, locale);
+  if (isNewLocale(locale)) return extraPrivacy(english, locale);
+  return english;
+}
 
 export function l(strings: TemplateStringsArray): Record<Locale, string> {
   const parts = strings[0]
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean);
-  const core = INITIAL_LOCALES.filter((locale) => !isNewLocale(locale));
+  const core = INITIAL_LOCALES.filter((locale) => !isSynthLocale(locale));
   if (parts.length !== core.length && parts.length !== INITIAL_LOCALES.length) {
     throw new Error(`Expected ${core.length} or ${INITIAL_LOCALES.length} lines, got ${parts.length}: ${parts[0]}`);
   }
   return Object.fromEntries(
     INITIAL_LOCALES.map((locale, i) => [
       locale,
-      parts[i] ?? (isNewLocale(locale) ? extraPrivacy(parts[0], locale) : parts[0]),
+      parts[i] ?? (isSynthLocale(locale) ? privacyFallback(parts[0], locale) : parts[0]),
     ]),
   ) as Record<Locale, string>;
 }

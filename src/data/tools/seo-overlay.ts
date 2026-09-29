@@ -48704,4 +48704,35 @@ const seoOverlayBase: Record<string, Partial<Record<Locale, SeoOverlay>>> = {
 export const seoOverlay: Record<string, Partial<Record<Locale, SeoOverlay>>> = {
   ...seoOverlayBase,
   ...wave3Seo,
+  "background-remover": {
+    en: {
+      name: "Background remover",
+      title: "Background remover online — free, no upload",
+      description: "Remove image backgrounds in your browser with an on-device model. Free. Files stay on your device — Freela does not upload them.",
+      h1: "Background remover",
+      intro: "Background remover. Cut a subject from JPG, PNG or WebP in this tab with local ONNX inference. Files and text stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. Published Freela tools in this release are LOCAL_ONLY and run in the browser." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page and we do not invent reviews or star ratings." },
+        { question: "What input does this page accept?", answer: "Background remover: JPG, PNG, WebP. LOCAL_ONLY." },
+        { question: "Is the model downloaded?", answer: "Model weights may cache in the browser on first use. Your photo is not uploaded for processing." },
+      ],
+    },
+  },
+  "pdf-signature": {
+    en: {
+      name: "PDF signature stamp",
+      title: "PDF signature stamp online — free, no upload",
+      description: "Add a visual signature or stamp to a PDF in your browser. Free. Files stay on your device — Freela does not upload them.",
+      h1: "PDF signature stamp",
+      intro: "PDF signature stamp. Overlay a visible name or approval mark on PDF pages locally. Not PKI certificate signing. Files stay on your device — Freela does not upload them.",
+      faq: [
+        { question: "Does this tool upload my files?", answer: "No. Published Freela tools in this release are LOCAL_ONLY and run in the browser." },
+        { question: "Is it free to use?", answer: "Yes. There is no paywall on this page and we do not invent reviews or star ratings." },
+        { question: "What input does this page accept?", answer: "PDF signature stamp: PDF. LOCAL_ONLY visual stamp." },
+        { question: "Is this a legal digital signature?", answer: "No. It is a visible stamp only, not a cryptographic certificate." },
+      ],
+    },
+  },
+
 };

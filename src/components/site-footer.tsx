@@ -132,7 +132,11 @@ export function SiteFooter({ locale }: { locale: string }) {
       <div className="border-t border-border bg-muted/40">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs leading-5 text-muted-foreground">
-            © {new Date().getFullYear()} Freela · {ui.adDisclosure}
+            © {new Date().getFullYear()} Freela · Made with{" "}
+            <span className="footer-heart" aria-hidden="true">
+              ♥
+            </span>{" "}
+            · {ui.adDisclosure}
           </p>
           <DarkshareBadge />
         </div>

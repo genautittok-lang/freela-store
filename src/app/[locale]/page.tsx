@@ -44,6 +44,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       <section className="freela-hero grid items-center gap-8 rounded-[2rem] border border-border px-5 py-8 shadow-[0_20px_50px_rgb(21_122_69_/_0.08)] sm:px-10 sm:py-12 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+            <span className="rounded-md bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">v1.2</span>
             <span>{formatNumber(locale, count)}</span>
             <span aria-hidden="true">·</span>
             <span>{ui.processedLocally}</span>

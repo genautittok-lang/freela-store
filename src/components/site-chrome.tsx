@@ -33,6 +33,9 @@ export function SiteHeader({
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 shadow-[0_8px_24px_rgb(21_122_69_/_0.06)] backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4">
         <Logo locale={locale} compact homeLabel={ui.home} />
+        <span className="hidden rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary sm:inline">
+          v1.2
+        </span>
         <nav className="hidden items-center gap-5 text-sm lg:flex" aria-label={ui.toolsNav}>
           <Link className="nav-link" href={`/${locale}`} data-active={homeActive ? "true" : "false"} aria-current={homeActive ? "page" : undefined}>
             {ui.home}

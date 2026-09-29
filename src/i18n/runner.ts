@@ -1,6 +1,7 @@
 import type { Locale } from "@/data/locales";
 import { isLocale } from "@/data/locales";
 import { runner8 } from "@/i18n/locale8";
+import { runnerEu } from "@/i18n/locale-eu";
 
 const labels = {
   en: {
@@ -748,6 +749,7 @@ const labels = {
     keepPage: "השאירו לפחות עמוד אחד.",
   },
   ...runner8,
+  ...runnerEu,
 } as Record<Locale, Record<string, string>>;
 
 export type RunnerLabel = keyof (typeof labels)["en"];

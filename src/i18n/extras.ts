@@ -1,5 +1,6 @@
 import type { Locale } from "@/data/locales";
 import { extras8 } from "@/i18n/locale8";
+import { extrasEu } from "@/i18n/locale-eu";
 
 export type ExtraMessages = {
   trustTitle: string;
@@ -602,4 +603,5 @@ export const extras: Record<Locale, ExtraMessages> = {
     contactHint: "כל השאלות: tools@freela.store",
   },
   ...extras8,
+  ...extrasEu,
 };

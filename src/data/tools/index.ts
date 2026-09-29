@@ -19,6 +19,7 @@ import { packsRtl } from "./locale-packs-rtl";
 import { seoOverlay } from "./seo-overlay";
 import { fallbackExamples, fallbackFaq, fallbackFormats, fallbackHowTo } from "@/i18n/tool-fallbacks";
 import { isNewLocale, synthesizeToolCopy } from "@/i18n/locale8";
+import { isEuLocale, synthesizeToolCopyEu } from "@/i18n/locale-eu";
 
 const englishCatalog = [
   ...englishTools,
@@ -144,6 +145,7 @@ function shellCopy(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][st
 
 function copyFor(tool: EnglishTool, locale: Locale): ToolDefinition["copy"][string] | null {
   if (isNewLocale(locale)) return synthesizeToolCopy(tool, locale);
+  if (isEuLocale(locale)) return synthesizeToolCopyEu(tool, locale);
   const seo = seoOverlay[tool.id]?.[locale];
   if (locale === SOURCE_LOCALE) {
     const faq = [

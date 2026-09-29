@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-28T01:39:38.810Z",
-  "published": 403,
-  "workflowPass": 403,
+  "generatedAt": "2026-09-29T00:06:07.958Z",
+  "published": 404,
+  "workflowPass": 404,
   "locales": [
     {
       "code": "en",
@@ -165,129 +165,129 @@
     },
     {
       "code": "ro",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Română"
     },
     {
       "code": "cs",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Čeština"
     },
     {
       "code": "sk",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Slovenčina"
     },
     {
       "code": "hu",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Magyar"
     },
     {
       "code": "el",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Ελληνικά"
     },
     {
       "code": "bg",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Български"
     },
     {
       "code": "hr",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Hrvatski"
     },
     {
       "code": "sr",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Српски"
     },
     {
       "code": "sl",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Slovenščina"
     },
     {
       "code": "sv",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Svenska"
     },
     {
       "code": "da",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Dansk"
     },
     {
       "code": "no",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Norsk"
     },
     {
       "code": "fi",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Suomi"
     },
     {
       "code": "et",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Eesti"
     },
     {
       "code": "lv",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Latviešu"
     },
     {
       "code": "lt",
-      "routed": false,
-      "indexable": false,
-      "translationReviewed": false,
+      "routed": true,
+      "indexable": true,
+      "translationReviewed": true,
       "dir": "ltr",
       "nativeName": "Lietuvių"
     }
@@ -312,7 +312,23 @@
     "hi",
     "id",
     "vi",
-    "th"
+    "th",
+    "ro",
+    "cs",
+    "sk",
+    "hu",
+    "el",
+    "bg",
+    "hr",
+    "sr",
+    "sl",
+    "sv",
+    "da",
+    "no",
+    "fi",
+    "et",
+    "lv",
+    "lt"
   ],
   "tools": [
     {
@@ -3181,7 +3197,7 @@
       ],
       "maxFileSize": 26214400,
       "options": [],
-      "primaryCta": "Read encryption limits",
+      "primaryCta": "Protect or unlock PDF",
       "output": "file",
       "postAction": "download",
       "preview": false,
@@ -3189,9 +3205,10 @@
       "errors": "actionable Error message",
       "success": "Done. status",
       "privacy": "LOCAL_ONLY",
-      "example": "Check this page before trusting a random locker.",
+      "example": "Lock a draft before emailing it.",
       "relatedTools": [
         "pdf-watermark",
+        "pdf-signature",
         "compress-pdf"
       ],
       "mobile": "e2e viewport + tool page layout",
@@ -3954,20 +3971,20 @@
       "categoryName": "Converters"
     },
     {
-      "id": "convert-video",
-      "slug": "convert-video",
-      "category": "converters",
-      "url": "/en/tools/convert-video",
-      "purpose": "Convert video status (convert video). Free. Files and text stay on your device — Freela does not upload them.",
+      "id": "background-remover",
+      "slug": "background-remover",
+      "category": "images",
+      "url": "/en/tools/background-remover",
+      "purpose": "Remove image backgrounds in your browser with an on-device model. Free. Files stay on your device — Freela does not upload them.",
       "userInput": "file",
       "supportedFormats": [
-        "mp4",
-        "webm",
-        "mov"
+        "jpg",
+        "png",
+        "webp"
       ],
-      "maxFileSize": 83886080,
+      "maxFileSize": 12582912,
       "options": [],
-      "primaryCta": "See available options",
+      "primaryCta": "Remove background",
       "output": "file",
       "postAction": "download",
       "preview": false,
@@ -3975,10 +3992,11 @@
       "errors": "actionable Error message",
       "success": "Done. status",
       "privacy": "LOCAL_ONLY",
-      "example": "Confirm the product is honest about codecs.",
+      "example": "Cut a product shot for a listing.",
       "relatedTools": [
-        "video-file-info",
-        "universal-converter"
+        "convert-image",
+        "image-blur",
+        "png-to-ico"
       ],
       "mobile": "e2e viewport + tool page layout",
       "accessibility": "labels on fields; axe home smoke",
@@ -3986,7 +4004,41 @@
       "localization": "20 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
       "seo": "EN indexable; title/H1/canonical present",
       "status": "PASS",
-      "categoryName": "Converters"
+      "categoryName": "Images"
+    },
+    {
+      "id": "pdf-signature",
+      "slug": "pdf-signature",
+      "category": "pdf-documents",
+      "url": "/en/tools/pdf-signature",
+      "purpose": "Add a visual signature or stamp to a PDF in your browser. Free. Files stay on your device — Freela does not upload them.",
+      "userInput": "file",
+      "supportedFormats": [
+        "pdf"
+      ],
+      "maxFileSize": 26214400,
+      "options": [],
+      "primaryCta": "Stamp signature",
+      "output": "file",
+      "postAction": "download",
+      "preview": false,
+      "validation": "empty/invalid surfaces an alert in ToolRunner",
+      "errors": "actionable Error message",
+      "success": "Done. status",
+      "privacy": "LOCAL_ONLY",
+      "example": "Mark a packet as reviewed.",
+      "relatedTools": [
+        "pdf-watermark",
+        "pdf-password",
+        "pdf-page-numbers"
+      ],
+      "mobile": "e2e viewport + tool page layout",
+      "accessibility": "labels on fields; axe home smoke",
+      "tests": "unit workflow PASS",
+      "localization": "20 routed locales; tool packs + chrome + CTAs; indexable after completeness check",
+      "seo": "EN indexable; title/H1/canonical present",
+      "status": "PASS",
+      "categoryName": "PDF & Documents"
     },
     {
       "id": "text-to-pdf",

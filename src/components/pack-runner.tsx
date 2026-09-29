@@ -37,11 +37,16 @@ import {
   overlayText,
   pngToIco,
   rasterizePdf,
+  removeImageBackground,
+  removePdfPassword,
+  setPdfPassword,
   stampPdf,
+  stampPdfSignature,
   xlsxToCsv,
   csvToXlsx,
 } from "@/lib/tools/pack-convert";
 import { linesToPdfBytes, markdownToPlain } from "@/lib/tools/improve";
+import { toast } from "sonner";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -71,9 +76,12 @@ export function PackToolPanel({
 }) {
   const id = tool.id;
   if (id === "universal-converter") return <UniversalConverter tool={tool} locale={locale} wrap={wrap} cta={cta} />;
-  if (id === "pdf-password" || id === "convert-video") {
+  if (id === "convert-video") {
     return <DeferredTool tool={tool} locale={locale} wrap={wrap} cta={cta} />;
   }
+  if (id === "pdf-password") return <PdfPasswordTool tool={tool} locale={locale} wrap={wrap} cta={cta} />;
+  if (id === "pdf-signature") return <PdfSignatureTool tool={tool} locale={locale} wrap={wrap} cta={cta} />;
+  if (id === "background-remover") return <BackgroundRemoverTool tool={tool} locale={locale} wrap={wrap} cta={cta} />;
   if (id === "tip-calculator") return <Tip locale={locale} wrap={wrap} cta={cta} />;
   if (id === "loan-calculator") return <Loan locale={locale} wrap={wrap} cta={cta} />;
   if (id === "compound-interest") return <Compound locale={locale} wrap={wrap} cta={cta} />;
@@ -115,6 +123,224 @@ function DeferredTool({
       <Button type="button" size="lg" className="w-full sm:w-auto" onClick={() => wrap(() => undefined)}>
         {cta}
       </Button>
+    </div>
+  );
+}
+
+function PdfPasswordTool({
+  tool,
+  locale,
+  wrap,
+  cta,
+}: {
+  tool: ToolDefinition;
+  locale: string;
+  wrap: (fn: () => Promise<void>) => Promise<void>;
+  cta: string;
+}) {
+  const [files, setFiles] = useState<File[]>([]);
+  const [mode, setMode] = useState<"set" | "remove">("set");
+  const [password, setPassword] = useState("");
+  const [owner, setOwner] = useState("");
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
+  const file = files[0];
+  return (
+    <div className="grid gap-3">
+      <Notice>
+        Sets or removes a real PDF user password in this tab with Standard Security (LOCAL_ONLY). This is not a DRM or certificate lock.
+      </Notice>
+      <FileDropzone
+        locale={locale}
+        toolId={tool.id}
+        accept=".pdf,application/pdf"
+        multiple={false}
+        files={files}
+        onFiles={(next) => {
+          setFiles(next);
+          setResult(null);
+        }}
+        formats={tool.supportedFormats}
+        maxBytes={tool.maxFileSize}
+        onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+      />
+      <div className="flex flex-wrap gap-2" role="radiogroup">
+        {(["set", "remove"] as const).map((k) => (
+          <button
+            key={k}
+            type="button"
+            role="radio"
+            aria-checked={mode === k}
+            className={`rounded-lg border px-3 py-2 text-sm font-medium ${mode === k ? "border-primary bg-accent" : "border-border"}`}
+            onClick={() => setMode(k)}
+          >
+            {k === "set" ? "Set password" : "Remove password"}
+          </button>
+        ))}
+      </div>
+      <Field label={mode === "set" ? "User password" : "Current password"}>
+        <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off" />
+      </Field>
+      {mode === "set" ? (
+        <Field label="Owner password (optional)">
+          <Input type="password" value={owner} onChange={(e) => setOwner(e.target.value)} autoComplete="off" />
+        </Field>
+      ) : null}
+      <Button
+        type="button"
+        size="lg"
+        className="w-full sm:w-auto"
+        onClick={() =>
+          wrap(async () => {
+            if (!file) throw new Error(rl(locale, "chooseFile"));
+            const blob =
+              mode === "set"
+                ? await setPdfPassword(file, password, owner || undefined)
+                : await removePdfPassword(file, password);
+            const name = mode === "set" ? "protected.pdf" : "unlocked.pdf";
+            triggerDownload(blob, name);
+            setResult({ blob, name });
+          })
+        }
+      >
+        {cta}
+      </Button>
+      <DownloadBar locale={locale} blob={result?.blob ?? null} name={result?.name ?? ""} />
+    </div>
+  );
+}
+
+function PdfSignatureTool({
+  tool,
+  locale,
+  wrap,
+  cta,
+}: {
+  tool: ToolDefinition;
+  locale: string;
+  wrap: (fn: () => Promise<void>) => Promise<void>;
+  cta: string;
+}) {
+  const [files, setFiles] = useState<File[]>([]);
+  const [text, setText] = useState("Signed locally · Freela");
+  const [mode, setMode] = useState<"signature" | "stamp">("signature");
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
+  const file = files[0];
+  return (
+    <div className="grid gap-3">
+      <Notice>
+        Draws a visible signature/stamp box on PDF pages in this browser. This is not cryptographic PKI / certificate signing.
+      </Notice>
+      <FileDropzone
+        locale={locale}
+        toolId={tool.id}
+        accept=".pdf,application/pdf"
+        multiple={false}
+        files={files}
+        onFiles={(next) => {
+          setFiles(next);
+          setResult(null);
+        }}
+        formats={tool.supportedFormats}
+        maxBytes={tool.maxFileSize}
+        onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+      />
+      <div className="flex flex-wrap gap-2">
+        {(["signature", "stamp"] as const).map((k) => (
+          <button
+            key={k}
+            type="button"
+            className={`rounded-lg border px-3 py-2 text-sm font-medium capitalize ${mode === k ? "border-primary bg-accent" : "border-border"}`}
+            onClick={() => setMode(k)}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+      <Field label="Signature / stamp text">
+        <Input value={text} onChange={(e) => setText(e.target.value)} />
+      </Field>
+      <Button
+        type="button"
+        size="lg"
+        className="w-full sm:w-auto"
+        onClick={() =>
+          wrap(async () => {
+            if (!file) throw new Error(rl(locale, "chooseFile"));
+            const blob = await stampPdfSignature(file, { text, mode });
+            const name = "signed.pdf";
+            triggerDownload(blob, name);
+            setResult({ blob, name });
+          })
+        }
+      >
+        {cta}
+      </Button>
+      <DownloadBar locale={locale} blob={result?.blob ?? null} name={result?.name ?? ""} />
+    </div>
+  );
+}
+
+function BackgroundRemoverTool({
+  tool,
+  locale,
+  wrap,
+  cta,
+}: {
+  tool: ToolDefinition;
+  locale: string;
+  wrap: (fn: () => Promise<void>) => Promise<void>;
+  cta: string;
+}) {
+  const [files, setFiles] = useState<File[]>([]);
+  const [progress, setProgress] = useState(0);
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
+  const file = files[0];
+  return (
+    <div className="grid gap-3">
+      <Notice>
+        Removes the background with an on-device ONNX model (LOCAL_ONLY inference). The first run may download model weights into this browser cache.
+      </Notice>
+      <FileDropzone
+        locale={locale}
+        toolId={tool.id}
+        accept="image/*,.jpg,.jpeg,.png,.webp"
+        multiple={false}
+        files={files}
+        onFiles={(next) => {
+          setFiles(next);
+          setResult(null);
+          setProgress(0);
+        }}
+        formats={tool.supportedFormats}
+        maxBytes={tool.maxFileSize}
+        onSelected={() => track("file_selected", { toolId: tool.id, locale })}
+      />
+      {progress > 0 && progress < 1 ? (
+        <p className="text-sm text-muted-foreground">Working… {Math.round(progress * 100)}%</p>
+      ) : null}
+      <Button
+        type="button"
+        size="lg"
+        className="w-full sm:w-auto"
+        onClick={() =>
+          wrap(async () => {
+            if (!file) throw new Error(rl(locale, "chooseImage"));
+            try {
+              const blob = await removeImageBackground(file, setProgress);
+              const name = `${file.name.replace(/\.[^.]+$/, "")}-no-bg.png`;
+              triggerDownload(blob, name);
+              setResult({ blob, name });
+            } catch (err) {
+              const msg = err instanceof Error ? err.message : "Could not remove the background.";
+              toast.error(msg);
+              throw err;
+            }
+          })
+        }
+      >
+        {cta}
+      </Button>
+      <DownloadBar locale={locale} blob={result?.blob ?? null} name={result?.name ?? ""} />
     </div>
   );
 }
@@ -584,7 +810,9 @@ function FilePack({
         </Field>
       ) : null}
       {tool.id === "docx-to-pdf" ? (
-        <Notice>Output is a text PDF (Helvetica on A4), not a Word layout replica. PDF→Word is not available.</Notice>
+        <Notice>
+          Text PDF with basic bold/italic from DOCX (Helvetica). Columns, images, headers and exact Word fonts are not rebuilt. PDF→Word is not available.
+        </Notice>
       ) : null}
       <Button
         type="button"
@@ -618,8 +846,14 @@ function FilePack({
               name = "numbered.pdf";
               triggerDownload(blob, name);
             } else if (tool.id === "qr-reader") {
-              const decoded = await readQr(file);
-              setText(decoded);
+              try {
+                const decoded = await readQr(file);
+                setText(decoded);
+              } catch (err) {
+                const msg = err instanceof Error ? err.message : "No QR code found in this image.";
+                toast.error(msg);
+                throw err;
+              }
               return;
             } else if (tool.id === "xlsx-csv") {
               if (/\.csv$/i.test(file.name)) {
@@ -645,7 +879,13 @@ function FilePack({
               name = "favicon.ico";
               triggerDownload(blob, name);
             } else if (tool.id === "extract-pdf-text") {
-              setText(await extractPdfText(file));
+              try {
+                setText(await extractPdfText(file));
+              } catch (err) {
+                const msg = err instanceof Error ? err.message : "No readable text found.";
+                toast.error(msg);
+                throw err;
+              }
               return;
             } else if (tool.id === "video-file-info") {
               setText(await videoInfo(file));

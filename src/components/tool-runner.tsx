@@ -127,6 +127,14 @@ export function ToolRunner({
     } catch (err) {
       const message = err instanceof Error ? err.message : ui.error;
       setError(message);
+      if (
+        tool.id === "qr-reader" ||
+        tool.id === "extract-pdf-text" ||
+        tool.id === "background-remover" ||
+        /OCR|blurry|no readable|No QR|No selectable/i.test(message)
+      ) {
+        void import("sonner").then(({ toast }) => toast.error(message));
+      }
       track("tool_error", {
         toolId: tool.id,
         locale,

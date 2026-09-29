@@ -4,6 +4,7 @@ import type { LegalSlug } from "@/data/legal-slugs";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 import { legal8 } from "@/i18n/locale8";
+import { legalEu } from "@/i18n/locale-eu";
 
 const BODIES: Record<LegalSlug, Partial<Record<Locale, string[]>>> = {
   "about": {
@@ -897,7 +898,7 @@ const BODIES: Record<LegalSlug, Partial<Record<Locale, string[]>>> = {
 };
 
 export function legalBody(slug: LegalSlug, locale: string): string[] {
-  const packed = legal8(slug, locale);
+  const packed = legal8(slug, locale) ?? legalEu(slug, locale);
   if (packed) return packed;
   const code: Locale = isLocale(locale) ? locale : "en";
   return BODIES[slug][code] ?? BODIES[slug].en ?? [];

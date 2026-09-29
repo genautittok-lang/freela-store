@@ -119,7 +119,7 @@ export function popularityRows(range = "30d"): PopularityRow[] {
   const previous = loadAgg(prevStart, since);
   const hasEvents = [...current.values()].some((a) => a.opens + a.starts + a.completions + a.downloads > 0);
   return publishedTools()
-    .filter((tool) => tool.id !== "pdf-password" && tool.id !== "convert-video")
+    .filter((tool) => tool.id !== "convert-video")
     .map((tool) => {
       const agg = current.get(tool.id) ?? emptyAgg();
       const { score, growth, source } = scoreFrom(agg, POPULARITY_SEED[tool.id] ?? 8, previous.get(tool.id), hasEvents);
@@ -167,7 +167,7 @@ export function rankedTools(locale: string, opts?: { limit?: number; maxPerCateg
 export function rankedInCategory(locale: string, categoryId: string, limit = 4) {
   const order = new Map(popularityRows().map((row, i) => [row.id, i]));
   return visibleTools(locale)
-    .filter((tool) => tool.category === categoryId && tool.id !== "pdf-password" && tool.id !== "convert-video")
+    .filter((tool) => tool.category === categoryId && tool.id !== "convert-video")
     .sort((a, b) => (order.get(a.id) ?? 999) - (order.get(b.id) ?? 999))
     .slice(0, limit);
 }

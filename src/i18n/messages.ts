@@ -1,5 +1,6 @@
 import type { Locale } from "@/data/locales";
 import { messages8 } from "@/i18n/locale8";
+import { messagesEu } from "@/i18n/locale-eu";
 import { extras, type ExtraMessages } from "@/i18n/extras";
 import { uxChrome, type UxChrome } from "@/i18n/ux";
 import { isLocale } from "@/data/locales";
@@ -56,7 +57,7 @@ export const messages: Record<Locale, Messages> = {
   en: {
     brand: "Freela",
     tagline: "Free online tools that run in your browser",
-    searchPlaceholder: "Search tools…",
+    searchPlaceholder: "What do you want to do with your file?",
     searchButton: "Search",
     searchTitle: "Search tools",
     searchEmpty: "Type a tool name, format or task.",
@@ -628,6 +629,7 @@ export const messages: Record<Locale, Messages> = {
     openMenu: "פתיחת תפריט",
   },
   ...messages8,
+  ...messagesEu,
 };
 
 export type UiMessages = Messages & ExtraMessages & UxChrome;

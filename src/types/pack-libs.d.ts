@@ -13,6 +13,7 @@ declare module "jsqr" {
 declare module "mammoth" {
   const mammoth: {
     extractRawText: (input: { arrayBuffer: ArrayBuffer }) => Promise<{ value: string }>;
+    convertToHtml: (input: { arrayBuffer: ArrayBuffer }) => Promise<{ value: string }>;
   };
   export default mammoth;
 }

@@ -1,6 +1,7 @@
 import type { Locale } from "@/data/locales";
 import { isLocale } from "@/data/locales";
 import { ux8 } from "@/i18n/locale8";
+import { uxEu } from "@/i18n/locale-eu";
 
 export type UxChrome = {
   company: string;
@@ -278,6 +279,7 @@ export const uxChrome: Record<Locale, UxChrome> = {
     breadcrumb: "נתיב ניווט",
   },
   ...ux8,
+  ...uxEu,
 };
 
 export function ux(locale: string): UxChrome {

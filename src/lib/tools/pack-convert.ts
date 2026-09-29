@@ -99,27 +99,180 @@ export async function stampPdf(
   return new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
 }
 
+type DocxRun = { text: string; bold?: boolean; italic?: boolean };
+
+function htmlToStyledRuns(html: string): DocxRun[][] {
+  const block = html
+    .replace(/<\/(p|h[1-6]|li|div|tr)>/gi, "\n")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"');
+  const lines = block.split(/\n+/);
+  return lines.map((line) => {
+    const runs: DocxRun[] = [];
+    const re = /<(strong|b|em|i)(?:\s[^>]*)?>([\s\S]*?)<\/\1>|([^<]+)/gi;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(line))) {
+      if (m[1]) {
+        const tag = m[1].toLowerCase();
+        const text = m[2].replace(/<[^>]+>/g, "").trim();
+        if (text) runs.push({ text, bold: tag === "strong" || tag === "b", italic: tag === "em" || tag === "i" });
+      } else if (m[3]?.trim()) {
+        runs.push({ text: m[3].replace(/<[^>]+>/g, "") });
+      }
+    }
+    if (!runs.length) {
+      const plain = line.replace(/<[^>]+>/g, "").trim();
+      if (plain) runs.push({ text: plain });
+    }
+    return runs;
+  }).filter((r) => r.length);
+}
+
 export async function docxToTextPdf(file: File) {
   const mammoth = (await import("mammoth")).default;
-  const { value } = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
-  const text = value.trim();
-  if (!text) throw new Error("This DOCX had no extractable text. Layout, images and tracked changes are not converted.");
+  const buffer = await file.arrayBuffer();
+  let runsByLine: DocxRun[][] = [];
+  try {
+    const { value: html } = await mammoth.convertToHtml({ arrayBuffer: buffer });
+    runsByLine = htmlToStyledRuns(html);
+  } catch {
+    runsByLine = [];
+  }
+  if (!runsByLine.length) {
+    const { value } = await mammoth.extractRawText({ arrayBuffer: buffer });
+    const text = value.trim();
+    if (!text) throw new Error("This DOCX had no extractable text. Layout, images and tracked changes are not converted.");
+    runsByLine = wrapPdfText(text, 92).map((line) => [{ text: line }]);
+  }
   const pdf = await PDFDocument.create();
-  const font = await pdf.embedFont(StandardFonts.Helvetica);
+  const regular = await pdf.embedFont(StandardFonts.Helvetica);
+  const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
+  const italic = await pdf.embedFont(StandardFonts.HelveticaOblique);
+  const boldItalic = await pdf.embedFont(StandardFonts.HelveticaBoldOblique);
   const pageSize: [number, number] = [595.28, 841.89];
   let page = pdf.addPage(pageSize);
   let y = 800;
-  const lines = wrapPdfText(text, 92);
-  for (const line of lines) {
+  const maxWidth = 500;
+  for (const runs of runsByLine) {
+    let x = 48;
+    for (const run of runs) {
+      const font = run.bold && run.italic ? boldItalic : run.bold ? bold : run.italic ? italic : regular;
+      const chunks = wrapPdfText(run.text, 92);
+      for (const chunk of chunks) {
+        const width = font.widthOfTextAtSize(chunk.slice(0, 120), 11);
+        if (x > 48 && x + width > 48 + maxWidth) {
+          x = 48;
+          y -= 14;
+        }
+        if (y < 48) {
+          page = pdf.addPage(pageSize);
+          y = 800;
+          x = 48;
+        }
+        page.drawText(chunk.slice(0, 120), { x, y, size: 11, font, color: rgb(0.1, 0.1, 0.12) });
+        x += width + 2;
+        if (chunks.length > 1) {
+          x = 48;
+          y -= 14;
+        }
+      }
+    }
+    y -= 16;
     if (y < 48) {
       page = pdf.addPage(pageSize);
       y = 800;
     }
-    page.drawText(line.slice(0, 120), { x: 48, y, size: 11, font, color: rgb(0.1, 0.1, 0.12) });
-    y -= 14;
   }
   const bytes = await pdf.save();
   return new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
+}
+
+/** Real PDF user-password set/remove via @cantoo/pdf-lib (pdf-lib fork with Standard Security). */
+export async function setPdfPassword(file: File, userPassword: string, ownerPassword?: string) {
+  const pwd = userPassword.trim();
+  if (pwd.length < 1) throw new Error("Enter a user password to protect this PDF.");
+  const { PDFDocument: CantooDoc } = await import("@cantoo/pdf-lib");
+  const doc = await CantooDoc.load(await file.arrayBuffer(), { ignoreEncryption: false });
+  doc.encrypt({
+    userPassword: pwd,
+    ownerPassword: (ownerPassword || pwd).trim() || pwd,
+    permissions: { printing: "highResolution", copying: false, modifying: false },
+  });
+  const bytes = await doc.save();
+  return new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
+}
+
+export async function removePdfPassword(file: File, password: string) {
+  const pwd = password.trim();
+  if (!pwd) throw new Error("Enter the current PDF password to unlock it.");
+  const { PDFDocument: CantooDoc } = await import("@cantoo/pdf-lib");
+  try {
+    const doc = await CantooDoc.load(await file.arrayBuffer(), { password: pwd });
+    const bytes = await doc.save();
+    return new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
+  } catch {
+    throw new Error("Could not open this PDF with that password. Check the password or try another file.");
+  }
+}
+
+/** Visual signature / stamp overlay (not PKI certificate signing). */
+export async function stampPdfSignature(
+  file: File,
+  opts: { text: string; mode?: "signature" | "stamp"; pageIndex?: number },
+) {
+  const label = (opts.text || "Signed").trim().slice(0, 64) || "Signed";
+  const doc = await PDFDocument.load(await file.arrayBuffer());
+  const font = await doc.embedFont(StandardFonts.HelveticaOblique);
+  const pages = doc.getPages();
+  if (!pages.length) throw new Error("This PDF has no pages.");
+  const targets =
+    opts.pageIndex != null && opts.pageIndex >= 0 && opts.pageIndex < pages.length
+      ? [pages[opts.pageIndex]]
+      : pages;
+  for (const page of targets) {
+    const { width } = page.getSize();
+    const boxW = Math.min(220, width * 0.45);
+    const boxH = opts.mode === "stamp" ? 48 : 36;
+    const x = width - boxW - 36;
+    const y = 36;
+    page.drawRectangle({
+      x,
+      y,
+      width: boxW,
+      height: boxH,
+      borderColor: rgb(0.15, 0.35, 0.55),
+      borderWidth: 1.2,
+      color: rgb(0.93, 0.96, 1),
+      opacity: 0.92,
+    });
+    page.drawText(label, {
+      x: x + 10,
+      y: y + boxH / 2 - 4,
+      size: 11,
+      font,
+      color: rgb(0.12, 0.25, 0.45),
+    });
+  }
+  const bytes = await doc.save();
+  return new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
+}
+
+export async function removeImageBackground(file: File, onProgress?: (p: number) => void) {
+  onProgress?.(0.05);
+  const { removeBackground } = await import("@imgly/background-removal");
+  onProgress?.(0.15);
+  const blob = await removeBackground(file, {
+    progress: (_key, current, total) => {
+      if (total > 0) onProgress?.(0.15 + 0.8 * (current / total));
+    },
+  });
+  onProgress?.(1);
+  if (!blob) throw new Error("Background removal returned nothing. Try a clearer photo with a single subject.");
+  return blob;
 }
 
 export async function heicToBlob(file: File, toType: "image/jpeg" | "image/png") {

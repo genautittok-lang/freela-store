@@ -1,6 +1,8 @@
 # Freela STORE
 
-**Public contact for every question:** [tools@freela.store](mailto:tools@freela.store)
+**Version:** v1.2 · **Public contact:** [tools@freela.store](mailto:tools@freela.store)
+
+Browser-first PDF, image, text, developer and calculator tools. Files stay on your device (LOCAL_ONLY).
 
 ## Requirements
 
@@ -21,16 +23,26 @@ Development-only admin default (login is refused in production if this value is 
 
 Passwords are stored as bcrypt hashes in SQLite (`data/freela.db`).
 
-## Popular tools
-
-Home ranking uses analytics (opens, starts, success, downloads, errors, search, growth) when SQLite has events. Until then it uses a published seed. Public pages never show invented usage counts.
-
+## Run
 
 ```bash
 npm run dev
 ```
 
 App: [http://127.0.0.1:43173/en](http://127.0.0.1:43173/en)
+
+## v1.2 snapshot
+
+- **404** published tools · **36** locales · **~15372** sitemap URLs
+- Real PDF password set/remove · background remover · visual PDF signature stamp
+- TikTok/YouTube/Shorts downloaders **refused** (ToS / copyright)
+- PWA shell service worker · mega search · mobile bottom nav · pulsing footer heart
+
+See store report: `docs/freela-v12-report.md` (agent store).
+
+## Popular tools
+
+Home ranking uses analytics when SQLite has events; otherwise a published seed. Public pages never show invented usage counts.
 
 Admin: [http://127.0.0.1:43173/admin](http://127.0.0.1:43173/admin)
 

@@ -262,6 +262,17 @@
   box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
 }
 
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.footer-heart {
+  animation: pulse 1.5s infinite ease-in-out;
+  color: #ef4444;
+  display: inline-block;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .freela-card,
   .freela-chip,
@@ -269,6 +280,9 @@
   .nav-link::after,
   .darkshare-badge {
     transition: none;
+  }
+  .footer-heart {
+    animation: none;
   }
   .nav-link::after {
     transform: scaleX(0);
