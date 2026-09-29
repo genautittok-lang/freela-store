@@ -11,6 +11,10 @@ import { negotiateLocale } from "@/lib/accept-language";
 import {
   languageAlternates,
   sitemapEntries,
+  sitemapEntriesForLocale,
+  sitemapChildLocs,
+  renderSitemapIndexXml,
+  renderSitemapUrlsetXml,
   indexableLocales,
   toolMetadata,
   pageMetadata,
@@ -212,7 +216,6 @@ describe("sitemap structure and count formula", () => {
 
     for (const entry of entries) {
       expect(entry.url.startsWith("http")).toBe(true);
-      expect(entry.alternates.languages["x-default"]).toBeTruthy();
       expect(entry.url.includes("/admin")).toBe(false);
       expect(entry.url.includes("/search")).toBe(false);
     }
@@ -227,7 +230,36 @@ describe("sitemap structure and count formula", () => {
 
     const mergeJa = toolUrls.find((e) => e.url.endsWith("/ja/tools/merge-pdf"));
     expect(mergeJa).toBeTruthy();
-    expect(Object.keys(mergeJa!.alternates.languages).filter((k) => k !== "x-default")).toHaveLength(36);
+  });
+
+  it("splits into one child sitemap per locale with no cross-locale URLs", () => {
+    const children = sitemapChildLocs();
+    expect(children).toHaveLength(INITIAL_LOCALES.length);
+    expect(new Set(children).size).toBe(children.length);
+
+    const indexXml = renderSitemapIndexXml();
+    expect(indexXml).toContain("<sitemapindex");
+    for (const locale of INITIAL_LOCALES) {
+      expect(indexXml).toContain(`/sitemap/${locale}.xml`);
+      const localeEntries = sitemapEntriesForLocale(locale);
+      expect(localeEntries.length).toBe(15_804 / INITIAL_LOCALES.length);
+      for (const entry of localeEntries) {
+        expect(entry.url).toContain(`/${locale}`);
+        // No other locale prefix as the path segment after host
+        const path = entry.url.replace(/^https?:\/\/[^/]+/, "");
+        expect(path.startsWith(`/${locale}/`) || path === `/${locale}`).toBe(true);
+      }
+      const xml = renderSitemapUrlsetXml(localeEntries);
+      expect(xml).toContain("<urlset");
+      expect(xml).not.toContain("xhtml:link");
+      expect(Buffer.byteLength(xml, "utf8")).toBeLessThan(5_000_000);
+    }
+
+    const allFromChildren = INITIAL_LOCALES.flatMap((locale) =>
+      sitemapEntriesForLocale(locale).map((e) => e.url),
+    );
+    expect(allFromChildren).toHaveLength(15_804);
+    expect(new Set(allFromChildren).size).toBe(15_804);
   });
 });
 

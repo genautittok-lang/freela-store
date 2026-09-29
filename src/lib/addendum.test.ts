@@ -71,7 +71,8 @@ describe("seo gates", () => {
     for (const locale of INITIAL_LOCALES) {
       expect(urls.some((u) => u.includes(`/${locale}`))).toBe(true);
     }
-    const langs = sitemapEntries()[0]?.alternates.languages ?? {};
+    // hreflang alternates live in HTML head (pageMetadata), not sitemap XML
+    const langs = languageAlternates("", [...INITIAL_LOCALES]);
     expect(Object.keys(langs).filter((k) => k !== "x-default").sort()).toEqual([...INITIAL_LOCALES].sort());
   });
   it("robots disallows admin and search", () => {

@@ -199,51 +199,74 @@ export function faqJsonLd(faq: { question: string; answer: string }[]) {
   };
 }
 
-export function sitemapEntries() {
+/** Slim sitemap URL (no xhtml:link alternates — hreflang lives in HTML head). */
+export type SitemapUrlEntry = {
+  url: string;
+  lastModified?: string;
+};
+
+/** URLs for one indexable locale: home, legal, categories, tools. */
+export function sitemapEntriesForLocale(locale: Locale): SitemapUrlEntry[] {
+  const loc = getLocale(locale);
+  if (!loc?.indexable) return [];
+
+  const urls: SitemapUrlEntry[] = [];
   const pages = ["", ...LEGAL_SLUGS.map((slug) => `/${slug}`)];
-  const urls: {
-    url: string;
-    lastModified?: string;
-    alternates: { languages: Record<string, string> };
-  }[] = [];
-  const locales = indexableLocales();
   for (const path of pages) {
-    for (const locale of locales) {
-      urls.push({
-        url: absoluteUrl(`/${locale}${path || ""}`),
-        lastModified: "2026-09-24",
-        alternates: { languages: languageAlternates(path || "", locales) },
-      });
-    }
+    urls.push({
+      url: absoluteUrl(`/${locale}${path}`),
+      lastModified: "2026-09-24",
+    });
   }
   for (const cat of categories) {
-    const languages: Record<string, string> = {};
-    for (const code of locales) {
-      languages[code] = absoluteUrl(`/${code}/tools/${cat.copy[code].slug}`);
-    }
-    languages["x-default"] = absoluteUrl(`/${SOURCE_LOCALE}/tools/${cat.copy.en.slug}`);
-    for (const locale of locales) {
-      urls.push({
-        url: absoluteUrl(`/${locale}/tools/${cat.copy[locale].slug}`),
-        lastModified: "2026-09-26",
-        alternates: { languages },
-      });
-    }
+    urls.push({
+      url: absoluteUrl(`/${locale}/tools/${cat.copy[locale].slug}`),
+      lastModified: "2026-09-26",
+    });
   }
-  for (const locale of locales) {
-    for (const tool of indexableTools(locale)) {
-      const path = `/tools/${tool.copy[locale].slug}`;
-      urls.push({
-        url: absoluteUrl(`/${locale}${path}`),
-        lastModified: tool.lastModified,
-        alternates: {
-          languages: languageAlternates(
-            path,
-            publicLocalesForTool(tool).filter((code) => getLocale(code)?.indexable),
-          ),
-        },
-      });
-    }
+  for (const tool of indexableTools(locale)) {
+    urls.push({
+      url: absoluteUrl(`/${locale}/tools/${tool.copy[locale].slug}`),
+      lastModified: tool.lastModified,
+    });
   }
   return urls;
+}
+
+/** All locale URLs concatenated (stable order = indexableLocales order). */
+export function sitemapEntries(): SitemapUrlEntry[] {
+  return indexableLocales().flatMap((locale) => sitemapEntriesForLocale(locale));
+}
+
+/** Child sitemap absolute URLs listed by the sitemap index. */
+export function sitemapChildLocs(): string[] {
+  return indexableLocales().map((locale) => absoluteUrl(`/sitemap/${locale}.xml`));
+}
+
+export function renderSitemapIndexXml(childLocs: string[] = sitemapChildLocs()): string {
+  const body = childLocs
+    .map((loc) => `  <sitemap>\n    <loc>${escapeXml(loc)}</loc>\n  </sitemap>`)
+    .join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</sitemapindex>\n`;
+}
+
+export function renderSitemapUrlsetXml(entries: SitemapUrlEntry[]): string {
+  const body = entries
+    .map((entry) => {
+      const lastmod = entry.lastModified
+        ? `\n    <lastmod>${escapeXml(entry.lastModified)}</lastmod>`
+        : "";
+      return `  <url>\n    <loc>${escapeXml(entry.url)}</loc>${lastmod}\n  </url>`;
+    })
+    .join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
+}
+
+function escapeXml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }

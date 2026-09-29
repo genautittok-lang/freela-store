@@ -82,13 +82,6 @@ if (urls.some((u) => u.url.includes("/admin") || u.url.includes("/search") || u.
 }
 for (const entry of urls) {
   if (!entry.url.startsWith("http")) fail(`Sitemap URL not absolute: ${entry.url}`);
-  const langs = entry.alternates.languages;
-  if (!langs["x-default"]) fail(`Missing x-default for ${entry.url}`);
-  if (!langs.en) fail(`Missing en hreflang for ${entry.url}`);
-  for (const [code, href] of Object.entries(langs)) {
-    if (code === "x-default") continue;
-    if (!href.startsWith("http")) fail(`hreflang ${code} not absolute`);
-  }
 }
 
 const indexed = indexableLocales();
@@ -105,16 +98,10 @@ const sample = languageAlternates("", indexed);
 if (!sample.en || !sample["x-default"] || !sample.de || !sample.ar || !sample.he) {
   fail("hreflang sample incomplete for indexable locales");
 }
-for (const entry of urls) {
-  const codes = Object.keys(entry.alternates.languages).filter((c) => c !== "x-default");
-  for (const locale of INITIAL_LOCALES) {
-    if (!codes.includes(locale) && entry.url.includes("/tools/")) {
-      // tool pages should list every public locale that has copy
-    }
-    if (!codes.includes(locale) && !entry.url.includes("/tools/")) {
-      fail(`Page hreflang missing ${locale} on ${entry.url}`);
-    }
-  }
+// Sitemap XML is slim (no xhtml alternates); hreflang reciprocity is enforced via HTML metadata helpers.
+for (const locale of INITIAL_LOCALES) {
+  const home = languageAlternates("", indexed);
+  if (!home[locale]?.includes(`/${locale}`)) fail(`hreflang missing ${locale}`);
 }
 
 assertPreparedUi();
@@ -161,20 +148,26 @@ else {
   const deUrl = absoluteUrl(`/de/tools/${images.copy.de.slug}`);
   const entry = urls.find((u) => u.url === deUrl);
   if (!entry) fail("German images category missing from sitemap");
-  else if (!entry.alternates.languages.pl?.endsWith("/pl/tools/obrazy")) {
-    fail(`Category hreflang slug mismatch: ${entry.alternates.languages.pl}`);
+  const catHreflang: Record<string, string> = {
+    "x-default": absoluteUrl(`/en/tools/${images.copy.en.slug}`),
+  };
+  for (const code of indexed) {
+    catHreflang[code] = absoluteUrl(`/${code}/tools/${images.copy[code].slug}`);
   }
-  if (!entry?.alternates.languages["x-default"]?.endsWith("/en/tools/images")) {
+  if (!catHreflang.pl?.endsWith("/pl/tools/obrazy")) {
+    fail(`Category hreflang slug mismatch: ${catHreflang.pl}`);
+  }
+  if (!catHreflang["x-default"]?.endsWith("/en/tools/images")) {
     fail("Category x-default should use the English images slug");
   }
 }
 
-const toolUrls = urls.filter((u) => u.url.includes("/tools/"));
-for (const entry of toolUrls) {
-  const codes = Object.keys(entry.alternates.languages);
-  if (!codes.includes("x-default")) fail(`Tool sitemap missing x-default ${entry.url}`);
+// Slim sitemap has no embedded alternates; HTML head still exposes full hreflang via languageAlternates.
+{
+  const langs = languageAlternates("/tools/merge-pdf", indexed);
+  if (!langs["x-default"]) fail("Tool hreflang missing x-default");
   for (const locale of INITIAL_LOCALES) {
-    if (!codes.includes(locale)) fail(`Tool hreflang missing ${locale} on ${entry.url}`);
+    if (!langs[locale]) fail(`Tool hreflang missing ${locale}`);
   }
 }
 

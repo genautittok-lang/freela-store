@@ -29,11 +29,18 @@ test("RTL Hebrew home is live, dir=rtl, and indexable", async ({ page }) => {
 test("sitemap includes routed locales", async ({ request }) => {
   const sm = await request.get(`${base}/sitemap.xml`);
   const xml = await sm.text();
-  expect(xml).toContain("/en/");
-  expect(xml).toContain("/ar/");
-  expect(xml).toContain("/he/");
-  expect(xml).toContain("/uk/");
-  expect(xml).toContain("/de/");
+  expect(xml).toContain("<sitemapindex");
+  expect(xml).toContain("/sitemap/en.xml");
+  expect(xml).toContain("/sitemap/ar.xml");
+  expect(xml).toContain("/sitemap/he.xml");
+  expect(xml).toContain("/sitemap/uk.xml");
+  expect(xml).toContain("/sitemap/de.xml");
+
+  const child = await request.get(`${base}/sitemap/en.xml`);
+  const childXml = await child.text();
+  expect(childXml).toContain("<urlset");
+  expect(childXml).toContain("/en/");
+  expect(childXml).not.toContain("/admin");
 });
 
 test("core locales are reachable and indexable", async ({ page }) => {
