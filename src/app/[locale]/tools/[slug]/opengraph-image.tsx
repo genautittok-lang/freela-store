@@ -4,7 +4,8 @@ import { categoryBySlug, toolBySlug, copyForTool, copyForCategory } from "@/lib/
 import { categories } from "@/data/categories";
 import { t } from "@/i18n/messages";
 
-export const runtime = "edge";
+// Node runtime: Edge 1 MB limit rejects the registry-backed OG bundle (~1.55 MB).
+export const runtime = "nodejs";
 export const alt = "Freela tool";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
