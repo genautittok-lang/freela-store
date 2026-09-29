@@ -20,6 +20,13 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["better-sqlite3"],
   transpilePackages: ["pdfjs-dist", "heic2any"],
   poweredByHeader: false,
+  async redirects() {
+    return [
+      // GSC / users often type /sitemap without .xml — bare path was 404.
+      { source: "/sitemap", destination: "/sitemap.xml", permanent: true },
+      { source: "/sitemap/", destination: "/sitemap.xml", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

@@ -1,6 +1,6 @@
 import { renderSitemapIndexXml } from "@/lib/seo";
 
-/** Sitemap index listing every per-locale child at `/sitemap/{locale}.xml`. */
+/** Sitemap index listing five chunked children at `/sitemap/1.xml` … `/sitemap/5.xml`. */
 export function GET() {
   const xml = renderSitemapIndexXml();
   return new Response(xml, {

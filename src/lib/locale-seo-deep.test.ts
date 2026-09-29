@@ -12,7 +12,10 @@ import {
   languageAlternates,
   sitemapEntries,
   sitemapEntriesForLocale,
+  sitemapEntriesForChunk,
   sitemapChildLocs,
+  sitemapChunkIds,
+  SITEMAP_CHUNK_COUNT,
   renderSitemapIndexXml,
   renderSitemapUrlsetXml,
   indexableLocales,
@@ -232,34 +235,50 @@ describe("sitemap structure and count formula", () => {
     expect(mergeJa).toBeTruthy();
   });
 
-  it("splits into one child sitemap per locale with no cross-locale URLs", () => {
+  it("splits into five chunked child sitemaps covering every URL once", () => {
     const children = sitemapChildLocs();
-    expect(children).toHaveLength(INITIAL_LOCALES.length);
-    expect(new Set(children).size).toBe(children.length);
+    expect(SITEMAP_CHUNK_COUNT).toBe(5);
+    expect(sitemapChunkIds()).toEqual([1, 2, 3, 4, 5]);
+    expect(children).toHaveLength(5);
+    expect(new Set(children).size).toBe(5);
 
     const indexXml = renderSitemapIndexXml();
     expect(indexXml).toContain("<sitemapindex");
+    for (const id of sitemapChunkIds()) {
+      expect(indexXml).toContain(`/sitemap/${id}.xml`);
+    }
+    // Old per-locale children must not appear in the index
     for (const locale of INITIAL_LOCALES) {
-      expect(indexXml).toContain(`/sitemap/${locale}.xml`);
-      const localeEntries = sitemapEntriesForLocale(locale);
-      expect(localeEntries.length).toBe(15_804 / INITIAL_LOCALES.length);
-      for (const entry of localeEntries) {
-        expect(entry.url).toContain(`/${locale}`);
-        // No other locale prefix as the path segment after host
-        const path = entry.url.replace(/^https?:\/\/[^/]+/, "");
-        expect(path.startsWith(`/${locale}/`) || path === `/${locale}`).toBe(true);
-      }
-      const xml = renderSitemapUrlsetXml(localeEntries);
+      expect(indexXml).not.toContain(`/sitemap/${locale}.xml`);
+    }
+
+    const expectedPerChunk = Math.ceil(15_804 / SITEMAP_CHUNK_COUNT);
+    const allFromChildren: string[] = [];
+    for (const id of sitemapChunkIds()) {
+      const chunkEntries = sitemapEntriesForChunk(id);
+      expect(chunkEntries.length).toBeGreaterThan(0);
+      expect(chunkEntries.length).toBeLessThanOrEqual(expectedPerChunk);
+      expect(chunkEntries.length).toBeLessThan(50_000);
+      const xml = renderSitemapUrlsetXml(chunkEntries);
       expect(xml).toContain("<urlset");
       expect(xml).not.toContain("xhtml:link");
       expect(Buffer.byteLength(xml, "utf8")).toBeLessThan(5_000_000);
+      allFromChildren.push(...chunkEntries.map((e) => e.url));
     }
 
-    const allFromChildren = INITIAL_LOCALES.flatMap((locale) =>
-      sitemapEntriesForLocale(locale).map((e) => e.url),
-    );
     expect(allFromChildren).toHaveLength(15_804);
     expect(new Set(allFromChildren).size).toBe(15_804);
+    expect(allFromChildren).toEqual(sitemapEntries().map((e) => e.url));
+
+    // Per-locale helper still works for HTML/hreflang tooling; not used as sitemap children
+    for (const locale of INITIAL_LOCALES) {
+      const localeEntries = sitemapEntriesForLocale(locale);
+      expect(localeEntries.length).toBe(15_804 / INITIAL_LOCALES.length);
+      for (const entry of localeEntries) {
+        const path = entry.url.replace(/^https?:\/\/[^/]+/, "");
+        expect(path.startsWith(`/${locale}/`) || path === `/${locale}`).toBe(true);
+      }
+    }
   });
 });
 

@@ -26,21 +26,29 @@ test("RTL Hebrew home is live, dir=rtl, and indexable", async ({ page }) => {
   expect(robots || "").not.toMatch(/noindex/i);
 });
 
-test("sitemap includes routed locales", async ({ request }) => {
+test("sitemap index lists five chunked children", async ({ request }) => {
   const sm = await request.get(`${base}/sitemap.xml`);
   const xml = await sm.text();
   expect(xml).toContain("<sitemapindex");
-  expect(xml).toContain("/sitemap/en.xml");
-  expect(xml).toContain("/sitemap/ar.xml");
-  expect(xml).toContain("/sitemap/he.xml");
-  expect(xml).toContain("/sitemap/uk.xml");
-  expect(xml).toContain("/sitemap/de.xml");
+  expect(xml).toContain("/sitemap/1.xml");
+  expect(xml).toContain("/sitemap/5.xml");
+  expect(xml).not.toContain("/sitemap/en.xml");
+  expect(xml).not.toContain("/sitemap/6.xml");
 
-  const child = await request.get(`${base}/sitemap/en.xml`);
+  const child = await request.get(`${base}/sitemap/1.xml`);
   const childXml = await child.text();
   expect(childXml).toContain("<urlset");
-  expect(childXml).toContain("/en/");
+  expect(childXml).toMatch(/\/(en|de|uk|ar|he)\b/);
   expect(childXml).not.toContain("/admin");
+
+  const bare = await request.get(`${base}/sitemap`);
+  expect(bare.ok()).toBeTruthy();
+  expect(bare.url()).toMatch(/\/sitemap\.xml$/);
+  expect(await bare.text()).toContain("<sitemapindex");
+
+  const bareSlash = await request.get(`${base}/sitemap/`);
+  expect(bareSlash.ok()).toBeTruthy();
+  expect(bareSlash.url()).toMatch(/\/sitemap\.xml$/);
 });
 
 test("core locales are reachable and indexable", async ({ page }) => {

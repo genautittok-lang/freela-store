@@ -290,9 +290,28 @@ export function sitemapEntries(): SitemapUrlEntry[] {
   return indexableLocales().flatMap((locale) => sitemapEntriesForLocale(locale));
 }
 
+/** Fixed number of chunked child sitemaps listed by the index (not per-locale). */
+export const SITEMAP_CHUNK_COUNT = 5;
+
+/** 1-based chunk ids: 1 … SITEMAP_CHUNK_COUNT. */
+export function sitemapChunkIds(): number[] {
+  return Array.from({ length: SITEMAP_CHUNK_COUNT }, (_, i) => i + 1);
+}
+
+/** Slice of all sitemap URLs for one chunk (even split, last chunk may be smaller). */
+export function sitemapEntriesForChunk(chunkId: number): SitemapUrlEntry[] {
+  if (!Number.isInteger(chunkId) || chunkId < 1 || chunkId > SITEMAP_CHUNK_COUNT) {
+    return [];
+  }
+  const all = sitemapEntries();
+  const chunkSize = Math.ceil(all.length / SITEMAP_CHUNK_COUNT);
+  const start = (chunkId - 1) * chunkSize;
+  return all.slice(start, start + chunkSize);
+}
+
 /** Child sitemap absolute URLs listed by the sitemap index. */
 export function sitemapChildLocs(): string[] {
-  return indexableLocales().map((locale) => absoluteUrl(`/sitemap/${locale}.xml`));
+  return sitemapChunkIds().map((id) => absoluteUrl(`/sitemap/${id}.xml`));
 }
 
 export function renderSitemapIndexXml(childLocs: string[] = sitemapChildLocs()): string {

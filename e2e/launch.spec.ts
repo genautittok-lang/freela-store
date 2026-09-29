@@ -109,14 +109,19 @@ test("robots and sitemap", async ({ request }) => {
   const sm = await request.get(`${base}/sitemap.xml`);
   const xml = await sm.text();
   expect(xml).toContain("<sitemapindex");
+  expect(xml).toContain("/sitemap/1.xml");
+  expect(xml).toContain("/sitemap/5.xml");
   expect(xml).not.toContain("/admin");
   expect(xml).not.toContain("/search");
-  const child = await request.get(`${base}/sitemap/en.xml`);
+  const child = await request.get(`${base}/sitemap/1.xml`);
   expect(child.ok()).toBeTruthy();
   const childXml = await child.text();
   expect(childXml).toContain("<urlset");
   expect(childXml).not.toContain("/admin");
   expect(childXml).not.toContain("/search");
+  const bare = await request.get(`${base}/sitemap`);
+  expect(bare.ok()).toBeTruthy();
+  expect(bare.url()).toMatch(/\/sitemap\.xml$/);
 });
 
 test("mobile menu", async ({ page }) => {
