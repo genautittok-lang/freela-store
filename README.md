@@ -122,7 +122,7 @@ Temporary public preview (this agent VM only): a Cloudflare quick tunnel may be 
    - `ADMIN_EMAIL=` a real operator address
    - `ADMIN_PASSWORD=` a long random secret (**not** `changeme-freela`)
    - `DATABASE_PATH=` a persistent volume path (for example `/var/lib/freela/freela.db`)
-3. `npm ci && npm run build && npm start -- --hostname 0.0.0.0 --port 43173` (or your process manager). Put nginx/Caddy in front with TLS.
+3. `npm ci && npm run build && npm start` (listens on `0.0.0.0` and `PORT` or `43173`). Put nginx/Caddy in front with TLS. For Railway, see the project docs note on bind host / `PORT`.
 4. Confirm `https://freela.store/robots.txt` points at `https://freela.store/sitemap.xml`.
 5. Back up the SQLite file. Schema is created on first boot (`src/lib/db.ts`).
 6. After DNS + TLS: Search Console domain property, submit sitemap, inspect `/en` and a few tool URLs. **Indexing is not guaranteed.**
