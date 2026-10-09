@@ -2,6 +2,9 @@
   "name": "freela-store",
   "version": "1.2.1",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1 --port 43173",
     "build": "next build",
